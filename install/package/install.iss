@@ -1,7 +1,7 @@
 
 [Setup]
 AppName=StarCitizen Helper
-AppVersion=1.0.2.8
+AppVersion=1.0.2.9
 DefaultDirName={commonpf}\StarCitizen Helper
 DefaultGroupName=StarCitizen Helper
 SourceDir=C:\google\programming\GitHub\StarCitizen-Helper\install\package\Input
