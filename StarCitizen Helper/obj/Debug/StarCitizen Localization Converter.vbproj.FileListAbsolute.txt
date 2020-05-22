@@ -1,0 +1,34 @@
+C:\google\programming\GitHub\StarCitizen Localization Converter\StarCitizen Localization Converter\bin\Debug\StarCitizen Localization Converter.exe.config
+C:\google\programming\GitHub\StarCitizen Localization Converter\StarCitizen Localization Converter\bin\Debug\StarCitizen Localization Converter.exe
+C:\google\programming\GitHub\StarCitizen Localization Converter\StarCitizen Localization Converter\bin\Debug\StarCitizen Localization Converter.pdb
+C:\google\programming\GitHub\StarCitizen Localization Converter\StarCitizen Localization Converter\bin\Debug\StarCitizen Localization Converter.xml
+C:\google\programming\GitHub\StarCitizen Localization Converter\StarCitizen Localization Converter\obj\Debug\StarCitizen Localization Converter.vbprojResolveAssemblyReference.cache
+C:\google\programming\GitHub\StarCitizen Localization Converter\StarCitizen Localization Converter\obj\Debug\StarCitizen_Localization_Converter.Resources.resources
+C:\google\programming\GitHub\StarCitizen Localization Converter\StarCitizen Localization Converter\obj\Debug\StarCitizen Localization Converter.vbproj.GenerateResource.Cache
+C:\google\programming\GitHub\StarCitizen Localization Converter\StarCitizen Localization Converter\obj\Debug\StarCitizen Localization Converter.exe
+C:\google\programming\GitHub\StarCitizen Localization Converter\StarCitizen Localization Converter\obj\Debug\StarCitizen Localization Converter.xml
+C:\google\programming\GitHub\StarCitizen Localization Converter\StarCitizen Localization Converter\obj\Debug\StarCitizen Localization Converter.pdb
+C:\google\programming\GitHub\StarCitizen Localization Converter\StarCitizen Localization Converter\obj\Debug\StarCitizen_Localization_Converter.MainForm.resources
+C:\Users\warfa\Google Диск\programming\GitHub\StarCitizen-Localization-Converter\StarCitizen Localization Converter\bin\Debug\StarCitizen Localization converter.exe.config
+C:\Users\warfa\Google Диск\programming\GitHub\StarCitizen-Localization-Converter\StarCitizen Localization Converter\obj\Debug\StarCitizen Localization converter.exe
+C:\Users\warfa\Google Диск\programming\GitHub\StarCitizen-Localization-Converter\StarCitizen Localization Converter\obj\Debug\StarCitizen Localization converter.xml
+C:\Users\warfa\Google Диск\programming\GitHub\StarCitizen-Localization-Converter\StarCitizen Localization Converter\obj\Debug\StarCitizen Localization converter.pdb
+C:\Users\warfa\Google Диск\programming\GitHub\StarCitizen-Localization-Converter\StarCitizen Localization Converter\bin\Debug\StarCitizen Localization converter.exe
+C:\Users\warfa\Google Диск\programming\GitHub\StarCitizen-Localization-Converter\StarCitizen Localization Converter\bin\Debug\StarCitizen Localization converter.pdb
+C:\Users\warfa\Google Диск\programming\GitHub\StarCitizen-Localization-Converter\StarCitizen Localization Converter\bin\Debug\StarCitizen Localization converter.xml
+C:\Users\warfa\Google Диск\programming\GitHub\StarCitizen-Localization-Converter\StarCitizen Localization Converter\obj\Debug\StarCitizen Localization Converter.vbprojResolveAssemblyReference.cache
+C:\Users\warfa\Google Диск\programming\GitHub\StarCitizen-Localization-Converter\StarCitizen Localization Converter\obj\Debug\StarCitizen_Localization_Converter.ConvertForm.resources
+C:\Users\warfa\Google Диск\programming\GitHub\StarCitizen-Localization-Converter\StarCitizen Localization Converter\obj\Debug\StarCitizen_Localization_Converter.Resources.resources
+C:\Users\warfa\Google Диск\programming\GitHub\StarCitizen-Localization-Converter\StarCitizen Localization Converter\obj\Debug\StarCitizen Localization Converter.vbproj.GenerateResource.Cache
+C:\Users\warfa\Google Диск\programming\GitHub\StarCitizen-Localization-Converter\StarCitizen Localization Converter\obj\Debug\StarCitizen_Localization_Converter.MainForm.resources
+C:\google\programming\GitHub\StarCitizen-Helper\StarCitizen Localization Converter\bin\Debug\StarCitizen Localization converter.exe.config
+C:\google\programming\GitHub\StarCitizen-Helper\StarCitizen Localization Converter\obj\Debug\StarCitizen Localization converter.exe
+C:\google\programming\GitHub\StarCitizen-Helper\StarCitizen Localization Converter\obj\Debug\StarCitizen Localization converter.xml
+C:\google\programming\GitHub\StarCitizen-Helper\StarCitizen Localization Converter\obj\Debug\StarCitizen Localization converter.pdb
+C:\google\programming\GitHub\StarCitizen-Helper\StarCitizen Localization Converter\bin\Debug\StarCitizen Helper.exe.config
+C:\google\programming\GitHub\StarCitizen-Helper\StarCitizen Localization Converter\obj\Debug\StarCitizen Localization Converter.vbprojResolveAssemblyReference.cache
+C:\google\programming\GitHub\StarCitizen-Helper\StarCitizen Localization Converter\obj\Debug\SC.ConvertForm.resources
+C:\google\programming\GitHub\StarCitizen-Helper\StarCitizen Localization Converter\obj\Debug\SC.MainForm.resources
+C:\google\programming\GitHub\StarCitizen-Helper\StarCitizen Localization Converter\obj\Debug\SC.Resources.resources
+C:\google\programming\GitHub\StarCitizen-Helper\StarCitizen Localization Converter\obj\Debug\StarCitizen Localization Converter.vbproj.GenerateResource.Cache
+C:\google\programming\GitHub\StarCitizen-Helper\StarCitizen Localization Converter\obj\Debug\StarCitizen Helper.xml
