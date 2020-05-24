@@ -33,10 +33,12 @@ Namespace My
         <Global.System.Diagnostics.DebuggerStepThroughAttribute()>
         Protected Overrides Sub OnCreateMainForm()
             On Error GoTo fin
+            Initialization = True
             InitializeStart()
             MAIN_THREAD = Global.SC.MainForm
             Me.MainForm = MAIN_THREAD
             InitializeEnd()
+            Initialization = False
 fin:        Exit Sub
         End Sub
 

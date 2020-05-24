@@ -22,5 +22,25 @@ StarCitizen Helper
   resource lookups using this strongly typed resource class.
 </summary>
 </member>
+<member name="P:SC.My.Resources.Resources.core_fix">
+<summary>
+  Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+</summary>
+</member>
+<member name="P:SC.My.Resources.Resources.disabled">
+<summary>
+  Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+</summary>
+</member>
+<member name="P:SC.My.Resources.Resources.mouse_click">
+<summary>
+  Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+</summary>
+</member>
+<member name="P:SC.My.Resources.Resources.process_kill">
+<summary>
+  Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+</summary>
+</member>
 </members>
 </doc>

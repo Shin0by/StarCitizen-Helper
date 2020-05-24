@@ -59,5 +59,41 @@ Namespace My.Resources
                 resourceCulture = value
             End Set
         End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        '''</summary>
+        Friend ReadOnly Property core_fix() As System.IO.UnmanagedMemoryStream
+            Get
+                Return ResourceManager.GetStream("core_fix", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        '''</summary>
+        Friend ReadOnly Property disabled() As System.IO.UnmanagedMemoryStream
+            Get
+                Return ResourceManager.GetStream("disabled", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        '''</summary>
+        Friend ReadOnly Property mouse_click() As System.IO.UnmanagedMemoryStream
+            Get
+                Return ResourceManager.GetStream("mouse_click", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        '''</summary>
+        Friend ReadOnly Property process_kill() As System.IO.UnmanagedMemoryStream
+            Get
+                Return ResourceManager.GetStream("process_kill", resourceCulture)
+            End Get
+        End Property
     End Module
 End Namespace

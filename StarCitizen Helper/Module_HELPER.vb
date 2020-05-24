@@ -2,51 +2,77 @@
     Public Sub ConfigFile()
         _VARS.ConfigFileIsOK = True
         If _FILE._FileExits(_APP.configFullPath) = False Then
-            IO.File.Create(_APP.configFullPath).Dispose()
-            _LOG._sAdd("CONFIG_FILE", "Файл конфигурациине найден, будет создан новый файл конфигурации", _APP.configFullPath, 2)
+            'BUILD INI FILE
+WriteBlock: IO.File.Create(_APP.configFullPath).Dispose()
+            _LOG._sAdd("CONFIG_FILE", "Файл конфигурации не найден, будет создан новый файл конфигурации", _APP.configFullPath, 2)
 
-            'Update latest DateTime start
-            If _INI._Write("CONFIGURATION", "DT", Date.Now) = False Then _VARS.ConfigFileIsOK = False
+            'Update latest DateTime start and check Write function
+            If _INI._Write("CONFIGURATION", "DT", Date.Now) = False Then
+                _VARS.ConfigFileIsOK = False
+                _LOG._sAdd("CONFIG_FILE", "Запись в файл коифигурации невозможна, проверьте права на запись", _APP.configFullPath, 1)
+                GoTo ReadBlock
+            End If
 
-            'File watcher
+            'FileWatcher
             _INI._Write("CONFIGURATION", "FILES_WATCHER", 0)
 
-            'GIT Block
+            'PKiller
+            _INI._Write("CONFIGURATION", "PKILLER_ENABLED", 0)
+            _INI._Write("CONFIGURATION", "PKILLER_KEY", 0)
+            _INI._Write("CONFIGURATION", "PKILLER_MOD", 0)
+            _INI._Write("CONFIGURATION", "PKILLER_LIST", "")
+
+            'GIT
             _INI._Write("EXTERNAL", "PACK_GIT_ZIP", _VARS.PackageZipURL)
             _INI._Write("EXTERNAL", "PACK_GIT_PAGE", _VARS.PackageGitURL)
 
-            'Add hex patcher block
-            If _INI._Write("EXTERNAL", "BLOCK1", _VARS.BLOCK1) = False Then _VARS.ConfigFileIsOK = False
-            If _INI._Write("EXTERNAL", "BLOCK2", _VARS.BLOCK2) = False Then _VARS.ConfigFileIsOK = False
-        Else
-            'Update latest DateTime start
-            If _INI._Write("CONFIGURATION", "DT", Date.Now) = False Then
-                _VARS.ConfigFileIsOK = False
-            Else
-                _LOG._sAdd("CONFIG_FILE", "Загружена конфигурация из файла", _APP.configFullPath, 2)
-            End If
-
-            MAIN_THREAD.CheckBox_FileWatcher.Checked = StringToBool(_INI._GET_VALUE("CONFIGURATION", "FILES_WATCHER", 0, {0, 1}).Value)
-            _VARS.GameExeFilePath = _INI._GET_VALUE("EXTERNAL", "EXE_PATH", Nothing).Value
-            If _VARS.GameExeFilePath IsNot Nothing Then
-                Dim fo As ResultClass = _FILE._GetInfo(_VARS.GameExeFilePath)
-                If fo.Err.Flag = True Or fo.ValueObject Is Nothing Then
-                    _LOG._Add("CONFIG_FILE", "Ошибка при доступе к файлу", fo.LogList(_VARS.GameExeFilePath), 1)
-                Else
-                    _VARS.GameRootFolder = fo.ValueObject.Directory.Parent.FullName
-                End If
-            End If
-            _VARS.PackageZipURL = _INI._GET_VALUE("EXTERNAL", "PACK_GIT_ZIP", Nothing).Value
-            _VARS.PackageGitURL = _INI._GET_VALUE("EXTERNAL", "PACK_GIT_PAGE", Nothing).Value
+            'HEX
+            _INI._Write("EXTERNAL", "BLOCK1", _VARS.BLOCK1)
+            _INI._Write("EXTERNAL", "BLOCK2", _VARS.BLOCK2)
         End If
+
+        'LOAD INI FILE
+ReadBlock: _VARS.ConfigFileIsOK = True
+
+        'Update latest DateTime start and check Write function
+        If _INI._Write("CONFIGURATION", "DT", Date.Now) = False Then
+            _VARS.ConfigFileIsOK = False
+        Else
+            _LOG._sAdd("CONFIG_FILE", "Загружена конфигурация из файла", _APP.configFullPath, 2)
+        End If
+
+        _VARS.FileWatcher = StringToBool(_INI._GET_VALUE("CONFIGURATION", "FILES_WATCHER", False, {"0", "1"}).Value)
+
+        _VARS.GameExeFilePath = _INI._GET_VALUE("EXTERNAL", "EXE_PATH", Nothing).Value
+        If _VARS.GameExeFilePath IsNot Nothing Then
+            Dim fo As ResultClass = _FILE._GetInfo(_VARS.GameExeFilePath)
+            If fo.Err.Flag = True Or fo.ValueObject Is Nothing Then
+                _LOG._Add("CONFIG_FILE", "Ошибка при доступе к файлу", fo.LogList(_VARS.GameExeFilePath), 1)
+            Else
+                _VARS.GameRootFolder = fo.ValueObject.Directory.Parent.FullName
+            End If
+        End If
+
+        'GIT
+        _VARS.PackageZipURL = _INI._GET_VALUE("EXTERNAL", "PACK_GIT_ZIP", Nothing).Value
+        _VARS.PackageGitURL = _INI._GET_VALUE("EXTERNAL", "PACK_GIT_PAGE", Nothing).Value
+
+        'PKiller
+        _VARS.PKillerEnabled = StringToBool(_INI._GET_VALUE("CONFIGURATION", "PKILLER_ENABLED", False, {"0", "1"}).Value)
+        _VARS.PKillerKeyID = _INI._GET_VALUE("CONFIGURATION", "PKILLER_KEY", 0).Value
+        _VARS.PKillerKeyMod = _INI._GET_VALUE("CONFIGURATION", "PKILLER_MOD", 0, {"0", "1", "2", "3", "4", "5", "6", "7"}).Value
+
     End Sub
 
     Public Function StringToBool(Value As String) As Boolean
-        If Value = "1" Then Return True
-        If Value = 1 Then Return True
-        If Value = "True" Then Return True
-        If Value = True Then Return True
-        Return False
+        On Error Resume Next
+        Dim result As Boolean = False
+        Boolean.TryParse(Value, result)
+        If Value = "0" Then result = False
+        If Value = "1" Then result = True
+        If LCase(Value) = "false" Then result = False
+        If LCase(Value) = "true" Then result = True
+        Return result
     End Function
 
     Public Function BoolToString(Value As Boolean) As String
@@ -54,6 +80,54 @@
         Return "0"
     End Function
 
+    Public Function KeyModifierListToKeys(SelectedIndex As Integer) As Keys
+        Dim result As Keys
+        Select Case SelectedIndex
+            Case 0
+                result = Keys.None
+            Case 1
+                result = Keys.LMenu
+            Case 2
+                result = Keys.LControlKey
+            Case 3
+                result = Keys.LShiftKey
+            Case 4
+                result = Keys.RMenu
+            Case 5
+                result = Keys.RControlKey
+            Case 6
+                result = Keys.RShiftKey
+            Case Else
+                result = Keys.None
+        End Select
+        Return result
+    End Function
+
+    Public Function ProccessKill_ListBox_Update(ListBox As ListBox, LoadTrue_SaveFalse As Boolean) As Integer
+        Dim temp As String = Nothing
+        If LoadTrue_SaveFalse = True Then
+            ListBox.Items.Clear()
+            temp = _INI._GET_VALUE("CONFIGURATION", "PKILLER_LIST", Nothing).Value
+            If temp IsNot Nothing Then
+                For Each elem In Split(temp, ",")
+                    elem = Trim(elem)
+                    ListBox.Items.Add(elem.ToString)
+                Next
+            End If
+        Else
+            If ListBox.Items.Count > 0 Then
+                For Each elem In ListBox.Items
+                    If temp = Nothing Then
+                        temp = elem.ToString
+                    Else
+                        temp += "," & elem.ToString
+                    End If
+                Next
+                _INI._Write("CONFIGURATION", "PKILLER_LIST", temp)
+            End If
+        End If
+        Return ListBox.Items.Count
+    End Function
 
     Class Class_HelperPatch
         Public Function SetGameExeFilePath() As String
@@ -64,7 +138,7 @@
 
             Dim Path As String = SelectFile("Файл игры |" & _VARS.GameExeFileName & "|Exe (*.exe)|*.exe" & "|Все файлы (*.*)|*.*")
             If Path Is Nothing Then
-                _VARS.GameExeFilePath = Nothing
+                '_VARS.GameExeFilePath = Nothing
                 Return Nothing
             End If
 

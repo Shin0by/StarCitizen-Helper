@@ -1,6 +1,8 @@
 ﻿Imports System.IO
 Module Module_MAIN
+    Public Initialization As Boolean = True
     Public MAIN_THREAD As MainForm
+    Public _KEYS As Class_KEYS
     Public _FILE As New Class_FILE
     Public _INI As New Class_INI
     Public _LOG As New Class_LOG(True)
@@ -10,9 +12,12 @@ Module Module_MAIN
     Public _VARS As New Class_VarCol
     Public _INET As New Class_INET
     Public _WATCHFILE_THREAD As Class_THREAD_WATCHFILE
+    Public _PROCESS As New Class_PROCESSES
+
 
     Public Sub InitializeStart()
-        _INI._File =  _APP.configFullPath
+        _KEYS = New Class_KEYS(MAIN_THREAD)
+        _INI._File = _APP.configFullPath
 
         _VARS.FilePathMinLen = 2
         _VARS.FileNameMinLen = 5
@@ -39,11 +44,12 @@ Module Module_MAIN
         Module_HELPER.ConfigFile()
 
         _WATCHFILE_THREAD = New Class_THREAD_WATCHFILE(MAIN_THREAD)
-        _WATCHFILE_THREAD.start_thread()
+        _WATCHFILE_THREAD.StartThread()
         _WATCHFILE_THREAD.PushWatchFiles = True
 
         _HELPER_PATCH.CheckHexToExe(3)
         MAIN_THREAD.UpdateInterface()
+
     End Sub
 
     Public Sub Unload()
@@ -136,23 +142,36 @@ Module Module_MAIN
 
 
     Class Class_VarCol
-        Private sGameExeFileName As String = Nothing
-        Private sGameExeFilePath As String = Nothing
-
-        Public BLOCK1 As String = Nothing
-        Public BLOCK2 As String = Nothing
+        'Global
         Public FilePathMinLen As Long = 2
         Public FileNameMinLen As Long = 5
+
+        'ConfigFile
+        Public ConfigFileIsOK As Boolean = False
+
+        'Patcher
         Public GameName As String = Nothing
         Public GameRootFolder As String = Nothing
         Public GameExeFileStatus As New Class_PATCH.Class_PatchResult
-        Public ConfigFileIsOK As Boolean = False
         Public GameExeFileCopyPref As String = ".bak"
+        Public BLOCK1 As String = Nothing
+        Public BLOCK2 As String = Nothing
+        Private sGameExeFileName As String = Nothing
+        Private sGameExeFilePath As String = Nothing
+        Public FileWatcher As Boolean = False
+
+        'Download
         Public PackageZipURL As String = Nothing
         Public PackageGitURL As String = Nothing
         Public DownloadFolderPref As String = Nothing
         Public DownloadFolder As String = Nothing
         Public DownloadFile As String = "master.zip"
+
+        'PKiller
+        Public PKillerEnabled As Boolean = False
+        Public PKillerKeyID As Integer = 0
+        Public PKillerKeyMod As Integer = 0
+
 
         Public Property GameExeFileName As String
             Get

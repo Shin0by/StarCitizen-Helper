@@ -1,8 +1,14 @@
 ﻿Imports Microsoft.VisualBasic.FileIO
 
 Module Module_PARSER
-    Public PARSER As New Class_PARSER
+    Public PARSER As New Class_Parser
     Class Class_SubLineBlock
+        Friend Class Class_KeyValBlock
+            Public sKey As String = Nothing
+            Public sValue As String = Nothing
+            Public Err As Boolean = False
+        End Class
+
         Private cLeftString As New Class_KeyValBlock
         Private cRightString As New Class_KeyValBlock
         Public Err As Boolean = False
@@ -163,11 +169,4 @@ Module Module_PARSER
             Me.lLinesWithError = 0
         End Sub
     End Class
-
-    Class Class_KeyValBlock
-        Public sKey As String = Nothing
-        Public sValue As String = Nothing
-        Public Err As Boolean = False
-    End Class
-
 End Module

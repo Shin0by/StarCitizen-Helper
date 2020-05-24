@@ -40,6 +40,7 @@ Partial Class MainForm
         Me.TabControl = New System.Windows.Forms.TabControl()
         Me.TabPage_Patch = New System.Windows.Forms.TabPage()
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
+        Me.Label_ModInfo = New System.Windows.Forms.Label()
         Me.ModOn_Button = New System.Windows.Forms.Button()
         Me.Label_FileWatcher = New System.Windows.Forms.Label()
         Me.CheckBox_FileWatcher = New System.Windows.Forms.CheckBox()
@@ -55,17 +56,34 @@ Partial Class MainForm
         Me.GitClone_Button = New System.Windows.Forms.Button()
         Me.Label_GitClone = New System.Windows.Forms.Label()
         Me.Label_InstallAll = New System.Windows.Forms.Label()
+        Me.TabPage_Killer = New System.Windows.Forms.TabPage()
+        Me.TableLayoutPanel4 = New System.Windows.Forms.TableLayoutPanel()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.Label_SetKeyKill = New System.Windows.Forms.Label()
+        Me.AddProccessKill_Button = New System.Windows.Forms.Button()
+        Me.CheckBox_KillerThread = New System.Windows.Forms.CheckBox()
+        Me.SetKeyKill_Button = New System.Windows.Forms.Button()
+        Me.Label_KillerThread = New System.Windows.Forms.Label()
+        Me.ProcessKillerModKey_ComboBox = New System.Windows.Forms.ComboBox()
+        Me.RemoveProccessKill_Button = New System.Windows.Forms.Button()
+        Me.ProccessKill_ListBox = New System.Windows.Forms.ListBox()
+        Me.AddProccessKill_TextBox = New System.Windows.Forms.TextBox()
+        Me.ProccessList_ListBox = New System.Windows.Forms.ListBox()
+        Me.Label_ProcessKillerModKey = New System.Windows.Forms.Label()
+        Me.Label4 = New System.Windows.Forms.Label()
         Me.TabPage_Debug = New System.Windows.Forms.TabPage()
         Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
-        Me.TextBox_Debug = New System.Windows.Forms.TextBox()
-        Me.Timer_Log = New System.Windows.Forms.Timer(Me.components)
         Me.ClearLog_Button = New System.Windows.Forms.Button()
+        Me.TextBox_Debug = New System.Windows.Forms.TextBox()
+        Me.Timer_UI = New System.Windows.Forms.Timer(Me.components)
         Me.ContextMenuStrip1.SuspendLayout()
         Me.TabControl.SuspendLayout()
         Me.TabPage_Patch.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
         Me.TabPage_Update.SuspendLayout()
         Me.TableLayoutPanel3.SuspendLayout()
+        Me.TabPage_Killer.SuspendLayout()
+        Me.TableLayoutPanel4.SuspendLayout()
         Me.TabPage_Debug.SuspendLayout()
         Me.TableLayoutPanel2.SuspendLayout()
         Me.SuspendLayout()
@@ -155,12 +173,13 @@ Partial Class MainForm
         '
         Me.TabControl.Controls.Add(Me.TabPage_Patch)
         Me.TabControl.Controls.Add(Me.TabPage_Update)
+        Me.TabControl.Controls.Add(Me.TabPage_Killer)
         Me.TabControl.Controls.Add(Me.TabPage_Debug)
         Me.TabControl.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TabControl.Location = New System.Drawing.Point(0, 0)
         Me.TabControl.Name = "TabControl"
         Me.TabControl.SelectedIndex = 0
-        Me.TabControl.Size = New System.Drawing.Size(784, 261)
+        Me.TabControl.Size = New System.Drawing.Size(784, 311)
         Me.TabControl.TabIndex = 2
         '
         'TabPage_Patch
@@ -169,7 +188,7 @@ Partial Class MainForm
         Me.TabPage_Patch.Location = New System.Drawing.Point(4, 22)
         Me.TabPage_Patch.Name = "TabPage_Patch"
         Me.TabPage_Patch.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage_Patch.Size = New System.Drawing.Size(776, 235)
+        Me.TabPage_Patch.Size = New System.Drawing.Size(776, 285)
         Me.TabPage_Patch.TabIndex = 0
         Me.TabPage_Patch.Text = "Модификация"
         Me.TabPage_Patch.UseVisualStyleBackColor = True
@@ -180,6 +199,7 @@ Partial Class MainForm
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
+        Me.TableLayoutPanel1.Controls.Add(Me.Label_ModInfo, 0, 5)
         Me.TableLayoutPanel1.Controls.Add(Me.ModOn_Button, 0, 2)
         Me.TableLayoutPanel1.Controls.Add(Me.Label_FileWatcher, 1, 1)
         Me.TableLayoutPanel1.Controls.Add(Me.CheckBox_FileWatcher, 0, 1)
@@ -200,8 +220,21 @@ Partial Class MainForm
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel1.Size = New System.Drawing.Size(770, 229)
+        Me.TableLayoutPanel1.Size = New System.Drawing.Size(770, 279)
         Me.TableLayoutPanel1.TabIndex = 2
+        '
+        'Label_ModInfo
+        '
+        Me.Label_ModInfo.AutoSize = True
+        Me.TableLayoutPanel1.SetColumnSpan(Me.Label_ModInfo, 3)
+        Me.Label_ModInfo.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Label_ModInfo.Location = New System.Drawing.Point(3, 153)
+        Me.Label_ModInfo.Margin = New System.Windows.Forms.Padding(3)
+        Me.Label_ModInfo.Name = "Label_ModInfo"
+        Me.Label_ModInfo.Size = New System.Drawing.Size(764, 123)
+        Me.Label_ModInfo.TabIndex = 11
+        Me.Label_ModInfo.Text = resources.GetString("Label_ModInfo.Text")
+        Me.Label_ModInfo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'ModOn_Button
         '
@@ -210,7 +243,7 @@ Partial Class MainForm
         Me.ModOn_Button.Name = "ModOn_Button"
         Me.ModOn_Button.Size = New System.Drawing.Size(250, 24)
         Me.ModOn_Button.TabIndex = 5
-        Me.ModOn_Button.Text = "Модификация вкл."
+        Me.ModOn_Button.Text = "Вкл. модификацию"
         Me.ModOn_Button.UseVisualStyleBackColor = True
         '
         'Label_FileWatcher
@@ -256,7 +289,7 @@ Partial Class MainForm
         Me.ModOff_Button.Name = "ModOff_Button"
         Me.ModOff_Button.Size = New System.Drawing.Size(250, 24)
         Me.ModOff_Button.TabIndex = 6
-        Me.ModOff_Button.Text = "Модификация выкл."
+        Me.ModOff_Button.Text = "Выкл. модификацию"
         Me.ModOff_Button.UseVisualStyleBackColor = True
         '
         'ModScan_Button
@@ -314,7 +347,7 @@ Partial Class MainForm
         Me.TabPage_Update.Location = New System.Drawing.Point(4, 22)
         Me.TabPage_Update.Name = "TabPage_Update"
         Me.TabPage_Update.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage_Update.Size = New System.Drawing.Size(776, 235)
+        Me.TabPage_Update.Size = New System.Drawing.Size(776, 285)
         Me.TabPage_Update.TabIndex = 2
         Me.TabPage_Update.Text = "Загрузка и обновление"
         Me.TabPage_Update.UseVisualStyleBackColor = True
@@ -339,7 +372,7 @@ Partial Class MainForm
         Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
         Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
         Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel3.Size = New System.Drawing.Size(770, 229)
+        Me.TableLayoutPanel3.Size = New System.Drawing.Size(770, 279)
         Me.TableLayoutPanel3.TabIndex = 3
         '
         'InstallAll_Button
@@ -387,13 +420,202 @@ Partial Class MainForm
         Me.Label_InstallAll.Text = "Локализация и шрифты, а так же будут выполнены настройки для их использования"
         Me.Label_InstallAll.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
+        'TabPage_Killer
+        '
+        Me.TabPage_Killer.Controls.Add(Me.TableLayoutPanel4)
+        Me.TabPage_Killer.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage_Killer.Name = "TabPage_Killer"
+        Me.TabPage_Killer.Size = New System.Drawing.Size(776, 285)
+        Me.TabPage_Killer.TabIndex = 3
+        Me.TabPage_Killer.Text = "Завершение процессов"
+        Me.TabPage_Killer.UseVisualStyleBackColor = True
+        '
+        'TableLayoutPanel4
+        '
+        Me.TableLayoutPanel4.ColumnCount = 4
+        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
+        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334!))
+        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334!))
+        Me.TableLayoutPanel4.Controls.Add(Me.Label1, 0, 6)
+        Me.TableLayoutPanel4.Controls.Add(Me.Label_SetKeyKill, 1, 1)
+        Me.TableLayoutPanel4.Controls.Add(Me.AddProccessKill_Button, 0, 3)
+        Me.TableLayoutPanel4.Controls.Add(Me.CheckBox_KillerThread, 0, 0)
+        Me.TableLayoutPanel4.Controls.Add(Me.SetKeyKill_Button, 0, 1)
+        Me.TableLayoutPanel4.Controls.Add(Me.Label_KillerThread, 1, 0)
+        Me.TableLayoutPanel4.Controls.Add(Me.ProcessKillerModKey_ComboBox, 0, 2)
+        Me.TableLayoutPanel4.Controls.Add(Me.RemoveProccessKill_Button, 0, 4)
+        Me.TableLayoutPanel4.Controls.Add(Me.ProccessKill_ListBox, 1, 4)
+        Me.TableLayoutPanel4.Controls.Add(Me.AddProccessKill_TextBox, 1, 3)
+        Me.TableLayoutPanel4.Controls.Add(Me.ProccessList_ListBox, 3, 0)
+        Me.TableLayoutPanel4.Controls.Add(Me.Label_ProcessKillerModKey, 1, 2)
+        Me.TableLayoutPanel4.Controls.Add(Me.Label4, 2, 3)
+        Me.TableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel4.Location = New System.Drawing.Point(0, 0)
+        Me.TableLayoutPanel4.Name = "TableLayoutPanel4"
+        Me.TableLayoutPanel4.RowCount = 7
+        Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40.0!))
+        Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel4.Size = New System.Drawing.Size(776, 285)
+        Me.TableLayoutPanel4.TabIndex = 3
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.TableLayoutPanel4.SetColumnSpan(Me.Label1, 4)
+        Me.Label1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Label1.Location = New System.Drawing.Point(3, 193)
+        Me.Label1.Margin = New System.Windows.Forms.Padding(3)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(770, 89)
+        Me.Label1.TabIndex = 13
+        Me.Label1.Text = resources.GetString("Label1.Text")
+        Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'Label_SetKeyKill
+        '
+        Me.Label_SetKeyKill.AutoSize = True
+        Me.Label_SetKeyKill.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Label_SetKeyKill.Location = New System.Drawing.Point(254, 33)
+        Me.Label_SetKeyKill.Margin = New System.Windows.Forms.Padding(3)
+        Me.Label_SetKeyKill.Name = "Label_SetKeyKill"
+        Me.Label_SetKeyKill.Size = New System.Drawing.Size(246, 24)
+        Me.Label_SetKeyKill.TabIndex = 7
+        Me.Label_SetKeyKill.Text = "Горячая клавиша не задана"
+        Me.Label_SetKeyKill.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'AddProccessKill_Button
+        '
+        Me.AddProccessKill_Button.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.AddProccessKill_Button.Location = New System.Drawing.Point(3, 93)
+        Me.AddProccessKill_Button.Name = "AddProccessKill_Button"
+        Me.AddProccessKill_Button.Size = New System.Drawing.Size(245, 24)
+        Me.AddProccessKill_Button.TabIndex = 4
+        Me.AddProccessKill_Button.Text = "Добавить процесс"
+        Me.AddProccessKill_Button.UseVisualStyleBackColor = True
+        '
+        'CheckBox_KillerThread
+        '
+        Me.CheckBox_KillerThread.AutoSize = True
+        Me.CheckBox_KillerThread.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.CheckBox_KillerThread.Location = New System.Drawing.Point(3, 3)
+        Me.CheckBox_KillerThread.Name = "CheckBox_KillerThread"
+        Me.CheckBox_KillerThread.Size = New System.Drawing.Size(245, 24)
+        Me.CheckBox_KillerThread.TabIndex = 3
+        Me.CheckBox_KillerThread.Text = "Включить Завершение процессов"
+        Me.CheckBox_KillerThread.UseVisualStyleBackColor = True
+        '
+        'SetKeyKill_Button
+        '
+        Me.SetKeyKill_Button.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SetKeyKill_Button.Location = New System.Drawing.Point(3, 33)
+        Me.SetKeyKill_Button.Name = "SetKeyKill_Button"
+        Me.SetKeyKill_Button.Size = New System.Drawing.Size(245, 24)
+        Me.SetKeyKill_Button.TabIndex = 1
+        Me.SetKeyKill_Button.Text = "Назначить горячую клавишу"
+        Me.SetKeyKill_Button.UseVisualStyleBackColor = True
+        '
+        'Label_KillerThread
+        '
+        Me.Label_KillerThread.AutoSize = True
+        Me.Label_KillerThread.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Label_KillerThread.Location = New System.Drawing.Point(254, 3)
+        Me.Label_KillerThread.Margin = New System.Windows.Forms.Padding(3)
+        Me.Label_KillerThread.Name = "Label_KillerThread"
+        Me.Label_KillerThread.Size = New System.Drawing.Size(246, 24)
+        Me.Label_KillerThread.TabIndex = 2
+        Me.Label_KillerThread.Text = "Функция выключена"
+        Me.Label_KillerThread.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'ProcessKillerModKey_ComboBox
+        '
+        Me.ProcessKillerModKey_ComboBox.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.ProcessKillerModKey_ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.ProcessKillerModKey_ComboBox.FormattingEnabled = True
+        Me.ProcessKillerModKey_ComboBox.Items.AddRange(New Object() {"Без модификатора", "Left ALT", "Left CTRL", "Left SHIFT", "Right ALT", "Right CTRL", "Right SHIFT"})
+        Me.ProcessKillerModKey_ComboBox.Location = New System.Drawing.Point(3, 63)
+        Me.ProcessKillerModKey_ComboBox.Name = "ProcessKillerModKey_ComboBox"
+        Me.ProcessKillerModKey_ComboBox.Size = New System.Drawing.Size(245, 21)
+        Me.ProcessKillerModKey_ComboBox.TabIndex = 6
+        '
+        'RemoveProccessKill_Button
+        '
+        Me.RemoveProccessKill_Button.Enabled = False
+        Me.RemoveProccessKill_Button.Location = New System.Drawing.Point(3, 123)
+        Me.RemoveProccessKill_Button.Name = "RemoveProccessKill_Button"
+        Me.RemoveProccessKill_Button.Size = New System.Drawing.Size(245, 24)
+        Me.RemoveProccessKill_Button.TabIndex = 5
+        Me.RemoveProccessKill_Button.Text = "Удалить процесс"
+        Me.RemoveProccessKill_Button.UseVisualStyleBackColor = True
+        '
+        'ProccessKill_ListBox
+        '
+        Me.ProccessKill_ListBox.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.ProccessKill_ListBox.FormattingEnabled = True
+        Me.ProccessKill_ListBox.IntegralHeight = False
+        Me.ProccessKill_ListBox.Location = New System.Drawing.Point(254, 123)
+        Me.ProccessKill_ListBox.Name = "ProccessKill_ListBox"
+        Me.TableLayoutPanel4.SetRowSpan(Me.ProccessKill_ListBox, 2)
+        Me.ProccessKill_ListBox.Size = New System.Drawing.Size(246, 64)
+        Me.ProccessKill_ListBox.TabIndex = 11
+        '
+        'AddProccessKill_TextBox
+        '
+        Me.AddProccessKill_TextBox.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.AddProccessKill_TextBox.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.AddProccessKill_TextBox.Location = New System.Drawing.Point(254, 94)
+        Me.AddProccessKill_TextBox.Margin = New System.Windows.Forms.Padding(3, 4, 3, 1)
+        Me.AddProccessKill_TextBox.Name = "AddProccessKill_TextBox"
+        Me.AddProccessKill_TextBox.Size = New System.Drawing.Size(246, 21)
+        Me.AddProccessKill_TextBox.TabIndex = 12
+        '
+        'ProccessList_ListBox
+        '
+        Me.ProccessList_ListBox.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.ProccessList_ListBox.FormattingEnabled = True
+        Me.ProccessList_ListBox.IntegralHeight = False
+        Me.ProccessList_ListBox.Location = New System.Drawing.Point(526, 3)
+        Me.ProccessList_ListBox.Name = "ProccessList_ListBox"
+        Me.TableLayoutPanel4.SetRowSpan(Me.ProccessList_ListBox, 6)
+        Me.ProccessList_ListBox.Size = New System.Drawing.Size(247, 184)
+        Me.ProccessList_ListBox.TabIndex = 14
+        '
+        'Label_ProcessKillerModKey
+        '
+        Me.Label_ProcessKillerModKey.AutoSize = True
+        Me.Label_ProcessKillerModKey.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Label_ProcessKillerModKey.Location = New System.Drawing.Point(254, 63)
+        Me.Label_ProcessKillerModKey.Margin = New System.Windows.Forms.Padding(3)
+        Me.Label_ProcessKillerModKey.Name = "Label_ProcessKillerModKey"
+        Me.Label_ProcessKillerModKey.Size = New System.Drawing.Size(246, 24)
+        Me.Label_ProcessKillerModKey.TabIndex = 8
+        Me.Label_ProcessKillerModKey.Text = "Клавиша модификатор не выбрана"
+        Me.Label_ProcessKillerModKey.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Label4.Location = New System.Drawing.Point(506, 93)
+        Me.Label4.Margin = New System.Windows.Forms.Padding(3)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(14, 24)
+        Me.Label4.TabIndex = 15
+        Me.Label4.Text = "<"
+        Me.Label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
         'TabPage_Debug
         '
         Me.TabPage_Debug.Controls.Add(Me.TableLayoutPanel2)
         Me.TabPage_Debug.Location = New System.Drawing.Point(4, 22)
         Me.TabPage_Debug.Name = "TabPage_Debug"
         Me.TabPage_Debug.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage_Debug.Size = New System.Drawing.Size(776, 235)
+        Me.TabPage_Debug.Size = New System.Drawing.Size(776, 285)
         Me.TabPage_Debug.TabIndex = 1
         Me.TabPage_Debug.Text = "Лог"
         Me.TabPage_Debug.UseVisualStyleBackColor = True
@@ -411,8 +633,19 @@ Partial Class MainForm
         Me.TableLayoutPanel2.RowCount = 2
         Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
-        Me.TableLayoutPanel2.Size = New System.Drawing.Size(770, 229)
+        Me.TableLayoutPanel2.Size = New System.Drawing.Size(770, 279)
         Me.TableLayoutPanel2.TabIndex = 0
+        '
+        'ClearLog_Button
+        '
+        Me.TableLayoutPanel2.SetColumnSpan(Me.ClearLog_Button, 2)
+        Me.ClearLog_Button.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.ClearLog_Button.Location = New System.Drawing.Point(3, 252)
+        Me.ClearLog_Button.Name = "ClearLog_Button"
+        Me.ClearLog_Button.Size = New System.Drawing.Size(764, 24)
+        Me.ClearLog_Button.TabIndex = 2
+        Me.ClearLog_Button.Text = "Очистить лог"
+        Me.ClearLog_Button.UseVisualStyleBackColor = True
         '
         'TextBox_Debug
         '
@@ -424,34 +657,23 @@ Partial Class MainForm
         Me.TextBox_Debug.Multiline = True
         Me.TextBox_Debug.Name = "TextBox_Debug"
         Me.TextBox_Debug.ScrollBars = System.Windows.Forms.ScrollBars.Both
-        Me.TextBox_Debug.Size = New System.Drawing.Size(764, 193)
+        Me.TextBox_Debug.Size = New System.Drawing.Size(764, 243)
         Me.TextBox_Debug.TabIndex = 0
         '
-        'Timer_Log
+        'Timer_UI
         '
-        Me.Timer_Log.Interval = 1000
-        '
-        'ClearLog_Button
-        '
-        Me.TableLayoutPanel2.SetColumnSpan(Me.ClearLog_Button, 2)
-        Me.ClearLog_Button.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.ClearLog_Button.Location = New System.Drawing.Point(3, 202)
-        Me.ClearLog_Button.Name = "ClearLog_Button"
-        Me.ClearLog_Button.Size = New System.Drawing.Size(764, 24)
-        Me.ClearLog_Button.TabIndex = 2
-        Me.ClearLog_Button.Text = "Очистить лог"
-        Me.ClearLog_Button.UseVisualStyleBackColor = True
+        Me.Timer_UI.Interval = 1000
         '
         'MainForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(784, 261)
+        Me.ClientSize = New System.Drawing.Size(784, 311)
         Me.Controls.Add(Me.TabControl)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
-        Me.MinimumSize = New System.Drawing.Size(800, 300)
+        Me.MinimumSize = New System.Drawing.Size(800, 350)
         Me.Name = "MainForm"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "StarCitizen Helper"
@@ -463,6 +685,9 @@ Partial Class MainForm
         Me.TabPage_Update.ResumeLayout(False)
         Me.TableLayoutPanel3.ResumeLayout(False)
         Me.TableLayoutPanel3.PerformLayout()
+        Me.TabPage_Killer.ResumeLayout(False)
+        Me.TableLayoutPanel4.ResumeLayout(False)
+        Me.TableLayoutPanel4.PerformLayout()
         Me.TabPage_Debug.ResumeLayout(False)
         Me.TableLayoutPanel2.ResumeLayout(False)
         Me.TableLayoutPanel2.PerformLayout()
@@ -488,7 +713,7 @@ Partial Class MainForm
     Friend WithEvents Label_SetStarCitizenExeFilePath As Label
     Friend WithEvents TableLayoutPanel2 As TableLayoutPanel
     Friend WithEvents TextBox_Debug As TextBox
-    Friend WithEvents Timer_Log As Timer
+    Friend WithEvents Timer_UI As Timer
     Friend WithEvents CheckBox_FileWatcher As CheckBox
     Friend WithEvents Label_FileWatcher As Label
     Friend WithEvents ModOn_Button As Button
@@ -506,4 +731,20 @@ Partial Class MainForm
     Friend WithEvents Update_ToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents InstallAll_ToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ClearLog_Button As Button
+    Friend WithEvents TabPage_Killer As TabPage
+    Friend WithEvents TableLayoutPanel4 As TableLayoutPanel
+    Friend WithEvents Label_ProcessKillerModKey As Label
+    Friend WithEvents Label_SetKeyKill As Label
+    Friend WithEvents RemoveProccessKill_Button As Button
+    Friend WithEvents AddProccessKill_Button As Button
+    Friend WithEvents CheckBox_KillerThread As CheckBox
+    Friend WithEvents SetKeyKill_Button As Button
+    Friend WithEvents Label_KillerThread As Label
+    Friend WithEvents ProcessKillerModKey_ComboBox As ComboBox
+    Friend WithEvents Label_ModInfo As Label
+    Friend WithEvents ProccessKill_ListBox As ListBox
+    Friend WithEvents AddProccessKill_TextBox As TextBox
+    Friend WithEvents Label1 As Label
+    Friend WithEvents ProccessList_ListBox As ListBox
+    Friend WithEvents Label4 As Label
 End Class

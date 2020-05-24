@@ -138,11 +138,13 @@
     <Compile Include="Module_FILE.vb" />
     <Compile Include="Module_HELPER.vb" />
     <Compile Include="Module_INI.vb" />
+    <Compile Include="Module_KEYS.vb" />
     <Compile Include="Module_LOG.vb" />
     <Compile Include="Module_MAIN.vb" />
     <Compile Include="Module_NET.vb" />
     <Compile Include="Module_PARSE.vb" />
     <Compile Include="Module_PATCH.vb" />
+    <Compile Include="Module_PROCESSES.vb" />
     <Compile Include="Module_THREAD.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -193,6 +195,10 @@
     <None Include="StarCitizen Helper_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\mouse_click.wav" />
+    <None Include="Resources\core_fix.wav" />
+    <None Include="Resources\disabled.wav" />
+    <None Include="Resources\process_kill.wav" />
     <Content Include="Shin0by soft.ico" />
   </ItemGroup>
   <ItemGroup>

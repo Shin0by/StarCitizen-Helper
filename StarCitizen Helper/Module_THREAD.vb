@@ -5,7 +5,6 @@ Module Module_THREAD
     Public Class Class_THREAD_WATCHFILE
         Dim WATCH_FILE As Thread
         Private MyParent As MainForm
-        Dim ExecuteString As String
         Private WatchList As New Class_WatcherList
         Private bPushFiles As Boolean = False
         Public LogFlag As Byte = 0
@@ -25,7 +24,7 @@ Module Module_THREAD
             MyParent = Parent
         End Sub
 
-        Sub start_thread()
+        Public Sub StartThread()
             WATCH_FILE = New Thread(AddressOf ThreadTask)
             WATCH_FILE.IsBackground = True
             WATCH_FILE.Start()
@@ -33,7 +32,7 @@ Module Module_THREAD
 
         Public Sub ThreadTask()
             Do
-                If MAIN_THREAD.CheckBox_FileWatcher.Checked = True Then
+                If _VARS.FileWatcher = True Then
                     AddFilesToWatcher()
                     Me.WatchFile()
                 End If
