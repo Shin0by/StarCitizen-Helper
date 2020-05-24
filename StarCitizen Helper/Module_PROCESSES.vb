@@ -15,10 +15,10 @@
             For Each line In Process.GetProcesses
                 Flag = True
                 If FullMatch = False Then
-                    If InStr(line.ProcessName, SubName) = 1 Then
+                    If InStr(LCase(line.ProcessName), LCase(SubName)) = 1 Then
                         If OnlyUniqName = True Then
                             For Each subLine In result
-                                If subLine.ProcessName = line.ProcessName Then
+                                If LCase(subLine.ProcessName) = LCase(line.ProcessName) Then
                                     Flag = False
                                 End If
                             Next
@@ -32,7 +32,7 @@
                     If LCase(line.ProcessName) = LCase(SubName) Then
                         If OnlyUniqName = True Then
                             For Each subLine In result
-                                If subLine.ProcessName = line.ProcessName Then
+                                If LCase(subLine.ProcessName) = LCase(line.ProcessName) Then
                                     Flag = False
                                 End If
                             Next
