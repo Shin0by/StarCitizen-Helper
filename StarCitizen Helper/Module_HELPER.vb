@@ -22,6 +22,11 @@ WriteBlock: IO.File.Create(_APP.configFullPath).Dispose()
             _INI._Write("CONFIGURATION", "PKILLER_MOD", 0)
             _INI._Write("CONFIGURATION", "PKILLER_LIST", "")
 
+            'Profiles
+            _INI._Write("EXTERNAL", "PROFILES_PROCESS_KILL_ENABLED", 1)
+            _INI._Write("EXTERNAL", "PROFILES_PROCESS_NAME_GAME", "starcitizen")
+            _INI._Write("EXTERNAL", "PROFILES_PROCESS_NAME_LAUNCHER", "RSI Launcher")
+
             'GIT
             _INI._Write("EXTERNAL", "PACK_GIT_ZIP", _VARS.PackageZipURL)
             _INI._Write("EXTERNAL", "PACK_GIT_PAGE", _VARS.PackageGitURL)
@@ -47,7 +52,7 @@ ReadBlock: _VARS.ConfigFileIsOK = True
         If _VARS.GameExeFilePath IsNot Nothing Then
             Dim fo As ResultClass = _FILE._GetInfo(_VARS.GameExeFilePath)
             If fo.Err.Flag = True Or fo.ValueObject Is Nothing Then
-                _LOG._Add("CONFIG_FILE", "Ошибка при доступе к файлу", fo.LogList(_VARS.GameExeFilePath), 1)
+                _LOG._Add("CONFIG_FILE", "Ошибка при доступе к файлу", fo.LogList(_VARS.GameExeFilePath), 2)
             Else
                 _VARS.GameRootFolder = fo.ValueObject.Directory.Parent.FullName
             End If
@@ -62,6 +67,10 @@ ReadBlock: _VARS.ConfigFileIsOK = True
         _VARS.PKillerKeyID = _INI._GET_VALUE("CONFIGURATION", "PKILLER_KEY", 0).Value
         _VARS.PKillerKeyMod = _INI._GET_VALUE("CONFIGURATION", "PKILLER_MOD", 0, {"0", "1", "2", "3", "4", "5", "6", "7"}).Value
 
+        'Profiles
+        _VARS.GameProcessKillerEnabled = StringToBool(_INI._GET_VALUE("EXTERNAL", "PROFILES_PROCESS_KILL_ENABLED", True, {"0", "1"}).Value)
+        _VARS.GameProcessMain = _INI._GET_VALUE("EXTERNAL", "PROFILES_PROCESS_NAME_GAME", Nothing).Value
+        _VARS.GameProcessLauncher = _INI._GET_VALUE("EXTERNAL", "PROFILES_PROCESS_NAME_LAUNCHER", Nothing).Value
     End Sub
 
     Public Function StringToBool(Value As String) As Boolean
@@ -78,6 +87,55 @@ ReadBlock: _VARS.ConfigFileIsOK = True
     Public Function BoolToString(Value As Boolean) As String
         If Value = True Then Return "1"
         Return "0"
+    End Function
+
+    Public Function RenameLIVEFolder(Optional OnlyCheck As Boolean = True) As ResultClass
+        MAIN_THREAD.Button_ToLIVE.Enabled = False
+        MAIN_THREAD.Button_ToPTU.Enabled = False
+        Dim result As ResultClass = _FILE._GetInfo(_VARS.GameExeFilePath)
+        result.ValueLong = 0
+        Dim File As IO.FileInfo = Nothing
+        Dim rightPath As String = Nothing
+        Dim leftPath As String = Nothing
+
+        If result.Err.Flag = False Then
+            File = CType(result.ValueObject, IO.FileInfo)
+            rightPath = File.Directory.Name & "\" & _VARS.GameExeFileName
+            If UCase(File.Directory.Parent.Name) = "LIVE" Then
+                result.ValueLong = 1
+                result.ValueString = "PTU"
+            ElseIf UCase(File.Directory.Parent.Name) = "PTU" Then
+                result.ValueLong = 2
+                result.ValueString = "LIVE"
+            Else
+                result.ValueLong = 0
+            End If
+        End If
+
+        Dim EnableControls As Long = result.ValueLong
+
+        If result.ValueLong >= 1 Then
+            If OnlyCheck = False Then
+                result = _FILE._RenameDirectory(File.Directory.Parent.FullName, result.ValueString)
+                If result.Err.Flag = True Then
+                    _LOG._Add("LIVE-PTU", "Ошибка при переименовании папки игры", result.LogList(), 1, result.Err.Number)
+                Else
+                    _LOG._sAdd("LIVE-PTU", "Папка игры успешно переименована", File.Directory.Parent.FullName & " -> " & result.ValueString, 2, 0)
+                    result.ValueString = _HELPER_PATCH.SetGameExeFilePath(_FILE._CombinePath(result.ValueString, rightPath))
+                End If
+            End If
+        End If
+
+        If OnlyCheck = True Then
+            If EnableControls = 1 And result.ValueString IsNot Nothing Then MAIN_THREAD.Button_ToPTU.Enabled = True
+            If EnableControls = 2 And result.ValueString IsNot Nothing Then MAIN_THREAD.Button_ToLIVE.Enabled = True
+        Else
+            If EnableControls = 2 And result.ValueString IsNot Nothing Then MAIN_THREAD.Button_ToPTU.Enabled = True
+            If EnableControls = 1 And result.ValueString IsNot Nothing Then MAIN_THREAD.Button_ToLIVE.Enabled = True
+        End If
+
+
+        Return result
     End Function
 
     Public Function KeyModifierListToKeys(SelectedIndex As Integer) As Keys
@@ -103,43 +161,56 @@ ReadBlock: _VARS.ConfigFileIsOK = True
         Return result
     End Function
 
-    Public Function ProccessKill_ListBox_Update(ListBox As ListBox, LoadTrue_SaveFalse As Boolean) As Integer
+    Public Function ProccessKill_CheckedListBox_Update(CheckedListBox As CheckedListBox, LoadTrue_SaveFalse As Boolean) As Integer
         Dim temp As String = Nothing
         If LoadTrue_SaveFalse = True Then
-            ListBox.Items.Clear()
+            CheckedListBox.Items.Clear()
             temp = _INI._GET_VALUE("CONFIGURATION", "PKILLER_LIST", Nothing).Value
             If temp IsNot Nothing Then
+                Dim subElem As String()
                 For Each elem In Split(temp, ",")
-                    elem = Trim(elem)
-                    ListBox.Items.Add(elem.ToString)
+                    subElem = Split(Trim(elem), ":")
+                    If subElem.Count = 2 Then
+                        If StringToBool(subElem(0)) = True Then
+                            CheckedListBox.Items.Add(subElem(1), True)
+                        Else
+                            CheckedListBox.Items.Add(subElem(1), False)
+                        End If
+                    End If
                 Next
             End If
         Else
-            If ListBox.Items.Count > 0 Then
-                For Each elem In ListBox.Items
+            If CheckedListBox.Items.Count > 0 Then
+                Dim index As Integer = 0
+                Dim State As String = "0"
+                For Each elem In CheckedListBox.Items
+                    State = "0"
+                    index = CheckedListBox.Items.IndexOf(elem)
+                    If CheckedListBox.GetItemCheckState(index) = 1 Then State = "1"
                     If temp = Nothing Then
-                        temp = elem.ToString
+                        temp = State & ":" & elem.ToString
                     Else
-                        temp += "," & elem.ToString
+                        temp += "," & State & ":" & elem.ToString
                     End If
                 Next
                 _INI._Write("CONFIGURATION", "PKILLER_LIST", temp)
             End If
         End If
-        Return ListBox.Items.Count
+        Return CheckedListBox.Items.Count
     End Function
 
     Class Class_HelperPatch
-        Public Function SetGameExeFilePath() As String
-            If _VARS.ConfigFileIsOK = False Then
-                _VARS.GameExeFilePath = Nothing
-                Return Nothing
-            End If
-
-            Dim Path As String = SelectFile("Файл игры |" & _VARS.GameExeFileName & "|Exe (*.exe)|*.exe" & "|Все файлы (*.*)|*.*")
-            If Path Is Nothing Then
-                '_VARS.GameExeFilePath = Nothing
-                Return Nothing
+        Public Function SetGameExeFilePath(Optional ExPath As String = Nothing) As String
+            Dim Path As String = Nothing
+            If ExPath Is Nothing Then
+                If _VARS.ConfigFileIsOK = False Then
+                    _VARS.GameExeFilePath = Nothing
+                    Return Nothing
+                End If
+                Path = SelectFile("Файл игры |" & _VARS.GameExeFileName & "|Exe (*.exe)|*.exe" & "|Все файлы (*.*)|*.*")
+                If Path Is Nothing Then Return Nothing
+            Else
+                Path = ExPath
             End If
 
             If _INI._Write("EXTERNAL", "EXE_PATH", Path) = False Then
@@ -168,9 +239,10 @@ ReadBlock: _VARS.ConfigFileIsOK = True
             result.LogFlag = LogFlag
             If _VARS.GameExeFilePath IsNot Nothing Then
                 If _FILE._FileExits(_VARS.GameExeFilePath) Then
-                    If _INI._GET_VALUE("EXTERNAL", "BLOCK1", Nothing).Value IsNot Nothing And _INI._GET_VALUE("EXTERNAL", "BLOCK2", Nothing).Value IsNot Nothing Then
+                    If _INI._GET_VALUE("EXTERNAL", "BLOCK1", Nothing).Value IsNot Nothing Or _INI._GET_VALUE("EXTERNAL", "BLOCK2", Nothing).Value IsNot Nothing Then
                         result = _PATCH.Patch(_VARS.GameExeFilePath, _INI._GET_VALUE("EXTERNAL", "BLOCK1", Nothing).Value, _INI._GET_VALUE("EXTERNAL", "BLOCK2", Nothing).Value, True)
                     Else
+                        result.Result.Err.Flag = True
                         result.Result.Err.Description = "В файле конфигурации " & _APP.configName & " отсутствуют значения [BLOCK1, BLOCK2]"
                     End If
                 Else

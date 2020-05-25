@@ -37,6 +37,7 @@ Public Class MainForm
     Public Sub UpdateInterface()
         Button_SetStarCitizenExeFilePath.Enabled = _VARS.ConfigFileIsOK
         UpdateGameExeFileStatus()
+        RenameLIVEFolder()
 
         'Patcher
         If _VARS.GameExeFilePath Is Nothing Then
@@ -52,6 +53,7 @@ Public Class MainForm
 
         'PKIller
         Me.CheckBox_KillerThread.Checked = _VARS.PKillerEnabled
+        Me.KillerThread_ToolStripMenuItem.Checked = _VARS.PKillerEnabled
         Me.ProcessKillerModKey_ComboBox.SelectedIndex = _VARS.PKillerKeyMod
         If _VARS.PKillerKeyID = 0 Then
             Me.Label_SetKeyKill.Text = "Клавиша модификатор не задана"
@@ -59,7 +61,7 @@ Public Class MainForm
             Me.Label_ProcessKillerModKey.Text = "Имя клавиши: " & Chr(34) & _KEYS._GetKeyNameByID(KeyModifierListToKeys(Me.ProcessKillerModKey_ComboBox.SelectedIndex)) & Chr(34) & vbNewLine & "ID клавиши: " & KeyModifierListToKeys(Me.ProcessKillerModKey_ComboBox.SelectedIndex)
         End If
 
-        If ProccessKill_ListBox_Update(Me.ProccessKill_ListBox, True) > 0 Then Me.RemoveProccessKill_Button.Enabled = True
+        If ProccessKill_CheckedListBox_Update(Me.ProccessKill_CheckedListBox, True) > 0 Then Me.RemoveProccessKill_Button.Enabled = True
         If _VARS.PKillerKeyID = 0 Then
             Me.Label_SetKeyKill.Text = "Горячая клавиша не задана"
         Else
@@ -67,6 +69,8 @@ Public Class MainForm
             _KEYS._Add(_VARS.PKillerKeyID, KeyModifierListToKeys(ProcessKillerModKey_ComboBox.SelectedIndex), "KillProcess", _VARS.PKillerKeyID)
         End If
 
+        'Profiles
+        Me.CheckBox_BeforeKillProcess.Checked = _VARS.GameProcessKillerEnabled
 
     End Sub
 
@@ -75,6 +79,8 @@ Public Class MainForm
         Me.ModOn_Button.Enabled = False
         Me.ModOff_Button.Enabled = False
         Me.ModScan_Button.Enabled = False
+        Me.ModOn_ToolStripMenuItem.Enabled = False
+        Me.ModOff_ToolStripMenuItem.Enabled = False
         Me.Patch_ToolStripMenuItem.Text = "Модификация (Неизв.)"
 
         If _VARS.GameExeFileStatus.Result.Err.Flag = False Then
@@ -101,12 +107,13 @@ Public Class MainForm
             End If
             _LOG._sAdd("WINDOW_FORM", "Результат проверки:", Me.Patch_ToolStripMenuItem.Text, 2)
         Else
-            If _VARS.GameExeFilePath Is Nothing Or _VARS.GameExeFileStatus.Result.Err.Number = 0 Then
+            If _VARS.GameExeFilePath Is Nothing And _VARS.GameExeFileStatus.Result.Err.Number = 0 Then
                 _LOG._Add("WINDOW_FORM", "Ошибка при проверке доступности файла игры", _VARS.GameExeFileStatus.Result.LogList("Требуется указать путь к файлу игры" & vbNewLine & "Раздел [Модификация] кнопка [Исполняемый файл]" & vbNewLine & "Укажите путь к фалу [" & _VARS.GameExeFileName & "]"), 0, _VARS.GameExeFileStatus.Result.Err.Number)
             Else
-                _LOG._Add("WINDOW_FORM", "Ошибка при проверке доступности файла игры", _VARS.GameExeFileStatus.Result.LogList(_VARS.GameExeFilePath), 1, _VARS.GameExeFileStatus.Result.Err.Number)
+                If _VARS.GameExeFileStatus.Result.Err.Number <> 57 Then
+                    _LOG._Add("WINDOW_FORM", "Ошибка при проверке файла игры", _VARS.GameExeFileStatus.Result.LogList(_VARS.GameExeFilePath), 1, _VARS.GameExeFileStatus.Result.Err.Number)
+                End If
             End If
-
         End If
         Me.ModScan_Button.Enabled = True
         Me.ContextMenuStrip1.Enabled = True
@@ -133,7 +140,6 @@ Public Class MainForm
             Me.TextBox_Debug.ScrollToCaret()
             '_LOG.Write = False
         End If
-
 
     End Sub
 
@@ -233,6 +239,7 @@ Fin:    Me.InstallAll_Button.Enabled = True
         End If
 
         _VARS.PKillerEnabled = Me.CheckBox_KillerThread.Checked
+        KillerThread_ToolStripMenuItem.Checked = _VARS.PKillerEnabled
         _INI._Write("CONFIGURATION", "PKILLER_ENABLED", BoolToString(_VARS.PKillerEnabled))
     End Sub
 
@@ -240,13 +247,13 @@ Fin:    Me.InstallAll_Button.Enabled = True
 
 
     Private Sub RemoveProccessKill_Button_Click(sender As Object, e As EventArgs) Handles RemoveProccessKill_Button.Click
-        If Me.ProccessKill_ListBox.SelectedIndex = -1 Then
+        If Me.ProccessKill_CheckedListBox.SelectedIndex = -1 Then
             _LOG._sAdd("WINDOW_FORM", "Требуется выбрать имя процесса")
             Exit Sub
         End If
-        Me.ProccessKill_ListBox.Items.RemoveAt(ProccessKill_ListBox.SelectedIndex)
-        If ProccessKill_ListBox.Items.Count = 0 Then RemoveProccessKill_Button.Enabled = False
-        ProccessKill_ListBox_Update(ProccessKill_ListBox, False)
+        Me.ProccessKill_CheckedListBox.Items.RemoveAt(ProccessKill_CheckedListBox.SelectedIndex)
+        If ProccessKill_CheckedListBox.Items.Count = 0 Then RemoveProccessKill_Button.Enabled = False
+        ProccessKill_CheckedListBox_Update(ProccessKill_CheckedListBox, False)
     End Sub
 
     Private Sub AddProccessKill_TextBox_TextChanged(sender As Object, e As EventArgs) Handles AddProccessKill_TextBox.TextChanged
@@ -271,16 +278,16 @@ Fin:    Me.InstallAll_Button.Enabled = True
             _LOG._sAdd("WINDOW_FORM", "Требуется указать имя процесса")
             Exit Sub
         End If
-        For Each line In Me.ProccessKill_ListBox.Items
+        For Each line In Me.ProccessKill_CheckedListBox.Items
             If LCase(line) = LCase(AddProccessKill_TextBox.Text) Then
                 _LOG._sAdd("WINDOW_FORM", "Указанный процесс уже в списке")
                 Exit Sub
             End If
         Next
-        Me.ProccessKill_ListBox.Items.Add(AddProccessKill_TextBox.Text)
+        Me.ProccessKill_CheckedListBox.Items.Add(AddProccessKill_TextBox.Text)
         Me.AddProccessKill_TextBox.Text = Nothing
         Me.RemoveProccessKill_Button.Enabled = True
-        ProccessKill_ListBox_Update(ProccessKill_ListBox, False)
+        ProccessKill_CheckedListBox_Update(ProccessKill_CheckedListBox, False)
     End Sub
 
     Private Sub SetKeyKill_Button_Click(sender As Object, e As EventArgs) Handles SetKeyKill_Button.Click
@@ -305,5 +312,44 @@ Fin:    Me.InstallAll_Button.Enabled = True
         _KEYS._Clear()
         _KEYS._Add(_VARS.PKillerKeyID, KeyModifierListToKeys(Me.ProcessKillerModKey_ComboBox.SelectedIndex), "KillProcess", _VARS.PKillerKeyID)
         _INI._Write("CONFIGURATION", "PKILLER_MOD", _VARS.PKillerKeyMod)
+    End Sub
+
+    Private Sub ProccessKill_CheckedListBox_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ProccessKill_CheckedListBox.SelectedIndexChanged
+        ProccessKill_CheckedListBox_Update(ProccessKill_CheckedListBox, False)
+    End Sub
+
+    Private Sub KillerThread_ToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles KillerThread_ToolStripMenuItem.Click
+        If _VARS.PKillerEnabled = True Then
+            _VARS.PKillerEnabled = False
+        Else
+            _VARS.PKillerEnabled = True
+        End If
+        Me.CheckBox_KillerThread.Checked = _VARS.PKillerEnabled
+        Me.KillerThread_ToolStripMenuItem.Checked = _VARS.PKillerEnabled
+    End Sub
+
+    Private Sub PKill_ToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PKill_ToolStripMenuItem.Click
+
+    End Sub
+
+    Private Sub KillProcesses_ToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles KillProcesses_ToolStripMenuItem.Click
+        _KEYS._ForceClick(_VARS.PKillerKeyID)
+    End Sub
+
+    Private Sub Button_ToLIVE_Click(sender As Object, e As EventArgs) Handles Button_ToLIVE.Click
+        If _VARS.GameProcessMain IsNot Nothing Then _PROCESS._Kill(_VARS.GameProcessMain, False, True)
+        If _VARS.GameProcessLauncher IsNot Nothing Then _PROCESS._Kill(_VARS.GameProcessLauncher, False, True)
+        RenameLIVEFolder(False)
+    End Sub
+
+    Private Sub Button_ToPTU_Click(sender As Object, e As EventArgs) Handles Button_ToPTU.Click
+        If _VARS.GameProcessMain IsNot Nothing Then _PROCESS._Kill(_VARS.GameProcessMain, False, True)
+        If _VARS.GameProcessLauncher IsNot Nothing Then _PROCESS._Kill(_VARS.GameProcessLauncher, False, True)
+        RenameLIVEFolder(False)
+    End Sub
+
+    Private Sub CheckBox_BeforeKillProcess_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox_BeforeKillProcess.CheckedChanged
+        _VARS.GameProcessKillerEnabled = Me.CheckBox_BeforeKillProcess.Checked
+        _INI._Write("EXTERNAL", "PROFILES_PROCESS_KILL_ENABLED", BoolToString(_VARS.GameProcessKillerEnabled))
     End Sub
 End Class

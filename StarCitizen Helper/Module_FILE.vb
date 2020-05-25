@@ -7,12 +7,27 @@ Module Module_FILE
         Public WATCHER As New Class_WatcherList
         Public ZIP As New Class_ZIP
 
+        Public Function UsedByProcess(Path As String) As Boolean
+            Try
+                Using temp As New IO.FileStream(Path, FileMode.Open, FileAccess.ReadWrite, FileShare.None)
+                End Using
+            Catch Ex As Exception
+                Return True
+            End Try
+            Return False
+        End Function
+
         Public Function _GetInfo(Path As String) As ResultClass
             Dim result As New ResultClass
             Try
                 Dim File As New IO.FileInfo(Path)
-                If Me._FileExits(Path) = False Then Return Nothing
-                result.ValueObject = CType(My.Computer.FileSystem.GetFileInfo(Path), FileInfo)
+                If Me._FileExits(Path) = False Then
+                    result.ValueBoolean = False
+                    result.ValueObject = Nothing
+                    Return result
+                End If
+                result.ValueBoolean = True
+                result.ValueObject = My.Computer.FileSystem.GetFileInfo(Path)
             Catch
                 result.Err.Description = Err.Description
                 result.Err.Number = Err.Number
@@ -85,6 +100,26 @@ Module Module_FILE
                 Return False
             End Try
         End Function
+
+        Public Function _RenameDirectory(Source As String, Destination As String) As ResultClass
+            Dim result As New ResultClass
+            Try
+                My.Computer.FileSystem.RenameDirectory(Source, Destination)
+                result.ValueString = _FILE._CombinePath(New FileInfo(Source).Directory.FullName, Destination)
+                result.ValueBoolean = True
+            Catch
+                result.ValueBoolean = False
+                result.Err.Flag = True
+                result.Err.Description = Err.Description
+                result.Err.Number = Err.Number
+            End Try
+            Return result
+        End Function
+
+        Public Function _CombinePath(ParamArray Path As String()) As String
+            Return IO.Path.Combine(Path)
+        End Function
+
 
         Public Function CreateFolder(sPath) As String
             Try

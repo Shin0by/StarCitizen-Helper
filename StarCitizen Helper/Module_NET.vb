@@ -63,7 +63,7 @@ Module Module_NET
                 End If
 
                 fo = _FILE._GetInfo(sPath)
-                If CType(fo.ValueObject, FileInfo).Length <> content.Length Then
+                If CType(fo.ValueObject, IO.FileInfo).Length <> content.Length Then
                     result.Err.Description = "Неверен размер загруженного файла " & Chr(34) & sPath & Chr(34)
                     Return result
                 End If

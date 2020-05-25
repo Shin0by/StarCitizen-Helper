@@ -36,16 +36,16 @@ Module Module_THREAD
                     AddFilesToWatcher()
                     Me.WatchFile()
                 End If
-Execute:        Thread.Sleep(10000)
+Execute:        Thread.Sleep(3000)
             Loop
         End Sub
 
         Private Sub WatchFile()
             If _VARS.GameExeFilePath Is Nothing Then Exit Sub
-            Dim List As List(Of IO.FileInfo) = WatchList._List
+            Dim List As List(Of FileInfo) = WatchList._List
             For i = 0 To List.Count - 1
-                Dim before As IO.FileInfo = WatchList._Get(List(i).FullName)
-                Dim after As IO.FileInfo = WatchList._Update(List(i).FullName)
+                Dim before As FileInfo = WatchList._Get(List(i).FullName)
+                Dim after As FileInfo = WatchList._Update(List(i).FullName)
 
                 If before Is Nothing Then Continue For
 
@@ -59,6 +59,14 @@ Execute:        Thread.Sleep(10000)
                 If before.LastWriteTime <> after.LastWriteTime Then
                     _LOG._sAdd("WATCHER", "Отслеживаемый файл был изменен", before.FullName, Me.LogFlag)
                     Me.LogFlag = 0
+                End If
+
+                If _VARS.GameExeFileStatus.UsedAppProcess = False Then
+                    If _FILE.UsedByProcess(List(i).FullName) = True Then
+                        _VARS.GameExeFileStatus.UsedAnotherProcess = True
+                    Else
+                        _VARS.GameExeFileStatus.UsedAnotherProcess = False
+                    End If
                 End If
             Next
         End Sub

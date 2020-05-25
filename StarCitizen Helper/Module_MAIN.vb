@@ -45,7 +45,7 @@ Module Module_MAIN
 
         _WATCHFILE_THREAD = New Class_THREAD_WATCHFILE(MAIN_THREAD)
         _WATCHFILE_THREAD.StartThread()
-        _WATCHFILE_THREAD.PushWatchFiles = True
+        '_WATCHFILE_THREAD.PushWatchFiles = True
 
         _HELPER_PATCH.CheckHexToExe(3)
         MAIN_THREAD.UpdateInterface()
@@ -154,6 +154,7 @@ Module Module_MAIN
         Public GameRootFolder As String = Nothing
         Public GameExeFileStatus As New Class_PATCH.Class_PatchResult
         Public GameExeFileCopyPref As String = ".bak"
+
         Public BLOCK1 As String = Nothing
         Public BLOCK2 As String = Nothing
         Private sGameExeFileName As String = Nothing
@@ -171,6 +172,11 @@ Module Module_MAIN
         Public PKillerEnabled As Boolean = False
         Public PKillerKeyID As Integer = 0
         Public PKillerKeyMod As Integer = 0
+
+        'Profiles
+        Public GameProcessKillerEnabled As Boolean = False
+        Public GameProcessMain As String = Nothing
+        Public GameProcessLauncher As String = Nothing
 
 
         Public Property GameExeFileName As String

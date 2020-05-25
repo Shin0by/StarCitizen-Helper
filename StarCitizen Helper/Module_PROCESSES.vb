@@ -48,8 +48,8 @@
             Return result
         End Function
 
-        Public Sub _Kill(Name As String)
-            Dim pList As List(Of Process) = Me._Get(Name, True, True)
+        Public Sub _Kill(Name As String, Optional OnlyUniqName As Boolean = True, Optional FullMatch As Boolean = False)
+            Dim pList As List(Of Process) = Me._Get(Name, OnlyUniqName, FullMatch)
             For Each Process In pList
                 Process.Kill()
                 _LOG._sAdd("_PROCESSES._Kill()", "Завершение процесса", Process.ProcessName, 2)

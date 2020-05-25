@@ -58,6 +58,18 @@ Module Module_KEYS
             Me.Locker = Nothing
         End Sub
 
+        Public Sub _ForceClick(KeyID As Integer)
+            If Me.data.Count = 0 Then Exit Sub
+            Me._CheckWrite("_KEYS._ForceClick()")
+            For i = 0 To Me.data.Count - 1
+                If Me.data(i).ID = KeyID Then
+                    Me.data(i).ForceClick = True
+                    Exit For
+                End If
+            Next
+            Me.Locker = Nothing
+        End Sub
+
         Friend Class Class_KEY
             Public iID As Integer = 0
             Public Clicked As Boolean = False  'True - If Click complete
@@ -70,6 +82,7 @@ Module Module_KEYS
             Public KeyName As String = Nothing
             Friend oModifier As New Class_KEY_Modifier
             Private oModifiers As Keys() = {Keys.LMenu, Keys.RMenu, Keys.LControlKey, Keys.RControlKey, Keys.LShiftKey, Keys.RShiftKey}
+            Public ForceClick As Boolean = False
 
             Public Property ID() As Integer
                 Get
@@ -167,7 +180,8 @@ Module Module_KEYS
 
 
 
-                If Key.Clicked = True Then
+                If Key.Clicked = True Or Key.ForceClick = True Then
+                    Key.ForceClick = False
                     Console.WriteLine("_KEYS._Update(): " & Key.ID & ", Modifier: " & Key.oModifier.StateNow & ", " & Date.Now)
                     If Me.SetNewInProgress = False Then
                         Key.Clicked = False
@@ -236,13 +250,20 @@ Fin:        If Err.Number > 0 Then
         End Property
 
         Class Class_KeyHandlers
+            Function SendKey(Key As Keys) As Object
+                SendKeys.SendWait(_KEYS._GetKeyNameByID(Key))
+                Return True
+            End Function
+
             Function KillProcess(Value As String) As Object
                 On Error GoTo fin
                 Dim result As Boolean = False
-                If MAIN_THREAD.ProccessKill_ListBox.Items.Count = 0 Then Return result
+                If MAIN_THREAD.ProccessKill_CheckedListBox.Items.Count = 0 Then Return result
                 My.Computer.Audio.Play(My.Resources.process_kill, AudioPlayMode.Background)
-                For Each elem In MAIN_THREAD.ProccessKill_ListBox.Items
-                    If Len(Trim(elem.ToString)) > 0 Then _PROCESS._Kill(elem.ToString)
+                For Each elem In MAIN_THREAD.ProccessKill_CheckedListBox.Items
+                    If MAIN_THREAD.ProccessKill_CheckedListBox.GetItemCheckState(MAIN_THREAD.ProccessKill_CheckedListBox.Items.IndexOf(elem)) = 1 Then
+                        If Len(Trim(elem.ToString)) > 0 Then _PROCESS._Kill(elem.ToString)
+                    End If
                 Next
 fin:            Return result
             End Function

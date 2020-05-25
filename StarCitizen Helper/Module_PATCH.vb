@@ -11,6 +11,8 @@ Module Module_PATCH
             Public Result As New ResultClass
             Public LogFlag As Byte = 2
             Public ChangedOutside As Boolean = False
+            Public UsedAnotherProcess As Boolean = False
+            Public UsedAppProcess As Boolean = False
         End Class
 
         Public Function Patch(sPath As String, sHexSearch As String, sHexReplacement As String, Optional OnlySearch As Boolean = False) As Class_PatchResult
@@ -20,8 +22,8 @@ Module Module_PATCH
             Else
                 _LOG._sAdd("PATCHER", "Модифицирование файла " & sPath, "HEX_BLOCK1: [" & sHexSearch & "]" & vbNewLine & "HEX_BLOCK2: [" & sHexReplacement & "]", 2)
             End If
-
             Try
+                result.UsedAppProcess = True
                 Dim FileBytes() As System.Byte
                 Dim FS As New System.IO.FileStream(sPath, System.IO.FileMode.Open)
                 Dim BR As New System.IO.BinaryReader(FS)
@@ -36,6 +38,7 @@ Module Module_PATCH
                 If ByteArraySearch(FileBytes, ReplacementBytes) = -1 Then result.Found_BLOCK2 = False
                 If OnlySearch = True Then
                     result.PatchResult = False
+                    result.UsedAppProcess = False
                     Return result
                 End If
 
@@ -52,6 +55,7 @@ Module Module_PATCH
                 result.Result.Err.Number = Err.Number
                 result.PatchResult = False
             End Try
+            result.UsedAppProcess = False
             Return result
         End Function
 

@@ -30,6 +30,10 @@ Partial Class MainForm
         Me.ModOff_ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.Update_ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.InstallAll_ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.PKill_ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.KillerThread_ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripSeparator3 = New System.Windows.Forms.ToolStripSeparator()
+        Me.KillProcesses_ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator()
         Me.ShowWinToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
@@ -66,16 +70,24 @@ Partial Class MainForm
         Me.Label_KillerThread = New System.Windows.Forms.Label()
         Me.ProcessKillerModKey_ComboBox = New System.Windows.Forms.ComboBox()
         Me.RemoveProccessKill_Button = New System.Windows.Forms.Button()
-        Me.ProccessKill_ListBox = New System.Windows.Forms.ListBox()
         Me.AddProccessKill_TextBox = New System.Windows.Forms.TextBox()
         Me.ProccessList_ListBox = New System.Windows.Forms.ListBox()
         Me.Label_ProcessKillerModKey = New System.Windows.Forms.Label()
         Me.Label4 = New System.Windows.Forms.Label()
+        Me.ProccessKill_CheckedListBox = New System.Windows.Forms.CheckedListBox()
+        Me.TabPage_GameProfiles = New System.Windows.Forms.TabPage()
+        Me.TableLayoutPanel5 = New System.Windows.Forms.TableLayoutPanel()
+        Me.Button_ToPTU = New System.Windows.Forms.Button()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.Label_BeforeKillProcess = New System.Windows.Forms.Label()
+        Me.Button_ToLIVE = New System.Windows.Forms.Button()
+        Me.Label_ToLivePtu = New System.Windows.Forms.Label()
         Me.TabPage_Debug = New System.Windows.Forms.TabPage()
         Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
         Me.ClearLog_Button = New System.Windows.Forms.Button()
         Me.TextBox_Debug = New System.Windows.Forms.TextBox()
         Me.Timer_UI = New System.Windows.Forms.Timer(Me.components)
+        Me.CheckBox_BeforeKillProcess = New System.Windows.Forms.CheckBox()
         Me.ContextMenuStrip1.SuspendLayout()
         Me.TabControl.SuspendLayout()
         Me.TabPage_Patch.SuspendLayout()
@@ -84,22 +96,24 @@ Partial Class MainForm
         Me.TableLayoutPanel3.SuspendLayout()
         Me.TabPage_Killer.SuspendLayout()
         Me.TableLayoutPanel4.SuspendLayout()
+        Me.TabPage_GameProfiles.SuspendLayout()
+        Me.TableLayoutPanel5.SuspendLayout()
         Me.TabPage_Debug.SuspendLayout()
         Me.TableLayoutPanel2.SuspendLayout()
         Me.SuspendLayout()
         '
         'ContextMenuStrip1
         '
-        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.Patch_ToolStripMenuItem, Me.Update_ToolStripMenuItem, Me.ToolStripSeparator2, Me.ShowWinToolStripMenuItem, Me.ToolStripSeparator1, Me.ExitToolStripMenuItem})
+        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.Patch_ToolStripMenuItem, Me.Update_ToolStripMenuItem, Me.PKill_ToolStripMenuItem, Me.ToolStripSeparator2, Me.ShowWinToolStripMenuItem, Me.ToolStripSeparator1, Me.ExitToolStripMenuItem})
         Me.ContextMenuStrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Table
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(182, 104)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(206, 126)
         '
         'Patch_ToolStripMenuItem
         '
         Me.Patch_ToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ModOn_ToolStripMenuItem, Me.ModOff_ToolStripMenuItem})
         Me.Patch_ToolStripMenuItem.Name = "Patch_ToolStripMenuItem"
-        Me.Patch_ToolStripMenuItem.Size = New System.Drawing.Size(181, 22)
+        Me.Patch_ToolStripMenuItem.Size = New System.Drawing.Size(205, 22)
         Me.Patch_ToolStripMenuItem.Text = "Модификация"
         '
         'ModOn_ToolStripMenuItem
@@ -118,7 +132,7 @@ Partial Class MainForm
         '
         Me.Update_ToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.InstallAll_ToolStripMenuItem})
         Me.Update_ToolStripMenuItem.Name = "Update_ToolStripMenuItem"
-        Me.Update_ToolStripMenuItem.Size = New System.Drawing.Size(181, 22)
+        Me.Update_ToolStripMenuItem.Size = New System.Drawing.Size(205, 22)
         Me.Update_ToolStripMenuItem.Text = "Обновление"
         '
         'InstallAll_ToolStripMenuItem
@@ -127,26 +141,51 @@ Partial Class MainForm
         Me.InstallAll_ToolStripMenuItem.Size = New System.Drawing.Size(174, 22)
         Me.InstallAll_ToolStripMenuItem.Text = "Полная установка"
         '
+        'PKill_ToolStripMenuItem
+        '
+        Me.PKill_ToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.KillerThread_ToolStripMenuItem, Me.ToolStripSeparator3, Me.KillProcesses_ToolStripMenuItem})
+        Me.PKill_ToolStripMenuItem.Name = "PKill_ToolStripMenuItem"
+        Me.PKill_ToolStripMenuItem.Size = New System.Drawing.Size(205, 22)
+        Me.PKill_ToolStripMenuItem.Text = "Завершение процессов"
+        '
+        'KillerThread_ToolStripMenuItem
+        '
+        Me.KillerThread_ToolStripMenuItem.CheckOnClick = True
+        Me.KillerThread_ToolStripMenuItem.Name = "KillerThread_ToolStripMenuItem"
+        Me.KillerThread_ToolStripMenuItem.Size = New System.Drawing.Size(193, 22)
+        Me.KillerThread_ToolStripMenuItem.Text = "Вкл."
+        '
+        'ToolStripSeparator3
+        '
+        Me.ToolStripSeparator3.Name = "ToolStripSeparator3"
+        Me.ToolStripSeparator3.Size = New System.Drawing.Size(190, 6)
+        '
+        'KillProcesses_ToolStripMenuItem
+        '
+        Me.KillProcesses_ToolStripMenuItem.Name = "KillProcesses_ToolStripMenuItem"
+        Me.KillProcesses_ToolStripMenuItem.Size = New System.Drawing.Size(193, 22)
+        Me.KillProcesses_ToolStripMenuItem.Text = "Завершить процессы"
+        '
         'ToolStripSeparator2
         '
         Me.ToolStripSeparator2.Name = "ToolStripSeparator2"
-        Me.ToolStripSeparator2.Size = New System.Drawing.Size(178, 6)
+        Me.ToolStripSeparator2.Size = New System.Drawing.Size(202, 6)
         '
         'ShowWinToolStripMenuItem
         '
         Me.ShowWinToolStripMenuItem.Name = "ShowWinToolStripMenuItem"
-        Me.ShowWinToolStripMenuItem.Size = New System.Drawing.Size(181, 22)
+        Me.ShowWinToolStripMenuItem.Size = New System.Drawing.Size(205, 22)
         Me.ShowWinToolStripMenuItem.Text = "Скрыть программу"
         '
         'ToolStripSeparator1
         '
         Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
-        Me.ToolStripSeparator1.Size = New System.Drawing.Size(178, 6)
+        Me.ToolStripSeparator1.Size = New System.Drawing.Size(202, 6)
         '
         'ExitToolStripMenuItem
         '
         Me.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
-        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(181, 22)
+        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(205, 22)
         Me.ExitToolStripMenuItem.Text = "Выход"
         '
         'NotifyIcon1
@@ -174,6 +213,7 @@ Partial Class MainForm
         Me.TabControl.Controls.Add(Me.TabPage_Patch)
         Me.TabControl.Controls.Add(Me.TabPage_Update)
         Me.TabControl.Controls.Add(Me.TabPage_Killer)
+        Me.TabControl.Controls.Add(Me.TabPage_GameProfiles)
         Me.TabControl.Controls.Add(Me.TabPage_Debug)
         Me.TabControl.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TabControl.Location = New System.Drawing.Point(0, 0)
@@ -445,11 +485,11 @@ Partial Class MainForm
         Me.TableLayoutPanel4.Controls.Add(Me.Label_KillerThread, 1, 0)
         Me.TableLayoutPanel4.Controls.Add(Me.ProcessKillerModKey_ComboBox, 0, 2)
         Me.TableLayoutPanel4.Controls.Add(Me.RemoveProccessKill_Button, 0, 4)
-        Me.TableLayoutPanel4.Controls.Add(Me.ProccessKill_ListBox, 1, 4)
         Me.TableLayoutPanel4.Controls.Add(Me.AddProccessKill_TextBox, 1, 3)
         Me.TableLayoutPanel4.Controls.Add(Me.ProccessList_ListBox, 3, 0)
         Me.TableLayoutPanel4.Controls.Add(Me.Label_ProcessKillerModKey, 1, 2)
         Me.TableLayoutPanel4.Controls.Add(Me.Label4, 2, 3)
+        Me.TableLayoutPanel4.Controls.Add(Me.ProccessKill_CheckedListBox, 1, 4)
         Me.TableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TableLayoutPanel4.Location = New System.Drawing.Point(0, 0)
         Me.TableLayoutPanel4.Name = "TableLayoutPanel4"
@@ -553,17 +593,6 @@ Partial Class MainForm
         Me.RemoveProccessKill_Button.Text = "Удалить процесс"
         Me.RemoveProccessKill_Button.UseVisualStyleBackColor = True
         '
-        'ProccessKill_ListBox
-        '
-        Me.ProccessKill_ListBox.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.ProccessKill_ListBox.FormattingEnabled = True
-        Me.ProccessKill_ListBox.IntegralHeight = False
-        Me.ProccessKill_ListBox.Location = New System.Drawing.Point(254, 123)
-        Me.ProccessKill_ListBox.Name = "ProccessKill_ListBox"
-        Me.TableLayoutPanel4.SetRowSpan(Me.ProccessKill_ListBox, 2)
-        Me.ProccessKill_ListBox.Size = New System.Drawing.Size(246, 64)
-        Me.ProccessKill_ListBox.TabIndex = 11
-        '
         'AddProccessKill_TextBox
         '
         Me.AddProccessKill_TextBox.Dock = System.Windows.Forms.DockStyle.Fill
@@ -608,6 +637,116 @@ Partial Class MainForm
         Me.Label4.TabIndex = 15
         Me.Label4.Text = "<"
         Me.Label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'ProccessKill_CheckedListBox
+        '
+        Me.ProccessKill_CheckedListBox.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.ProccessKill_CheckedListBox.FormattingEnabled = True
+        Me.ProccessKill_CheckedListBox.IntegralHeight = False
+        Me.ProccessKill_CheckedListBox.Location = New System.Drawing.Point(254, 123)
+        Me.ProccessKill_CheckedListBox.Name = "ProccessKill_CheckedListBox"
+        Me.TableLayoutPanel4.SetRowSpan(Me.ProccessKill_CheckedListBox, 2)
+        Me.ProccessKill_CheckedListBox.Size = New System.Drawing.Size(246, 64)
+        Me.ProccessKill_CheckedListBox.TabIndex = 16
+        '
+        'TabPage_GameProfiles
+        '
+        Me.TabPage_GameProfiles.Controls.Add(Me.TableLayoutPanel5)
+        Me.TabPage_GameProfiles.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage_GameProfiles.Name = "TabPage_GameProfiles"
+        Me.TabPage_GameProfiles.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage_GameProfiles.Size = New System.Drawing.Size(776, 285)
+        Me.TabPage_GameProfiles.TabIndex = 4
+        Me.TabPage_GameProfiles.Text = "Профили"
+        Me.TabPage_GameProfiles.UseVisualStyleBackColor = True
+        '
+        'TableLayoutPanel5
+        '
+        Me.TableLayoutPanel5.ColumnCount = 4
+        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15.51724!))
+        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15.51724!))
+        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 34.48276!))
+        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 34.48276!))
+        Me.TableLayoutPanel5.Controls.Add(Me.CheckBox_BeforeKillProcess, 0, 1)
+        Me.TableLayoutPanel5.Controls.Add(Me.Button_ToPTU, 1, 0)
+        Me.TableLayoutPanel5.Controls.Add(Me.Label2, 0, 5)
+        Me.TableLayoutPanel5.Controls.Add(Me.Label_BeforeKillProcess, 2, 1)
+        Me.TableLayoutPanel5.Controls.Add(Me.Button_ToLIVE, 0, 0)
+        Me.TableLayoutPanel5.Controls.Add(Me.Label_ToLivePtu, 2, 0)
+        Me.TableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel5.Location = New System.Drawing.Point(3, 3)
+        Me.TableLayoutPanel5.Name = "TableLayoutPanel5"
+        Me.TableLayoutPanel5.RowCount = 6
+        Me.TableLayoutPanel5.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel5.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel5.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel5.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel5.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel5.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel5.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+        Me.TableLayoutPanel5.Size = New System.Drawing.Size(770, 279)
+        Me.TableLayoutPanel5.TabIndex = 3
+        '
+        'Button_ToPTU
+        '
+        Me.Button_ToPTU.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Button_ToPTU.Enabled = False
+        Me.Button_ToPTU.Location = New System.Drawing.Point(122, 3)
+        Me.Button_ToPTU.Name = "Button_ToPTU"
+        Me.Button_ToPTU.Size = New System.Drawing.Size(113, 24)
+        Me.Button_ToPTU.TabIndex = 12
+        Me.Button_ToPTU.Text = "PTU"
+        Me.Button_ToPTU.UseVisualStyleBackColor = True
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.TableLayoutPanel5.SetColumnSpan(Me.Label2, 4)
+        Me.Label2.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Label2.Location = New System.Drawing.Point(3, 153)
+        Me.Label2.Margin = New System.Windows.Forms.Padding(3)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(764, 123)
+        Me.Label2.TabIndex = 11
+        Me.Label2.Text = resources.GetString("Label2.Text")
+        Me.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'Label_BeforeKillProcess
+        '
+        Me.Label_BeforeKillProcess.AutoSize = True
+        Me.TableLayoutPanel5.SetColumnSpan(Me.Label_BeforeKillProcess, 2)
+        Me.Label_BeforeKillProcess.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Label_BeforeKillProcess.Location = New System.Drawing.Point(241, 33)
+        Me.Label_BeforeKillProcess.Margin = New System.Windows.Forms.Padding(3)
+        Me.Label_BeforeKillProcess.Name = "Label_BeforeKillProcess"
+        Me.Label_BeforeKillProcess.Size = New System.Drawing.Size(526, 24)
+        Me.Label_BeforeKillProcess.TabIndex = 4
+        Me.Label_BeforeKillProcess.Text = "Завершит процессы игры и лаунчера перед переименованием папки"
+        Me.Label_BeforeKillProcess.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'Button_ToLIVE
+        '
+        Me.Button_ToLIVE.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Button_ToLIVE.Enabled = False
+        Me.Button_ToLIVE.Location = New System.Drawing.Point(3, 3)
+        Me.Button_ToLIVE.Name = "Button_ToLIVE"
+        Me.Button_ToLIVE.Size = New System.Drawing.Size(113, 24)
+        Me.Button_ToLIVE.TabIndex = 1
+        Me.Button_ToLIVE.Text = "LIVE"
+        Me.Button_ToLIVE.UseVisualStyleBackColor = True
+        '
+        'Label_ToLivePtu
+        '
+        Me.Label_ToLivePtu.AutoSize = True
+        Me.TableLayoutPanel5.SetColumnSpan(Me.Label_ToLivePtu, 2)
+        Me.Label_ToLivePtu.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Label_ToLivePtu.Location = New System.Drawing.Point(241, 3)
+        Me.Label_ToLivePtu.Margin = New System.Windows.Forms.Padding(3)
+        Me.Label_ToLivePtu.Name = "Label_ToLivePtu"
+        Me.Label_ToLivePtu.Size = New System.Drawing.Size(526, 24)
+        Me.Label_ToLivePtu.TabIndex = 2
+        Me.Label_ToLivePtu.Text = "Переименовать папку игры из LIVE в PTU и наоборот"
+        Me.Label_ToLivePtu.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'TabPage_Debug
         '
@@ -664,6 +803,18 @@ Partial Class MainForm
         '
         Me.Timer_UI.Interval = 1000
         '
+        'CheckBox_BeforeKillProcess
+        '
+        Me.CheckBox_BeforeKillProcess.AutoSize = True
+        Me.TableLayoutPanel5.SetColumnSpan(Me.CheckBox_BeforeKillProcess, 2)
+        Me.CheckBox_BeforeKillProcess.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.CheckBox_BeforeKillProcess.Location = New System.Drawing.Point(3, 33)
+        Me.CheckBox_BeforeKillProcess.Name = "CheckBox_BeforeKillProcess"
+        Me.CheckBox_BeforeKillProcess.Size = New System.Drawing.Size(232, 24)
+        Me.CheckBox_BeforeKillProcess.TabIndex = 13
+        Me.CheckBox_BeforeKillProcess.Text = "Предварительное завершение"
+        Me.CheckBox_BeforeKillProcess.UseVisualStyleBackColor = True
+        '
         'MainForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -688,6 +839,9 @@ Partial Class MainForm
         Me.TabPage_Killer.ResumeLayout(False)
         Me.TableLayoutPanel4.ResumeLayout(False)
         Me.TableLayoutPanel4.PerformLayout()
+        Me.TabPage_GameProfiles.ResumeLayout(False)
+        Me.TableLayoutPanel5.ResumeLayout(False)
+        Me.TableLayoutPanel5.PerformLayout()
         Me.TabPage_Debug.ResumeLayout(False)
         Me.TableLayoutPanel2.ResumeLayout(False)
         Me.TableLayoutPanel2.PerformLayout()
@@ -742,9 +896,21 @@ Partial Class MainForm
     Friend WithEvents Label_KillerThread As Label
     Friend WithEvents ProcessKillerModKey_ComboBox As ComboBox
     Friend WithEvents Label_ModInfo As Label
-    Friend WithEvents ProccessKill_ListBox As ListBox
     Friend WithEvents AddProccessKill_TextBox As TextBox
     Friend WithEvents Label1 As Label
     Friend WithEvents ProccessList_ListBox As ListBox
     Friend WithEvents Label4 As Label
+    Friend WithEvents ProccessKill_CheckedListBox As CheckedListBox
+    Friend WithEvents PKill_ToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents KillerThread_ToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ToolStripSeparator3 As ToolStripSeparator
+    Friend WithEvents KillProcesses_ToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents TabPage_GameProfiles As TabPage
+    Friend WithEvents TableLayoutPanel5 As TableLayoutPanel
+    Friend WithEvents Button_ToPTU As Button
+    Friend WithEvents Label2 As Label
+    Friend WithEvents Label_BeforeKillProcess As Label
+    Friend WithEvents Button_ToLIVE As Button
+    Friend WithEvents Label_ToLivePtu As Label
+    Friend WithEvents CheckBox_BeforeKillProcess As CheckBox
 End Class
