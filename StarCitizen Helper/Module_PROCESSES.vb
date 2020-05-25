@@ -48,7 +48,7 @@
             Return result
         End Function
 
-        Public Sub _Kill(Name As String, Optional OnlyUniqName As Boolean = True, Optional FullMatch As Boolean = False)
+        Public Sub _Kill(Name As String, Optional OnlyUniqName As Boolean = True, Optional FullMatch As Boolean = True)
             Dim pList As List(Of Process) = Me._Get(Name, OnlyUniqName, FullMatch)
             For Each Process In pList
                 Process.Kill()
