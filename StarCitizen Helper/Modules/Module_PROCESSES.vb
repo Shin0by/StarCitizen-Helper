@@ -51,6 +51,7 @@
         Public Sub _Kill(Name As String, Optional OnlyUniqName As Boolean = True, Optional FullMatch As Boolean = True)
             Dim pList As List(Of Process) = Me._Get(Name, OnlyUniqName, FullMatch)
             For Each Process In pList
+                If Process.ProcessName = _APP.appProcess.ProcessName Then _LOG._sAdd("_PROCESSES._Kill()", "Завершение процесса - игнорировано", Process.ProcessName, 2) : Continue For
                 Process.Kill()
                 _LOG._sAdd("_PROCESSES._Kill()", "Завершение процесса", Process.ProcessName, 2)
             Next

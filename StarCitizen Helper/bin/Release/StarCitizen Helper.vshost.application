@@ -7,14 +7,14 @@
     <framework targetVersion="4.5" profile="Full" supportedRuntime="4.0.30319" />
   </compatibleFrameworks>
   <dependency>
-    <dependentAssembly dependencyType="install" codebase="StarCitizen Helper.exe.manifest" size="4892">
+    <dependentAssembly dependencyType="install" codebase="StarCitizen Helper.exe.manifest" size="4904">
       <assemblyIdentity name="StarCitizen Helper.exe" version="1.0.0.4" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>4f6GPlLw6yg3gb5Y0ORjI5lfj6+ctgDsdpIbfoIUzKM=</dsig:DigestValue>
+        <dsig:DigestValue>A388VQwV6l1F/XCQmwc2yYePmCF3AcOjlB1lYDFh+6A=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

@@ -89,53 +89,64 @@ ReadBlock: _VARS.ConfigFileIsOK = True
         Return "0"
     End Function
 
-    Public Function RenameLIVEFolder(Optional OnlyCheck As Boolean = True) As ResultClass
+    Public Function RenameLIVEFolder(ToProfile As String, Optional OnlyCheck As Boolean = True) As ResultClass
         MAIN_THREAD.Button_ToLIVE.Enabled = False
         MAIN_THREAD.Button_ToPTU.Enabled = False
+        MAIN_THREAD.Button_ToEPTU.Enabled = False
+        MAIN_THREAD.ToLIVE_ToolStripMenuItem.Enabled = False
+        MAIN_THREAD.ToPTU_ToolStripMenuItem.Enabled = False
+        MAIN_THREAD.ToEPTU_ToolStripMenuItem.Enabled = False
+
         Dim result As ResultClass = _FILE._GetInfo(_VARS.GameExeFilePath)
-        result.ValueLong = 0
         Dim File As IO.FileInfo = Nothing
-        Dim rightPath As String = Nothing
-        Dim leftPath As String = Nothing
+        Dim FolderSrc As String = Nothing
+        Dim FolderDest As String = Nothing
+        If result.Err.Flag = True Then GoTo Fin
+
+        File = CType(result.ValueObject, IO.FileInfo)
+        Select Case UCase(File.Directory.Parent.Name)
+            Case "LIVE"
+                FolderSrc = File.Directory.Parent.FullName
+                If OnlyCheck = False Then FolderDest = _FILE._CombinePath(File.Directory.Parent.Parent.FullName, ToProfile)
+            Case "PTU"
+                FolderSrc = File.Directory.Parent.FullName
+                If OnlyCheck = False Then FolderDest = _FILE._CombinePath(File.Directory.Parent.Parent.FullName, ToProfile)
+            Case "EPTU"
+                FolderSrc = File.Directory.Parent.FullName
+                If OnlyCheck = False Then FolderDest = _FILE._CombinePath(File.Directory.Parent.Parent.FullName, ToProfile)
+        End Select
+
+        If FolderSrc IsNot Nothing And FolderDest IsNot Nothing And OnlyCheck = False Then
+            result = _FILE._RenameDirectory(File.Directory.Parent.FullName, ToProfile)
+            If result.Err.Flag = True Then
+                _LOG._Add("LIVE-PTU-EPTU", "Ошибка при переименовании папки игры", result.LogList(), 1, result.Err.Number)
+            Else
+                _LOG._sAdd("LIVE-PTU-EPTU", "Папка игры успешно переименована", File.Directory.Parent.FullName & " -> " & FolderDest, 2, 0)
+                result.ValueString = _HELPER_PATCH.SetGameExeFilePath(_FILE._CombinePath(FolderDest, File.Directory.Name, File.Name))
+            End If
+        End If
 
         If result.Err.Flag = False Then
-            File = CType(result.ValueObject, IO.FileInfo)
-            rightPath = File.Directory.Name & "\" & _VARS.GameExeFileName
-            If UCase(File.Directory.Parent.Name) = "LIVE" Then
-                result.ValueLong = 1
-                result.ValueString = "PTU"
-            ElseIf UCase(File.Directory.Parent.Name) = "PTU" Then
-                result.ValueLong = 2
-                result.ValueString = "LIVE"
-            Else
-                result.ValueLong = 0
-            End If
+            If OnlyCheck = True Then ToProfile = UCase(File.Directory.Parent.Name)
+            Select Case ToProfile
+                Case "LIVE"
+                    MAIN_THREAD.Button_ToPTU.Enabled = True
+                    MAIN_THREAD.ToPTU_ToolStripMenuItem.Enabled = True
+                    MAIN_THREAD.Button_ToEPTU.Enabled = True
+                    MAIN_THREAD.ToEPTU_ToolStripMenuItem.Enabled = True
+                Case "PTU"
+                    MAIN_THREAD.Button_ToLIVE.Enabled = True
+                    MAIN_THREAD.ToLIVE_ToolStripMenuItem.Enabled = True
+                    MAIN_THREAD.Button_ToEPTU.Enabled = True
+                    MAIN_THREAD.ToEPTU_ToolStripMenuItem.Enabled = True
+                Case "EPTU"
+                    MAIN_THREAD.Button_ToLIVE.Enabled = True
+                    MAIN_THREAD.ToLIVE_ToolStripMenuItem.Enabled = True
+                    MAIN_THREAD.Button_ToPTU.Enabled = True
+                    MAIN_THREAD.ToPTU_ToolStripMenuItem.Enabled = True
+            End Select
         End If
-
-        Dim EnableControls As Long = result.ValueLong
-
-        If result.ValueLong >= 1 Then
-            If OnlyCheck = False Then
-                result = _FILE._RenameDirectory(File.Directory.Parent.FullName, result.ValueString)
-                If result.Err.Flag = True Then
-                    _LOG._Add("LIVE-PTU", "Ошибка при переименовании папки игры", result.LogList(), 1, result.Err.Number)
-                Else
-                    _LOG._sAdd("LIVE-PTU", "Папка игры успешно переименована", File.Directory.Parent.FullName & " -> " & result.ValueString, 2, 0)
-                    result.ValueString = _HELPER_PATCH.SetGameExeFilePath(_FILE._CombinePath(result.ValueString, rightPath))
-                End If
-            End If
-        End If
-
-        If OnlyCheck = True Then
-            If EnableControls = 1 And result.ValueString IsNot Nothing Then MAIN_THREAD.Button_ToPTU.Enabled = True
-            If EnableControls = 2 And result.ValueString IsNot Nothing Then MAIN_THREAD.Button_ToLIVE.Enabled = True
-        Else
-            If EnableControls = 2 And result.ValueString IsNot Nothing Then MAIN_THREAD.Button_ToPTU.Enabled = True
-            If EnableControls = 1 And result.ValueString IsNot Nothing Then MAIN_THREAD.Button_ToLIVE.Enabled = True
-        End If
-
-
-        Return result
+Fin:    Return result
     End Function
 
     Public Function KeyModifierListToKeys(SelectedIndex As Integer) As Keys
@@ -203,29 +214,15 @@ ReadBlock: _VARS.ConfigFileIsOK = True
         Public Function SetGameExeFilePath(Optional ExPath As String = Nothing) As String
             Dim Path As String = Nothing
             If ExPath Is Nothing Then
-                If _VARS.ConfigFileIsOK = False Then
-                    _VARS.GameExeFilePath = Nothing
-                    Return Nothing
-                End If
+                If _VARS.ConfigFileIsOK = False Then _VARS.GameExeFilePath = Nothing : Return Nothing
                 Path = SelectFile("Файл игры |" & _VARS.GameExeFileName & "|Exe (*.exe)|*.exe" & "|Все файлы (*.*)|*.*")
                 If Path Is Nothing Then Return Nothing
-            Else
-                Path = ExPath
-            End If
+            Else : Path = ExPath : End If
 
-            If _INI._Write("EXTERNAL", "EXE_PATH", Path) = False Then
-                _VARS.ConfigFileIsOK = False
-                _VARS.GameExeFilePath = Nothing
-                Return Nothing
-            End If
-
+            If _INI._Write("EXTERNAL", "EXE_PATH", Path) = False Then _VARS.ConfigFileIsOK = False : _VARS.GameExeFilePath = Nothing : Return Nothing
             Path = Nothing
             Path = _INI._GET_VALUE("EXTERNAL", "EXE_PATH", Nothing).Value
-            If Path Is Nothing Then
-                _VARS.ConfigFileIsOK = True
-                _VARS.GameExeFilePath = Nothing
-                Return Nothing
-            End If
+            If Path Is Nothing Then _VARS.ConfigFileIsOK = True : _VARS.GameExeFilePath = Nothing : Return Nothing
 
             _WATCHFILE_THREAD.PushWatchFiles = True
             _VARS.GameExeFilePath = Path
@@ -272,12 +269,9 @@ ReadBlock: _VARS.ConfigFileIsOK = True
                     result.Found_BLOCK1 = InvertBool(result.Found_BLOCK1)
                     result.Found_BLOCK2 = InvertBool(result.Found_BLOCK2)
                 End If
-
                 _VARS.GameExeFileStatus = result
-                If _VARS.GameExeFileStatus.Result.Err.Flag = True Then
-                    _LOG._sAdd("PATCHER", "Ошибка при внесении изменений в файл " & _VARS.GameExeFileName, _VARS.GameExeFileStatus.Result.Err.Description, 1, _VARS.GameExeFileStatus.Result.Err.Number)
-                End If
-            Catch ex As Exception
+                If _VARS.GameExeFileStatus.Result.Err.Flag = True Then _LOG._sAdd("PATCHER", "Ошибка при внесении изменений в файл " & _VARS.GameExeFileName, _VARS.GameExeFileStatus.Result.Err.Description, 1, _VARS.GameExeFileStatus.Result.Err.Number)
+            Catch ex As Exception: 
                 _LOG._sAdd("PATCHER", "Ошибка при подготовке к внесению изменений в файл " & _VARS.GameExeFileName, Err.Description, 1, Err.Number)
             End Try
 

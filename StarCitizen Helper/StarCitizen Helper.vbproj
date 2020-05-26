@@ -68,7 +68,7 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Shin0by soft.ico</ApplicationIcon>
+    <ApplicationIcon>Other\Shin0by soft.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup />
   <PropertyGroup>
@@ -121,56 +121,56 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConvertForm.vb">
+    <Compile Include="Forms\ConvertForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ConvertForm.Designer.vb">
+    <Compile Include="Forms\ConvertForm.Designer.vb">
       <DependentUpon>ConvertForm.vb</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainForm.Designer.vb">
+    <Compile Include="Forms\MainForm.Designer.vb">
       <DependentUpon>MainForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="MainForm.vb">
+    <Compile Include="Forms\MainForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Module_APP.vb" />
-    <Compile Include="Module_FILE.vb" />
-    <Compile Include="Module_HELPER.vb" />
-    <Compile Include="Module_INI.vb" />
-    <Compile Include="Module_KEYS.vb" />
-    <Compile Include="Module_LOG.vb" />
-    <Compile Include="Module_MAIN.vb" />
-    <Compile Include="Module_NET.vb" />
-    <Compile Include="Module_PARSE.vb" />
-    <Compile Include="Module_PATCH.vb" />
-    <Compile Include="Module_PROCESSES.vb" />
-    <Compile Include="Module_THREAD.vb" />
+    <Compile Include="Modules\Module_APP.vb" />
+    <Compile Include="Modules\Module_FILE.vb" />
+    <Compile Include="Modules\Module_HELPER.vb" />
+    <Compile Include="Modules\Module_INI.vb" />
+    <Compile Include="Modules\Module_KEYS.vb" />
+    <Compile Include="Modules\Module_LOG.vb" />
+    <Compile Include="Modules\Module_MAIN.vb" />
+    <Compile Include="Modules\Module_NET.vb" />
+    <Compile Include="Modules\Module_PARSE.vb" />
+    <Compile Include="Modules\Module_PATCH.vb" />
+    <Compile Include="Modules\Module_PROCESSES.vb" />
+    <Compile Include="Modules\Module_THREAD.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
       <DependentUpon>Application.myapp</DependentUpon>
     </Compile>
-    <Compile Include="My Project\Resources.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="My Project\Settings.Designer.vb">
+    <Compile Include="Other\Settings.Designer.vb">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ConvertForm.resx">
+    <EmbeddedResource Include="Forms\ConvertForm.resx">
       <DependentUpon>ConvertForm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.resx">
+    <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="My Project\Resources.resx">
+    <EmbeddedResource Include="Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
@@ -183,23 +183,23 @@
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application1.Designer.vb</LastGenOutput>
     </None>
-    <None Include="My Project\Settings.settings">
+    <None Include="Other\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
-    <None Include="App.config">
+    <None Include="Other\App.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="packages.config" />
-    <None Include="StarCitizen Helper_TemporaryKey.pfx" />
+    <None Include="Other\packages.config" />
+    <None Include="Other\StarCitizen Helper_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\mouse_click.wav" />
     <None Include="Resources\core_fix.wav" />
     <None Include="Resources\disabled.wav" />
     <None Include="Resources\process_kill.wav" />
-    <Content Include="Shin0by soft.ico" />
+    <Content Include="Other\Shin0by soft.ico" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">

@@ -39,7 +39,7 @@ Module Module_MAIN
 
     Public Sub InitializeEnd()
         'On Error Resume Next
-        MAIN_THREAD.Text = _APP.appName
+        MAIN_THREAD.Text = _APP.appName & " " & _APP.Version
         MAIN_THREAD.NotifyIcon1.Text = _APP.appName
         Module_HELPER.ConfigFile()
 
