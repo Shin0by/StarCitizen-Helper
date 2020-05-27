@@ -11,7 +11,7 @@
     <AssemblyName>StarCitizen Helper</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>WindowsForms</MyType>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <TargetFrameworkProfile />
@@ -94,6 +94,9 @@
       <HintPath>..\packages\ini-parser.2.5.2\lib\net20\INIFileParser.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
@@ -106,6 +109,7 @@
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Net.Http" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
@@ -121,6 +125,12 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\WL_Download.Designer.vb">
+      <DependentUpon>WL_Download.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\WL_Download.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Forms\ConvertForm.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -163,6 +173,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Controls\WL_Download.resx">
+      <DependentUpon>WL_Download.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\ConvertForm.resx">
       <DependentUpon>ConvertForm.vb</DependentUpon>
     </EmbeddedResource>
@@ -178,6 +191,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="My Project\app.manifest" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>

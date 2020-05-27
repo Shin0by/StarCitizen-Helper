@@ -1,6 +1,4 @@
-﻿
-
-Imports System.IO
+﻿Imports System.IO
 Imports System.Net
 
 Module Module_NET
@@ -24,23 +22,10 @@ Module Module_NET
         Public Async Function Download(sUrl As String, sPath As String) As Task(Of ResultClass)
             Dim result As New ResultClass
             result.Err.Flag = True
-
-            If Len(sUrl) < _VARS.FilePathMinLen + _VARS.FileNameMinLen Then
-                result.Err.Description = "URL имеет некорректную длину " & Chr(34) & sUrl & Chr(34)
-                Return result
-            End If
-
-            If Len(sPath) < _VARS.FilePathMinLen + _VARS.FileNameMinLen Then
-                result.Err.Description = "Путь для загрузки имеет некорректную длину " & Chr(34) & sUrl & Chr(34)
-                Return result
-            End If
-
+            If Len(sUrl) < _VARS.FilePathMinLen + _VARS.FileNameMinLen Then result.Err.Description = "URL имеет некорректную длину " & Chr(34) & sUrl & Chr(34) : Return result
+            If Len(sPath) < _VARS.FilePathMinLen + _VARS.FileNameMinLen Then result.Err.Description = "Путь для загрузки имеет некорректную длину " & Chr(34) & sUrl & Chr(34) : Return result
             Dim fo As ResultClass = _FILE._Kill(sPath)
-            If fo.Err.Flag = True Then
-                result.Err.Description = "Не удалось удалить существующий файл " & Chr(34) & sPath & Chr(34)
-                Return result
-            End If
-
+            If fo.Err.Flag = True Then result.Err.Description = "Не удалось удалить существующий файл " & Chr(34) & sPath & Chr(34) : Return result
             Try
                 Dim content = New MemoryStream()
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12
@@ -57,17 +42,9 @@ Module Module_NET
                     End Using
                 End Using
 
-                If _FILE._FileExits(sPath) = False Then
-                    result.Err.Description = "Запись файла невозможна, проверьте права на запись для файла и папки " & Chr(34) & sPath & Chr(34)
-                    Return result
-                End If
-
+                If _FILE._FileExits(sPath) = False Then result.Err.Description = "Запись файла невозможна, проверьте права на запись для файла и папки " & Chr(34) & sPath & Chr(34) : Return result
                 fo = _FILE._GetInfo(sPath)
-                If CType(fo.ValueObject, IO.FileInfo).Length <> content.Length Then
-                    result.Err.Description = "Неверен размер загруженного файла " & Chr(34) & sPath & Chr(34)
-                    Return result
-                End If
-
+                If CType(fo.ValueObject, IO.FileInfo).Length <> content.Length Then result.Err.Description = "Неверен размер загруженного файла " & Chr(34) & sPath & Chr(34) : Return result
                 result.Err.Flag = False
                 result.Err.Description = Nothing
             Catch ex As Exception
@@ -78,6 +55,5 @@ Module Module_NET
 
             Return result
         End Function
-
     End Class
 End Module

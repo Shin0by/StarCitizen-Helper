@@ -1,4 +1,6 @@
-﻿Module Module_HELPER
+﻿Imports System.IO
+
+Module Module_HELPER
     Public Sub ConfigFile()
         _VARS.ConfigFileIsOK = True
         If _FILE._FileExits(_APP.configFullPath) = False Then
@@ -210,6 +212,17 @@ Fin:    Return result
         Return CheckedListBox.Items.Count
     End Function
 
+    Public Function CheckPackageZip() As ResultClass
+        Dim result As New ResultClass
+        result.ValueBoolean = False
+        If _FILE._FileExits(Path.Combine(_VARS.DownloadFolder, _VARS.DownloadFile)) = False Then result.Err.Flag = True : result.Err.Description = "Ошибка при проверке пакета обновлений" : Return result
+        If _VARS.GameExeFilePath Is Nothing Then result.Err.Flag = True : result.Err.Description = "Не указан путь к файлу игры" : Return result
+        result.ValueBoolean = True
+        Return result
+    End Function
+
+
+
     Class Class_HelperPatch
         Public Function SetGameExeFilePath(Optional ExPath As String = Nothing) As String
             Dim Path As String = Nothing
@@ -271,7 +284,7 @@ Fin:    Return result
                 End If
                 _VARS.GameExeFileStatus = result
                 If _VARS.GameExeFileStatus.Result.Err.Flag = True Then _LOG._sAdd("PATCHER", "Ошибка при внесении изменений в файл " & _VARS.GameExeFileName, _VARS.GameExeFileStatus.Result.Err.Description, 1, _VARS.GameExeFileStatus.Result.Err.Number)
-            Catch ex As Exception: 
+            Catch ex As Exception
                 _LOG._sAdd("PATCHER", "Ошибка при подготовке к внесению изменений в файл " & _VARS.GameExeFileName, Err.Description, 1, Err.Number)
             End Try
 

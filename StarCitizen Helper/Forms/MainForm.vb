@@ -58,22 +58,53 @@ Public Class MainForm
     '-----------------------------------> 'Modification
 
     '<----------------------------------- Download and update
-    Private Async Sub GitClone_Button_Click(sender As Object, e As EventArgs) Handles GitClone_Button.Click
+    Private Sub GitClone_Button_Click(sender As Object, e As EventArgs) Handles GitClone_Button.Click
         Me.GitClone_Button.Enabled = False
+        Me.InstallAll_Button.Enabled = False
         Me.ContextMenuStrip1.Enabled = False
+        WL_Download1.Visible = True
+        Dim result As New ResultClass
         _VARS.DownloadFolder = _FILE.CreateFolder(_VARS.DownloadFolder)
-        If _VARS.DownloadFolder Is Nothing Then
-            _LOG._sAdd("WINDOW_FORM", "Не удалось получить доступ к папке загрузок:", _VARS.DownloadFolder, 1)
-            GoTo Fin
-        End If
+        If _VARS.DownloadFolder Is Nothing Then result.Err.Flag = True : result.Err.Description = "Не удалось получить доступ к папке загрузок" & vbNewLine & _VARS.DownloadFolder : GoTo Fin
 
-        Dim result As ResultClass = Await _INET.Download(_VARS.PackageZipURL, Path.Combine(_VARS.DownloadFolder, _VARS.DownloadFile))
-        If result.Err.Flag = False Then
-            _LOG._sAdd("WINDOW_FORM", "Загрузка пакета обновлений успешно завершена", Path.Combine(_VARS.DownloadFolder, _VARS.DownloadFile), 0)
-        Else
-            _LOG._Add("WINDOW_FORM", "Ошибка при загрузке пакета обновлений", result.LogList(), 1, result.Err.Number)
+        Dim sURL As String = _VARS.PackageZipURL
+        Dim sPath As String = Path.Combine(_VARS.DownloadFolder, _VARS.DownloadFile)
+
+        If Len(sURL) < _VARS.FilePathMinLen + _VARS.FileNameMinLen Then result.Err.Flag = True : result.Err.Description = "URL имеет некорректную длину" & vbNewLine & sURL : GoTo Fin
+        If Len(sPath) < _VARS.FilePathMinLen + _VARS.FileNameMinLen Then result.Err.Flag = True : result.Err.Description = "Путь загрузки имеет некорректную длину" & vbNewLine & sPath : GoTo Fin
+        If _FILE._Kill(sPath).Err.Flag = True Then result.Err.Flag = True : result.Err.Description = "Не удалось удалить существующий файл" & vbNewLine & sPath : GoTo Fin
+
+        WL_Download1.SecurityProtocol = SecurityProtocolType.Tls12
+        WL_Download1.DownloadStart(_VARS.PackageZipURL, Path.Combine(_VARS.DownloadFolder, _VARS.DownloadFile))
+
+Fin:    If result.Err.Flag = True Then
+            _LOG._sAdd("WINDOW_FORM", result.Err.Description, Nothing, 2, result.Err.Number)
+            Dim temp As String() = Split(result.Err.Description, vbNewLine, 2)
+            WL_Download1.DownloadFrom = "Последняя загрузка завершилась ошибкой: " & temp(0)
+            WL_Download1.DownloadTo = temp(1)
+            Me.GitClone_Button.Enabled = True
+            Me.ContextMenuStrip1.Enabled = True
         End If
-Fin:    Me.GitClone_Button.Enabled = True
+        Me.GitClone_Button.Focus()
+    End Sub
+
+    Private Sub DownloadCompleted(ByVal sender As Object, ByVal e As AsyncCompletedEventArgs) Handles WL_Download1.CompleteEvent
+        Dim result As New ResultClass
+        If WL_Download1.DownloadProgress.Err IsNot Nothing Then result.Err.Flag = True : result.Err.Description = "Ошибка при загрузке пакета обновлений" & vbNewLine & WL_Download1.DownloadProgress.Err.Message : GoTo Fin
+        If CType(_FILE._GetInfo(Path.Combine(_VARS.DownloadFolder, _VARS.DownloadFile)).ValueObject, FileInfo).Length <> WL_Download1.DownloadProgress.BytesReceived Then result.Err.Flag = True : result.Err.Description = "Ошибка при проверке загруженного файла" & vbNewLine & Path.Combine(_VARS.DownloadFolder, _VARS.DownloadFile) : GoTo Fin
+
+Fin:    If result.Err.Flag = True Then
+            _LOG._sAdd("WINDOW_FORM", result.Err.Description, Nothing, 2, result.Err.Number)
+            Dim temp As String() = Split(result.Err.Description, vbNewLine, 2)
+            WL_Download1.DownloadFrom = "Последняя загрузка завершилась ошибкой: " & temp(0)
+            WL_Download1.DownloadTo = temp(1)
+            Me.GitClone_Button.Enabled = True
+        Else
+            WL_Download1.DownloadFrom = "Загрузка успешно завершена"
+            Me.GitClone_Button.Enabled = True
+            Me.InstallAll_Button.Enabled = CheckPackageZip.ValueBoolean
+        End If
+        Me.GitClone_Button.Focus()
         Me.ContextMenuStrip1.Enabled = True
     End Sub
 
@@ -340,6 +371,9 @@ Fin:    Me.InstallAll_Button.Enabled = True
             Me.Label_SetStarCitizenExeFilePath.Text = _VARS.GameExeFilePath
         End If
         Me.CheckBox_FileWatcher.Checked = _VARS.FileWatcher
+
+        'Download and update
+        Me.InstallAll_Button.Enabled = CheckPackageZip.ValueBoolean
 
         'PKIller
         Me.CheckBox_KillerThread.Checked = _VARS.PKillerEnabled

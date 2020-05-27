@@ -34,6 +34,12 @@ Partial Class MainForm
         Me.KillerThread_ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator3 = New System.Windows.Forms.ToolStripSeparator()
         Me.KillProcesses_ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.Profiles_ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.BeforeKillProcess_ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripSeparator4 = New System.Windows.Forms.ToolStripSeparator()
+        Me.ToLIVE_ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToPTU_ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToEPTU_ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator()
         Me.ShowWinToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
@@ -89,12 +95,7 @@ Partial Class MainForm
         Me.ClearLog_Button = New System.Windows.Forms.Button()
         Me.TextBox_Debug = New System.Windows.Forms.TextBox()
         Me.Timer_UI = New System.Windows.Forms.Timer(Me.components)
-        Me.Profiles_ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.BeforeKillProcess_ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripSeparator4 = New System.Windows.Forms.ToolStripSeparator()
-        Me.ToLIVE_ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToPTU_ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToEPTU_ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.WL_Download1 = New SC.WL_Download()
         Me.ContextMenuStrip1.SuspendLayout()
         Me.TabControl.SuspendLayout()
         Me.TabPage_Patch.SuspendLayout()
@@ -114,7 +115,7 @@ Partial Class MainForm
         Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.Patch_ToolStripMenuItem, Me.Update_ToolStripMenuItem, Me.PKill_ToolStripMenuItem, Me.Profiles_ToolStripMenuItem, Me.ToolStripSeparator2, Me.ShowWinToolStripMenuItem, Me.ToolStripSeparator1, Me.ExitToolStripMenuItem})
         Me.ContextMenuStrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Table
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(215, 170)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(215, 148)
         '
         'Patch_ToolStripMenuItem
         '
@@ -172,6 +173,43 @@ Partial Class MainForm
         Me.KillProcesses_ToolStripMenuItem.Name = "KillProcesses_ToolStripMenuItem"
         Me.KillProcesses_ToolStripMenuItem.Size = New System.Drawing.Size(193, 22)
         Me.KillProcesses_ToolStripMenuItem.Text = "Завершить процессы"
+        '
+        'Profiles_ToolStripMenuItem
+        '
+        Me.Profiles_ToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BeforeKillProcess_ToolStripMenuItem, Me.ToolStripSeparator4, Me.ToLIVE_ToolStripMenuItem, Me.ToPTU_ToolStripMenuItem, Me.ToEPTU_ToolStripMenuItem})
+        Me.Profiles_ToolStripMenuItem.Name = "Profiles_ToolStripMenuItem"
+        Me.Profiles_ToolStripMenuItem.Size = New System.Drawing.Size(214, 22)
+        Me.Profiles_ToolStripMenuItem.Text = "Перемещение профилей"
+        '
+        'BeforeKillProcess_ToolStripMenuItem
+        '
+        Me.BeforeKillProcess_ToolStripMenuItem.CheckOnClick = True
+        Me.BeforeKillProcess_ToolStripMenuItem.Name = "BeforeKillProcess_ToolStripMenuItem"
+        Me.BeforeKillProcess_ToolStripMenuItem.Size = New System.Drawing.Size(242, 22)
+        Me.BeforeKillProcess_ToolStripMenuItem.Text = "Предварительное завершение"
+        '
+        'ToolStripSeparator4
+        '
+        Me.ToolStripSeparator4.Name = "ToolStripSeparator4"
+        Me.ToolStripSeparator4.Size = New System.Drawing.Size(239, 6)
+        '
+        'ToLIVE_ToolStripMenuItem
+        '
+        Me.ToLIVE_ToolStripMenuItem.Name = "ToLIVE_ToolStripMenuItem"
+        Me.ToLIVE_ToolStripMenuItem.Size = New System.Drawing.Size(242, 22)
+        Me.ToLIVE_ToolStripMenuItem.Text = "LIVE"
+        '
+        'ToPTU_ToolStripMenuItem
+        '
+        Me.ToPTU_ToolStripMenuItem.Name = "ToPTU_ToolStripMenuItem"
+        Me.ToPTU_ToolStripMenuItem.Size = New System.Drawing.Size(242, 22)
+        Me.ToPTU_ToolStripMenuItem.Text = "PTU"
+        '
+        'ToEPTU_ToolStripMenuItem
+        '
+        Me.ToEPTU_ToolStripMenuItem.Name = "ToEPTU_ToolStripMenuItem"
+        Me.ToEPTU_ToolStripMenuItem.Size = New System.Drawing.Size(242, 22)
+        Me.ToEPTU_ToolStripMenuItem.Text = "EPTU"
         '
         'ToolStripSeparator2
         '
@@ -402,23 +440,28 @@ Partial Class MainForm
         'TableLayoutPanel3
         '
         Me.TableLayoutPanel3.ColumnCount = 3
-        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
+        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33332!))
         Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334!))
         Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334!))
         Me.TableLayoutPanel3.Controls.Add(Me.InstallAll_Button, 0, 2)
         Me.TableLayoutPanel3.Controls.Add(Me.GitClone_Button, 0, 0)
         Me.TableLayoutPanel3.Controls.Add(Me.Label_GitClone, 1, 0)
         Me.TableLayoutPanel3.Controls.Add(Me.Label_InstallAll, 1, 2)
+        Me.TableLayoutPanel3.Controls.Add(Me.WL_Download1, 0, 7)
         Me.TableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
         Me.TableLayoutPanel3.Location = New System.Drawing.Point(3, 3)
         Me.TableLayoutPanel3.Name = "TableLayoutPanel3"
-        Me.TableLayoutPanel3.RowCount = 6
+        Me.TableLayoutPanel3.RowCount = 8
         Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
         Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
         Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
         Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
         Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
-        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle())
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
         Me.TableLayoutPanel3.Size = New System.Drawing.Size(770, 279)
         Me.TableLayoutPanel3.TabIndex = 3
         '
@@ -831,42 +874,19 @@ Partial Class MainForm
         '
         Me.Timer_UI.Interval = 1000
         '
-        'Profiles_ToolStripMenuItem
+        'WL_Download1
         '
-        Me.Profiles_ToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BeforeKillProcess_ToolStripMenuItem, Me.ToolStripSeparator4, Me.ToLIVE_ToolStripMenuItem, Me.ToPTU_ToolStripMenuItem, Me.ToEPTU_ToolStripMenuItem})
-        Me.Profiles_ToolStripMenuItem.Name = "Profiles_ToolStripMenuItem"
-        Me.Profiles_ToolStripMenuItem.Size = New System.Drawing.Size(214, 22)
-        Me.Profiles_ToolStripMenuItem.Text = "Перемещение профилей"
-        '
-        'BeforeKillProcess_ToolStripMenuItem
-        '
-        Me.BeforeKillProcess_ToolStripMenuItem.CheckOnClick = True
-        Me.BeforeKillProcess_ToolStripMenuItem.Name = "BeforeKillProcess_ToolStripMenuItem"
-        Me.BeforeKillProcess_ToolStripMenuItem.Size = New System.Drawing.Size(242, 22)
-        Me.BeforeKillProcess_ToolStripMenuItem.Text = "Предварительное завершение"
-        '
-        'ToolStripSeparator4
-        '
-        Me.ToolStripSeparator4.Name = "ToolStripSeparator4"
-        Me.ToolStripSeparator4.Size = New System.Drawing.Size(239, 6)
-        '
-        'ToLIVE_ToolStripMenuItem
-        '
-        Me.ToLIVE_ToolStripMenuItem.Name = "ToLIVE_ToolStripMenuItem"
-        Me.ToLIVE_ToolStripMenuItem.Size = New System.Drawing.Size(242, 22)
-        Me.ToLIVE_ToolStripMenuItem.Text = "LIVE"
-        '
-        'ToPTU_ToolStripMenuItem
-        '
-        Me.ToPTU_ToolStripMenuItem.Name = "ToPTU_ToolStripMenuItem"
-        Me.ToPTU_ToolStripMenuItem.Size = New System.Drawing.Size(242, 22)
-        Me.ToPTU_ToolStripMenuItem.Text = "PTU"
-        '
-        'ToEPTU_ToolStripMenuItem
-        '
-        Me.ToEPTU_ToolStripMenuItem.Name = "ToEPTU_ToolStripMenuItem"
-        Me.ToEPTU_ToolStripMenuItem.Size = New System.Drawing.Size(242, 22)
-        Me.ToEPTU_ToolStripMenuItem.Text = "EPTU"
+        Me.WL_Download1.AutoEllipsis = False
+        Me.WL_Download1.Clickable = False
+        Me.TableLayoutPanel3.SetColumnSpan(Me.WL_Download1, 3)
+        Me.WL_Download1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.WL_Download1.DownloadFrom = Nothing
+        Me.WL_Download1.DownloadTo = Nothing
+        Me.WL_Download1.Location = New System.Drawing.Point(3, 213)
+        Me.WL_Download1.Name = "WL_Download1"
+        Me.WL_Download1.Size = New System.Drawing.Size(764, 63)
+        Me.WL_Download1.TabIndex = 11
+        Me.WL_Download1.Visible = False
         '
         'MainForm
         '
@@ -973,4 +993,5 @@ Partial Class MainForm
     Friend WithEvents ToLIVE_ToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToPTU_ToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToEPTU_ToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents WL_Download1 As WL_Download
 End Class

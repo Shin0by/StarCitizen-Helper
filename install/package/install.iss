@@ -1,6 +1,6 @@
 
 [Setup]
-AppVersion=1.2.6.37
+AppVersion=1.3.7.41
 AppName=StarCitizen Helper
 DefaultDirName={commonpf}\StarCitizen Helper
 DefaultGroupName=StarCitizen Helper
@@ -27,7 +27,7 @@ Name: "{commondesktop}\StarCitizen Helper"; Filename: "{app}\StarCitizen Helper.
 
 [Components]
 Name: "main"; Description: "StarCitizen Helper"; Types: full compact custom; Flags: fixed
-Name: "framework"; Description: "Microsoft .Net Framework 4.7.2"; Types: full
+Name: "framework"; Description: "Microsoft .Net Framework 4.7.2";
 Name: "links"; Description: "Ярлыки:"; Types: full
 Name: "links\desktop"; Description: "На рабочем столе"; Types: full
 Name: "links\mainmenu"; Description: "В главном меню"; Types: full

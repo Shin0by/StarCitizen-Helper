@@ -32,8 +32,8 @@ Module Module_MAIN
         'Set Nothing when publish
         _VARS.BLOCK1 = "4032F680BFEE01"
         _VARS.BLOCK2 = "90909080BFEE01"
-        _VARS.PackageZipURL = "https://github.com/Shin0by/StarCitizen-Localization-Converter/archive/" & _VARS.DownloadFile
-        _VARS.PackageGitURL = "https://github.com/Shin0by/StarCitizen-Localization-Converter/"
+        _VARS.PackageZipURL = "https://github.com/defterai/StarCitizenModding/archive/" & _VARS.DownloadFile
+        _VARS.PackageGitURL = "https://github.com/defterai/StarCitizenModding"
 
     End Sub
 
@@ -45,11 +45,9 @@ Module Module_MAIN
 
         _WATCHFILE_THREAD = New Class_THREAD_WATCHFILE(MAIN_THREAD)
         _WATCHFILE_THREAD.StartThread()
-        '_WATCHFILE_THREAD.PushWatchFiles = True
 
         _HELPER_PATCH.CheckHexToExe(3)
         MAIN_THREAD.UpdateInterface()
-
     End Sub
 
     Public Sub Unload()

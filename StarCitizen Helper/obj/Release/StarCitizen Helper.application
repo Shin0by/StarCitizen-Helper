@@ -4,7 +4,7 @@
   <description asmv2:publisher="Shin0by" asmv2:product="StarCitizen Helper" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <deployment install="true" co.v1:createDesktopShortcut="true" />
   <compatibleFrameworks xmlns="urn:schemas-microsoft-com:clickonce.v2">
-    <framework targetVersion="4.5" profile="Full" supportedRuntime="4.0.30319" />
+    <framework targetVersion="4.6" profile="Full" supportedRuntime="4.0.30319" />
   </compatibleFrameworks>
   <dependency>
     <dependentAssembly dependencyType="install" codebase="StarCitizen Helper.exe.manifest" size="4904">
@@ -14,7 +14,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>A388VQwV6l1F/XCQmwc2yYePmCF3AcOjlB1lYDFh+6A=</dsig:DigestValue>
+        <dsig:DigestValue>DP+8QOxcfQskzC2h7AVfIWXdo5IxQ8ZzkuUrM2V/d9M=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
