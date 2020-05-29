@@ -8,6 +8,8 @@ SourceDir=C:\google\programming\GitHub\StarCitizen-Helper\install\package\Input
 OutputDir=C:\google\programming\GitHub\StarCitizen-Helper\install\package\Output
 ArchitecturesInstallIn64BitMode=x64
 UninstallDisplayIcon={app}\StarCitizen Helper.exe
+AlwaysShowDirOnReadyPage=yes
+DisableDirPage=no
 
 [Files]
 Source: "StarCitizen Helper.exe"; DestDir: "{app}"; Components: main
