@@ -6,10 +6,15 @@ Module Module_GIT
         Public Function _GetGitList() As List(Of Class_GitUpdateList.Class_GitUpdateElement)
             _GIT_LIST._Clear()
             Dim Header As New Net.WebHeaderCollection
-            Header.Add("authorization:token 191eb0edb3806ef34a335571b5e7120d152f0152")
             Header.Add("Accept-Encoding:gzip,deflate")
             Dim temp As String = Nothing
-            temp = _INET._GetHTTP(_VARS.PackageGitURL_Api, Net.SecurityProtocolType.Tls12, Header).ValueString
+            Dim result As ResultClass
+            result = _INET._GetHTTP(_VARS.PackageGitURL_Api, Net.SecurityProtocolType.Tls12, Header)
+            If result.Err.Flag = True Then
+                _LOG._sAdd("GIT_NET", "Не удалось загрузить данные о доступных сборках с Git репозитория", result.Err.Description, 1) : Return _GIT_LIST._GetAll
+            Else
+                temp = result.ValueString
+            End If
             If Len(temp) < 10 Then _LOG._sAdd("GIT_NET", "Не удалось загрузить данные о доступных сборках с Git репозитория", _VARS.PackageGitURL_Api, 1) : Return _GIT_LIST._GetAll
             _GIT_LIST._Add("Master", "Master", _VARS.PackageGitURL_Master, DateTime.Now, True)
             temp = "{" & Chr(34) & "data" & Chr(34) & ":" & temp & "}"

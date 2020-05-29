@@ -365,7 +365,7 @@ Fin:    Me.InstallAll_Button.Enabled = True
     End Sub
 
     Public Sub Timer_UI_Tick(sender As Object, e As EventArgs) Handles Timer_UI.Tick
-        Timer_UI.Interval = 60000
+        Timer_UI.Interval = 90000
         Dim NewGitList As List(Of Module_GIT.Class_GIT.Class_GitUpdateList.Class_GitUpdateElement) = _GIT._GetGitList()
         If NewGitList.Count <> _VARS.PackageList.Count Then
             _VARS.PackageList = NewGitList
@@ -475,12 +475,5 @@ Fin:    Me.InstallAll_Button.Enabled = True
         Me.ContextMenuStrip1.Enabled = True
     End Sub
 
-    Private Sub DownloadCompleted(sender As Object, e As EventArgs) Handles WL_Download1.CompleteEvent
-
-    End Sub
-
-    Private Sub TableLayoutPanel3_Paint(sender As Object, e As PaintEventArgs) Handles TableLayoutPanel3.Paint
-
-    End Sub
     '-----------------------------------> 'Form logic
 End Class
