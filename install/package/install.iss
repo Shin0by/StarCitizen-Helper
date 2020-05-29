@@ -16,6 +16,7 @@ Source: "StarCitizen Helper.exe"; DestDir: "{app}"; Components: main
 Source: "Shin0by soft.ico"; DestDir: "{app}"; Components: main
 Source: "config.ini"; DestDir: "{app}"; Components: main; Permissions: users-modify
 Source: "INIFileParser.dll"; DestDir: "{app}"; Components: main
+Source: "Newtonsoft.Json.dll"; DestDir: "{app}"; Components: main
 Source: "required\NDP472-KB4054531-Web.exe"; DestDir: "{tmp}"; Components: framework; AfterInstall: AfterInstallProcedure
 
 [Types]
