@@ -11,9 +11,9 @@ Public Class MainForm
 
     Private Sub MainForm_VisibleChanged(sender As Object, e As EventArgs) Handles Me.VisibleChanged
         If Me.Visible = True Then
-            Me.Timer_UI.Enabled = True
+            Me.Timer_LOG.Enabled = True
         Else
-            Me.Timer_UI.Enabled = False
+            Me.Timer_LOG.Enabled = False
         End If
     End Sub
     '-----------------------------------> 'Form
@@ -67,15 +67,14 @@ Public Class MainForm
         _VARS.DownloadFolder = _FILE.CreateFolder(_VARS.DownloadFolder)
         If _VARS.DownloadFolder Is Nothing Then result.Err.Flag = True : result.Err.Description = "Не удалось получить доступ к папке загрузок" & vbNewLine & _VARS.DownloadFolder : GoTo Fin
 
-        Dim sURL As String = _VARS.PackageZipURL
-        Dim sPath As String = Path.Combine(_VARS.DownloadFolder, _VARS.DownloadFile)
+        Dim sURL As String = _VARS.PackageGitURL_Master
+        Dim sPath As String = Path.Combine(_VARS.DownloadFolder, "*.zip")
 
         If Len(sURL) < _VARS.FilePathMinLen + _VARS.FileNameMinLen Then result.Err.Flag = True : result.Err.Description = "URL имеет некорректную длину" & vbNewLine & sURL : GoTo Fin
         If Len(sPath) < _VARS.FilePathMinLen + _VARS.FileNameMinLen Then result.Err.Flag = True : result.Err.Description = "Путь загрузки имеет некорректную длину" & vbNewLine & sPath : GoTo Fin
         If _FILE._Kill(sPath).Err.Flag = True Then result.Err.Flag = True : result.Err.Description = "Не удалось удалить существующий файл" & vbNewLine & sPath : GoTo Fin
 
-        WL_Download1.SecurityProtocol = SecurityProtocolType.Tls12
-        WL_Download1.DownloadStart(_VARS.PackageZipURL, Path.Combine(_VARS.DownloadFolder, _VARS.DownloadFile))
+        DownloadFromGit()
 
 Fin:    If result.Err.Flag = True Then
             _LOG._sAdd("WINDOW_FORM", result.Err.Description, Nothing, 2, result.Err.Number)
@@ -88,7 +87,7 @@ Fin:    If result.Err.Flag = True Then
         Me.GitClone_Button.Focus()
     End Sub
 
-    Private Sub DownloadCompleted(ByVal sender As Object, ByVal e As AsyncCompletedEventArgs) Handles WL_Download1.CompleteEvent
+    Friend Sub DownloadCompleted(ByVal sender As Object, ByVal e As AsyncCompletedEventArgs) Handles WL_Download1.CompleteEvent
         Dim result As New ResultClass
         If WL_Download1.DownloadProgress.Err IsNot Nothing Then result.Err.Flag = True : result.Err.Description = "Ошибка при загрузке пакета обновлений" & vbNewLine & WL_Download1.DownloadProgress.Err.Message : GoTo Fin
         If CType(_FILE._GetInfo(Path.Combine(_VARS.DownloadFolder, _VARS.DownloadFile)).ValueObject, FileInfo).Length <> WL_Download1.DownloadProgress.BytesReceived Then result.Err.Flag = True : result.Err.Description = "Ошибка при проверке загруженного файла" & vbNewLine & Path.Combine(_VARS.DownloadFolder, _VARS.DownloadFile) : GoTo Fin
@@ -102,31 +101,43 @@ Fin:    If result.Err.Flag = True Then
         Else
             WL_Download1.DownloadFrom = "Загрузка успешно завершена"
             Me.GitClone_Button.Enabled = True
-            Me.InstallAll_Button.Enabled = CheckPackageZip.ValueBoolean
+            If GetDownloaded() IsNot Nothing Then Me.InstallAll_Button.Enabled = True
         End If
         Me.GitClone_Button.Focus()
         Me.ContextMenuStrip1.Enabled = True
+
+        GetDownloaded()
+        If _VARS.PackageDownloadedVersion Is Nothing Then Label_GitClone.Text = "Загружена версия: не определена" : Else : Label_GitClone.Text = "Загружена версия: " & _VARS.PackageDownloadedVersion
+
     End Sub
 
     Private Sub InstallAll_Button_Click(sender As Object, e As EventArgs) Handles InstallAll_Button.Click
         Me.ContextMenuStrip1.Enabled = False
         Me.InstallAll_Button.Enabled = False
-        If _VARS.GameRootFolder Is Nothing Then
-            _LOG._sAdd("WINDOW_FORM", "Не удалось получить доступ к папке игры:", _VARS.GameRootFolder, 1)
-            GoTo Fin
+        If _VARS.GameExeFilePath Is Nothing Then _LOG._sAdd("WINDOW_FORM", "Не указан путь к исполняемому файлу игры", Nothing, 1) : GoTo Fin
+        If _VARS.GameRootFolder Is Nothing Then _LOG._sAdd("WINDOW_FORM", "Не удалось получить доступ к папке игры:", _VARS.GameRootFolder, 1) : GoTo Fin
+        If _FILE._FileExits(Path.Combine(_VARS.DownloadFolder, _VARS.DownloadFile)) = False Then _LOG._sAdd("WINDOW_FORM", "Не удалось получить доступ к файлу обновлений:", Path.Combine(_VARS.DownloadFolder, _VARS.DownloadFile), 1) : GoTo Fin
+
+        _FILE.ZIP.UnzipFolderToFolder(Path.Combine(_VARS.DownloadFolder, _VARS.DownloadFile), ".data", _VARS.GameRootFolder & "\data")
+
+        _FILE._Kill(_FILE._CombinePath(_VARS.GameRootFolder & _VARS.PackageInstalledMeta))
+        _FILE._WriteTextFile(Replace(_VARS.DownloadFile, ".ZIP", "",,, CompareMethod.Text), _FILE._CombinePath(_VARS.GameRootFolder & _VARS.PackageInstalledMeta), System.Text.Encoding.UTF8)
+
+        GetInstalled()
+        If _VARS.PackageInstalledVersion Is Nothing Then
+            Label_InstallAll.Text = "Установлена версия: не определена"
+        Else
+            Label_InstallAll.Text = "Установлена версия: " & _VARS.PackageInstalledVersion
         End If
 
-        If _FILE._FileExits(IO.Path.Combine(_VARS.DownloadFolder, _VARS.DownloadFile)) = False Then
-            _LOG._sAdd("WINDOW_FORM", "Не удалось получить доступ к файлу обновлений:", Path.Combine(_VARS.DownloadFolder, _VARS.DownloadFile), 1)
-            GoTo Fin
-        End If
-        _FILE.ZIP.UnzipFolderToFolder(Path.Combine(_VARS.DownloadFolder, _VARS.DownloadFile), "StarCitizenModding-master/data", _VARS.GameRootFolder & "\data")
+
 Fin:    Me.InstallAll_Button.Enabled = True
         Me.ContextMenuStrip1.Enabled = True
     End Sub
 
-    Private Sub Label_GitClone_DoubleClick(sender As Object, e As EventArgs) Handles Label_GitClone.DoubleClick
-        _INET.OpenURL(_VARS.PackageGitURL)
+    Private Sub GitClone_ComboBox_SelectedIndexChanged(sender As Object, e As EventArgs) Handles GitClone_ComboBox.SelectedIndexChanged
+        _VARS.PackageSelected = GitClone_ComboBox.SelectedItem.ToString
+        _INI._Write("EXTERNAL", "PACK_GIT_SELECTED", _VARS.PackageSelected)
     End Sub
     '-----------------------------------> 'Download and update
 
@@ -331,7 +342,7 @@ Fin:    Me.InstallAll_Button.Enabled = True
     '-----------------------------------> 'Menu
 
     '<----------------------------------- Other form elements
-    Private Sub Timer_UI_Tick(sender As Object, e As EventArgs) Handles Timer_UI.Tick
+    Private Sub Timer_LOG_Tick(sender As Object, e As EventArgs) Handles Timer_LOG.Tick
         On Error Resume Next
         If _LOG.Buffer IsNot Nothing Then
             Me.TextBox_Debug.AppendText(_LOG.Buffer)
@@ -352,6 +363,22 @@ Fin:    Me.InstallAll_Button.Enabled = True
             Me.TextBox_Debug.ScrollToCaret()
         End If
     End Sub
+
+    Public Sub Timer_UI_Tick(sender As Object, e As EventArgs) Handles Timer_UI.Tick
+        Timer_UI.Interval = 60000
+        Dim NewGitList As List(Of Module_GIT.Class_GIT.Class_GitUpdateList.Class_GitUpdateElement) = _GIT._GetGitList()
+        If NewGitList.Count <> _VARS.PackageList.Count Then
+            _VARS.PackageList = NewGitList
+            MAIN_THREAD.GitClone_ComboBox.Items.Clear()
+            If _VARS.PackageList.Count > 1 Then
+                For i = 0 To _VARS.PackageList.Count - 2
+                    MAIN_THREAD.GitClone_ComboBox.Items.Add(_VARS.PackageList(i)._name)
+                Next
+            End If
+
+            MAIN_THREAD.GitClone_ComboBox.SelectedIndex = MAIN_THREAD.GitClone_ComboBox.FindString(_INI._GET_VALUE("EXTERNAL", "PACK_GIT_SELECTED", "Master").Value)
+        End If
+    End Sub
     '-----------------------------------> 'Other form elements
 
     '<----------------------------------- Form logic
@@ -368,12 +395,17 @@ Fin:    Me.InstallAll_Button.Enabled = True
                 Me.Label_SetStarCitizenExeFilePath.Text = "Заданный путь не указывает на файл " & _VARS.GameExeFileName
             End If
         Else
-            Me.Label_SetStarCitizenExeFilePath.Text = _VARS.GameExeFilePath
+            Me.Label_SetStarCitizenExeFilePath.Text = "Версия: " & _VARS.GameExeFileVersion & ", путь: " & _VARS.GameExeFilePath
         End If
         Me.CheckBox_FileWatcher.Checked = _VARS.FileWatcher
 
         'Download and update
-        Me.InstallAll_Button.Enabled = CheckPackageZip.ValueBoolean
+
+        GetInstalled()
+        If _VARS.PackageInstalledVersion Is Nothing Then : Label_InstallAll.Text = "Установлена версия: не определена" : Else : Label_InstallAll.Text = "Установлена версия: " & _VARS.PackageInstalledVersion : End If
+        GetDownloaded()
+        If _VARS.PackageDownloadedVersion IsNot Nothing Then Me.InstallAll_Button.Enabled = True Else Me.InstallAll_Button.Enabled = False
+        If _VARS.PackageDownloadedVersion Is Nothing Then : Label_GitClone.Text = "Загружена версия:не определена" : Else : Label_GitClone.Text = "Загружена версия: " & _VARS.PackageDownloadedVersion : End If
 
         'PKIller
         Me.CheckBox_KillerThread.Checked = _VARS.PKillerEnabled
@@ -441,6 +473,14 @@ Fin:    Me.InstallAll_Button.Enabled = True
         End If
         Me.ModScan_Button.Enabled = True
         Me.ContextMenuStrip1.Enabled = True
+    End Sub
+
+    Private Sub DownloadCompleted(sender As Object, e As EventArgs) Handles WL_Download1.CompleteEvent
+
+    End Sub
+
+    Private Sub TableLayoutPanel3_Paint(sender As Object, e As PaintEventArgs) Handles TableLayoutPanel3.Paint
+
     End Sub
     '-----------------------------------> 'Form logic
 End Class

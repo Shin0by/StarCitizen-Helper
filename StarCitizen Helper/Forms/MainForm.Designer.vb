@@ -62,6 +62,7 @@ Partial Class MainForm
         Me.Label_ModScan_Button = New System.Windows.Forms.Label()
         Me.TabPage_Update = New System.Windows.Forms.TabPage()
         Me.TableLayoutPanel3 = New System.Windows.Forms.TableLayoutPanel()
+        Me.GitClone_ComboBox = New System.Windows.Forms.ComboBox()
         Me.InstallAll_Button = New System.Windows.Forms.Button()
         Me.GitClone_Button = New System.Windows.Forms.Button()
         Me.Label_GitClone = New System.Windows.Forms.Label()
@@ -94,6 +95,7 @@ Partial Class MainForm
         Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
         Me.ClearLog_Button = New System.Windows.Forms.Button()
         Me.TextBox_Debug = New System.Windows.Forms.TextBox()
+        Me.Timer_LOG = New System.Windows.Forms.Timer(Me.components)
         Me.Timer_UI = New System.Windows.Forms.Timer(Me.components)
         Me.WL_Download1 = New SC.WL_Download()
         Me.ContextMenuStrip1.SuspendLayout()
@@ -357,6 +359,7 @@ Partial Class MainForm
         '
         'Label_SetStarCitizenExeFilePath
         '
+        Me.Label_SetStarCitizenExeFilePath.AutoEllipsis = True
         Me.Label_SetStarCitizenExeFilePath.AutoSize = True
         Me.TableLayoutPanel1.SetColumnSpan(Me.Label_SetStarCitizenExeFilePath, 2)
         Me.Label_SetStarCitizenExeFilePath.Dock = System.Windows.Forms.DockStyle.Fill
@@ -443,9 +446,10 @@ Partial Class MainForm
         Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33332!))
         Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334!))
         Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334!))
+        Me.TableLayoutPanel3.Controls.Add(Me.GitClone_ComboBox, 0, 0)
         Me.TableLayoutPanel3.Controls.Add(Me.InstallAll_Button, 0, 2)
-        Me.TableLayoutPanel3.Controls.Add(Me.GitClone_Button, 0, 0)
-        Me.TableLayoutPanel3.Controls.Add(Me.Label_GitClone, 1, 0)
+        Me.TableLayoutPanel3.Controls.Add(Me.GitClone_Button, 0, 1)
+        Me.TableLayoutPanel3.Controls.Add(Me.Label_GitClone, 1, 1)
         Me.TableLayoutPanel3.Controls.Add(Me.Label_InstallAll, 1, 2)
         Me.TableLayoutPanel3.Controls.Add(Me.WL_Download1, 0, 7)
         Me.TableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill
@@ -465,6 +469,16 @@ Partial Class MainForm
         Me.TableLayoutPanel3.Size = New System.Drawing.Size(770, 279)
         Me.TableLayoutPanel3.TabIndex = 3
         '
+        'GitClone_ComboBox
+        '
+        Me.GitClone_ComboBox.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.GitClone_ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.GitClone_ComboBox.FormattingEnabled = True
+        Me.GitClone_ComboBox.Location = New System.Drawing.Point(3, 3)
+        Me.GitClone_ComboBox.Name = "GitClone_ComboBox"
+        Me.GitClone_ComboBox.Size = New System.Drawing.Size(250, 21)
+        Me.GitClone_ComboBox.TabIndex = 12
+        '
         'InstallAll_Button
         '
         Me.InstallAll_Button.Location = New System.Drawing.Point(3, 63)
@@ -477,7 +491,7 @@ Partial Class MainForm
         'GitClone_Button
         '
         Me.GitClone_Button.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.GitClone_Button.Location = New System.Drawing.Point(3, 3)
+        Me.GitClone_Button.Location = New System.Drawing.Point(3, 33)
         Me.GitClone_Button.Name = "GitClone_Button"
         Me.GitClone_Button.Size = New System.Drawing.Size(250, 24)
         Me.GitClone_Button.TabIndex = 1
@@ -489,12 +503,12 @@ Partial Class MainForm
         Me.Label_GitClone.AutoSize = True
         Me.TableLayoutPanel3.SetColumnSpan(Me.Label_GitClone, 2)
         Me.Label_GitClone.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Label_GitClone.Location = New System.Drawing.Point(259, 3)
+        Me.Label_GitClone.Location = New System.Drawing.Point(259, 33)
         Me.Label_GitClone.Margin = New System.Windows.Forms.Padding(3)
         Me.Label_GitClone.Name = "Label_GitClone"
         Me.Label_GitClone.Size = New System.Drawing.Size(508, 24)
         Me.Label_GitClone.TabIndex = 2
-        Me.Label_GitClone.Text = "Принудительая загрузка актуальной версия пакета обновлений с Git"
+        Me.Label_GitClone.Text = "Загрузка выбранного пакета обновлений"
         Me.Label_GitClone.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'Label_InstallAll
@@ -870,9 +884,13 @@ Partial Class MainForm
         Me.TextBox_Debug.Size = New System.Drawing.Size(764, 243)
         Me.TextBox_Debug.TabIndex = 0
         '
+        'Timer_LOG
+        '
+        Me.Timer_LOG.Interval = 1000
+        '
         'Timer_UI
         '
-        Me.Timer_UI.Interval = 1000
+        Me.Timer_UI.Interval = 600
         '
         'WL_Download1
         '
@@ -940,7 +958,7 @@ Partial Class MainForm
     Friend WithEvents Label_SetStarCitizenExeFilePath As Label
     Friend WithEvents TableLayoutPanel2 As TableLayoutPanel
     Friend WithEvents TextBox_Debug As TextBox
-    Friend WithEvents Timer_UI As Timer
+    Friend WithEvents Timer_LOG As Timer
     Friend WithEvents CheckBox_FileWatcher As CheckBox
     Friend WithEvents Label_FileWatcher As Label
     Friend WithEvents ModOn_Button As Button
@@ -994,4 +1012,6 @@ Partial Class MainForm
     Friend WithEvents ToPTU_ToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToEPTU_ToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents WL_Download1 As WL_Download
+    Friend WithEvents GitClone_ComboBox As ComboBox
+    Friend WithEvents Timer_UI As Timer
 End Class

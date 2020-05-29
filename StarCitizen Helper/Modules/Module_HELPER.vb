@@ -1,4 +1,5 @@
 ﻿Imports System.IO
+Imports System.Net
 
 Module Module_HELPER
     Public Sub ConfigFile()
@@ -30,8 +31,11 @@ WriteBlock: IO.File.Create(_APP.configFullPath).Dispose()
             _INI._Write("EXTERNAL", "PROFILES_PROCESS_NAME_LAUNCHER", "RSI Launcher")
 
             'GIT
-            _INI._Write("EXTERNAL", "PACK_GIT_ZIP", _VARS.PackageZipURL)
-            _INI._Write("EXTERNAL", "PACK_GIT_PAGE", _VARS.PackageGitURL)
+            _INI._Write("EXTERNAL", "PACK_GIT_MASTER", _VARS.PackageGitURL_Master)
+            _INI._Write("EXTERNAL", "PACK_GIT_PAGE", _VARS.PackageGitURL_Root)
+            _INI._Write("EXTERNAL", "PACK_GIT_API", _VARS.PackageGitURL_Api)
+            _INI._Write("EXTERNAL", "PACK_GIT_SELECTED", "Master")
+            _INI._Write("EXTERNAL", "PACK_GIT_INSTALLED", _VARS.PackageInstalledVersion)
 
             'HEX
             _INI._Write("EXTERNAL", "BLOCK1", _VARS.BLOCK1)
@@ -61,8 +65,11 @@ ReadBlock: _VARS.ConfigFileIsOK = True
         End If
 
         'GIT
-        _VARS.PackageZipURL = _INI._GET_VALUE("EXTERNAL", "PACK_GIT_ZIP", Nothing).Value
-        _VARS.PackageGitURL = _INI._GET_VALUE("EXTERNAL", "PACK_GIT_PAGE", Nothing).Value
+        _VARS.PackageGitURL_Master = _INI._GET_VALUE("EXTERNAL", "PACK_GIT_MASTER", Nothing).Value
+        _VARS.PackageGitURL_Root = _INI._GET_VALUE("EXTERNAL", "PACK_GIT_PAGE", Nothing).Value
+        _VARS.PackageGitURL_Api = _INI._GET_VALUE("EXTERNAL", "PACK_GIT_API", Nothing).Value
+        _VARS.PackageSelected = _INI._GET_VALUE("EXTERNAL", "PACK_GIT_SELECTED", "Master").Value
+        _VARS.PackageInstalledVersion = _INI._GET_VALUE("EXTERNAL", "PACK_GIT_INSTALLED", Nothing).Value
 
         'PKiller
         _VARS.PKillerEnabled = StringToBool(_INI._GET_VALUE("CONFIGURATION", "PKILLER_ENABLED", False, {"0", "1"}).Value)
@@ -74,6 +81,68 @@ ReadBlock: _VARS.ConfigFileIsOK = True
         _VARS.GameProcessMain = _INI._GET_VALUE("EXTERNAL", "PROFILES_PROCESS_NAME_GAME", Nothing).Value
         _VARS.GameProcessLauncher = _INI._GET_VALUE("EXTERNAL", "PROFILES_PROCESS_NAME_LAUNCHER", Nothing).Value
     End Sub
+
+    Public Sub DownloadFromGit()
+        MAIN_THREAD.WL_Download1.SecurityProtocol = SecurityProtocolType.Tls12
+        Dim Headers As New WebHeaderCollection
+        Headers.Add("authorization: token 191eb0edb3806ef34a335571b5e7120d152f0152")
+        Headers.Add("Accept-Encoding: gzip,deflate")
+        Headers.Add("Host: api.github.com")
+        Headers.Add("User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36")
+        Headers.Add("Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9")
+        _VARS.DownloadFile = _VARS.PackageSelected & ".zip"
+        Dim GitUpdateElement As Class_GIT.Class_GitUpdateList.Class_GitUpdateElement = _GIT._GIT_LIST._GetByName(_VARS.PackageSelected, "Master")
+        If GitUpdateElement._isMaster = True Then
+            'Fix this block
+            MAIN_THREAD.WL_Download1.Visible = True
+            MAIN_THREAD.WL_Download1.ProgressBar.Value = 0
+            MAIN_THREAD.WL_Download1.DownloadFrom = GitUpdateElement._zipball_url
+            MAIN_THREAD.WL_Download1.DownloadTo = Path.Combine(_VARS.DownloadFolder, _VARS.DownloadFile)
+            MAIN_THREAD.Update()
+            Dim result As ResultClass = _INET._GetFile(GitUpdateElement._zipball_url, Path.Combine(_VARS.DownloadFolder, _VARS.DownloadFile), Net.SecurityProtocolType.Tls12, Headers)
+            If result.Err.Flag = True Then
+                MAIN_THREAD.WL_Download1.DownloadFrom = "Последняя загрузка завершилась ошибкой: " & result.ValueString
+                MAIN_THREAD.WL_Download1.DownloadTo = result.Err.Description
+            Else
+                MAIN_THREAD.WL_Download1.DownloadFrom = "Загрузка успешно завершена"
+            End If
+
+            MAIN_THREAD.WL_Download1.ProgressBar.Value = 100
+            MAIN_THREAD.GitClone_Button.Enabled = True
+            If GetDownloaded() IsNot Nothing Then MAIN_THREAD.InstallAll_Button.Enabled = True
+            MAIN_THREAD.GitClone_Button.Focus()
+            MAIN_THREAD.ContextMenuStrip1.Enabled = True
+            GetDownloaded()
+            If _VARS.PackageDownloadedVersion Is Nothing Then : MAIN_THREAD.Label_GitClone.Text = "Загружена версия: не определена" : Else : MAIN_THREAD.Label_GitClone.Text = "Загружена версия: " & _VARS.PackageDownloadedVersion : End If
+            'Fix this block
+        Else
+            MAIN_THREAD.WL_Download1.DownloadStart(GitUpdateElement._zipball_url, Path.Combine(_VARS.DownloadFolder, _VARS.DownloadFile), Headers)
+        End If
+    End Sub
+
+    Public Function GetDownloaded() As String
+        Dim Path As String = _FILE._CombinePath(_VARS.DownloadFolder)
+        Dim list As String() = Directory.GetFiles(Path)
+        Dim File As FileInfo
+        If list.Count = 1 Then
+            File = CType(_FILE._GetInfo(list(0)).ValueObject, FileInfo)
+            If LCase(File.Extension) = ".zip" Then
+                _VARS.PackageDownloadedVersion = Trim(Left(File.Name, Len(File.Name) - Len(File.Extension)))
+                _VARS.DownloadFile = File.Name
+            End If
+        End If
+        Return _VARS.PackageDownloadedVersion
+    End Function
+
+    Public Function GetInstalled() As String
+        Dim Path As String = _FILE._CombinePath(_VARS.GameRootFolder & _VARS.PackageInstalledMeta)
+        Dim result As String = _FILE._ReadTextFile(Path, System.Text.Encoding.UTF8)
+        If result IsNot Nothing Then
+            _VARS.PackageInstalledVersion = _FILE._ReadTextFile(Path, System.Text.Encoding.UTF8)
+            _INI._Write("EXTERNAL", "PACK_GIT_INSTALLED", _VARS.PackageInstalledVersion)
+        End If
+        Return Trim(result)
+    End Function
 
     Public Function StringToBool(Value As String) As Boolean
         On Error Resume Next
@@ -212,17 +281,6 @@ Fin:    Return result
         Return CheckedListBox.Items.Count
     End Function
 
-    Public Function CheckPackageZip() As ResultClass
-        Dim result As New ResultClass
-        result.ValueBoolean = False
-        If _FILE._FileExits(Path.Combine(_VARS.DownloadFolder, _VARS.DownloadFile)) = False Then result.Err.Flag = True : result.Err.Description = "Ошибка при проверке пакета обновлений" : Return result
-        If _VARS.GameExeFilePath Is Nothing Then result.Err.Flag = True : result.Err.Description = "Не указан путь к файлу игры" : Return result
-        result.ValueBoolean = True
-        Return result
-    End Function
-
-
-
     Class Class_HelperPatch
         Public Function SetGameExeFilePath(Optional ExPath As String = Nothing) As String
             Dim Path As String = Nothing
@@ -249,6 +307,7 @@ Fin:    Return result
             result.LogFlag = LogFlag
             If _VARS.GameExeFilePath IsNot Nothing Then
                 If _FILE._FileExits(_VARS.GameExeFilePath) Then
+                    _VARS.GameExeFileVersion = FileVersionInfo.GetVersionInfo(_VARS.GameExeFilePath).FileVersion.ToString
                     If _INI._GET_VALUE("EXTERNAL", "BLOCK1", Nothing).Value IsNot Nothing Or _INI._GET_VALUE("EXTERNAL", "BLOCK2", Nothing).Value IsNot Nothing Then
                         result = _PATCH.Patch(_VARS.GameExeFilePath, _INI._GET_VALUE("EXTERNAL", "BLOCK1", Nothing).Value, _INI._GET_VALUE("EXTERNAL", "BLOCK2", Nothing).Value, True)
                     Else

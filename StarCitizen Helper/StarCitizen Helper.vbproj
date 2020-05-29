@@ -95,6 +95,10 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -146,12 +150,13 @@
     </Compile>
     <Compile Include="Modules\Module_APP.vb" />
     <Compile Include="Modules\Module_FILE.vb" />
+    <Compile Include="Modules\Module_GIT.vb" />
     <Compile Include="Modules\Module_HELPER.vb" />
     <Compile Include="Modules\Module_INI.vb" />
     <Compile Include="Modules\Module_KEYS.vb" />
     <Compile Include="Modules\Module_LOG.vb" />
     <Compile Include="Modules\Module_MAIN.vb" />
-    <Compile Include="Modules\Module_NET.vb" />
+    <Compile Include="Modules\Module_INET.vb" />
     <Compile Include="Modules\Module_PARSE.vb" />
     <Compile Include="Modules\Module_PATCH.vb" />
     <Compile Include="Modules\Module_PROCESSES.vb" />
@@ -209,6 +214,7 @@
     <None Include="Other\StarCitizen Helper_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
     <None Include="Resources\mouse_click.wav" />
     <None Include="Resources\core_fix.wav" />
     <None Include="Resources\disabled.wav" />

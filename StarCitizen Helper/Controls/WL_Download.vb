@@ -114,7 +114,7 @@ Public Class WL_Download
         End Set
     End Property
 
-    Public Function DownloadStart(Optional DownloadFrom As String = Nothing, Optional DownloadTo As String = Nothing) As Boolean
+    Public Function DownloadStart(Optional DownloadFrom As String = Nothing, Optional DownloadTo As String = Nothing, Optional Headers As WebHeaderCollection = Nothing) As Boolean
         If DownloadFrom Is Nothing And sDownloadFrom Is Nothing Then Return False
         If DownloadTo Is Nothing And sDownloadTo Is Nothing Then Return False
 
@@ -130,6 +130,9 @@ Public Class WL_Download
         Me.DownloadProgress = New DownloadProgressElement
         Me.DownloadClient = New WebClient()
 
+        If Headers Is Nothing Then Headers = New WebHeaderCollection
+        DownloadClient.Headers = Headers
+
         Me.THREAD_Download = New Thread(AddressOf ThreadTask)
         Me.THREAD_Download.Start()
         Return True
@@ -139,9 +142,6 @@ Public Class WL_Download
         ServicePointManager.SecurityProtocol = Me.SecurityProtocol
         DownloadClient.DownloadFileAsync(New Uri(Me.DownloadFrom), Me.DownloadTo)
     End Sub
-
-
-
 
     Private Sub DownloadProgressChanged(ByVal Sender As Object, ByVal e As DownloadProgressChangedEventArgs) Handles DownloadClient.DownloadProgressChanged
         Me.DownloadProgress.BytesReceived = e.BytesReceived

@@ -45,18 +45,17 @@ Module Module_FILE
 
         Public Function _Kill(sPath As String) As ResultClass
             Dim result As New ResultClass
+            result.ValueBoolean = True
             If Len(sPath) < _VARS.FileNameMinLen + _VARS.FilePathMinLen Then Return result
             Try
-                If Me._FileExits(sPath) = False Then
-                    result.ValueBoolean = True
-                Else
-                    My.Computer.FileSystem.DeleteFile(sPath)
-                    result.ValueBoolean = True
-                End If
+                FileSystem.Kill(sPath)
+                result.ValueBoolean = True
             Catch ex As Exception
-                result.Err.Description = Err.Description
-                result.Err.Number = Err.Number
-                result.Err.Flag = True
+                If Err.Number <> 53 Then
+                    result.Err.Description = Err.Description
+                    result.Err.Number = Err.Number
+                    result.Err.Flag = True
+                End If
             End Try
             Return result
         End Function
@@ -228,6 +227,7 @@ Module Module_FILE
                     Dim isFile As Boolean = True
                     Dim destPath As String = Nothing
                     Dim temp As String = Nothing
+                    Dim Cntr As Long = 0
                     For Each elem In zipPack.Entries
                         temp = Nothing
                         destPath = Nothing
@@ -237,6 +237,10 @@ Module Module_FILE
                         temp = Replace(elem.FullName, sPathFrom & "/", "")
                         destPath = Path.GetFullPath(Path.Combine(sPathTo, temp))
 
+                        If sPathFrom.StartsWith(".", StringComparison.Ordinal) And Cntr = 0 Then
+                            sPathFrom = elem.FullName & Right(sPathFrom, Len(sPathFrom) - 1)
+                        End If
+
                         If elem.FullName.StartsWith(sPathFrom, StringComparison.Ordinal) Then
                             If isFile = True Then
                                 elem.ExtractToFile(destPath, True)
@@ -244,6 +248,7 @@ Module Module_FILE
                                 _FILE.CreateFolder(destPath)
                             End If
                         End If
+                        Cntr += 1
                     Next
 
                 End Using

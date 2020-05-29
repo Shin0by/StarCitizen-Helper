@@ -1,4 +1,6 @@
 ﻿Imports System.IO
+Imports SC.Class_GIT.Class_GitUpdateList
+
 Module Module_MAIN
     Public Initialization As Boolean = True
     Public MAIN_THREAD As MainForm
@@ -13,9 +15,11 @@ Module Module_MAIN
     Public _INET As New Class_INET
     Public _WATCHFILE_THREAD As Class_THREAD_WATCHFILE
     Public _PROCESS As New Class_PROCESSES
-
+    Public _GIT As New Class_GIT
 
     Public Sub InitializeStart()
+
+
         _KEYS = New Class_KEYS(MAIN_THREAD)
         _INI._File = _APP.configFullPath
 
@@ -25,20 +29,23 @@ Module Module_MAIN
         _VARS.GameName = "StarCitizen"
         _VARS.GameExeFileName = "StarCitizen.exe"
         _VARS.GameExeFileCopyPref = ".bak"
-        _VARS.DownloadFile = "master.zip"
         _VARS.DownloadFolderPref = "temp"
+        _VARS.DownloadFile = "master.zip"
         _VARS.DownloadFolder = _FILE.CreateFolder(Path.Combine(_APP.exePath, _VARS.DownloadFolderPref))
+        _VARS.PackageInstalledMeta = "meta.txt"
+
+
 
         'Set Nothing when publish
         _VARS.BLOCK1 = "4032F680BFEE01"
         _VARS.BLOCK2 = "90909080BFEE01"
-        _VARS.PackageZipURL = "https://github.com/defterai/StarCitizenModding/archive/" & _VARS.DownloadFile
-        _VARS.PackageGitURL = "https://github.com/defterai/StarCitizenModding"
-
+        _VARS.PackageGitURL_Root = "https://github.com/defterai/StarCitizenModding"
+        _VARS.PackageGitURL_Master = "https://codeload.github.com/defterai/StarCitizenModding/zip/master"
+        _VARS.PackageGitURL_Api = "https://api.github.com/repos/defterai/StarCitizenModding/releases"
+        'Set Nothing when publish
     End Sub
 
     Public Sub InitializeEnd()
-        'On Error Resume Next
         MAIN_THREAD.Text = _APP.appName & " " & _APP.Version
         MAIN_THREAD.NotifyIcon1.Text = _APP.appName
         Module_HELPER.ConfigFile()
@@ -48,6 +55,8 @@ Module Module_MAIN
 
         _HELPER_PATCH.CheckHexToExe(3)
         MAIN_THREAD.UpdateInterface()
+
+        MAIN_THREAD.Timer_UI.Enabled = True
     End Sub
 
     Public Sub Unload()
@@ -137,8 +146,6 @@ Module Module_MAIN
         End Function
     End Class
 
-
-
     Class Class_VarCol
         'Global
         Public FilePathMinLen As Long = 2
@@ -152,6 +159,7 @@ Module Module_MAIN
         Public GameRootFolder As String = Nothing
         Public GameExeFileStatus As New Class_PATCH.Class_PatchResult
         Public GameExeFileCopyPref As String = ".bak"
+        Public GameExeFileVersion As String = Nothing
 
         Public BLOCK1 As String = Nothing
         Public BLOCK2 As String = Nothing
@@ -160,11 +168,17 @@ Module Module_MAIN
         Public FileWatcher As Boolean = False
 
         'Download
-        Public PackageZipURL As String = Nothing
-        Public PackageGitURL As String = Nothing
+        Public PackageGitURL_Master As String = Nothing
+        Public PackageGitURL_Root As String = Nothing
+        Public PackageGitURL_Api As String = Nothing
         Public DownloadFolderPref As String = Nothing
         Public DownloadFolder As String = Nothing
-        Public DownloadFile As String = "master.zip"
+        Public DownloadFile As String = Nothing
+        Public PackageSelected As String = Nothing
+        Public PackageInstalledVersion As String = Nothing
+        Public PackageInstalledMeta As String = Nothing
+        Public PackageDownloadedVersion As String = Nothing
+        Public PackageList As New List(Of Class_GitUpdateElement)
 
         'PKiller
         Public PKillerEnabled As Boolean = False

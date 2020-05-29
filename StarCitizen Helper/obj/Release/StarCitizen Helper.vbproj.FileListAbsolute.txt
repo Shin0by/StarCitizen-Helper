@@ -18,3 +18,5 @@ C:\google\programming\GitHub\StarCitizen-Helper\StarCitizen Helper\obj\Release\S
 C:\google\programming\GitHub\StarCitizen-Helper\StarCitizen Helper\obj\Release\StarCitizen Helper.exe
 C:\google\programming\GitHub\StarCitizen-Helper\StarCitizen Helper\obj\Release\StarCitizen Helper.pdb
 C:\google\programming\GitHub\StarCitizen-Helper\StarCitizen Helper\obj\Release\SC.WL_Download.resources
+C:\google\programming\GitHub\StarCitizen-Helper\StarCitizen Helper\bin\Release\Newtonsoft.Json.dll
+C:\google\programming\GitHub\StarCitizen-Helper\StarCitizen Helper\bin\Release\Newtonsoft.Json.xml
