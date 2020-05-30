@@ -67,6 +67,7 @@ Partial Class MainForm
         Me.GitClone_Button = New System.Windows.Forms.Button()
         Me.Label_GitClone = New System.Windows.Forms.Label()
         Me.Label_InstallAll = New System.Windows.Forms.Label()
+        Me.WL_Download1 = New SC.WL_Download()
         Me.TabPage_Killer = New System.Windows.Forms.TabPage()
         Me.TableLayoutPanel4 = New System.Windows.Forms.TableLayoutPanel()
         Me.Label1 = New System.Windows.Forms.Label()
@@ -97,7 +98,6 @@ Partial Class MainForm
         Me.TextBox_Debug = New System.Windows.Forms.TextBox()
         Me.Timer_LOG = New System.Windows.Forms.Timer(Me.components)
         Me.Timer_UI = New System.Windows.Forms.Timer(Me.components)
-        Me.WL_Download1 = New SC.WL_Download()
         Me.ContextMenuStrip1.SuspendLayout()
         Me.TabControl.SuspendLayout()
         Me.TabPage_Patch.SuspendLayout()
@@ -524,6 +524,20 @@ Partial Class MainForm
         Me.Label_InstallAll.Text = "Локализация и шрифты, а так же будут выполнены настройки для их использования"
         Me.Label_InstallAll.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
+        'WL_Download1
+        '
+        Me.WL_Download1.AutoEllipsis = False
+        Me.WL_Download1.Clickable = False
+        Me.TableLayoutPanel3.SetColumnSpan(Me.WL_Download1, 3)
+        Me.WL_Download1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.WL_Download1.DownloadFrom = Nothing
+        Me.WL_Download1.DownloadTo = Nothing
+        Me.WL_Download1.Location = New System.Drawing.Point(3, 213)
+        Me.WL_Download1.Name = "WL_Download1"
+        Me.WL_Download1.Size = New System.Drawing.Size(764, 63)
+        Me.WL_Download1.TabIndex = 11
+        Me.WL_Download1.Visible = False
+        '
         'TabPage_Killer
         '
         Me.TabPage_Killer.Controls.Add(Me.TableLayoutPanel4)
@@ -891,20 +905,6 @@ Partial Class MainForm
         'Timer_UI
         '
         Me.Timer_UI.Interval = 600
-        '
-        'WL_Download1
-        '
-        Me.WL_Download1.AutoEllipsis = False
-        Me.WL_Download1.Clickable = False
-        Me.TableLayoutPanel3.SetColumnSpan(Me.WL_Download1, 3)
-        Me.WL_Download1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.WL_Download1.DownloadFrom = Nothing
-        Me.WL_Download1.DownloadTo = Nothing
-        Me.WL_Download1.Location = New System.Drawing.Point(3, 213)
-        Me.WL_Download1.Name = "WL_Download1"
-        Me.WL_Download1.Size = New System.Drawing.Size(764, 63)
-        Me.WL_Download1.TabIndex = 11
-        Me.WL_Download1.Visible = False
         '
         'MainForm
         '

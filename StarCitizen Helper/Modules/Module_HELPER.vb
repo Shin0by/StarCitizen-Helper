@@ -85,7 +85,6 @@ ReadBlock: _VARS.ConfigFileIsOK = True
     Public Sub DownloadFromGit()
         MAIN_THREAD.WL_Download1.SecurityProtocol = SecurityProtocolType.Tls12
         Dim Headers As New WebHeaderCollection
-        Headers.Add("authorization: token 191eb0edb3806ef34a335571b5e7120d152f0152")
         Headers.Add("Accept-Encoding: gzip,deflate")
         Headers.Add("Host: api.github.com")
         Headers.Add("User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36")
