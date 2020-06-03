@@ -27,14 +27,10 @@ Module Module_MAIN
         _VARS.FileNameMinLen = 5
         _APP.appName = "StarCitizen Helper"
         _VARS.GameName = "StarCitizen"
-        _VARS.GameExeFileName = "StarCitizen.exe"
-        _VARS.GameExeFileCopyPref = ".bak"
         _VARS.DownloadFolderPref = "temp"
         _VARS.DownloadFile = "master.zip"
         _VARS.DownloadFolder = _FILE.CreateFolder(Path.Combine(_APP.exePath, _VARS.DownloadFolderPref))
         _VARS.PackageInstalledMeta = "meta.txt"
-
-
 
         'Set Nothing when publish
         _VARS.BLOCK1 = "4032F680BFEE01"
@@ -53,10 +49,21 @@ Module Module_MAIN
         _WATCHFILE_THREAD = New Class_THREAD_WATCHFILE(MAIN_THREAD)
         _WATCHFILE_THREAD.StartThread()
 
-        _HELPER_PATCH.CheckHexToExe(3)
         MAIN_THREAD.UpdateInterface()
-
         MAIN_THREAD.Timer_UI.Enabled = True
+
+        MAIN_THREAD.WL_Mod.Property_GameExeFileName = "StarCitizen.exe"
+        MAIN_THREAD.WL_Mod.Property_PatchSrcFileName = "patcher.bin"
+        MAIN_THREAD.WL_Mod.Property_PatchSrcFilePath = _FILE._CombinePath(_VARS.DownloadFolder, MAIN_THREAD.WL_Mod.Property_PatchSrcFileName)
+        MAIN_THREAD.WL_Mod.Property_PatchDstFileName = "CIGDevelopmentTools.dll"
+        MAIN_THREAD.WL_Mod.Property_ModInPackFileVersion = _VARS.PackageDownloadedVersion
+        If MAIN_THREAD.WL_Mod.Property_GameExeFilePath Is Nothing Then
+            _LOG._sAdd("WINDOW_FORM", "Не указан путь к исполняемому файлу игры" & vbNewLine & "Перейдите в вкладку [" & MAIN_THREAD.TabPage_Patch.Text & "] и нажмите кноку [" & MAIN_THREAD.WL_Mod.Text_Path & "], укажите путь к файлу [...\Bin64\" & MAIN_THREAD.WL_Mod.Property_GameExeFileName & "]", Nothing, 0)
+        Else
+            MAIN_THREAD.WL_Mod._Update()
+            MAIN_THREAD.WL_Mod.Property_PatchDstFilePath = _FILE._CombinePath(MAIN_THREAD.WL_Mod.Property_GameExeFolderPath, MAIN_THREAD.WL_Mod.Property_PatchDstFileName)
+            MAIN_THREAD.WL_Mod._Update(2)
+        End If
     End Sub
 
     Public Sub Unload()
@@ -78,19 +85,18 @@ Module Module_MAIN
         Return True
     End Function
     Class ResultClass
-        Friend Class Class_UniversalResult_Error
-            Public Number As Long = 0
-            Public Description As String = Nothing
-            Public Flag As Boolean = False
-        End Class
-
-        Public Err As New Class_UniversalResult_Error
+        Public Err As New ERR_Element(Owner)
         Private boolValue As Boolean = False
         Private stringValue As String = Nothing
         Private longValue As Long = Nothing
         Private objValue As Object = Nothing
         Private Type As Boolean = 0 '0 - Boolean, 1 - String, 2 - Long, 3 - Object
         Private lLogList As New List(Of LOG_SubLine)
+        Private Owner As Object
+
+        Sub New(Owner As Object)
+            Me.Owner = Owner
+        End Sub
 
         Public Property ValueBoolean As Boolean
             Get
@@ -136,10 +142,15 @@ Module Module_MAIN
         Public Function LogList(Optional Value As String = Nothing) As List(Of LOG_SubLine)
             Dim LogSubLine As New LOG_SubLine
             LogSubLine.Value = Value
-            If Me.Err.Flag = True Then
+            If Me.Err._Flag = True Then
                 LogSubLine.List.Add("")
-                LogSubLine.List.Add("Описание: " & Err.Description)
-                If Err.Number <> 0 Then LogSubLine.List.Add("Номер: " & Err.Number)
+                If Err._Description_App IsNot Nothing Then
+                    LogSubLine.List.Add("Ошибка: " & Err._Description_App)
+                    If Err._Description_Sys IsNot Nothing Then LogSubLine.List.Add("Подробности: " & Err._Description_Sys)
+                Else
+                    If Err._Description_Sys IsNot Nothing Then LogSubLine.List.Add("Ошибка: " & Err._Description_Sys)
+                End If
+                If Err._Number <> 0 Then LogSubLine.List.Add("Номер: " & Err._Number)
             End If
             Me.lLogList.Add(LogSubLine)
             Return Me.lLogList
@@ -156,16 +167,15 @@ Module Module_MAIN
 
         'Patcher
         Public GameName As String = Nothing
-        Public GameRootFolder As String = Nothing
         Public GameExeFileStatus As New Class_PATCH.Class_PatchResult
-        Public GameExeFileCopyPref As String = ".bak"
         Public GameExeFileVersion As String = Nothing
 
+        Public PatcherFileSourceName As String = Nothing
+        Public PatcherFileDestinationName As String = Nothing
         Public BLOCK1 As String = Nothing
         Public BLOCK2 As String = Nothing
-        Private sGameExeFileName As String = Nothing
-        Private sGameExeFilePath As String = Nothing
         Public FileWatcher As Boolean = False
+
 
         'Download
         Public PackageGitURL_Master As String = Nothing
@@ -189,32 +199,6 @@ Module Module_MAIN
         Public GameProcessKillerEnabled As Boolean = False
         Public GameProcessMain As String = Nothing
         Public GameProcessLauncher As String = Nothing
-
-
-        Public Property GameExeFileName As String
-            Get
-                Return Me.sGameExeFileName
-            End Get
-            Set(ByVal Value As String)
-                If Len(Value) < Me.FileNameMinLen Then
-                    Me.sGameExeFileName = Nothing
-                    Exit Property
-                End If
-                Me.sGameExeFileName = Value
-            End Set
-        End Property
-        Public Property GameExeFilePath As String
-            Get
-                Return Me.sGameExeFilePath
-            End Get
-            Set(ByVal Value As String)
-                If Len(Value) < Me.FileNameMinLen + Me.FilePathMinLen Then
-                    Me.sGameExeFilePath = Nothing
-                    Exit Property
-                End If
-                Me.sGameExeFilePath = Value
-            End Set
-        End Property
 
         Sub New()
             GameExeFileStatus.Found_BLOCK1 = False

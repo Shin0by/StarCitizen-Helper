@@ -135,6 +135,12 @@
     <Compile Include="Controls\WL_Download.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Controls\WL_Modification.Designer.vb">
+      <DependentUpon>WL_Modification.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\WL_Modification.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Forms\ConvertForm.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -149,6 +155,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Modules\Module_APP.vb" />
+    <Compile Include="Modules\Module_ERR.vb" />
     <Compile Include="Modules\Module_FILE.vb" />
     <Compile Include="Modules\Module_GIT.vb" />
     <Compile Include="Modules\Module_HELPER.vb" />
@@ -180,6 +187,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Controls\WL_Download.resx">
       <DependentUpon>WL_Download.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\WL_Modification.resx">
+      <DependentUpon>WL_Modification.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ConvertForm.resx">
       <DependentUpon>ConvertForm.vb</DependentUpon>

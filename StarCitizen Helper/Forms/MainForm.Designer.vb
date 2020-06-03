@@ -46,20 +46,8 @@ Partial Class MainForm
         Me.ExitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.NotifyIcon1 = New System.Windows.Forms.NotifyIcon(Me.components)
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
-        Me.Button_SetStarCitizenExeFilePath = New System.Windows.Forms.Button()
         Me.TabControl = New System.Windows.Forms.TabControl()
         Me.TabPage_Patch = New System.Windows.Forms.TabPage()
-        Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
-        Me.Label_ModInfo = New System.Windows.Forms.Label()
-        Me.ModOn_Button = New System.Windows.Forms.Button()
-        Me.Label_FileWatcher = New System.Windows.Forms.Label()
-        Me.CheckBox_FileWatcher = New System.Windows.Forms.CheckBox()
-        Me.Label_SetStarCitizenExeFilePath = New System.Windows.Forms.Label()
-        Me.ModOff_Button = New System.Windows.Forms.Button()
-        Me.ModScan_Button = New System.Windows.Forms.Button()
-        Me.Label_ModOn_Button = New System.Windows.Forms.Label()
-        Me.Label_ModOff_Button = New System.Windows.Forms.Label()
-        Me.Label_ModScan_Button = New System.Windows.Forms.Label()
         Me.TabPage_Update = New System.Windows.Forms.TabPage()
         Me.TableLayoutPanel3 = New System.Windows.Forms.TableLayoutPanel()
         Me.GitClone_ComboBox = New System.Windows.Forms.ComboBox()
@@ -67,7 +55,6 @@ Partial Class MainForm
         Me.GitClone_Button = New System.Windows.Forms.Button()
         Me.Label_GitClone = New System.Windows.Forms.Label()
         Me.Label_InstallAll = New System.Windows.Forms.Label()
-        Me.WL_Download1 = New SC.WL_Download()
         Me.TabPage_Killer = New System.Windows.Forms.TabPage()
         Me.TableLayoutPanel4 = New System.Windows.Forms.TableLayoutPanel()
         Me.Label1 = New System.Windows.Forms.Label()
@@ -98,10 +85,11 @@ Partial Class MainForm
         Me.TextBox_Debug = New System.Windows.Forms.TextBox()
         Me.Timer_LOG = New System.Windows.Forms.Timer(Me.components)
         Me.Timer_UI = New System.Windows.Forms.Timer(Me.components)
+        Me.WL_Mod = New SC.WL_Modification()
+        Me.WL_Download1 = New SC.WL_Download()
         Me.ContextMenuStrip1.SuspendLayout()
         Me.TabControl.SuspendLayout()
         Me.TabPage_Patch.SuspendLayout()
-        Me.TableLayoutPanel1.SuspendLayout()
         Me.TabPage_Update.SuspendLayout()
         Me.TableLayoutPanel3.SuspendLayout()
         Me.TabPage_Killer.SuspendLayout()
@@ -245,16 +233,6 @@ Partial Class MainForm
         '
         Me.OpenFileDialog1.FileName = "OpenFileDialog1"
         '
-        'Button_SetStarCitizenExeFilePath
-        '
-        Me.Button_SetStarCitizenExeFilePath.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Button_SetStarCitizenExeFilePath.Location = New System.Drawing.Point(3, 3)
-        Me.Button_SetStarCitizenExeFilePath.Name = "Button_SetStarCitizenExeFilePath"
-        Me.Button_SetStarCitizenExeFilePath.Size = New System.Drawing.Size(250, 24)
-        Me.Button_SetStarCitizenExeFilePath.TabIndex = 1
-        Me.Button_SetStarCitizenExeFilePath.Text = "Исполняемый файл"
-        Me.Button_SetStarCitizenExeFilePath.UseVisualStyleBackColor = True
-        '
         'TabControl
         '
         Me.TabControl.Controls.Add(Me.TabPage_Patch)
@@ -271,7 +249,7 @@ Partial Class MainForm
         '
         'TabPage_Patch
         '
-        Me.TabPage_Patch.Controls.Add(Me.TableLayoutPanel1)
+        Me.TabPage_Patch.Controls.Add(Me.WL_Mod)
         Me.TabPage_Patch.Location = New System.Drawing.Point(4, 22)
         Me.TabPage_Patch.Name = "TabPage_Patch"
         Me.TabPage_Patch.Padding = New System.Windows.Forms.Padding(3)
@@ -279,155 +257,6 @@ Partial Class MainForm
         Me.TabPage_Patch.TabIndex = 0
         Me.TabPage_Patch.Text = "Модификация"
         Me.TabPage_Patch.UseVisualStyleBackColor = True
-        '
-        'TableLayoutPanel1
-        '
-        Me.TableLayoutPanel1.ColumnCount = 3
-        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
-        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
-        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
-        Me.TableLayoutPanel1.Controls.Add(Me.Label_ModInfo, 0, 5)
-        Me.TableLayoutPanel1.Controls.Add(Me.ModOn_Button, 0, 2)
-        Me.TableLayoutPanel1.Controls.Add(Me.Label_FileWatcher, 1, 1)
-        Me.TableLayoutPanel1.Controls.Add(Me.CheckBox_FileWatcher, 0, 1)
-        Me.TableLayoutPanel1.Controls.Add(Me.Button_SetStarCitizenExeFilePath, 0, 0)
-        Me.TableLayoutPanel1.Controls.Add(Me.Label_SetStarCitizenExeFilePath, 1, 0)
-        Me.TableLayoutPanel1.Controls.Add(Me.ModOff_Button, 0, 3)
-        Me.TableLayoutPanel1.Controls.Add(Me.ModScan_Button, 0, 4)
-        Me.TableLayoutPanel1.Controls.Add(Me.Label_ModOn_Button, 1, 2)
-        Me.TableLayoutPanel1.Controls.Add(Me.Label_ModOff_Button, 1, 3)
-        Me.TableLayoutPanel1.Controls.Add(Me.Label_ModScan_Button, 1, 4)
-        Me.TableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TableLayoutPanel1.Location = New System.Drawing.Point(3, 3)
-        Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
-        Me.TableLayoutPanel1.RowCount = 6
-        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
-        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
-        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
-        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
-        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
-        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel1.Size = New System.Drawing.Size(770, 279)
-        Me.TableLayoutPanel1.TabIndex = 2
-        '
-        'Label_ModInfo
-        '
-        Me.Label_ModInfo.AutoSize = True
-        Me.TableLayoutPanel1.SetColumnSpan(Me.Label_ModInfo, 3)
-        Me.Label_ModInfo.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Label_ModInfo.Location = New System.Drawing.Point(3, 153)
-        Me.Label_ModInfo.Margin = New System.Windows.Forms.Padding(3)
-        Me.Label_ModInfo.Name = "Label_ModInfo"
-        Me.Label_ModInfo.Size = New System.Drawing.Size(764, 123)
-        Me.Label_ModInfo.TabIndex = 11
-        Me.Label_ModInfo.Text = resources.GetString("Label_ModInfo.Text")
-        Me.Label_ModInfo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'ModOn_Button
-        '
-        Me.ModOn_Button.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.ModOn_Button.Location = New System.Drawing.Point(3, 63)
-        Me.ModOn_Button.Name = "ModOn_Button"
-        Me.ModOn_Button.Size = New System.Drawing.Size(250, 24)
-        Me.ModOn_Button.TabIndex = 5
-        Me.ModOn_Button.Text = "Вкл. модификацию"
-        Me.ModOn_Button.UseVisualStyleBackColor = True
-        '
-        'Label_FileWatcher
-        '
-        Me.Label_FileWatcher.AutoSize = True
-        Me.TableLayoutPanel1.SetColumnSpan(Me.Label_FileWatcher, 2)
-        Me.Label_FileWatcher.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Label_FileWatcher.Location = New System.Drawing.Point(259, 33)
-        Me.Label_FileWatcher.Margin = New System.Windows.Forms.Padding(3)
-        Me.Label_FileWatcher.Name = "Label_FileWatcher"
-        Me.Label_FileWatcher.Size = New System.Drawing.Size(508, 24)
-        Me.Label_FileWatcher.TabIndex = 4
-        Me.Label_FileWatcher.Text = "Проверка ключевых файлов игры на предмет их изменения"
-        Me.Label_FileWatcher.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'CheckBox_FileWatcher
-        '
-        Me.CheckBox_FileWatcher.AutoSize = True
-        Me.CheckBox_FileWatcher.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.CheckBox_FileWatcher.Location = New System.Drawing.Point(3, 33)
-        Me.CheckBox_FileWatcher.Name = "CheckBox_FileWatcher"
-        Me.CheckBox_FileWatcher.Size = New System.Drawing.Size(250, 24)
-        Me.CheckBox_FileWatcher.TabIndex = 3
-        Me.CheckBox_FileWatcher.Text = "Отслеживать изменения файлов"
-        Me.CheckBox_FileWatcher.UseVisualStyleBackColor = True
-        '
-        'Label_SetStarCitizenExeFilePath
-        '
-        Me.Label_SetStarCitizenExeFilePath.AutoEllipsis = True
-        Me.Label_SetStarCitizenExeFilePath.AutoSize = True
-        Me.TableLayoutPanel1.SetColumnSpan(Me.Label_SetStarCitizenExeFilePath, 2)
-        Me.Label_SetStarCitizenExeFilePath.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Label_SetStarCitizenExeFilePath.Location = New System.Drawing.Point(259, 3)
-        Me.Label_SetStarCitizenExeFilePath.Margin = New System.Windows.Forms.Padding(3)
-        Me.Label_SetStarCitizenExeFilePath.Name = "Label_SetStarCitizenExeFilePath"
-        Me.Label_SetStarCitizenExeFilePath.Size = New System.Drawing.Size(508, 24)
-        Me.Label_SetStarCitizenExeFilePath.TabIndex = 2
-        Me.Label_SetStarCitizenExeFilePath.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'ModOff_Button
-        '
-        Me.ModOff_Button.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.ModOff_Button.Location = New System.Drawing.Point(3, 93)
-        Me.ModOff_Button.Name = "ModOff_Button"
-        Me.ModOff_Button.Size = New System.Drawing.Size(250, 24)
-        Me.ModOff_Button.TabIndex = 6
-        Me.ModOff_Button.Text = "Выкл. модификацию"
-        Me.ModOff_Button.UseVisualStyleBackColor = True
-        '
-        'ModScan_Button
-        '
-        Me.ModScan_Button.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.ModScan_Button.Location = New System.Drawing.Point(3, 123)
-        Me.ModScan_Button.Name = "ModScan_Button"
-        Me.ModScan_Button.Size = New System.Drawing.Size(250, 24)
-        Me.ModScan_Button.TabIndex = 7
-        Me.ModScan_Button.Text = "Определить модификацию"
-        Me.ModScan_Button.UseVisualStyleBackColor = True
-        '
-        'Label_ModOn_Button
-        '
-        Me.Label_ModOn_Button.AutoSize = True
-        Me.TableLayoutPanel1.SetColumnSpan(Me.Label_ModOn_Button, 2)
-        Me.Label_ModOn_Button.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Label_ModOn_Button.Location = New System.Drawing.Point(259, 63)
-        Me.Label_ModOn_Button.Margin = New System.Windows.Forms.Padding(3)
-        Me.Label_ModOn_Button.Name = "Label_ModOn_Button"
-        Me.Label_ModOn_Button.Size = New System.Drawing.Size(508, 24)
-        Me.Label_ModOn_Button.TabIndex = 8
-        Me.Label_ModOn_Button.Text = "Внести изменения в файл игры разблокировав возможность локализации"
-        Me.Label_ModOn_Button.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'Label_ModOff_Button
-        '
-        Me.Label_ModOff_Button.AutoSize = True
-        Me.TableLayoutPanel1.SetColumnSpan(Me.Label_ModOff_Button, 2)
-        Me.Label_ModOff_Button.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Label_ModOff_Button.Location = New System.Drawing.Point(259, 93)
-        Me.Label_ModOff_Button.Margin = New System.Windows.Forms.Padding(3)
-        Me.Label_ModOff_Button.Name = "Label_ModOff_Button"
-        Me.Label_ModOff_Button.Size = New System.Drawing.Size(508, 24)
-        Me.Label_ModOff_Button.TabIndex = 9
-        Me.Label_ModOff_Button.Text = "Вернуть файл в исходное состояние"
-        Me.Label_ModOff_Button.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'Label_ModScan_Button
-        '
-        Me.Label_ModScan_Button.AutoSize = True
-        Me.TableLayoutPanel1.SetColumnSpan(Me.Label_ModScan_Button, 2)
-        Me.Label_ModScan_Button.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Label_ModScan_Button.Location = New System.Drawing.Point(259, 123)
-        Me.Label_ModScan_Button.Margin = New System.Windows.Forms.Padding(3)
-        Me.Label_ModScan_Button.Name = "Label_ModScan_Button"
-        Me.Label_ModScan_Button.Size = New System.Drawing.Size(508, 24)
-        Me.Label_ModScan_Button.TabIndex = 10
-        Me.Label_ModScan_Button.Text = "Сканировать файл на предмет пригодности для модифицрования (см. лог)"
-        Me.Label_ModScan_Button.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'TabPage_Update
         '
@@ -523,20 +352,6 @@ Partial Class MainForm
         Me.Label_InstallAll.TabIndex = 8
         Me.Label_InstallAll.Text = "Локализация и шрифты, а так же будут выполнены настройки для их использования"
         Me.Label_InstallAll.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'WL_Download1
-        '
-        Me.WL_Download1.AutoEllipsis = False
-        Me.WL_Download1.Clickable = False
-        Me.TableLayoutPanel3.SetColumnSpan(Me.WL_Download1, 3)
-        Me.WL_Download1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.WL_Download1.DownloadFrom = Nothing
-        Me.WL_Download1.DownloadTo = Nothing
-        Me.WL_Download1.Location = New System.Drawing.Point(3, 213)
-        Me.WL_Download1.Name = "WL_Download1"
-        Me.WL_Download1.Size = New System.Drawing.Size(764, 63)
-        Me.WL_Download1.TabIndex = 11
-        Me.WL_Download1.Visible = False
         '
         'TabPage_Killer
         '
@@ -906,6 +721,42 @@ Partial Class MainForm
         '
         Me.Timer_UI.Interval = 600
         '
+        'WL_Mod
+        '
+        Me.WL_Mod.BackColor = System.Drawing.Color.Transparent
+        Me.WL_Mod.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.WL_Mod.Location = New System.Drawing.Point(3, 3)
+        Me.WL_Mod.Name = "WL_Mod"
+        Me.WL_Mod.Property_GameExeFileName = Nothing
+        Me.WL_Mod.Property_GameExeFilePath = Nothing
+        Me.WL_Mod.Property_ModInGameFileVersion = Nothing
+        Me.WL_Mod.Property_ModInPackFileVersion = Nothing
+        Me.WL_Mod.Property_ModStatus = False
+        Me.WL_Mod.Property_PatchDstFileName = Nothing
+        Me.WL_Mod.Property_PatchDstFilePath = Nothing
+        Me.WL_Mod.Property_PatchSrcFileName = Nothing
+        Me.WL_Mod.Property_PatchSrcFilePath = Nothing
+        Me.WL_Mod.Size = New System.Drawing.Size(770, 279)
+        Me.WL_Mod.TabIndex = 0
+        Me.WL_Mod.Text_Bottom = ""
+        Me.WL_Mod.Text_Disable = "Выкл. модификацию"
+        Me.WL_Mod.Text_Enable = "Вкл. модификацию"
+        Me.WL_Mod.Text_Path = "Исполняемый файл"
+        '
+        'WL_Download1
+        '
+        Me.WL_Download1.AutoEllipsis = False
+        Me.WL_Download1.Clickable = False
+        Me.TableLayoutPanel3.SetColumnSpan(Me.WL_Download1, 3)
+        Me.WL_Download1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.WL_Download1.DownloadFrom = Nothing
+        Me.WL_Download1.DownloadTo = Nothing
+        Me.WL_Download1.Location = New System.Drawing.Point(3, 213)
+        Me.WL_Download1.Name = "WL_Download1"
+        Me.WL_Download1.Size = New System.Drawing.Size(764, 63)
+        Me.WL_Download1.TabIndex = 11
+        Me.WL_Download1.Visible = False
+        '
         'MainForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -922,8 +773,6 @@ Partial Class MainForm
         Me.ContextMenuStrip1.ResumeLayout(False)
         Me.TabControl.ResumeLayout(False)
         Me.TabPage_Patch.ResumeLayout(False)
-        Me.TableLayoutPanel1.ResumeLayout(False)
-        Me.TableLayoutPanel1.PerformLayout()
         Me.TabPage_Update.ResumeLayout(False)
         Me.TableLayoutPanel3.ResumeLayout(False)
         Me.TableLayoutPanel3.PerformLayout()
@@ -950,23 +799,12 @@ Partial Class MainForm
     Friend WithEvents ModOff_ToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripSeparator2 As ToolStripSeparator
     Friend WithEvents OpenFileDialog1 As OpenFileDialog
-    Friend WithEvents Button_SetStarCitizenExeFilePath As Button
     Friend WithEvents TabControl As TabControl
     Friend WithEvents TabPage_Patch As TabPage
     Friend WithEvents TabPage_Debug As TabPage
-    Friend WithEvents TableLayoutPanel1 As TableLayoutPanel
-    Friend WithEvents Label_SetStarCitizenExeFilePath As Label
     Friend WithEvents TableLayoutPanel2 As TableLayoutPanel
     Friend WithEvents TextBox_Debug As TextBox
     Friend WithEvents Timer_LOG As Timer
-    Friend WithEvents CheckBox_FileWatcher As CheckBox
-    Friend WithEvents Label_FileWatcher As Label
-    Friend WithEvents ModOn_Button As Button
-    Friend WithEvents ModOff_Button As Button
-    Friend WithEvents ModScan_Button As Button
-    Friend WithEvents Label_ModOn_Button As Label
-    Friend WithEvents Label_ModOff_Button As Label
-    Friend WithEvents Label_ModScan_Button As Label
     Friend WithEvents TabPage_Update As TabPage
     Friend WithEvents TableLayoutPanel3 As TableLayoutPanel
     Friend WithEvents InstallAll_Button As Button
@@ -986,7 +824,6 @@ Partial Class MainForm
     Friend WithEvents SetKeyKill_Button As Button
     Friend WithEvents Label_KillerThread As Label
     Friend WithEvents ProcessKillerModKey_ComboBox As ComboBox
-    Friend WithEvents Label_ModInfo As Label
     Friend WithEvents AddProccessKill_TextBox As TextBox
     Friend WithEvents Label1 As Label
     Friend WithEvents ProccessList_ListBox As ListBox
@@ -1014,4 +851,5 @@ Partial Class MainForm
     Friend WithEvents WL_Download1 As WL_Download
     Friend WithEvents GitClone_ComboBox As ComboBox
     Friend WithEvents Timer_UI As Timer
+    Friend WithEvents WL_Mod As WL_Modification
 End Class

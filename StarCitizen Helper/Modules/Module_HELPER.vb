@@ -36,10 +36,6 @@ WriteBlock: IO.File.Create(_APP.configFullPath).Dispose()
             _INI._Write("EXTERNAL", "PACK_GIT_API", _VARS.PackageGitURL_Api)
             _INI._Write("EXTERNAL", "PACK_GIT_SELECTED", "Master")
             _INI._Write("EXTERNAL", "PACK_GIT_INSTALLED", _VARS.PackageInstalledVersion)
-
-            'HEX
-            _INI._Write("EXTERNAL", "BLOCK1", _VARS.BLOCK1)
-            _INI._Write("EXTERNAL", "BLOCK2", _VARS.BLOCK2)
         End If
 
         'LOAD INI FILE
@@ -54,15 +50,9 @@ ReadBlock: _VARS.ConfigFileIsOK = True
 
         _VARS.FileWatcher = StringToBool(_INI._GET_VALUE("CONFIGURATION", "FILES_WATCHER", False, {"0", "1"}).Value)
 
-        _VARS.GameExeFilePath = _INI._GET_VALUE("EXTERNAL", "EXE_PATH", Nothing).Value
-        If _VARS.GameExeFilePath IsNot Nothing Then
-            Dim fo As ResultClass = _FILE._GetInfo(_VARS.GameExeFilePath)
-            If fo.Err.Flag = True Or fo.ValueObject Is Nothing Then
-                _LOG._Add("CONFIG_FILE", "Ошибка при доступе к файлу", fo.LogList(_VARS.GameExeFilePath), 2)
-            Else
-                _VARS.GameRootFolder = fo.ValueObject.Directory.Parent.FullName
-            End If
-        End If
+        MAIN_THREAD.WL_Mod.Property_GameExeFilePath = _INI._GET_VALUE("EXTERNAL", "EXE_PATH", Nothing).Value
+        MAIN_THREAD.WL_Mod.Property_ModInGameFileVersion = _INI._GET_VALUE("EXTERNAL", "MOD_GAME_INSTALLED", Nothing).Value
+        MAIN_THREAD.WL_Mod.Property_ModInPackFileVersion = _INI._GET_VALUE("EXTERNAL", "MOD_PACK_INSTALLED", Nothing).Value
 
         'GIT
         _VARS.PackageGitURL_Master = _INI._GET_VALUE("EXTERNAL", "PACK_GIT_MASTER", Nothing).Value
@@ -70,6 +60,7 @@ ReadBlock: _VARS.ConfigFileIsOK = True
         _VARS.PackageGitURL_Api = _INI._GET_VALUE("EXTERNAL", "PACK_GIT_API", Nothing).Value
         _VARS.PackageSelected = _INI._GET_VALUE("EXTERNAL", "PACK_GIT_SELECTED", "Master").Value
         _VARS.PackageInstalledVersion = _INI._GET_VALUE("EXTERNAL", "PACK_GIT_INSTALLED", Nothing).Value
+
 
         'PKiller
         _VARS.PKillerEnabled = StringToBool(_INI._GET_VALUE("CONFIGURATION", "PKILLER_ENABLED", False, {"0", "1"}).Value)
@@ -99,9 +90,9 @@ ReadBlock: _VARS.ConfigFileIsOK = True
             MAIN_THREAD.WL_Download1.DownloadTo = Path.Combine(_VARS.DownloadFolder, _VARS.DownloadFile)
             MAIN_THREAD.Update()
             Dim result As ResultClass = _INET._GetFile(GitUpdateElement._zipball_url, Path.Combine(_VARS.DownloadFolder, _VARS.DownloadFile), Net.SecurityProtocolType.Tls12, Headers)
-            If result.Err.Flag = True Then
+            If result.Err._Flag = True Then
                 MAIN_THREAD.WL_Download1.DownloadFrom = "Последняя загрузка завершилась ошибкой: " & result.ValueString
-                MAIN_THREAD.WL_Download1.DownloadTo = result.Err.Description
+                MAIN_THREAD.WL_Download1.DownloadTo = result.Err._Description_Sys
             Else
                 MAIN_THREAD.WL_Download1.DownloadFrom = "Загрузка успешно завершена"
             End If
@@ -113,6 +104,7 @@ ReadBlock: _VARS.ConfigFileIsOK = True
             MAIN_THREAD.ContextMenuStrip1.Enabled = True
             GetDownloaded()
             If _VARS.PackageDownloadedVersion Is Nothing Then : MAIN_THREAD.Label_GitClone.Text = "Загружена версия: не определена" : Else : MAIN_THREAD.Label_GitClone.Text = "Загружена версия: " & _VARS.PackageDownloadedVersion : End If
+            MAIN_THREAD.ExtractPatcer()
             'Fix this block
         Else
             MAIN_THREAD.WL_Download1.DownloadStart(GitUpdateElement._zipball_url, Path.Combine(_VARS.DownloadFolder, _VARS.DownloadFile), Headers)
@@ -123,18 +115,23 @@ ReadBlock: _VARS.ConfigFileIsOK = True
         Dim Path As String = _FILE._CombinePath(_VARS.DownloadFolder)
         Dim list As String() = Directory.GetFiles(Path)
         Dim File As FileInfo
-        If list.Count = 1 Then
+        Dim Cntr As Integer = 0
+        If list.Count > 0 Then
             File = CType(_FILE._GetInfo(list(0)).ValueObject, FileInfo)
             If LCase(File.Extension) = ".zip" Then
+                Cntr += 1
                 _VARS.PackageDownloadedVersion = Trim(Left(File.Name, Len(File.Name) - Len(File.Extension)))
                 _VARS.DownloadFile = File.Name
             End If
         End If
-        Return _VARS.PackageDownloadedVersion
+
+        If Cntr = 1 Then Return _VARS.PackageDownloadedVersion
+        Return Nothing
     End Function
 
     Public Function GetInstalled() As String
-        Dim Path As String = _FILE._CombinePath(_VARS.GameRootFolder & _VARS.PackageInstalledMeta)
+        If MAIN_THREAD.WL_Mod.Property_GameRootFolderPath Is Nothing Then Return Nothing
+        Dim Path As String = _FILE._CombinePath(MAIN_THREAD.WL_Mod.Property_GameRootFolderPath, _VARS.PackageInstalledMeta)
         Dim result As String = _FILE._ReadTextFile(Path, System.Text.Encoding.UTF8)
         If result IsNot Nothing Then
             _VARS.PackageInstalledVersion = _FILE._ReadTextFile(Path, System.Text.Encoding.UTF8)
@@ -160,6 +157,7 @@ ReadBlock: _VARS.ConfigFileIsOK = True
     End Function
 
     Public Function RenameLIVEFolder(ToProfile As String, Optional OnlyCheck As Boolean = True) As ResultClass
+        Dim result As ResultClass = _FILE._GetInfo(MAIN_THREAD.WL_Mod.Property_GameExeFilePath)
         MAIN_THREAD.Button_ToLIVE.Enabled = False
         MAIN_THREAD.Button_ToPTU.Enabled = False
         MAIN_THREAD.Button_ToEPTU.Enabled = False
@@ -167,11 +165,12 @@ ReadBlock: _VARS.ConfigFileIsOK = True
         MAIN_THREAD.ToPTU_ToolStripMenuItem.Enabled = False
         MAIN_THREAD.ToEPTU_ToolStripMenuItem.Enabled = False
 
-        Dim result As ResultClass = _FILE._GetInfo(_VARS.GameExeFilePath)
+        If _FILE._FileExits(MAIN_THREAD.WL_Mod.Property_GameExeFilePath) = False Then result.Err._Flag = True
+
         Dim File As IO.FileInfo = Nothing
         Dim FolderSrc As String = Nothing
         Dim FolderDest As String = Nothing
-        If result.Err.Flag = True Then GoTo Fin
+        If result.Err._Flag = True Then GoTo Fin
 
         File = CType(result.ValueObject, IO.FileInfo)
         Select Case UCase(File.Directory.Parent.Name)
@@ -188,15 +187,16 @@ ReadBlock: _VARS.ConfigFileIsOK = True
 
         If FolderSrc IsNot Nothing And FolderDest IsNot Nothing And OnlyCheck = False Then
             result = _FILE._RenameDirectory(File.Directory.Parent.FullName, ToProfile)
-            If result.Err.Flag = True Then
-                _LOG._Add("LIVE-PTU-EPTU", "Ошибка при переименовании папки игры", result.LogList(), 1, result.Err.Number)
+            If result.Err._Flag = True Then
+                _LOG._Add("LIVE-PTU-EPTU", "Ошибка при переименовании папки игры", result.LogList(), 1, result.Err._Number)
             Else
                 _LOG._sAdd("LIVE-PTU-EPTU", "Папка игры успешно переименована", File.Directory.Parent.FullName & " -> " & FolderDest, 2, 0)
-                result.ValueString = _HELPER_PATCH.SetGameExeFilePath(_FILE._CombinePath(FolderDest, File.Directory.Name, File.Name))
+                MAIN_THREAD.WL_Mod.Property_GameExeFilePath = (_FILE._CombinePath(FolderDest, File.Directory.Name, File.Name))
+                result.ValueString = MAIN_THREAD.WL_Mod.Property_GameExeFilePath
             End If
         End If
 
-        If result.Err.Flag = False Then
+        If result.Err._Flag = False Then
             If OnlyCheck = True Then ToProfile = UCase(File.Directory.Parent.Name)
             Select Case ToProfile
                 Case "LIVE"
@@ -281,72 +281,34 @@ Fin:    Return result
     End Function
 
     Class Class_HelperPatch
-        Public Function SetGameExeFilePath(Optional ExPath As String = Nothing) As String
-            Dim Path As String = Nothing
-            If ExPath Is Nothing Then
-                If _VARS.ConfigFileIsOK = False Then _VARS.GameExeFilePath = Nothing : Return Nothing
-                Path = SelectFile("Файл игры |" & _VARS.GameExeFileName & "|Exe (*.exe)|*.exe" & "|Все файлы (*.*)|*.*")
-                If Path Is Nothing Then Return Nothing
-            Else : Path = ExPath : End If
 
-            If _INI._Write("EXTERNAL", "EXE_PATH", Path) = False Then _VARS.ConfigFileIsOK = False : _VARS.GameExeFilePath = Nothing : Return Nothing
-            Path = Nothing
-            Path = _INI._GET_VALUE("EXTERNAL", "EXE_PATH", Nothing).Value
-            If Path Is Nothing Then _VARS.ConfigFileIsOK = True : _VARS.GameExeFilePath = Nothing : Return Nothing
-
-            _WATCHFILE_THREAD.PushWatchFiles = True
-            _VARS.GameExeFilePath = Path
-            _VARS.GameRootFolder = _FILE._GetInfo(_VARS.GameExeFilePath).ValueObject.Directory.Parent.FullName
-
-            Return Path
-        End Function
-
-        Public Function CheckHexToExe(Optional LogFlag As Byte = 3) As Class_PATCH.Class_PatchResult
+        Public Function PatchStatus() As Boolean
             Dim result As New Class_PATCH.Class_PatchResult
-            result.LogFlag = LogFlag
-            If _VARS.GameExeFilePath IsNot Nothing Then
-                If _FILE._FileExits(_VARS.GameExeFilePath) Then
-                    _VARS.GameExeFileVersion = FileVersionInfo.GetVersionInfo(_VARS.GameExeFilePath).FileVersion.ToString
-                    If _INI._GET_VALUE("EXTERNAL", "BLOCK1", Nothing).Value IsNot Nothing Or _INI._GET_VALUE("EXTERNAL", "BLOCK2", Nothing).Value IsNot Nothing Then
-                        result = _PATCH.Patch(_VARS.GameExeFilePath, _INI._GET_VALUE("EXTERNAL", "BLOCK1", Nothing).Value, _INI._GET_VALUE("EXTERNAL", "BLOCK2", Nothing).Value, True)
-                    Else
-                        result.Result.Err.Flag = True
-                        result.Result.Err.Description = "В файле конфигурации " & _APP.configName & " отсутствуют значения [BLOCK1, BLOCK2]"
-                    End If
-                Else
-                    result.Result.Err.Flag = True
-                    result.Result.Err.Description = "Не верно указан путь к файлу " & _VARS.GameExeFileName & ", либо доступ к файлу отсутствует"
-                    _VARS.GameExeFilePath = Nothing
-                End If
-            Else
-                result.Result.Err.Flag = True
-                result.Result.Err.Description = "Не указан путь к файлу " & _VARS.GameExeFileName
-            End If
+            result.LogFlag = 3
+            'If _VARS.
+            'result = _PATCH.Patch(_VARS.GameExeFilePath, _VARS.BLOCK1, _VARS.BLOCK2, True) Then
 
-            result.PatchResult = False
-            _VARS.GameExeFileStatus = result
-            Return result
+            Dim src As String = _FILE._CombinePath(_VARS.DownloadFolder, _VARS.PatcherFileSourceName)
+
         End Function
+
+
 
         Public Sub PatchGame(Hex1ToHex2 As Boolean)
             Dim result As New Class_PATCH.Class_PatchResult
             Try
-                _FILE._CopyFile(_VARS.GameExeFilePath, _VARS.GameExeFilePath & _VARS.GameExeFileCopyPref, False)
-
                 If Hex1ToHex2 = True Then
-                    result = _PATCH.Patch(_VARS.GameExeFilePath, _VARS.BLOCK1, _VARS.BLOCK2)
+                    result = _PATCH.Patch(MAIN_THREAD.WL_Mod.Property_GameExeFilePath, _VARS.BLOCK1, _VARS.BLOCK2)
                 Else
-                    result = _PATCH.Patch(_VARS.GameExeFilePath, _VARS.BLOCK2, _VARS.BLOCK1)
+                    result = _PATCH.Patch(MAIN_THREAD.WL_Mod.Property_GameExeFilePath, _VARS.BLOCK2, _VARS.BLOCK1)
                     result.Found_BLOCK1 = InvertBool(result.Found_BLOCK1)
                     result.Found_BLOCK2 = InvertBool(result.Found_BLOCK2)
                 End If
                 _VARS.GameExeFileStatus = result
-                If _VARS.GameExeFileStatus.Result.Err.Flag = True Then _LOG._sAdd("PATCHER", "Ошибка при внесении изменений в файл " & _VARS.GameExeFileName, _VARS.GameExeFileStatus.Result.Err.Description, 1, _VARS.GameExeFileStatus.Result.Err.Number)
+                If _VARS.GameExeFileStatus.Result.Err._Flag = True Then _LOG._sAdd("PATCHER", "Ошибка при внесении изменений в файл " & MAIN_THREAD.WL_Mod.Property_GameExeFilePath, _VARS.GameExeFileStatus.Result.Err._Description_Sys, 1, _VARS.GameExeFileStatus.Result.Err._Number)
             Catch ex As Exception
-                _LOG._sAdd("PATCHER", "Ошибка при подготовке к внесению изменений в файл " & _VARS.GameExeFileName, Err.Description, 1, Err.Number)
+                _LOG._sAdd("PATCHER", "Ошибка при подготовке к внесению изменений в файл " & MAIN_THREAD.WL_Mod.Property_GameExeFilePath, Err.Description, 1, Err.Number)
             End Try
-
-            MAIN_THREAD.UpdateGameExeFileStatus()
         End Sub
     End Class
 End Module

@@ -32,20 +32,20 @@ Namespace My
 
         <Global.System.Diagnostics.DebuggerStepThroughAttribute()>
         Protected Overrides Sub OnCreateMainForm()
-            On Error GoTo fin
+            On Error GoTo Finalize
             Initialization = True
             InitializeStart()
             MAIN_THREAD = Global.SC.MainForm
             Me.MainForm = MAIN_THREAD
             InitializeEnd()
             Initialization = False
-fin:        Exit Sub
+Finalize:   Exit Sub
         End Sub
 
         Private Sub MyApplication_Shutdown(sender As Object, e As System.EventArgs) Handles Me.Shutdown
-            On Error GoTo fin
+            On Error GoTo Finalize
             Unload()
-fin:        Exit Sub
+Finalize:   Exit Sub
         End Sub
     End Class
 End Namespace

@@ -41,7 +41,7 @@ Execute:        Thread.Sleep(3000)
         End Sub
 
         Private Sub WatchFile()
-            If _VARS.GameExeFilePath Is Nothing Then Exit Sub
+            If MAIN_THREAD.WL_Mod.Property_GameExeFilePath Is Nothing Then Exit Sub
             Dim List As List(Of FileInfo) = WatchList._List
             For i = 0 To List.Count - 1
                 Dim before As FileInfo = WatchList._Get(List(i).FullName)
@@ -74,8 +74,8 @@ Execute:        Thread.Sleep(3000)
         Private Sub AddFilesToWatcher()
             If Me.PushWatchFiles = False Then Exit Sub
             WatchList._Clear()
-            If _VARS.GameExeFilePath IsNot Nothing Then
-                WatchList._Add(_VARS.GameExeFilePath)
+            If MAIN_THREAD.WL_Mod.Property_GameExeFilePath IsNot Nothing Then
+                WatchList._Add(MAIN_THREAD.WL_Mod.Property_GameExeFilePath)
             End If
         End Sub
 

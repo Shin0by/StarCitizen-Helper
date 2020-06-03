@@ -10,8 +10,8 @@ Module Module_GIT
             Dim temp As String = Nothing
             Dim result As ResultClass
             result = _INET._GetHTTP(_VARS.PackageGitURL_Api, Net.SecurityProtocolType.Tls12, Header)
-            If result.Err.Flag = True Then
-                _LOG._sAdd("GIT_NET", "Не удалось загрузить данные о доступных сборках с Git репозитория", result.Err.Description, 1) : Return _GIT_LIST._GetAll
+            If result.Err._Flag = True Then
+                _LOG._sAdd("GIT_NET", "Не удалось загрузить данные о доступных сборках с Git репозитория", result.Err._Description_Sys, 1) : Return _GIT_LIST._GetAll
             Else
                 temp = result.ValueString
             End If

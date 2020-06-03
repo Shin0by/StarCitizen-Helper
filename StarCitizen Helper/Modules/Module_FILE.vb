@@ -18,7 +18,7 @@ Module Module_FILE
         End Function
 
         Public Function _GetInfo(Path As String) As ResultClass
-            Dim result As New ResultClass
+            Dim result As New ResultClass(Me)
             Try
                 Dim File As New IO.FileInfo(Path)
                 If Me._FileExits(Path) = False Then
@@ -29,9 +29,9 @@ Module Module_FILE
                 result.ValueBoolean = True
                 result.ValueObject = My.Computer.FileSystem.GetFileInfo(Path)
             Catch
-                result.Err.Description = Err.Description
-                result.Err.Number = Err.Number
-                result.Err.Flag = True
+                result.Err._Description_Sys = Err.Description
+                result.Err._Number = Err.Number
+                result.Err._Flag = True
             End Try
             Return result
         End Function
@@ -43,18 +43,47 @@ Module Module_FILE
             End Try
         End Function
 
-        Public Function _Kill(sPath As String) As ResultClass
-            Dim result As New ResultClass
-            result.ValueBoolean = True
-            If Len(sPath) < _VARS.FileNameMinLen + _VARS.FilePathMinLen Then Return result
+        Public Function _DeleteFile(sPath As String) As ResultClass
+            Dim result As New ResultClass(Me)
+            If Len(sPath) < _VARS.FilePathMinLen + _VARS.FileNameMinLen Then
+                result.ValueBoolean = False
+                result.Err._Description_Sys = "Path too short"
+                result.Err._Number = 0
+                result.Err._Flag = True
+                Return result
+            End If
             Try
                 FileSystem.Kill(sPath)
                 result.ValueBoolean = True
             Catch ex As Exception
                 If Err.Number <> 53 Then
-                    result.Err.Description = Err.Description
-                    result.Err.Number = Err.Number
-                    result.Err.Flag = True
+                    result.ValueBoolean = False
+                    result.Err._Description_Sys = Err.Description
+                    result.Err._Number = Err.Number
+                    result.Err._Flag = True
+                End If
+            End Try
+            Return result
+        End Function
+
+        Public Function _DeleteFolder(sPath As String) As ResultClass
+            Dim result As New ResultClass(Me)
+            If Len(sPath) < _VARS.FilePathMinLen Then
+                result.ValueBoolean = False
+                result.Err._Description_Sys = "Path too short"
+                result.Err._Number = 0
+                result.Err._Flag = True
+                Return result
+            End If
+            Try
+                System.IO.Directory.Delete(sPath, True)
+                result.ValueBoolean = True
+            Catch ex As Exception
+                If Err.Number <> 53 Then
+                    result.ValueBoolean = False
+                    result.Err._Description_Sys = Err.Description
+                    result.Err._Number = Err.Number
+                    result.Err._Flag = True
                 End If
             End Try
             Return result
@@ -101,16 +130,16 @@ Module Module_FILE
         End Function
 
         Public Function _RenameDirectory(Source As String, Destination As String) As ResultClass
-            Dim result As New ResultClass
+            Dim result As New ResultClass(Me)
             Try
                 My.Computer.FileSystem.RenameDirectory(Source, Destination)
                 result.ValueString = _FILE._CombinePath(New FileInfo(Source).Directory.FullName, Destination)
                 result.ValueBoolean = True
             Catch
                 result.ValueBoolean = False
-                result.Err.Flag = True
-                result.Err.Description = Err.Description
-                result.Err.Number = Err.Number
+                result.Err._Flag = True
+                result.Err._Description_Sys = Err.Description
+                result.Err._Number = Err.Number
             End Try
             Return result
         End Function
@@ -147,7 +176,7 @@ Module Module_FILE
 
         Public Function _Add(sPath As String) As Boolean
             Dim fo As ResultClass = _FILE._GetInfo(sPath)
-            If fo.Err.Flag = True Or fo.ValueObject Is Nothing Then
+            If fo.Err._Flag = True Or fo.ValueObject Is Nothing Then
                 _LOG._Add("FILE_SYSTEM", "Не удалось включить наблюдение за файлом, файл отсутствует или доступ к нему ограничен", fo.LogList(sPath), 2)
                 Return False
             End If
@@ -194,7 +223,7 @@ Module Module_FILE
             End If
 
             Dim fo As ResultClass = _FILE._GetInfo(sPath)
-            If fo.Err.Flag = True Or fo.ValueObject Is Nothing Then
+            If fo.Err._Flag = True Or fo.ValueObject Is Nothing Then
                 _LOG._Add("FILE_SYSTEM", "Не удалось получить обновленные данные по файлу, файл отсутствует или доступ к нему ограничен", fo.LogList(sPath), 2)
                 Return Nothing
             End If
@@ -215,6 +244,38 @@ Module Module_FILE
         Public Function Unzip(sZip As String, sPath As String) As Boolean
             Try
                 ZipFile.ExtractToDirectory(sZip, sPath)
+            Catch ex As Exception
+                Return False
+            End Try
+            Return True
+        End Function
+
+        Public Function UnzipFileToFolder(sZip As String, sFile As String, sPathTo As String) As Boolean
+            Try
+                Using zipPack = ZipFile.OpenRead(sZip)
+                    Dim isFile As Boolean = True
+                    Dim destPath As String = Nothing
+                    Dim temp As String = Nothing
+                    Dim Cntr As Long = 0
+                    For Each elem In zipPack.Entries
+                        temp = Nothing
+                        destPath = Nothing
+                        isFile = True
+                        If elem.Name Is Nothing Or elem.Name = "" Then isFile = False
+
+                        If sFile.StartsWith(".", StringComparison.Ordinal) And Cntr = 0 Then
+                            sFile = elem.FullName & Right(sFile, Len(sFile) - 1)
+                        End If
+
+                        If elem.FullName.StartsWith(sFile, StringComparison.Ordinal) Then
+                            If isFile = True Then
+                                elem.ExtractToFile(sPathTo, True)
+                            End If
+                        End If
+                        Cntr += 1
+                    Next
+
+                End Using
             Catch ex As Exception
                 Return False
             End Try

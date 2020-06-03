@@ -8,7 +8,7 @@ Module Module_PATCH
             Public Found_BLOCK1 As Boolean = True
             Public Found_BLOCK2 As Boolean = True
             Public PatchResult As Boolean = True
-            Public Result As New ResultClass
+            Public Result As New ResultClass(Me)
             Public LogFlag As Byte = 2
             Public ChangedOutside As Boolean = False
             Public UsedAnotherProcess As Boolean = False
@@ -50,9 +50,9 @@ Module Module_PATCH
                 BW.Close()
                 FS.Close()
             Catch ex As Exception
-                result.Result.Err.Flag = True
-                result.Result.Err.Description = Err.Description
-                result.Result.Err.Number = Err.Number
+                result.Result.Err._Flag = True
+                result.Result.Err._Description_Sys = Err.Description
+                result.Result.Err._Number = Err.Number
                 result.PatchResult = False
             End Try
             result.UsedAppProcess = False

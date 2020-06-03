@@ -22,11 +22,11 @@ Module Module_INET
         End Function
 
         Public Function _GetFile(Url As String, Path As String, Optional SecurityProtocol As SecurityProtocolType = SecurityProtocolType.Tls12, Optional Header As WebHeaderCollection = Nothing, Optional Timeout As Integer = 5000, Optional UserAgent As String = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36", Optional Accept As String = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9") As ResultClass
-            Dim result As New ResultClass
-            result.Err.Flag = True
+            Dim result As New ResultClass(Me)
+            result.Err._Flag = True
 
-            Dim fo As ResultClass = _FILE._Kill(Path)
-            If fo.Err.Flag = True Then result.ValueString = "Не удалось удалить существующий файл " & Chr(34) & Path & Chr(34) : Return result
+            Dim fo As ResultClass = _FILE._DeleteFile(Path)
+            If fo.Err._Flag = True Then result.ValueString = "Не удалось удалить существующий файл " & Chr(34) & Path & Chr(34) : Return result
 
             Try
                 Dim content = New MemoryStream()
@@ -47,11 +47,11 @@ Module Module_INET
                 If _FILE._FileExits(Path) = False Then result.ValueString = "Запись файла невозможна, проверьте права на запись для файла и папки " & Chr(34) & Path & Chr(34) : Return result
                 fo = _FILE._GetInfo(Path)
                 If CType(fo.ValueObject, IO.FileInfo).Length <> content.Length Then result.ValueString = "Неверен размер загруженного файла " & Chr(34) & Path & Chr(34) : Return result
-                result.Err.Flag = False
-                result.Err.Description = Nothing
+                result.Err._Flag = False
+                result.Err._Description_Sys = Nothing
             Catch ex As Exception
-                result.Err.Description = Err.Description
-                result.Err.Number = Err.Number
+                result.Err._Description_Sys = Err.Description
+                result.Err._Number = Err.Number
                 Return result
             End Try
 
@@ -59,7 +59,7 @@ Module Module_INET
         End Function
 
         Public Function _GetHTTP(Url As String, Optional SecurityProtocol As SecurityProtocolType = SecurityProtocolType.Tls12, Optional Header As WebHeaderCollection = Nothing, Optional Timeout As Integer = 5000, Optional UserAgent As String = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36", Optional Accept As String = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9") As ResultClass
-            Dim result As New ResultClass
+            Dim result As New ResultClass(Me)
             Dim uUrl As New Uri(Url)
             ServicePointManager.SecurityProtocol = SecurityProtocol
             Dim request As HttpWebRequest = HttpWebRequest.Create(uUrl)
@@ -80,20 +80,20 @@ Module Module_INET
 
                 result.ValueLong = CType(response, HttpWebResponse).StatusCode
                 result.ValueString = reader.ReadToEnd
-                result.Err.Flag = False
+                result.Err._Flag = False
 
                 reader.Close()
                 dataStream.Close()
                 response.Close()
             Catch ex As Exception
                 Try
-                    result.Err.Flag = True
-                    result.Err.Number = DirectCast(DirectCast(ex, System.Net.WebException).Response, System.Net.HttpWebResponse).StatusCode
-                    result.Err.Description = ex.Message
+                    result.Err._Flag = True
+                    result.Err._Number = DirectCast(DirectCast(ex, System.Net.WebException).Response, System.Net.HttpWebResponse).StatusCode
+                    result.Err._Description_Sys = ex.Message
                 Catch ex2 As Exception
-                    result.Err.Flag = True
-                    result.Err.Number = DirectCast(DirectCast(ex, System.Net.WebException).Response, System.Net.HttpWebResponse).StatusCode
-                    result.Err.Description = ex.Message
+                    result.Err._Flag = True
+                    result.Err._Number = DirectCast(DirectCast(ex, System.Net.WebException).Response, System.Net.HttpWebResponse).StatusCode
+                    result.Err._Description_Sys = ex.Message
                 End Try
             End Try
             Return result
