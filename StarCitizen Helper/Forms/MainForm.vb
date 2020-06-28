@@ -6,8 +6,16 @@ Public Class MainForm
 
     '<----------------------------------- Form
     Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        WL_Mod.Text_Bottom = "Внимание!" & vbNewLine & "Все действия во вкладке [" & Me.TabPage_Patch.Text & "] Вы выполняете на свой страх и риск" & vbNewLine & vbNewLine & "Для включения или выключения модификации необходимо загрузить модуль модификации вместе с пакетом обновлений. Для этого во вкладке [" & Me.TabPage_Update.Text & "] выберите пакет обновлений не ниже 0.15 и нажмите [" & Me.GitClone_Button.Text & "], по завершении загрузки перейдите во вкладку [" & Me.TabPage_Patch.Text & "] и нажмите [" & Me.WL_Mod.Text_Enable & "]." & vbNewLine & vbNewLine & "Программа не вносит изменния в исполняемый фалы игры, но модифицирует память, когда игра запускается, это значительно сложнее выявить. Разработчик против читов и бесчестной игры, данная программа не несет подобного функционала."
+        MAIN_THREAD.WL_Mod.Text_Label_Bottom = "Внимание! Все действия во вкладке [" & Me.TabPage_Patch.Text & "] Вы выполняете на свой страх и риск." & vbNewLine & "Задействование функции [" & Me.WL_Mod.Text_Button_Enable & "] нарушит условия лицензионного соглашения с CIG." & vbNewLine & vbNewLine & "Для включения или выключения модификации необходимо загрузить ядро модификаций и локализацию входящие в пакет обновлений. Для этого перейдите во вкладку [" & Me.TabPage_Update.Text & "] и следуйте инструкциям." & vbNewLine & vbNewLine & "Примечание: Если был загружен и установлен новый пакет обновлений, то необходимо выключить и включить ядро модификаций, это задействует соответствующую версию ядра для соответствующей локализации. Программа не вносит изменния в исполняемый фалы игры, но модифицирует память и когда игра запускается, это значительно сложнее выявить." & vbNewLine & vbNewLine & "Автор программы против читов и бесчестной игры, данная программа не несет подобного функционала."
+        MAIN_THREAD.WL_Upd.Text_Label_Bottom = "Для загрузки пакета обновлений выберите в выпадающем списке актуальный пакет обновлений и нажмите [" & Me.WL_Upd.Text_Button_Download & "]. По завершении загрузки нажмите [" & Me.WL_Upd.Text_Button_InstallFull & "] - это установит необходимые файлы локализации в папку игры." & vbNewLine & "Для активации локализации требуется установить и включить ядро модификаций, для этого перейдите во вкладку [" & Me.TabPage_Patch.Text & "] и нажмите [" & Me.WL_Mod.Text_Button_Enable & "]." & vbNewLine & vbNewLine & "Примечание: Пакет локализации [Master] - это последняя версия сборки, еще не прошедшей проверку (не рекомендуется к установке)."
     End Sub
+
+    'Private Sub CheckBox_FSOWatcher_CheckedChanged(sender As Object, e As EventArgs)
+    'On Error Resume Next
+    '_VARS.FileWatcher = Me.CheckBox_Watcher.Checked
+    ' _WATCHFILE_THREAD.PushWatchFiles = True
+    '_INI._Write("CONFIGURATION", "FILES_WATCHER", BoolToString(_VARS.FileWatcher))
+    ' End Sub
 
     Private Sub MainForm_VisibleChanged(sender As Object, e As EventArgs) Handles Me.VisibleChanged
         If Me.Visible = True Then
@@ -19,97 +27,8 @@ Public Class MainForm
     '-----------------------------------> 'Form
 
     '<----------------------------------- Download and update
-    Private Sub GitClone_Button_Click(sender As Object, e As EventArgs) Handles GitClone_Button.Click
-        Me.GitClone_Button.Enabled = False
-        Me.InstallAll_Button.Enabled = False
-        Me.ContextMenuStrip1.Enabled = False
-        WL_Download1.Visible = True
-        Dim result As New ResultClass(Me)
-        _VARS.DownloadFolder = _FILE.CreateFolder(_VARS.DownloadFolder)
-        If _VARS.DownloadFolder Is Nothing Then result.Err._Flag = True : result.Err._Description_App = "Не удалось получить доступ к папке загрузок" : result.Err._Description_Sys = _VARS.DownloadFolder : GoTo Fin
 
-        Dim sURL As String = _VARS.PackageGitURL_Master
-        Dim sPath As String = Path.Combine(_VARS.DownloadFolder, "*.zip")
 
-        If Len(sURL) < _VARS.FilePathMinLen + _VARS.FileNameMinLen Then result.Err._Flag = True : result.Err._Description_App = "URL имеет некорректную длину" : result.Err._Description_Sys = sURL : GoTo Fin
-        If Len(sPath) < _VARS.FilePathMinLen + _VARS.FileNameMinLen Then result.Err._Flag = True : result.Err._Description_App = "Путь загрузки имеет некорректную длину" : result.Err._Description_Sys = sPath : GoTo Fin
-        If _FILE._DeleteFile(sPath).Err._Flag = True Then result.Err._Flag = True : result.Err._Description_App = "Не удалось удалить существующий файл" : result.Err._Description_Sys = sPath : GoTo Fin
-
-        DownloadFromGit()
-
-Fin:    If result.Err._Flag = True Then
-            _LOG._sAdd("WINDOW_FORM", result.Err._Description_App, result.Err._Description_Sys, 2, result.Err._Number)
-            WL_Download1.DownloadFrom = "Последняя загрузка завершилась ошибкой: " & result.Err._Description_App
-            WL_Download1.DownloadTo = result.Err._Description_Sys
-            Me.GitClone_Button.Enabled = True
-            Me.ContextMenuStrip1.Enabled = True
-        End If
-        Me.GitClone_Button.Focus()
-    End Sub
-
-    Friend Sub DownloadCompleted(ByVal sender As Object, ByVal e As AsyncCompletedEventArgs) Handles WL_Download1.CompleteEvent
-        Dim result As New ResultClass(Me)
-        If WL_Download1.DownloadProgress.Err IsNot Nothing Then result.Err._Flag = True : result.Err._Description_App = "Ошибка при загрузке пакета обновлений" : result.Err._Description_Sys = WL_Download1.DownloadProgress.Err.Message : GoTo Fin
-        If CType(_FILE._GetInfo(Path.Combine(_VARS.DownloadFolder, _VARS.DownloadFile)).ValueObject, FileInfo).Length <> WL_Download1.DownloadProgress.BytesReceived Then result.Err._Flag = True : result.Err._Description_App = "Ошибка при проверке загруженного файла" : result.Err._Description_Sys = Path.Combine(_VARS.DownloadFolder, _VARS.DownloadFile) : GoTo Fin
-
-Fin:    If result.Err._Flag = True Then
-            _LOG._sAdd("WINDOW_FORM", result.Err._Description_App, result.Err._Description_Sys, 2, result.Err._Number)
-            WL_Download1.DownloadFrom = "Последняя загрузка завершилась ошибкой: " & result.Err._Description_App
-            WL_Download1.DownloadTo = result.Err._Description_Sys
-            Me.GitClone_Button.Enabled = True
-        Else
-            WL_Download1.DownloadFrom = "Загрузка успешно завершена"
-            Me.GitClone_Button.Enabled = True
-            If GetDownloaded() IsNot Nothing Then Me.InstallAll_Button.Enabled = True
-        End If
-        Me.GitClone_Button.Focus()
-        Me.ContextMenuStrip1.Enabled = True
-
-        GetDownloaded()
-        ExtractPatcer()
-    End Sub
-
-    Sub ExtractPatcer()
-        _FILE._DeleteFile(_FILE._CombinePath(_VARS.DownloadFolder, MAIN_THREAD.WL_Mod.Property_PatchSrcFileName))
-        If _FILE.ZIP.UnzipFileToFolder(Path.Combine(_VARS.DownloadFolder, _VARS.DownloadFile), "." & MAIN_THREAD.WL_Mod.Property_PatchSrcFileName, _FILE._CombinePath(_VARS.DownloadFolder, MAIN_THREAD.WL_Mod.Property_PatchSrcFileName)) = False Then _LOG._sAdd("WINDOW_FORM", "Не удалось распаковать пакет обновлений в папку игры", Nothing, 1) : Exit Sub
-
-        If _VARS.PackageDownloadedVersion Is Nothing Then
-            Label_GitClone.Text = "Загружена версия: не определена"
-        Else
-            MAIN_THREAD.WL_Mod.Property_PatchSrcFilePath = _FILE._CombinePath(_VARS.DownloadFolder, MAIN_THREAD.WL_Mod.Property_PatchSrcFileName)
-            MAIN_THREAD.WL_Mod.Property_ModInPackFileVersion = _VARS.PackageDownloadedVersion
-            MAIN_THREAD.WL_Mod._Update()
-            Label_GitClone.Text = "Загружена версия: " & _VARS.PackageDownloadedVersion
-        End If
-    End Sub
-
-    Private Sub InstallAll_Button_Click(sender As Object, e As EventArgs) Handles InstallAll_Button.Click
-        Me.ContextMenuStrip1.Enabled = False
-        Me.InstallAll_Button.Enabled = False
-        If MAIN_THREAD.WL_Mod.Property_GameExeFilePath Is Nothing Then _LOG._sAdd("WINDOW_FORM", "Не указан путь к исполняемому файлу игры", Nothing, 1) : GoTo Fin
-        If MAIN_THREAD.WL_Mod.Property_GameRootFolderPath Is Nothing Then _LOG._sAdd("WINDOW_FORM", "Не удалось получить доступ к папке игры:", MAIN_THREAD.WL_Mod.Property_GameRootFolderPath, 1) : GoTo Fin
-        If _FILE._FileExits(Path.Combine(_VARS.DownloadFolder, _VARS.DownloadFile)) = False Then _LOG._sAdd("WINDOW_FORM", "Не удалось получить доступ к файлу обновлений:", Path.Combine(_VARS.DownloadFolder, _VARS.DownloadFile), 1) : GoTo Fin
-        If _FILE._DeleteFolder(_FILE._CombinePath(MAIN_THREAD.WL_Mod.Property_GameRootFolderPath, "data")).Err._Flag = True Then _LOG._sAdd("WINDOW_FORM", "Не удалось удалить ранее установленный пакет обновлений из папки игры", Nothing, 1) : GoTo Fin
-        If _FILE.ZIP.UnzipFolderToFolder(Path.Combine(_VARS.DownloadFolder, _VARS.DownloadFile), ".data", _FILE._CombinePath(MAIN_THREAD.WL_Mod.Property_GameRootFolderPath, "data")) = False Then _LOG._sAdd("WINDOW_FORM", "Не удалось распаковать пакет обновлений в папку игры", Nothing, 1) : GoTo Fin
-
-        _FILE._DeleteFile(_FILE._CombinePath(MAIN_THREAD.WL_Mod.Property_GameRootFolderPath, _VARS.PackageInstalledMeta)).Err._Flag = False
-        _FILE._WriteTextFile(Replace(_VARS.DownloadFile, ".ZIP", "",,, CompareMethod.Text), _FILE._CombinePath(MAIN_THREAD.WL_Mod.Property_GameRootFolderPath, _VARS.PackageInstalledMeta), System.Text.Encoding.UTF8)
-
-Fin:    GetInstalled()
-        If _VARS.PackageInstalledVersion Is Nothing Then
-            Label_InstallAll.Text = "Установлена версия: не определена"
-        Else
-            Label_InstallAll.Text = "Установлена версия: " & _VARS.PackageInstalledVersion
-        End If
-
-        Me.InstallAll_Button.Enabled = True
-        Me.ContextMenuStrip1.Enabled = True
-    End Sub
-
-    Private Sub GitClone_ComboBox_SelectedIndexChanged(sender As Object, e As EventArgs) Handles GitClone_ComboBox.SelectedIndexChanged
-        _VARS.PackageSelected = GitClone_ComboBox.SelectedItem.ToString
-        _INI._Write("EXTERNAL", "PACK_GIT_SELECTED", _VARS.PackageSelected)
-    End Sub
     '-----------------------------------> 'Download and update
 
     '<----------------------------------- Process killer
@@ -240,17 +159,17 @@ Fin:    GetInstalled()
     '<----------------------------------- Menu
     Private Sub ModOn_ToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ModOn_ToolStripMenuItem.Click
         'Mod ON menu
-        'Me.ModOn_Button_Click(sender, e)
+        Me.WL_Mod.Button_Enable_Click(sender, e)
     End Sub
 
     Private Sub ModOff_ToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ModOff_ToolStripMenuItem.Click
-        'Modal OFF menu
-        'Me.ModOff_Button_Click(sender, e)
+        'Mod OFF menu
+        Me.WL_Mod.Button_Disable_Click(sender, e)
     End Sub
 
     Private Sub InstallAll_ToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles InstallAll_ToolStripMenuItem.Click
         'Full install menu
-        Me.InstallAll_Button_Click(sender, e)
+        Me.WL_Upd.Button_InstallFull_Click(sender, e)
     End Sub
 
     Private Sub KillerThread_ToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles KillerThread_ToolStripMenuItem.Click
@@ -334,48 +253,30 @@ Fin:    GetInstalled()
             Me.TextBox_Debug.ScrollToCaret()
         End If
     End Sub
-
-    Public Sub Timer_UI_Tick(sender As Object, e As EventArgs) Handles Timer_UI.Tick
-        Timer_UI.Interval = 90000
-        Dim NewGitList As List(Of Module_GIT.Class_GIT.Class_GitUpdateList.Class_GitUpdateElement) = _GIT._GetGitList()
-        If NewGitList.Count <> _VARS.PackageList.Count Then
-            _VARS.PackageList = NewGitList
-            MAIN_THREAD.GitClone_ComboBox.Items.Clear()
-            If _VARS.PackageList.Count > 1 Then
-                For i = 0 To _VARS.PackageList.Count - 2
-                    MAIN_THREAD.GitClone_ComboBox.Items.Add(_VARS.PackageList(i)._name)
-                Next
-            End If
-
-            MAIN_THREAD.GitClone_ComboBox.SelectedIndex = MAIN_THREAD.GitClone_ComboBox.FindString(_INI._GET_VALUE("EXTERNAL", "PACK_GIT_SELECTED", "Master").Value)
-        End If
-    End Sub
     '-----------------------------------> 'Other form elements
 
     '<----------------------------------- Form logic
     Public Sub UpdateInterface()
-        'Button_SetStarCitizenExeFilePath.Enabled = _VARS.ConfigFileIsOK
         RenameLIVEFolder(Nothing)
 
-        'Patcher
-        If MAIN_THREAD.WL_Mod.Property_GameExeFilePath Is Nothing Then
-            If _INI._GET_VALUE("EXTERNAL", "EXE_PATH", Nothing).Value Is Nothing Then
-                'Me.Label_SetStarCitizenExeFilePath.Text = "Не задан путь к файлу " & _VARS.GameExeFileName
+        'Me.CheckBox_FSOWatcher.Checked = _VARS.FileWatcher
+
+        'Menu
+        ModOn_ToolStripMenuItem.Enabled = False
+        ModOff_ToolStripMenuItem.Enabled = False
+        If Me.WL_Mod.Property_GameExeFilePath IsNot Nothing Then
+            If Me.WL_Mod.Property_ModStatus = True Then
+                ModOff_ToolStripMenuItem.Enabled = True
             Else
-                'Me.Label_SetStarCitizenExeFilePath.Text = "Заданный путь не указывает на файл " & _VARS.GameExeFileName
+                ModOn_ToolStripMenuItem.Enabled = True
             End If
-        Else
-            'Me.Label_SetStarCitizenExeFilePath.Text = "Версия: " & _VARS.GameExeFileVersion & ", путь: " & _VARS.GameExeFilePath
         End If
-        'Me.CheckBox_FileWatcher.Checked = _VARS.FileWatcher
 
-        'Download and update
-
-        GetInstalled()
-        If _VARS.PackageInstalledVersion Is Nothing Then : Label_InstallAll.Text = "Установлена версия: не определена" : Else : Label_InstallAll.Text = "Установлена версия: " & _VARS.PackageInstalledVersion : End If
-        GetDownloaded()
-        If _VARS.PackageDownloadedVersion IsNot Nothing Then Me.InstallAll_Button.Enabled = True Else Me.InstallAll_Button.Enabled = False
-        If _VARS.PackageDownloadedVersion Is Nothing Then : Label_GitClone.Text = "Загружена версия:не определена" : Else : Label_GitClone.Text = "Загружена версия: " & _VARS.PackageDownloadedVersion : End If
+        If WL_Upd.Property_Path_File_Download IsNot Nothing Then
+            InstallAll_ToolStripMenuItem.Enabled = True
+        Else
+            InstallAll_ToolStripMenuItem.Enabled = False
+        End If
 
         'PKIller
         Me.CheckBox_KillerThread.Checked = _VARS.PKillerEnabled
@@ -399,19 +300,47 @@ Fin:    GetInstalled()
         Me.CheckBox_BeforeKillProcess.Checked = _VARS.GameProcessKillerEnabled
 
     End Sub
-
-    Private Sub DownloadCompleted(sender As Object, e As EventArgs) Handles WL_Download1.CompleteEvent
-
-    End Sub
-
-    Sub GamePathUpdate() Handles WL_Mod._Update_GameExeFilePath
-        GetInstalled()
-        If _VARS.PackageInstalledVersion Is Nothing Then
-            Label_InstallAll.Text = "Установлена версия: не определена"
-        Else
-            Label_InstallAll.Text = "Установлена версия: " & _VARS.PackageInstalledVersion
-        End If
-    End Sub
-
     '-----------------------------------> 'Form logic
+
+    '<----------------------------------- 'Callback
+    Sub GamePathUpdate(Path As String) Handles WL_Mod._Event_GameExeFile_Update_After
+        If Path Is Nothing Then Exit Sub
+
+        MAIN_THREAD.WL_Mod._Update()
+        MAIN_THREAD.WL_Mod.Property_PatchDstFilePath = _FSO._CombinePath(MAIN_THREAD.WL_Mod.Property_GameExeFolderPath, MAIN_THREAD.WL_Mod.Property_PatchDstFileName)
+
+        MAIN_THREAD.WL_Upd.Property_Path_Folder_Meta = MAIN_THREAD.WL_Mod.Property_GameRootFolderPath
+        MAIN_THREAD.WL_Upd.Property_Path_File_Meta = _FSO._CombinePath(MAIN_THREAD.WL_Upd.Property_Path_Folder_Meta, MAIN_THREAD.WL_Upd.Property_Name_File_Meta)
+    End Sub
+
+    Sub Upd_Controls_Enabled(Enabled As Boolean) Handles WL_Upd._Event_Controls_Enabled_Before, WL_Upd._Event_Controls_Enabled_After
+        MAIN_THREAD.WL_Mod.Enabled = Enabled
+    End Sub
+
+    Sub Mod_Controls_Enabled(Enabled As Boolean) Handles WL_Mod._Event_Controls_Enabled_Before, WL_Mod._Event_Controls_Enabled_After
+        MAIN_THREAD.WL_Upd.Enabled = Enabled
+    End Sub
+
+    Sub DownloadAfter(DownloadFrom As String, DownloadTo As String, e As WL_Download.DownloadProgressElement) Handles WL_Upd._Event_Download_After
+        Dim result As New ResultClass(Me)
+        result.ValueString = DownloadTo
+        _FSO._DeleteFile(_FSO._CombinePath(MAIN_THREAD.WL_Upd.Property_Path_Folder_Download, MAIN_THREAD.WL_Mod.Property_PatchSrcFileName))
+        If _FSO.ZIP.UnzipFileToFolder(MAIN_THREAD.WL_Upd.Property_Path_File_Download, "." & MAIN_THREAD.WL_Mod.Property_PatchSrcFileName, _FSO._CombinePath(MAIN_THREAD.WL_Upd.Property_Path_Folder_Download, MAIN_THREAD.WL_Mod.Property_PatchSrcFileName)) = False Then result.Err._Flag = True : result.Err._Description_App = "Не удалось извлечь ядро из загруженного пакета локадизации"
+        MAIN_THREAD.WL_Mod.Property_PatchSrcFilePath = _FSO._CombinePath(MAIN_THREAD.WL_Upd.Property_Path_Folder_Download, MAIN_THREAD.WL_Mod.Property_PatchSrcFileName)
+        MAIN_THREAD.WL_Mod.Property_ModInPackFileVersion = MAIN_THREAD.WL_Upd.Property_PackInPackVersion
+        MAIN_THREAD.WL_Mod._Update()
+        Me.UpdateInterface()
+    End Sub
+
+    Sub ModStatus_Click() Handles WL_Mod._Event_PatchDisable_Click_After, WL_Mod._Event_PatchEnable_Click_After
+        Me.UpdateInterface()
+    End Sub
+
+    Sub UpdInstallFull_Click() Handles WL_Upd._Event_InstallFull_Button_Click_After
+        Me.UpdateInterface()
+    End Sub
+
+
+
+    '-----------------------------------> 'Callback
 End Class

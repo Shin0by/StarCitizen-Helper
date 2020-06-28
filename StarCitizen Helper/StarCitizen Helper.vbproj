@@ -141,6 +141,12 @@
     <Compile Include="Controls\WL_Modification.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Controls\WL_Update.Designer.vb">
+      <DependentUpon>WL_Update.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\WL_Update.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Forms\ConvertForm.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -155,8 +161,9 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Modules\Module_APP.vb" />
+    <Compile Include="Modules\Module_CRYPTO.vb" />
     <Compile Include="Modules\Module_ERR.vb" />
-    <Compile Include="Modules\Module_FILE.vb" />
+    <Compile Include="Modules\Module_FSO.vb" />
     <Compile Include="Modules\Module_GIT.vb" />
     <Compile Include="Modules\Module_HELPER.vb" />
     <Compile Include="Modules\Module_INI.vb" />
@@ -190,6 +197,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\WL_Modification.resx">
       <DependentUpon>WL_Modification.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\WL_Update.resx">
+      <DependentUpon>WL_Update.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ConvertForm.resx">
       <DependentUpon>ConvertForm.vb</DependentUpon>

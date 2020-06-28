@@ -32,6 +32,7 @@ Partial Class WL_Download
         '
         'TableLayoutPanel
         '
+        Me.TableLayoutPanel.BackColor = System.Drawing.SystemColors.ControlLightLight
         Me.TableLayoutPanel.ColumnCount = 1
         Me.TableLayoutPanel.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.TableLayoutPanel.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))

@@ -25,8 +25,8 @@ Module Module_INET
             Dim result As New ResultClass(Me)
             result.Err._Flag = True
 
-            Dim fo As ResultClass = _FILE._DeleteFile(Path)
-            If fo.Err._Flag = True Then result.ValueString = "Не удалось удалить существующий файл " & Chr(34) & Path & Chr(34) : Return result
+            Dim fo As ResultClass = _FSO._DeleteFile(Path)
+            If fo.Err._Flag = True Then result.Err._Description_App = "Не удалось удалить существующий файл " & Chr(34) & Path & Chr(34) : Return result
 
             Try
                 Dim content = New MemoryStream()
@@ -44,12 +44,13 @@ Module Module_INET
                     End Using
                 End Using
 
-                If _FILE._FileExits(Path) = False Then result.ValueString = "Запись файла невозможна, проверьте права на запись для файла и папки " & Chr(34) & Path & Chr(34) : Return result
-                fo = _FILE._GetInfo(Path)
-                If CType(fo.ValueObject, IO.FileInfo).Length <> content.Length Then result.ValueString = "Неверен размер загруженного файла " & Chr(34) & Path & Chr(34) : Return result
+                If _FSO._FileExits(Path) = False Then result.Err._Description_App = "Запись файла невозможна, проверьте права на запись для файла и папки " & Chr(34) & Path & Chr(34) : Return result
+                fo = _FSO._GetInfo(Path)
+                If CType(fo.ValueObject, IO.FileInfo).Length <> content.Length Then result.Err._Description_App = "Неверен размер загруженного файла " & Chr(34) & Path & Chr(34) : Return result
                 result.Err._Flag = False
                 result.Err._Description_Sys = Nothing
             Catch ex As Exception
+                result.Err._Exeption = ex
                 result.Err._Description_Sys = Err.Description
                 result.Err._Number = Err.Number
                 Return result

@@ -17,7 +17,7 @@ Module Module_INI
         Private FilePath As String = Nothing
 
 
-        Public WriteOnly Property _File() As String
+        Public WriteOnly Property _FSO() As String
             Set(ByVal Value As String)
                 Me.FilePath = Value
             End Set

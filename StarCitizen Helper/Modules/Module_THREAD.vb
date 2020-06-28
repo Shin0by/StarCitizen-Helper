@@ -3,7 +3,7 @@ Imports System.Diagnostics
 Imports System.Threading
 Module Module_THREAD
     Public Class Class_THREAD_WATCHFILE
-        Dim WATCH_FILE As Thread
+        Dim WATCH_FSO As Thread
         Private MyParent As MainForm
         Private WatchList As New Class_WatcherList
         Private bPushFiles As Boolean = False
@@ -25,9 +25,9 @@ Module Module_THREAD
         End Sub
 
         Public Sub StartThread()
-            WATCH_FILE = New Thread(AddressOf ThreadTask)
-            WATCH_FILE.IsBackground = True
-            WATCH_FILE.Start()
+            WATCH_FSO = New Thread(AddressOf ThreadTask)
+            WATCH_FSO.IsBackground = True
+            WATCH_FSO.Start()
         End Sub
 
         Public Sub ThreadTask()
@@ -61,13 +61,13 @@ Execute:        Thread.Sleep(3000)
                     Me.LogFlag = 0
                 End If
 
-                If _VARS.GameExeFileStatus.UsedAppProcess = False Then
-                    If _FILE.UsedByProcess(List(i).FullName) = True Then
-                        _VARS.GameExeFileStatus.UsedAnotherProcess = True
-                    Else
-                        _VARS.GameExeFileStatus.UsedAnotherProcess = False
-                    End If
-                End If
+                'If _VARS.GameExeFileStatus.UsedAppProcess = False Then
+                'If _FSO.UsedByProcess(List(i).FullName) = True Then
+                '_VARS.GameExeFileStatus.UsedAnotherProcess = True
+                'Else
+                '_VARS.GameExeFileStatus.UsedAnotherProcess = False
+                'End If
+                'End If
             Next
         End Sub
 

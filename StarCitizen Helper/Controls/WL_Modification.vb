@@ -1,7 +1,14 @@
 ﻿Imports System.IO
-Imports System
 Public Class WL_Modification
-    Public Event _Update_GameExeFilePath()
+    Public Event _Event_GameExeFile_Update_Before(Path As String)
+    Public Event _Event_GameExeFile_Update_After(Path As String)
+    Public Event _Event_PatchEnable_Click_Before()
+    Public Event _Event_PatchEnable_Click_After()
+    Public Event _Event_PatchDisable_Click_Before()
+    Public Event _Event_PatchDisable_Click_After()
+
+    Public Event _Event_Controls_Enabled_Before(Enabled As Boolean)
+    Public Event _Event_Controls_Enabled_After(Enabled As Boolean)
 
     Private cBackColor As Color = Me.BackColor
     Private cForeColor As Color = Me.ForeColor
@@ -20,9 +27,14 @@ Public Class WL_Modification
     Private sModInPackFileVersion As String = Nothing
     Private sModStatus As Boolean = False
 
+    Private sGameModFolderName As String = Nothing
+    Private sGameModFolderPath As String = Nothing
+
+    '<----------------------------------- Basic control
     Public Sub New()
         InitializeComponent()
     End Sub
+    '-----------------------------------> Basic control
 
     '<----------------------------------- Properties
     Private Sub WL_Modification_BackColorChanged(sender As Object, e As EventArgs) Handles Me.BackColorChanged
@@ -41,7 +53,7 @@ Public Class WL_Modification
         Next
     End Sub
 
-    Public Property Text_Bottom() As String
+    Public Property Text_Label_Bottom() As String
         Get
             Return Me.Label_TextBottom.Text
         End Get
@@ -50,7 +62,7 @@ Public Class WL_Modification
         End Set
     End Property
 
-    Public Property Text_Enable() As String
+    Public Property Text_Button_Enable() As String
         Get
             Return Me.Button_Enable.Text
         End Get
@@ -59,7 +71,16 @@ Public Class WL_Modification
         End Set
     End Property
 
-    Public Property Text_Disable() As String
+    Public Property Text_Label_ModOn() As String
+        Get
+            Return Me.Label_ModOn.Text
+        End Get
+        Set(ByVal Value As String)
+            Me.Label_ModOn.Text = Value
+        End Set
+    End Property
+
+    Public Property Text_Button_Disable() As String
         Get
             Return Me.Button_Disable.Text
         End Get
@@ -68,7 +89,16 @@ Public Class WL_Modification
         End Set
     End Property
 
-    Public Property Text_Path() As String
+    Public Property Text_Label_ModOff() As String
+        Get
+            Return Me.Label_ModOff.Text
+        End Get
+        Set(ByVal Value As String)
+            Me.Label_ModOff.Text = Value
+        End Set
+    End Property
+
+    Public Property Text_Button_Path() As String
         Get
             Return Me.Button_Path.Text
         End Get
@@ -82,17 +112,19 @@ Public Class WL_Modification
             Return Me.sGameExeFilePath
         End Get
         Set(Value As String)
+            On Error Resume Next
+            RaiseEvent _Event_GameExeFile_Update_Before(Value)
             If _VARS.ConfigFileIsOK = False Then Exit Property
             If Len(Value) < _VARS.FileNameMinLen + _VARS.FilePathMinLen Then GoTo Finalize
             _INI._Write("EXTERNAL", "EXE_PATH", Value)
             If _INI._GET_VALUE("EXTERNAL", "EXE_PATH", Nothing).Value Is Nothing Then GoTo Finalize
             Me.sGameExeFilePath = Value
 
-            If _FILE._FileExits(Me.sGameExeFilePath) = False Then GoTo Finalize
-            Me.sGameExeFileName = CType(_FILE._GetInfo(Me.sGameExeFilePath).ValueObject, FileInfo).Name
-            Me.sGameExeFolderPath = CType(_FILE._GetInfo(Me.sGameExeFilePath).ValueObject, FileInfo).Directory.FullName
-            Me.sGameRootFolderPath = CType(_FILE._GetInfo(Me.sGameExeFilePath).ValueObject, FileInfo).Directory.Parent.FullName
-            If Me.Property_PatchDstFileName IsNot Nothing Then Me.Property_PatchDstFilePath = _FILE._CombinePath(Me.Property_GameExeFolderPath, Me.Property_PatchDstFileName)
+            If _FSO._FileExits(Me.sGameExeFilePath) = False Then GoTo Finalize
+            Me.sGameExeFileName = CType(_FSO._GetInfo(Me.sGameExeFilePath).ValueObject, FileInfo).Name
+            Me.sGameExeFolderPath = CType(_FSO._GetInfo(Me.sGameExeFilePath).ValueObject, FileInfo).Directory.FullName
+            Me.sGameRootFolderPath = CType(_FSO._GetInfo(Me.sGameExeFilePath).ValueObject, FileInfo).Directory.Parent.FullName
+            If Me.Property_PatchDstFileName IsNot Nothing Then Me.Property_PatchDstFilePath = _FSO._CombinePath(Me.Property_GameExeFolderPath, Me.Property_PatchDstFileName)
 
 Finalize:   If Me.sGameExeFileName IsNot Nothing Then
                 Me.Label_Path.Text = Me.sGameExeFilePath
@@ -102,10 +134,26 @@ Finalize:   If Me.sGameExeFileName IsNot Nothing Then
                 Me.Button_Disable.Enabled = False
                 Me.Button_Enable.Enabled = False
             End If
-            On Error Resume Next
-            Me.Invoke(Sub() RaiseEvent _Update_GameExeFilePath())
+            RaiseEvent _Event_GameExeFile_Update_After(Value)
         End Set
     End Property
+
+    Public Property Property_GameModFolderName() As String
+        Get
+            Return Me.sGameModFolderName
+        End Get
+        Set(Value As String)
+            Me.sGameModFolderName = Value
+        End Set
+    End Property
+
+    Public ReadOnly Property Property_GameModFolderPath() As String
+        Get
+            If Property_GameModFolderName Is Nothing Then Return Nothing
+            Return _FSO._CombinePath(Me.sGameRootFolderPath, Me.sGameModFolderName)
+        End Get
+    End Property
+
     Public Property Property_GameExeFileName() As String
         Get
             Return Me.sGameExeFileName
@@ -149,7 +197,7 @@ Finalize:   If Me.sGameExeFileName IsNot Nothing Then
             Return Me.sPatchSrcFilePath
         End Get
         Set(Value As String)
-            If _FILE._FileExits(Value) = False Then
+            If _FSO._FileExits(Value) = False Then
                 Exit Property
             End If
             Me.sPatchSrcFilePath = Value
@@ -170,9 +218,9 @@ Finalize:   If Me.sGameExeFileName IsNot Nothing Then
         End Get
         Set(Value As String)
             If Me.Property_PatchSrcFilePath Is Nothing Then Value = Nothing
-            If _FILE._FileExits(Me.Property_PatchSrcFilePath) = False Then Value = Nothing
+            If _FSO._FileExits(Me.Property_PatchSrcFilePath) = False Then Value = Nothing
             Me.sModInPackFileVersion = Value
-            If _VARS.ConfigFileIsOK = True Then _INI._Write("EXTERNAL", "MOD_PACK_INSTALLED", Me.sModInPackFileVersion)
+            If _VARS.ConfigFileIsOK = True Then _INI._Write("EXTERNAL", "MOD_PACK_VERSION", Me.sModInPackFileVersion)
         End Set
     End Property
 
@@ -182,7 +230,7 @@ Finalize:   If Me.sGameExeFileName IsNot Nothing Then
         End Get
         Set(Value As String)
             Me.sModInGameFileVersion = Value
-            If _VARS.ConfigFileIsOK = True Then _INI._Write("EXTERNAL", "MOD_GAME_INSTALLED", Me.sModInGameFileVersion)
+            If _VARS.ConfigFileIsOK = True Then _INI._Write("EXTERNAL", "MOD_GAME_VERSION", Me.sModInGameFileVersion)
         End Set
     End Property
 
@@ -194,53 +242,57 @@ Finalize:   If Me.sGameExeFileName IsNot Nothing Then
             Me.sModStatus = Value
         End Set
     End Property
-
-    '-----------------------------------> 'Properties
+    '-----------------------------------> Properties
 
     '<----------------------------------- Controls
     Private Sub Button_Path_Click(sender As Object, e As EventArgs) Handles Button_Path.Click
         Dim Path As String = Nothing
+        _Enabled(False)
         MAIN_THREAD.OpenFileDialog1.Filter = "Файл игры |" & Me.Property_GameExeFileName & "|Exe (*.exe)|*.exe" & "|Все файлы (*.*)|*.*"
         MAIN_THREAD.OpenFileDialog1.FilterIndex = 1
         MAIN_THREAD.OpenFileDialog1.RestoreDirectory = True
         If (MAIN_THREAD.OpenFileDialog1.ShowDialog() = DialogResult.OK) Then
             Me.Property_GameExeFilePath = MAIN_THREAD.OpenFileDialog1.FileName
         End If
+        _Enabled(True)
     End Sub
 
-    Private Sub Button_Enable_Click(sender As Object, e As EventArgs) Handles Button_Enable.Click
+    Public Sub Button_Enable_Click(sender As Object, e As EventArgs) Handles Button_Enable.Click
+        On Error Resume Next
+        RaiseEvent _Event_PatchEnable_Click_Before()
+        Me._Enabled(False)
         _Update()
-        _FILE._CopyFile(Me.Property_PatchSrcFilePath, Me.Property_PatchDstFilePath)
+        _FSO._CopyFile(Me.Property_PatchSrcFilePath, Me.Property_PatchDstFilePath)
         Me.Property_ModInGameFileVersion = Me.Property_ModInPackFileVersion
+        Me._Enabled(True)
         _Update(2)
+        RaiseEvent _Event_PatchEnable_Click_After()
     End Sub
 
-    Private Sub Button_Disable_Click(sender As Object, e As EventArgs) Handles Button_Disable.Click
+    Public Sub Button_Disable_Click(sender As Object, e As EventArgs) Handles Button_Disable.Click
+        On Error Resume Next
+        RaiseEvent _Event_PatchDisable_Click_Before()
+        Me._Enabled(False)
         _Update()
-        _FILE._DeleteFile(Me.Property_PatchDstFilePath)
+        _FSO._DeleteFile(Me.Property_PatchDstFilePath)
+        Me._Enabled(True)
         _Update(2)
+        RaiseEvent _Event_PatchDisable_Click_After()
     End Sub
-    '-----------------------------------> 'Controls
+    '-----------------------------------> Controls
 
     '<----------------------------------- Logic
-    Private Sub CheckBox_FileWatcher_CheckedChanged(sender As Object, e As EventArgs)
-        On Error Resume Next
-        _VARS.FileWatcher = Me.CheckBox_FileWatcher.Checked
-        _WATCHFILE_THREAD.PushWatchFiles = True
-        _INI._Write("CONFIGURATION", "FILES_WATCHER", BoolToString(_VARS.FileWatcher))
-    End Sub
-
     Private Function CheckSourceModСonditions() As Byte
-        If _VARS.DownloadFolder Is Nothing Then Return 3
+        If MAIN_THREAD.WL_Upd.Property_Path_Folder_Download Is Nothing Then Return 3
         If Me.Property_PatchSrcFileName Is Nothing Then Return 2
-        If _FILE._FileExits(Me.Property_PatchSrcFilePath) = False Then Return 1
+        If _FSO._FileExits(Me.Property_PatchSrcFilePath) = False Then Return 1
         Return 0
     End Function
 
     Private Function CheckDestinationModСonditions() As Byte
         If Property_GameExeFilePath Is Nothing Then Return 3
         If Me.Property_PatchDstFilePath Is Nothing Then Return 2
-        If _FILE._FileExits(Me.Property_PatchDstFilePath) = False Then Return 1
+        If _FSO._FileExits(Me.Property_PatchDstFilePath) = False Then Return 1
         Return 0
     End Function
 
@@ -286,5 +338,24 @@ Finalize:   If Me.sGameExeFileName IsNot Nothing Then
             End If
         End If
     End Sub
-    '-----------------------------------> 'Logic
+
+    Private Sub _Enabled(Enabled As Boolean, Optional FirstRecurseControl As Object = Nothing)
+        Dim FirstIteration As Boolean = False
+        If FirstRecurseControl Is Nothing Then
+            FirstIteration = True
+            RaiseEvent _Event_Controls_Enabled_Before(Enabled)
+            FirstRecurseControl = Me
+        End If
+
+        For Each elem In FirstRecurseControl.Controls
+            Me._Enabled(Enabled, elem)
+            If TypeOf elem Is Button Then elem.Enabled = Enabled
+            If TypeOf elem Is ComboBox Then elem.Enabled = Enabled
+        Next
+
+        If FirstIteration = True Then
+            RaiseEvent _Event_Controls_Enabled_After(Enabled)
+        End If
+    End Sub
+    '-----------------------------------> Logic
 End Class

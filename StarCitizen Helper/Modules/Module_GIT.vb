@@ -1,7 +1,9 @@
-﻿Imports Newtonsoft.Json
+﻿Imports System.Security.Cryptography
+Imports Newtonsoft.Json
 Module Module_GIT
     Class Class_GIT
         Public _GIT_LIST As New Class_GitUpdateList
+        Public _GIT_LIST_HASH As String = Nothing
 
         Public Function _GetGitList() As List(Of Class_GitUpdateList.Class_GitUpdateElement)
             _GIT_LIST._Clear()
@@ -11,17 +13,27 @@ Module Module_GIT
             Dim result As ResultClass
             result = _INET._GetHTTP(_VARS.PackageGitURL_Api, Net.SecurityProtocolType.Tls12, Header)
             If result.Err._Flag = True Then
+                If result.Err._Number = 403 Then
+                    result.Err._Description_Sys = "Отказано в доступе, лимит числа запросов." & vbNewLine & result.Err._Description_Sys
+                End If
                 _LOG._sAdd("GIT_NET", "Не удалось загрузить данные о доступных сборках с Git репозитория", result.Err._Description_Sys, 1) : Return _GIT_LIST._GetAll
             Else
                 temp = result.ValueString
             End If
             If Len(temp) < 10 Then _LOG._sAdd("GIT_NET", "Не удалось загрузить данные о доступных сборках с Git репозитория", _VARS.PackageGitURL_Api, 1) : Return _GIT_LIST._GetAll
-            _GIT_LIST._Add("Master", "Master", _VARS.PackageGitURL_Master, DateTime.Now, True)
+
             temp = "{" & Chr(34) & "data" & Chr(34) & ":" & temp & "}"
             Dim JSON As Object = JsonConvert.DeserializeObject(temp)
             For Each elem In JSON("data")
                 _GIT_LIST._Add(elem("name"), elem("tag_name"), elem("zipball_url"), elem("published_at"), False)
             Next
+            _GIT_LIST._Add("Master", "Master", _VARS.PackageGitURL_Master, DateTime.Now, True)
+            Dim hash As String = Nothing
+            For Each elem In _GIT_LIST._GetAll
+                hash += elem._name
+            Next
+
+            Me._GIT_LIST_HASH = Md5FromString(hash)
             Return _GIT_LIST._GetAll
         End Function
         Class Class_GitUpdateList

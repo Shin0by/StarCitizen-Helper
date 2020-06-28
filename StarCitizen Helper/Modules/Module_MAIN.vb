@@ -5,12 +5,11 @@ Module Module_MAIN
     Public Initialization As Boolean = True
     Public MAIN_THREAD As MainForm
     Public _KEYS As Class_KEYS
-    Public _FILE As New Class_FILE
+    Public _FSO As New Class_FSO
     Public _INI As New Class_INI
     Public _LOG As New Class_LOG(True)
     Public _APP As New Class_APP
     Public _PATCH As New Class_PATCH
-    Public _HELPER_PATCH As New Class_HelperPatch
     Public _VARS As New Class_VarCol
     Public _INET As New Class_INET
     Public _WATCHFILE_THREAD As Class_THREAD_WATCHFILE
@@ -21,20 +20,14 @@ Module Module_MAIN
 
 
         _KEYS = New Class_KEYS(MAIN_THREAD)
-        _INI._File = _APP.configFullPath
+        _INI._FSO = _APP.configFullPath
 
         _VARS.FilePathMinLen = 2
         _VARS.FileNameMinLen = 5
         _APP.appName = "StarCitizen Helper"
         _VARS.GameName = "StarCitizen"
-        _VARS.DownloadFolderPref = "temp"
-        _VARS.DownloadFile = "master.zip"
-        _VARS.DownloadFolder = _FILE.CreateFolder(Path.Combine(_APP.exePath, _VARS.DownloadFolderPref))
-        _VARS.PackageInstalledMeta = "meta.txt"
-
+        _VARS.PackageGitMaster_Name = "Master"
         'Set Nothing when publish
-        _VARS.BLOCK1 = "4032F680BFEE01"
-        _VARS.BLOCK2 = "90909080BFEE01"
         _VARS.PackageGitURL_Root = "https://github.com/defterai/StarCitizenModding"
         _VARS.PackageGitURL_Master = "https://codeload.github.com/defterai/StarCitizenModding/zip/master"
         _VARS.PackageGitURL_Api = "https://api.github.com/repos/defterai/StarCitizenModding/releases"
@@ -44,26 +37,22 @@ Module Module_MAIN
     Public Sub InitializeEnd()
         MAIN_THREAD.Text = _APP.appName & " " & _APP.Version
         MAIN_THREAD.NotifyIcon1.Text = _APP.appName
-        Module_HELPER.ConfigFile()
 
-        _WATCHFILE_THREAD = New Class_THREAD_WATCHFILE(MAIN_THREAD)
-        _WATCHFILE_THREAD.StartThread()
-
-        MAIN_THREAD.UpdateInterface()
-        MAIN_THREAD.Timer_UI.Enabled = True
-
+        MAIN_THREAD.WL_Upd.Property_Path_Folder_Download = _FSO._CombinePath(_APP.exePath, "temp")
+        MAIN_THREAD.WL_Upd.Property_Name_File_Meta = "meta.txt"
         MAIN_THREAD.WL_Mod.Property_GameExeFileName = "StarCitizen.exe"
         MAIN_THREAD.WL_Mod.Property_PatchSrcFileName = "patcher.bin"
-        MAIN_THREAD.WL_Mod.Property_PatchSrcFilePath = _FILE._CombinePath(_VARS.DownloadFolder, MAIN_THREAD.WL_Mod.Property_PatchSrcFileName)
+        MAIN_THREAD.WL_Mod.Property_PatchSrcFilePath = _FSO._CombinePath(MAIN_THREAD.WL_Upd.Property_Path_Folder_Download, MAIN_THREAD.WL_Mod.Property_PatchSrcFileName)
         MAIN_THREAD.WL_Mod.Property_PatchDstFileName = "CIGDevelopmentTools.dll"
-        MAIN_THREAD.WL_Mod.Property_ModInPackFileVersion = _VARS.PackageDownloadedVersion
-        If MAIN_THREAD.WL_Mod.Property_GameExeFilePath Is Nothing Then
-            _LOG._sAdd("WINDOW_FORM", "Не указан путь к исполняемому файлу игры" & vbNewLine & "Перейдите в вкладку [" & MAIN_THREAD.TabPage_Patch.Text & "] и нажмите кноку [" & MAIN_THREAD.WL_Mod.Text_Path & "], укажите путь к файлу [...\Bin64\" & MAIN_THREAD.WL_Mod.Property_GameExeFileName & "]", Nothing, 0)
-        Else
-            MAIN_THREAD.WL_Mod._Update()
-            MAIN_THREAD.WL_Mod.Property_PatchDstFilePath = _FILE._CombinePath(MAIN_THREAD.WL_Mod.Property_GameExeFolderPath, MAIN_THREAD.WL_Mod.Property_PatchDstFileName)
-            MAIN_THREAD.WL_Mod._Update(2)
-        End If
+        MAIN_THREAD.WL_Mod.Property_GameModFolderName = "data"
+
+        Module_HELPER.ConfigFile()
+
+        '_WATCHFILE_THREAD = New Class_THREAD_WATCHFILE(MAIN_THREAD)
+        '_WATCHFILE_THREAD.StartThread()
+
+        MAIN_THREAD.UpdateInterface()
+        MAIN_THREAD.WL_Mod._Update(2)
     End Sub
 
     Public Sub Unload()
@@ -167,28 +156,13 @@ Module Module_MAIN
 
         'Patcher
         Public GameName As String = Nothing
-        Public GameExeFileStatus As New Class_PATCH.Class_PatchResult
-        Public GameExeFileVersion As String = Nothing
-
-        Public PatcherFileSourceName As String = Nothing
-        Public PatcherFileDestinationName As String = Nothing
-        Public BLOCK1 As String = Nothing
-        Public BLOCK2 As String = Nothing
         Public FileWatcher As Boolean = False
 
-
         'Download
+        Public PackageGitMaster_Name As String = Nothing
         Public PackageGitURL_Master As String = Nothing
         Public PackageGitURL_Root As String = Nothing
         Public PackageGitURL_Api As String = Nothing
-        Public DownloadFolderPref As String = Nothing
-        Public DownloadFolder As String = Nothing
-        Public DownloadFile As String = Nothing
-        Public PackageSelected As String = Nothing
-        Public PackageInstalledVersion As String = Nothing
-        Public PackageInstalledMeta As String = Nothing
-        Public PackageDownloadedVersion As String = Nothing
-        Public PackageList As New List(Of Class_GitUpdateElement)
 
         'PKiller
         Public PKillerEnabled As Boolean = False
@@ -199,11 +173,5 @@ Module Module_MAIN
         Public GameProcessKillerEnabled As Boolean = False
         Public GameProcessMain As String = Nothing
         Public GameProcessLauncher As String = Nothing
-
-        Sub New()
-            GameExeFileStatus.Found_BLOCK1 = False
-            GameExeFileStatus.Found_BLOCK2 = False
-            GameExeFileStatus.PatchResult = False
-        End Sub
     End Class
 End Module

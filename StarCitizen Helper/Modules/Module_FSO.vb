@@ -1,9 +1,9 @@
 ﻿Imports System.IO
 Imports System
 Imports System.IO.Compression
-Module Module_FILE
+Module Module_FSO
 
-    Class Class_FILE
+    Class Class_FSO
         Public WATCHER As New Class_WatcherList
         Public ZIP As New Class_ZIP
 
@@ -15,6 +15,29 @@ Module Module_FILE
                 Return True
             End Try
             Return False
+        End Function
+
+        Public Function SetFolder(Path As String, CreateIfNotExist As Boolean) As ResultClass
+            Dim result As New ResultClass(Me)
+            result.ValueBoolean = True
+            result.ValueString = Path
+            Try
+                If CreateIfNotExist = False Then
+                    If (Not Directory.Exists(Path)) Then result.ValueBoolean = False
+                Else
+                    If (Not Directory.Exists(Path)) Then
+                        result.ValueBoolean = False
+                        Directory.CreateDirectory(Path)
+                    End If
+                End If
+            Catch
+                result.ValueBoolean = False
+                result.Err._Description_Sys = Err.Description
+                result.Err._Number = Err.Number
+                result.Err._Flag = True
+            End Try
+
+            Return result
         End Function
 
         Public Function _GetInfo(Path As String) As ResultClass
@@ -129,11 +152,11 @@ Module Module_FILE
             End Try
         End Function
 
-        Public Function _RenameDirectory(Source As String, Destination As String) As ResultClass
+        Public Function _RenameFolder(Source As String, Destination As String) As ResultClass
             Dim result As New ResultClass(Me)
             Try
                 My.Computer.FileSystem.RenameDirectory(Source, Destination)
-                result.ValueString = _FILE._CombinePath(New FileInfo(Source).Directory.FullName, Destination)
+                result.ValueString = _FSO._CombinePath(New FileInfo(Source).Directory.FullName, Destination)
                 result.ValueBoolean = True
             Catch
                 result.ValueBoolean = False
@@ -149,9 +172,9 @@ Module Module_FILE
         End Function
 
 
-        Public Function CreateFolder(sPath) As String
+        Public Function _CreateFolder(sPath) As String
             Try
-                If (Not System.IO.Directory.Exists(sPath)) Then System.IO.Directory.CreateDirectory(sPath)
+                If (Not Directory.Exists(sPath)) Then Directory.CreateDirectory(sPath)
                 Return sPath
             Catch ex As Exception
                 Return Nothing
@@ -169,13 +192,93 @@ Module Module_FILE
                 Return False
             End Try
         End Function
+
+        Class Class_ZIP
+            Public Function Unzip(sZip As String, sPath As String) As Boolean
+                Try
+                    ZipFile.ExtractToDirectory(sZip, sPath)
+                Catch ex As Exception
+                    Return False
+                End Try
+                Return True
+            End Function
+
+            Public Function UnzipFileToFolder(sZip As String, sFile As String, sPathTo As String) As Boolean
+                Try
+                    Using zipPack = ZipFile.OpenRead(sZip)
+                        Dim isFile As Boolean = True
+                        Dim destPath As String = Nothing
+                        Dim temp As String = Nothing
+                        Dim Cntr As Long = 0
+                        For Each elem In zipPack.Entries
+                            temp = Nothing
+                            destPath = Nothing
+                            isFile = True
+                            If elem.Name Is Nothing Or elem.Name = "" Then isFile = False
+
+                            If sFile.StartsWith(".", StringComparison.Ordinal) And Cntr = 0 Then
+                                sFile = elem.FullName & Right(sFile, Len(sFile) - 1)
+                            End If
+
+                            If elem.FullName.StartsWith(sFile, StringComparison.Ordinal) Then
+                                If isFile = True Then
+                                    elem.ExtractToFile(sPathTo, True)
+                                End If
+                            End If
+                            Cntr += 1
+                        Next
+
+                    End Using
+                Catch ex As Exception
+                    Return False
+                End Try
+                Return True
+            End Function
+
+            Public Function UnzipFolderToFolder(sZip As String, sPathFrom As String, sPathTo As String) As Boolean
+                Try
+                    Using zipPack = ZipFile.OpenRead(sZip)
+                        Dim isFile As Boolean = True
+                        Dim destPath As String = Nothing
+                        Dim temp As String = Nothing
+                        Dim Cntr As Long = 0
+                        For Each elem In zipPack.Entries
+                            temp = Nothing
+                            destPath = Nothing
+                            isFile = True
+                            If elem.Name Is Nothing Or elem.Name = "" Then isFile = False
+
+                            temp = Replace(elem.FullName, sPathFrom & "/", "")
+                            destPath = Path.GetFullPath(Path.Combine(sPathTo, temp))
+
+                            If sPathFrom.StartsWith(".", StringComparison.Ordinal) And Cntr = 0 Then
+                                sPathFrom = elem.FullName & Right(sPathFrom, Len(sPathFrom) - 1)
+                            End If
+
+                            If elem.FullName.StartsWith(sPathFrom, StringComparison.Ordinal) Then
+                                If isFile = True Then
+                                    elem.ExtractToFile(destPath, True)
+                                Else
+                                    _FSO._CreateFolder(destPath)
+                                End If
+                            End If
+                            Cntr += 1
+                        Next
+
+                    End Using
+                Catch ex As Exception
+                    Return False
+                End Try
+                Return True
+            End Function
+        End Class
     End Class
 
     Class Class_WatcherList
         Private data As New List(Of IO.FileInfo)
 
         Public Function _Add(sPath As String) As Boolean
-            Dim fo As ResultClass = _FILE._GetInfo(sPath)
+            Dim fo As ResultClass = _FSO._GetInfo(sPath)
             If fo.Err._Flag = True Or fo.ValueObject Is Nothing Then
                 _LOG._Add("FILE_SYSTEM", "Не удалось включить наблюдение за файлом, файл отсутствует или доступ к нему ограничен", fo.LogList(sPath), 2)
                 Return False
@@ -222,7 +325,7 @@ Module Module_FILE
                 Return Nothing
             End If
 
-            Dim fo As ResultClass = _FILE._GetInfo(sPath)
+            Dim fo As ResultClass = _FSO._GetInfo(sPath)
             If fo.Err._Flag = True Or fo.ValueObject Is Nothing Then
                 _LOG._Add("FILE_SYSTEM", "Не удалось получить обновленные данные по файлу, файл отсутствует или доступ к нему ограничен", fo.LogList(sPath), 2)
                 Return Nothing
@@ -238,85 +341,5 @@ Module Module_FILE
             Return fo.ValueObject
         End Function
 
-    End Class
-
-    Class Class_ZIP
-        Public Function Unzip(sZip As String, sPath As String) As Boolean
-            Try
-                ZipFile.ExtractToDirectory(sZip, sPath)
-            Catch ex As Exception
-                Return False
-            End Try
-            Return True
-        End Function
-
-        Public Function UnzipFileToFolder(sZip As String, sFile As String, sPathTo As String) As Boolean
-            Try
-                Using zipPack = ZipFile.OpenRead(sZip)
-                    Dim isFile As Boolean = True
-                    Dim destPath As String = Nothing
-                    Dim temp As String = Nothing
-                    Dim Cntr As Long = 0
-                    For Each elem In zipPack.Entries
-                        temp = Nothing
-                        destPath = Nothing
-                        isFile = True
-                        If elem.Name Is Nothing Or elem.Name = "" Then isFile = False
-
-                        If sFile.StartsWith(".", StringComparison.Ordinal) And Cntr = 0 Then
-                            sFile = elem.FullName & Right(sFile, Len(sFile) - 1)
-                        End If
-
-                        If elem.FullName.StartsWith(sFile, StringComparison.Ordinal) Then
-                            If isFile = True Then
-                                elem.ExtractToFile(sPathTo, True)
-                            End If
-                        End If
-                        Cntr += 1
-                    Next
-
-                End Using
-            Catch ex As Exception
-                Return False
-            End Try
-            Return True
-        End Function
-
-        Public Function UnzipFolderToFolder(sZip As String, sPathFrom As String, sPathTo As String) As Boolean
-            Try
-                Using zipPack = ZipFile.OpenRead(sZip)
-                    Dim isFile As Boolean = True
-                    Dim destPath As String = Nothing
-                    Dim temp As String = Nothing
-                    Dim Cntr As Long = 0
-                    For Each elem In zipPack.Entries
-                        temp = Nothing
-                        destPath = Nothing
-                        isFile = True
-                        If elem.Name Is Nothing Or elem.Name = "" Then isFile = False
-
-                        temp = Replace(elem.FullName, sPathFrom & "/", "")
-                        destPath = Path.GetFullPath(Path.Combine(sPathTo, temp))
-
-                        If sPathFrom.StartsWith(".", StringComparison.Ordinal) And Cntr = 0 Then
-                            sPathFrom = elem.FullName & Right(sPathFrom, Len(sPathFrom) - 1)
-                        End If
-
-                        If elem.FullName.StartsWith(sPathFrom, StringComparison.Ordinal) Then
-                            If isFile = True Then
-                                elem.ExtractToFile(destPath, True)
-                            Else
-                                _FILE.CreateFolder(destPath)
-                            End If
-                        End If
-                        Cntr += 1
-                    Next
-
-                End Using
-            Catch ex As Exception
-                Return False
-            End Try
-            Return True
-        End Function
     End Class
 End Module

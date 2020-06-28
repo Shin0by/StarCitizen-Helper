@@ -12,7 +12,7 @@ Public Class WL_Download
         Public InProgress As Boolean = False
     End Class
 
-    Public Event CompleteEvent(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Public Event _Event_Complete_Event(DownloadFrom As String, DownloadTo As String, e As DownloadProgressElement)
     Private sDownloadFrom As String = Nothing
     Private sDownloadTo As String = Nothing
     Private sDodnloadProgress As Byte = 0
@@ -45,6 +45,7 @@ Public Class WL_Download
 
     Private Sub Download_BackColorChanged(sender As Object, e As EventArgs) Handles Me.BackColorChanged
         On Error Resume Next
+        Me.TableLayoutPanel.BackColor = Me.BackColor
         For Each Elem In Me.TableLayoutPanel.Controls
             If Elem.BackColor IsNot Nothing Then Elem.BackColor = Me.BackColor
         Next
@@ -52,6 +53,7 @@ Public Class WL_Download
 
     Private Sub Download_ForeColorChanged(sender As Object, e As EventArgs) Handles Me.ForeColorChanged
         On Error Resume Next
+        Me.TableLayoutPanel.ForeColor = Me.ForeColor
         For Each Elem In Me.TableLayoutPanel.Controls
             If Elem.ForeColor IsNot Nothing Then Elem.ForeColor = Me.ForeColor
         Next
@@ -118,21 +120,22 @@ Public Class WL_Download
         If DownloadFrom Is Nothing And sDownloadFrom Is Nothing Then Return False
         If DownloadTo Is Nothing And sDownloadTo Is Nothing Then Return False
 
+        Me.DownloadProgress = New DownloadProgressElement
         Me.DownloadProgress.InProgress = True
         If DownloadFrom IsNot Nothing Then Me.DownloadFrom = DownloadFrom
         If DownloadTo IsNot Nothing Then Me.DownloadTo = DownloadTo
-
 
         Me.ProgressBar.Minimum = 0
         Me.ProgressBar.Maximum = 100
         Me.ProgressBar.Value = 0
 
-        Me.DownloadProgress = New DownloadProgressElement
+        Me.DownloadClient.Dispose()
         Me.DownloadClient = New WebClient()
 
         If Headers Is Nothing Then Headers = New WebHeaderCollection
-        DownloadClient.Headers = Headers
+        Me.DownloadClient.Headers = Headers
 
+        Me.THREAD_Download = Nothing
         Me.THREAD_Download = New Thread(AddressOf ThreadTask)
         Me.THREAD_Download.Start()
         Return True
@@ -140,7 +143,7 @@ Public Class WL_Download
 
     Private Sub ThreadTask()
         ServicePointManager.SecurityProtocol = Me.SecurityProtocol
-        DownloadClient.DownloadFileAsync(New Uri(Me.DownloadFrom), Me.DownloadTo)
+        Me.DownloadClient.DownloadFileAsync(New Uri(Me.DownloadFrom), Me.DownloadTo)
     End Sub
 
     Private Sub DownloadProgressChanged(ByVal Sender As Object, ByVal e As DownloadProgressChangedEventArgs) Handles DownloadClient.DownloadProgressChanged
@@ -153,14 +156,17 @@ Public Class WL_Download
     Private Sub DownloadFileCompleted(ByVal sender As Object, ByVal e As AsyncCompletedEventArgs) Handles DownloadClient.DownloadFileCompleted
         If e.Error IsNot Nothing Then
             Me.DownloadProgress.Err = e.Error
+            Me.Invoke(Sub() Me.LabelFromElement.Text = "Ошибка загрузки")
+            Me.Invoke(Sub() Me.LabelToElement.Text = Me.DownloadProgress.Err.Message)
         Else
             Me.DownloadProgress.Complete = True
             Me.Invoke(Sub() Me.ProgressBar.Value = 100)
         End If
         Me.DownloadProgress.InProgress = False
-        Me.Invoke(Sub() RaiseEvent CompleteEvent(sender, e))
         Me.THREAD_Download.Abort()
+        Me.Invoke(Sub() RaiseEvent _Event_Complete_Event(Me.DownloadFrom, Me.DownloadTo, Me.DownloadProgress))
     End Sub
+
 End Class
 
 

@@ -49,12 +49,6 @@ Partial Class MainForm
         Me.TabControl = New System.Windows.Forms.TabControl()
         Me.TabPage_Patch = New System.Windows.Forms.TabPage()
         Me.TabPage_Update = New System.Windows.Forms.TabPage()
-        Me.TableLayoutPanel3 = New System.Windows.Forms.TableLayoutPanel()
-        Me.GitClone_ComboBox = New System.Windows.Forms.ComboBox()
-        Me.InstallAll_Button = New System.Windows.Forms.Button()
-        Me.GitClone_Button = New System.Windows.Forms.Button()
-        Me.Label_GitClone = New System.Windows.Forms.Label()
-        Me.Label_InstallAll = New System.Windows.Forms.Label()
         Me.TabPage_Killer = New System.Windows.Forms.TabPage()
         Me.TableLayoutPanel4 = New System.Windows.Forms.TableLayoutPanel()
         Me.Label1 = New System.Windows.Forms.Label()
@@ -84,14 +78,12 @@ Partial Class MainForm
         Me.ClearLog_Button = New System.Windows.Forms.Button()
         Me.TextBox_Debug = New System.Windows.Forms.TextBox()
         Me.Timer_LOG = New System.Windows.Forms.Timer(Me.components)
-        Me.Timer_UI = New System.Windows.Forms.Timer(Me.components)
         Me.WL_Mod = New SC.WL_Modification()
-        Me.WL_Download1 = New SC.WL_Download()
+        Me.WL_Upd = New SC.WL_Update()
         Me.ContextMenuStrip1.SuspendLayout()
         Me.TabControl.SuspendLayout()
         Me.TabPage_Patch.SuspendLayout()
         Me.TabPage_Update.SuspendLayout()
-        Me.TableLayoutPanel3.SuspendLayout()
         Me.TabPage_Killer.SuspendLayout()
         Me.TableLayoutPanel4.SuspendLayout()
         Me.TabPage_GameProfiles.SuspendLayout()
@@ -105,7 +97,7 @@ Partial Class MainForm
         Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.Patch_ToolStripMenuItem, Me.Update_ToolStripMenuItem, Me.PKill_ToolStripMenuItem, Me.Profiles_ToolStripMenuItem, Me.ToolStripSeparator2, Me.ShowWinToolStripMenuItem, Me.ToolStripSeparator1, Me.ExitToolStripMenuItem})
         Me.ContextMenuStrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Table
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(215, 148)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(215, 170)
         '
         'Patch_ToolStripMenuItem
         '
@@ -260,7 +252,7 @@ Partial Class MainForm
         '
         'TabPage_Update
         '
-        Me.TabPage_Update.Controls.Add(Me.TableLayoutPanel3)
+        Me.TabPage_Update.Controls.Add(Me.WL_Upd)
         Me.TabPage_Update.Location = New System.Drawing.Point(4, 22)
         Me.TabPage_Update.Name = "TabPage_Update"
         Me.TabPage_Update.Padding = New System.Windows.Forms.Padding(3)
@@ -268,90 +260,6 @@ Partial Class MainForm
         Me.TabPage_Update.TabIndex = 2
         Me.TabPage_Update.Text = "Загрузка и обновление"
         Me.TabPage_Update.UseVisualStyleBackColor = True
-        '
-        'TableLayoutPanel3
-        '
-        Me.TableLayoutPanel3.ColumnCount = 3
-        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33332!))
-        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334!))
-        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334!))
-        Me.TableLayoutPanel3.Controls.Add(Me.GitClone_ComboBox, 0, 0)
-        Me.TableLayoutPanel3.Controls.Add(Me.InstallAll_Button, 0, 2)
-        Me.TableLayoutPanel3.Controls.Add(Me.GitClone_Button, 0, 1)
-        Me.TableLayoutPanel3.Controls.Add(Me.Label_GitClone, 1, 1)
-        Me.TableLayoutPanel3.Controls.Add(Me.Label_InstallAll, 1, 2)
-        Me.TableLayoutPanel3.Controls.Add(Me.WL_Download1, 0, 7)
-        Me.TableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TableLayoutPanel3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.TableLayoutPanel3.Location = New System.Drawing.Point(3, 3)
-        Me.TableLayoutPanel3.Name = "TableLayoutPanel3"
-        Me.TableLayoutPanel3.RowCount = 8
-        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
-        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
-        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
-        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
-        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
-        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
-        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
-        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
-        Me.TableLayoutPanel3.Size = New System.Drawing.Size(770, 279)
-        Me.TableLayoutPanel3.TabIndex = 3
-        '
-        'GitClone_ComboBox
-        '
-        Me.GitClone_ComboBox.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.GitClone_ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.GitClone_ComboBox.FormattingEnabled = True
-        Me.GitClone_ComboBox.Location = New System.Drawing.Point(3, 3)
-        Me.GitClone_ComboBox.Name = "GitClone_ComboBox"
-        Me.GitClone_ComboBox.Size = New System.Drawing.Size(250, 21)
-        Me.GitClone_ComboBox.TabIndex = 12
-        '
-        'InstallAll_Button
-        '
-        Me.InstallAll_Button.Location = New System.Drawing.Point(3, 63)
-        Me.InstallAll_Button.Name = "InstallAll_Button"
-        Me.InstallAll_Button.Size = New System.Drawing.Size(250, 24)
-        Me.InstallAll_Button.TabIndex = 5
-        Me.InstallAll_Button.Text = "Полная установка"
-        Me.InstallAll_Button.UseVisualStyleBackColor = True
-        '
-        'GitClone_Button
-        '
-        Me.GitClone_Button.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.GitClone_Button.Location = New System.Drawing.Point(3, 33)
-        Me.GitClone_Button.Name = "GitClone_Button"
-        Me.GitClone_Button.Size = New System.Drawing.Size(250, 24)
-        Me.GitClone_Button.TabIndex = 1
-        Me.GitClone_Button.Text = "Загрузить пакет обновлений"
-        Me.GitClone_Button.UseVisualStyleBackColor = True
-        '
-        'Label_GitClone
-        '
-        Me.Label_GitClone.AutoSize = True
-        Me.TableLayoutPanel3.SetColumnSpan(Me.Label_GitClone, 2)
-        Me.Label_GitClone.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Label_GitClone.Location = New System.Drawing.Point(259, 33)
-        Me.Label_GitClone.Margin = New System.Windows.Forms.Padding(3)
-        Me.Label_GitClone.Name = "Label_GitClone"
-        Me.Label_GitClone.Size = New System.Drawing.Size(508, 24)
-        Me.Label_GitClone.TabIndex = 2
-        Me.Label_GitClone.Text = "Загрузка выбранного пакета обновлений"
-        Me.Label_GitClone.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'Label_InstallAll
-        '
-        Me.Label_InstallAll.AutoSize = True
-        Me.TableLayoutPanel3.SetColumnSpan(Me.Label_InstallAll, 2)
-        Me.Label_InstallAll.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Label_InstallAll.Location = New System.Drawing.Point(259, 63)
-        Me.Label_InstallAll.Margin = New System.Windows.Forms.Padding(3)
-        Me.Label_InstallAll.Name = "Label_InstallAll"
-        Me.Label_InstallAll.Size = New System.Drawing.Size(508, 24)
-        Me.Label_InstallAll.TabIndex = 8
-        Me.Label_InstallAll.Text = "Локализация и шрифты, а так же будут выполнены настройки для их использования"
-        Me.Label_InstallAll.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'TabPage_Killer
         '
@@ -717,18 +625,15 @@ Partial Class MainForm
         '
         Me.Timer_LOG.Interval = 1000
         '
-        'Timer_UI
-        '
-        Me.Timer_UI.Interval = 600
-        '
         'WL_Mod
         '
-        Me.WL_Mod.BackColor = System.Drawing.Color.Transparent
+        Me.WL_Mod.BackColor = System.Drawing.SystemColors.ControlLightLight
         Me.WL_Mod.Dock = System.Windows.Forms.DockStyle.Fill
         Me.WL_Mod.Location = New System.Drawing.Point(3, 3)
         Me.WL_Mod.Name = "WL_Mod"
         Me.WL_Mod.Property_GameExeFileName = Nothing
         Me.WL_Mod.Property_GameExeFilePath = Nothing
+        Me.WL_Mod.Property_GameModFolderName = Nothing
         Me.WL_Mod.Property_ModInGameFileVersion = Nothing
         Me.WL_Mod.Property_ModInPackFileVersion = Nothing
         Me.WL_Mod.Property_ModStatus = False
@@ -738,29 +643,42 @@ Partial Class MainForm
         Me.WL_Mod.Property_PatchSrcFilePath = Nothing
         Me.WL_Mod.Size = New System.Drawing.Size(770, 279)
         Me.WL_Mod.TabIndex = 0
-        Me.WL_Mod.Text_Bottom = ""
-        Me.WL_Mod.Text_Disable = "Выкл. модификацию"
-        Me.WL_Mod.Text_Enable = "Вкл. модификацию"
-        Me.WL_Mod.Text_Path = "Исполняемый файл"
+        Me.WL_Mod.Text_Button_Disable = "Выкл. модификацию"
+        Me.WL_Mod.Text_Button_Enable = "Вкл. модификацию"
+        Me.WL_Mod.Text_Button_Path = "Исполняемый файл"
+        Me.WL_Mod.Text_Label_Bottom = ""
+        Me.WL_Mod.Text_Label_ModOff = "Выключить модификацию"
+        Me.WL_Mod.Text_Label_ModOn = "Включить модификацию"
         '
-        'WL_Download1
+        'WL_Upd
         '
-        Me.WL_Download1.AutoEllipsis = False
-        Me.WL_Download1.Clickable = False
-        Me.TableLayoutPanel3.SetColumnSpan(Me.WL_Download1, 3)
-        Me.WL_Download1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.WL_Download1.DownloadFrom = Nothing
-        Me.WL_Download1.DownloadTo = Nothing
-        Me.WL_Download1.Location = New System.Drawing.Point(3, 213)
-        Me.WL_Download1.Name = "WL_Download1"
-        Me.WL_Download1.Size = New System.Drawing.Size(764, 63)
-        Me.WL_Download1.TabIndex = 11
-        Me.WL_Download1.Visible = False
+        Me.WL_Upd.BackColor = System.Drawing.SystemColors.ControlLightLight
+        Me.WL_Upd.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.WL_Upd.Location = New System.Drawing.Point(3, 3)
+        Me.WL_Upd.Name = "WL_Upd"
+        Me.WL_Upd.Property_GitList_AutoUpdate = True
+        Me.WL_Upd.Property_GitList_Interval = 900000
+        Me.WL_Upd.Property_GitList_SelString = Nothing
+        Me.WL_Upd.Property_Name_File_Download = Nothing
+        Me.WL_Upd.Property_Name_File_Meta = Nothing
+        Me.WL_Upd.Property_PackInGameVersion = Nothing
+        Me.WL_Upd.Property_Path_File_Download = Nothing
+        Me.WL_Upd.Property_Path_File_Meta = Nothing
+        Me.WL_Upd.Property_Path_Folder_Download = Nothing
+        Me.WL_Upd.Property_Path_Folder_Meta = Nothing
+        Me.WL_Upd.Size = New System.Drawing.Size(770, 279)
+        Me.WL_Upd.TabIndex = 0
+        Me.WL_Upd.Text_Button_Download = "Загрузить пакет обновлений"
+        Me.WL_Upd.Text_Button_InstallFull = "Полная установка"
+        Me.WL_Upd.Text_Label_Bottom = ""
+        Me.WL_Upd.Text_Label_Download = "Загрузка выбранного пакета обновлений"
+        Me.WL_Upd.Text_Label_InstallFull = "Локализация и шрифты"
         '
         'MainForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.BackColor = System.Drawing.SystemColors.ControlLightLight
         Me.ClientSize = New System.Drawing.Size(784, 311)
         Me.Controls.Add(Me.TabControl)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
@@ -774,8 +692,6 @@ Partial Class MainForm
         Me.TabControl.ResumeLayout(False)
         Me.TabPage_Patch.ResumeLayout(False)
         Me.TabPage_Update.ResumeLayout(False)
-        Me.TableLayoutPanel3.ResumeLayout(False)
-        Me.TableLayoutPanel3.PerformLayout()
         Me.TabPage_Killer.ResumeLayout(False)
         Me.TableLayoutPanel4.ResumeLayout(False)
         Me.TableLayoutPanel4.PerformLayout()
@@ -806,11 +722,6 @@ Partial Class MainForm
     Friend WithEvents TextBox_Debug As TextBox
     Friend WithEvents Timer_LOG As Timer
     Friend WithEvents TabPage_Update As TabPage
-    Friend WithEvents TableLayoutPanel3 As TableLayoutPanel
-    Friend WithEvents InstallAll_Button As Button
-    Friend WithEvents GitClone_Button As Button
-    Friend WithEvents Label_GitClone As Label
-    Friend WithEvents Label_InstallAll As Label
     Friend WithEvents Update_ToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents InstallAll_ToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ClearLog_Button As Button
@@ -848,8 +759,6 @@ Partial Class MainForm
     Friend WithEvents ToLIVE_ToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToPTU_ToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToEPTU_ToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents WL_Download1 As WL_Download
-    Friend WithEvents GitClone_ComboBox As ComboBox
-    Friend WithEvents Timer_UI As Timer
     Friend WithEvents WL_Mod As WL_Modification
+    Friend WithEvents WL_Upd As WL_Update
 End Class

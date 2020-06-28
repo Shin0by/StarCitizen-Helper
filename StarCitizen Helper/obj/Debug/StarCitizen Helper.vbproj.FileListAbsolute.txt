@@ -21,3 +21,4 @@ C:\google\programming\GitHub\StarCitizen-Helper\StarCitizen Helper\obj\Debug\SC.
 C:\google\programming\GitHub\StarCitizen-Helper\StarCitizen Helper\bin\Debug\Newtonsoft.Json.dll
 C:\google\programming\GitHub\StarCitizen-Helper\StarCitizen Helper\bin\Debug\Newtonsoft.Json.xml
 C:\google\programming\GitHub\StarCitizen-Helper\StarCitizen Helper\obj\Debug\SC.WL_Modification.resources
+C:\google\programming\GitHub\StarCitizen-Helper\StarCitizen Helper\obj\Debug\SC.WL_Update.resources
