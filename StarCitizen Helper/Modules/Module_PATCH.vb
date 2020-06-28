@@ -55,6 +55,7 @@ Module Module_PATCH
                 result.Result.Err._Number = Err.Number
                 result.PatchResult = False
             End Try
+
             result.UsedAppProcess = False
             Return result
         End Function

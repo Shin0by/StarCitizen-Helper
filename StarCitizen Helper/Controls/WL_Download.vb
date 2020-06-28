@@ -45,6 +45,7 @@ Public Class WL_Download
 
     Private Sub Download_BackColorChanged(sender As Object, e As EventArgs) Handles Me.BackColorChanged
         On Error Resume Next
+
         Me.TableLayoutPanel.BackColor = Me.BackColor
         For Each Elem In Me.TableLayoutPanel.Controls
             If Elem.BackColor IsNot Nothing Then Elem.BackColor = Me.BackColor

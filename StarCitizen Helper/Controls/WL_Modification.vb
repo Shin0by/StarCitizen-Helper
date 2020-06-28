@@ -6,7 +6,6 @@ Public Class WL_Modification
     Public Event _Event_PatchEnable_Click_After()
     Public Event _Event_PatchDisable_Click_Before()
     Public Event _Event_PatchDisable_Click_After()
-
     Public Event _Event_Controls_Enabled_Before(Enabled As Boolean)
     Public Event _Event_Controls_Enabled_After(Enabled As Boolean)
 

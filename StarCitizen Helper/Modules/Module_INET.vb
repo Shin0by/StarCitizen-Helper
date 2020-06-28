@@ -30,6 +30,7 @@ Module Module_INET
 
             Try
                 Dim content = New MemoryStream()
+
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12
                 Dim request As Net.HttpWebRequest = DirectCast(Net.HttpWebRequest.Create(Url), Net.HttpWebRequest)
                 Using response = request.GetResponse()

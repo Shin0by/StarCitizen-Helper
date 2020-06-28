@@ -10,6 +10,7 @@ Public Class MainForm
         MAIN_THREAD.WL_Upd.Text_Label_Bottom = "Для загрузки пакета обновлений выберите в выпадающем списке актуальный пакет обновлений и нажмите [" & Me.WL_Upd.Text_Button_Download & "]. По завершении загрузки нажмите [" & Me.WL_Upd.Text_Button_InstallFull & "] - это установит необходимые файлы локализации в папку игры." & vbNewLine & "Для активации локализации требуется установить и включить ядро модификаций, для этого перейдите во вкладку [" & Me.TabPage_Patch.Text & "] и нажмите [" & Me.WL_Mod.Text_Button_Enable & "]." & vbNewLine & vbNewLine & "Примечание: Пакет локализации [Master] - это последняя версия сборки, еще не прошедшей проверку (не рекомендуется к установке)."
     End Sub
 
+
     'Private Sub CheckBox_FSOWatcher_CheckedChanged(sender As Object, e As EventArgs)
     'On Error Resume Next
     '_VARS.FileWatcher = Me.CheckBox_Watcher.Checked

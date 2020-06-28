@@ -15,7 +15,6 @@ WriteBlock: File.Create(_APP.configFullPath).Dispose()
                 _LOG._sAdd("CONFIG_FILE", "Запись в файл коифигурации невозможна, проверьте права на запись", _APP.configFullPath, 1)
                 GoTo ReadBlock
             End If
-
             'FileWatcher
             _INI._Write("CONFIGURATION", "FILES_WATCHER", 0)
 

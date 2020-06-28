@@ -29,6 +29,7 @@ Module Module_LOG
         Public Write As Boolean = False
         Private ThreadMode As Boolean = False
         Public Buffer As String = Nothing
+
         Public Function _TimeStamp(Delimeter As Boolean, Optional Time As Boolean = False, Optional Millesecond As Boolean = False) As String
             Dim delimDate = Nothing
             Dim delimTime = Nothing

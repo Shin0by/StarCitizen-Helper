@@ -24,7 +24,6 @@ Module Module_KEYS
             Me.Locker = Nothing
             Return True
         End Function
-
         Public Function _Get(KeyID As Integer) As Class_KEY
             If Me.data.Count = 0 Then Return Nothing
             Me._CheckWrite("_KEYS._Get()")

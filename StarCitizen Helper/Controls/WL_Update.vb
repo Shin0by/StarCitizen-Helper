@@ -55,7 +55,6 @@ Public Class WL_Update
         For Each Elem In Me.Controls
             Elem.BackColor = Me.cBackColor
         Next
-
     End Sub
 
     Private Sub WL_Update_ForeColorChanged(sender As Object, e As EventArgs) Handles Me.ForeColorChanged

@@ -87,7 +87,6 @@ Module Module_GIT
                         End If
                     Next
                 End Sub
-
             End Class
         End Class
     End Class

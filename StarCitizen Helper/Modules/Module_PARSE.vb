@@ -63,7 +63,6 @@ Module Module_PARSER
                 SubLines = New Class_SubLineBlock
                 Me.STATS.LinesIn = 1
                 SubLines.Source = fields(0) & "," & fields(1)
-
                 SubLines.Line = tfp.LineNumber - 1
                 SubLines.LeftString.sKey = Split(fields(0), "=", 2)(0)
                 SubLines.LeftString.sValue = Split(fields(0), "=", 2)(1)

@@ -50,7 +50,6 @@ Module Module_MAIN
 
         '_WATCHFILE_THREAD = New Class_THREAD_WATCHFILE(MAIN_THREAD)
         '_WATCHFILE_THREAD.StartThread()
-
         MAIN_THREAD.UpdateInterface()
         MAIN_THREAD.WL_Mod._Update(2)
     End Sub

@@ -11,6 +11,7 @@
         Public _Create As Date = Date.Now
         Public _Exeption As Exception = Nothing
 
+
         Public Sub _ToLOG(Type As Integer)
             _LOG._sAdd(Me.OwnerName & "." & Me._Tag, Me._Description_App, Me._Description_Sys, Type, Me._Number)
         End Sub

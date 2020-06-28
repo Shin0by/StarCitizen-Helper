@@ -42,6 +42,7 @@ Module Module_FSO
 
         Public Function _GetInfo(Path As String) As ResultClass
             Dim result As New ResultClass(Me)
+
             Try
                 Dim File As New IO.FileInfo(Path)
                 If Me._FileExits(Path) = False Then

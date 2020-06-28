@@ -11,6 +11,7 @@ Module Module_Crypto
         For i As Integer = 0 To Bytes.Length - 1
             sb.Append(Bytes(i).ToString("x2"))
         Next
+
         Return sb.ToString()
     End Function
 End Module

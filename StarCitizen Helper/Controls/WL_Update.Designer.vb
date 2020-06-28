@@ -29,8 +29,8 @@ Partial Class WL_Update
         Me.Button_Download = New System.Windows.Forms.Button()
         Me.Label_Download = New System.Windows.Forms.Label()
         Me.Label_InstallFull = New System.Windows.Forms.Label()
-        Me.BackgroundWorker = New System.ComponentModel.BackgroundWorker()
         Me.WL_Download = New SC.WL_Download()
+        Me.BackgroundWorker = New System.ComponentModel.BackgroundWorker()
         Me.TableLayoutPanel.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -132,9 +132,6 @@ Partial Class WL_Update
         Me.Label_InstallFull.Text = "Локализация и шрифты"
         Me.Label_InstallFull.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'BackgroundWorker
-        '
-        '
         'WL_Download
         '
         Me.WL_Download.AutoEllipsis = False
@@ -150,6 +147,9 @@ Partial Class WL_Update
         Me.TableLayoutPanel.SetRowSpan(Me.WL_Download, 3)
         Me.WL_Download.Size = New System.Drawing.Size(660, 88)
         Me.WL_Download.TabIndex = 14
+        '
+        'BackgroundWorker
+        '
         '
         'WL_Update
         '

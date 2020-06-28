@@ -187,10 +187,10 @@ Partial Class WL_Modification
     Friend WithEvents Label_TextBottom As Label
     Friend WithEvents Button_Enable As Button
     Friend WithEvents Label_FileWatcher As Label
-    Friend WithEvents CheckBox_FileWatcher As CheckBox
     Friend WithEvents Button_Path As Button
     Friend WithEvents Label_Path As Label
     Friend WithEvents Button_Disable As Button
     Friend WithEvents Label_ModOn As Label
     Friend WithEvents Label_ModOff As Label
+    Friend WithEvents CheckBox_FileWatcher As CheckBox
 End Class

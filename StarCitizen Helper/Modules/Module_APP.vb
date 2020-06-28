@@ -44,10 +44,8 @@ Module Module_APP
         Sub New()
             exePath = Application.StartupPath()
             If Right(exePath, 1) <> "\" Then exePath = exePath & "\"
-
             exeFullPath = Application.ExecutablePath
             exeName = Process.GetCurrentProcess.ProcessName.ToString
-
             configName = "config.ini"
             configPath = exePath
             configFullPath = configPath & configName

@@ -16,7 +16,6 @@ Module Module_INI
         Private Config = New FileIniDataParser()
         Private FilePath As String = Nothing
 
-
         Public WriteOnly Property _FSO() As String
             Set(ByVal Value As String)
                 Me.FilePath = Value
