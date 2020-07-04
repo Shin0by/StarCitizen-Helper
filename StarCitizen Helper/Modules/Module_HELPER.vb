@@ -18,6 +18,11 @@ WriteBlock: File.Create(_APP.configFullPath).Dispose()
             'FileWatcher
             _INI._Write("CONFIGURATION", "FILES_WATCHER", 0)
 
+            'SysUpdate
+            _INI._Write("UPDATE", "APP_VERSION", _APP.Version)
+            _INI._Write("UPDATE", "PACK_GIT_PAGE", "https://github.com/Shin0by/StarCitizen-Helper")
+            _INI._Write("UPDATE", "PACK_GIT_API", "https://api.github.com/repos/Shin0by/StarCitizen-Helper/releases")
+
             'PKiller
             _INI._Write("CONFIGURATION", "PKILLER_ENABLED", 0)
             _INI._Write("CONFIGURATION", "PKILLER_KEY", 0)
@@ -54,12 +59,15 @@ ReadBlock: _VARS.ConfigFileIsOK = True
 
         _VARS.FileWatcher = StringToBool(_INI._GET_VALUE("CONFIGURATION", "FILES_WATCHER", False, {"0", "1"}).Value)
 
+        'SysUpdate
+        MAIN_THREAD.WL_SysUpdate.Property_URLPageApplication = _INI._GET_VALUE("UPDATE", "PACK_GIT_PAGE", Nothing).Value
+        MAIN_THREAD.WL_SysUpdate.Property_URLApiApplication = _INI._GET_VALUE("UPDATE", "PACK_GIT_API", Nothing).Value
+
         'MOD & UPD
         MAIN_THREAD.WL_Mod.Property_GameExeFilePath = _INI._GET_VALUE("EXTERNAL", "EXE_PATH", Nothing).Value
         MAIN_THREAD.WL_Mod.Property_ModInGameFileVersion = _INI._GET_VALUE("EXTERNAL", "MOD_GAME_VERSION", Nothing).Value
         MAIN_THREAD.WL_Mod.Property_ModInPackFileVersion = _INI._GET_VALUE("EXTERNAL", "MOD_PACK_VERSION", Nothing).Value
         MAIN_THREAD.WL_Upd.Property_PackInGameVersion = _INI._GET_VALUE("EXTERNAL", "PACK_GAME_VERSION", Nothing).Value
-        'MAIN_THREAD.WL_Upd.Property_PackInPackVersion = _INI._GET_VALUE("EXTERNAL", "PACK_PACK_VERSION", Nothing).Value
 
         'GIT
         _VARS.PackageGitURL_Master = _INI._GET_VALUE("EXTERNAL", "PACK_GIT_MASTER", Nothing).Value

@@ -1,6 +1,7 @@
 ﻿Imports System.IO
 Imports System.Net
 Imports System.Threading
+Imports SC.Class_GIT.Class_GitUpdateList
 
 Public Class WL_Update
     Public Event _Event_ListGit_List_Change_Before()
@@ -26,7 +27,7 @@ Public Class WL_Update
     Private cBackColor As Color = Me.BackColor
     Private cForeColor As Color = Me.ForeColor
 
-    Private iUpdateGitList_Interval As Integer = 900000
+    Private iUpdateGitList_Interval As Integer = 90000
     Private bUpdateGitList_Enable As Boolean = False
     Private sGitList_Value As String = Nothing
 
@@ -413,15 +414,12 @@ Finalize: sender.Enabled = True
     '<----------------------------------- 'Thread
     Private Sub BackgroundWorker_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles BackgroundWorker.DoWork
         Thread.Sleep(1000)
+        Dim LatestPackDate As DateTime = Nothing
         Do
-            Dim NewGitList As List(Of Module_GIT.Class_GIT.Class_GitUpdateList.Class_GitUpdateElement) = _GIT._GetGitList()
-            Me.hashGitList = _GIT._GIT_LIST_HASH
-            Me.hashCurrentList = Nothing
-            For Each elem In Me.List_Git.Items
-                Me.hashCurrentList += elem
-            Next
-            Me.hashCurrentList = Md5FromString(Me.hashCurrentList)
-            If Me.hashGitList <> Me.hashCurrentList Then
+            Dim NewGitList As List(Of Module_GIT.Class_GIT.Class_GitUpdateList.Class_GitUpdateElement) = _GIT._GetGitList(_VARS.PackageGitURL_Api)
+            NewGitList.Add(New Class_GitUpdateElement("Master", "Master", _VARS.PackageGitURL_Master, DateTime.Now, Nothing, True))
+
+            If LatestPackDate <> _GIT._GIT_LatestElement._published Then
                 RaiseEvent _Event_ListGit_List_Change_Before()
                 Me.Invoke(Sub() Me.List_Git.Items.Clear())
                 For i = 0 To NewGitList.Count - 1
@@ -430,7 +428,7 @@ Finalize: sender.Enabled = True
                 Me.Property_GitList_SelString = _INI._GET_VALUE("EXTERNAL", "PACK_GIT_SELECTED", "").Value
                 RaiseEvent _Event_ListGit_List_Change_After()
             End If
-
+            LatestPackDate = _GIT._GIT_LatestElement._published
             Thread.Sleep(iUpdateGitList_Interval)
         Loop
     End Sub

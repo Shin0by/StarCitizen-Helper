@@ -141,6 +141,12 @@
     <Compile Include="Controls\WL_Modification.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Controls\WL_SysUpdate.Designer.vb">
+      <DependentUpon>WL_SysUpdate.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\WL_SysUpdate.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Controls\WL_Update.Designer.vb">
       <DependentUpon>WL_Update.vb</DependentUpon>
     </Compile>
@@ -197,6 +203,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\WL_Modification.resx">
       <DependentUpon>WL_Modification.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\WL_SysUpdate.resx">
+      <DependentUpon>WL_SysUpdate.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\WL_Update.resx">
       <DependentUpon>WL_Update.vb</DependentUpon>

@@ -48,9 +48,7 @@ Partial Class MainForm
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
         Me.TabControl = New System.Windows.Forms.TabControl()
         Me.TabPage_Patch = New System.Windows.Forms.TabPage()
-        Me.WL_Mod = New SC.WL_Modification()
-        Me.TabPage_Update = New System.Windows.Forms.TabPage()
-        Me.WL_Upd = New SC.WL_Update()
+        Me.TabPage_Packages = New System.Windows.Forms.TabPage()
         Me.TabPage_Killer = New System.Windows.Forms.TabPage()
         Me.TableLayoutPanel4 = New System.Windows.Forms.TableLayoutPanel()
         Me.Label1 = New System.Windows.Forms.Label()
@@ -79,17 +77,22 @@ Partial Class MainForm
         Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
         Me.ClearLog_Button = New System.Windows.Forms.Button()
         Me.TextBox_Debug = New System.Windows.Forms.TextBox()
+        Me.TabPage_SysUpdate = New System.Windows.Forms.TabPage()
         Me.Timer_LOG = New System.Windows.Forms.Timer(Me.components)
+        Me.WL_Mod = New SC.WL_Modification()
+        Me.WL_Upd = New SC.WL_Update()
+        Me.WL_SysUpdate = New SC.WL_SysUpdate()
         Me.ContextMenuStrip1.SuspendLayout()
         Me.TabControl.SuspendLayout()
         Me.TabPage_Patch.SuspendLayout()
-        Me.TabPage_Update.SuspendLayout()
+        Me.TabPage_Packages.SuspendLayout()
         Me.TabPage_Killer.SuspendLayout()
         Me.TableLayoutPanel4.SuspendLayout()
         Me.TabPage_GameProfiles.SuspendLayout()
         Me.TableLayoutPanel5.SuspendLayout()
         Me.TabPage_Debug.SuspendLayout()
         Me.TableLayoutPanel2.SuspendLayout()
+        Me.TabPage_SysUpdate.SuspendLayout()
         Me.SuspendLayout()
         '
         'ContextMenuStrip1
@@ -228,10 +231,11 @@ Partial Class MainForm
         'TabControl
         '
         Me.TabControl.Controls.Add(Me.TabPage_Patch)
-        Me.TabControl.Controls.Add(Me.TabPage_Update)
+        Me.TabControl.Controls.Add(Me.TabPage_Packages)
         Me.TabControl.Controls.Add(Me.TabPage_Killer)
         Me.TabControl.Controls.Add(Me.TabPage_GameProfiles)
         Me.TabControl.Controls.Add(Me.TabPage_Debug)
+        Me.TabControl.Controls.Add(Me.TabPage_SysUpdate)
         Me.TabControl.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TabControl.Location = New System.Drawing.Point(0, 0)
         Me.TabControl.Name = "TabControl"
@@ -250,65 +254,16 @@ Partial Class MainForm
         Me.TabPage_Patch.Text = "Модификация"
         Me.TabPage_Patch.UseVisualStyleBackColor = True
         '
-        'WL_Mod
+        'TabPage_Packages
         '
-        Me.WL_Mod.BackColor = System.Drawing.SystemColors.ControlLightLight
-        Me.WL_Mod.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.WL_Mod.Location = New System.Drawing.Point(3, 3)
-        Me.WL_Mod.Name = "WL_Mod"
-        Me.WL_Mod.Property_GameExeFileName = Nothing
-        Me.WL_Mod.Property_GameExeFilePath = Nothing
-        Me.WL_Mod.Property_GameModFolderName = Nothing
-        Me.WL_Mod.Property_ModInGameFileVersion = Nothing
-        Me.WL_Mod.Property_ModInPackFileVersion = Nothing
-        Me.WL_Mod.Property_ModStatus = False
-        Me.WL_Mod.Property_PatchDstFileName = Nothing
-        Me.WL_Mod.Property_PatchDstFilePath = Nothing
-        Me.WL_Mod.Property_PatchSrcFileName = Nothing
-        Me.WL_Mod.Property_PatchSrcFilePath = Nothing
-        Me.WL_Mod.Size = New System.Drawing.Size(770, 279)
-        Me.WL_Mod.TabIndex = 0
-        Me.WL_Mod.Text_Button_Disable = "Выкл. модификацию"
-        Me.WL_Mod.Text_Button_Enable = "Вкл. модификацию"
-        Me.WL_Mod.Text_Button_Path = "Исполняемый файл"
-        Me.WL_Mod.Text_Label_Bottom = ""
-        Me.WL_Mod.Text_Label_ModOff = "Выключить модификацию"
-        Me.WL_Mod.Text_Label_ModOn = "Включить модификацию"
-        '
-        'TabPage_Update
-        '
-        Me.TabPage_Update.Controls.Add(Me.WL_Upd)
-        Me.TabPage_Update.Location = New System.Drawing.Point(4, 22)
-        Me.TabPage_Update.Name = "TabPage_Update"
-        Me.TabPage_Update.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage_Update.Size = New System.Drawing.Size(776, 285)
-        Me.TabPage_Update.TabIndex = 2
-        Me.TabPage_Update.Text = "Загрузка и обновление"
-        Me.TabPage_Update.UseVisualStyleBackColor = True
-        '
-        'WL_Upd
-        '
-        Me.WL_Upd.BackColor = System.Drawing.SystemColors.ControlLightLight
-        Me.WL_Upd.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.WL_Upd.Location = New System.Drawing.Point(3, 3)
-        Me.WL_Upd.Name = "WL_Upd"
-        Me.WL_Upd.Property_GitList_AutoUpdate = True
-        Me.WL_Upd.Property_GitList_Interval = 900000
-        Me.WL_Upd.Property_GitList_SelString = Nothing
-        Me.WL_Upd.Property_Name_File_Download = Nothing
-        Me.WL_Upd.Property_Name_File_Meta = Nothing
-        Me.WL_Upd.Property_PackInGameVersion = Nothing
-        Me.WL_Upd.Property_Path_File_Download = Nothing
-        Me.WL_Upd.Property_Path_File_Meta = Nothing
-        Me.WL_Upd.Property_Path_Folder_Download = Nothing
-        Me.WL_Upd.Property_Path_Folder_Meta = Nothing
-        Me.WL_Upd.Size = New System.Drawing.Size(770, 279)
-        Me.WL_Upd.TabIndex = 0
-        Me.WL_Upd.Text_Button_Download = "Загрузить пакет обновлений"
-        Me.WL_Upd.Text_Button_InstallFull = "Полная установка"
-        Me.WL_Upd.Text_Label_Bottom = ""
-        Me.WL_Upd.Text_Label_Download = "Загрузка выбранного пакета обновлений"
-        Me.WL_Upd.Text_Label_InstallFull = "Локализация и шрифты"
+        Me.TabPage_Packages.Controls.Add(Me.WL_Upd)
+        Me.TabPage_Packages.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage_Packages.Name = "TabPage_Packages"
+        Me.TabPage_Packages.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage_Packages.Size = New System.Drawing.Size(776, 285)
+        Me.TabPage_Packages.TabIndex = 2
+        Me.TabPage_Packages.Text = "Локализация"
+        Me.TabPage_Packages.UseVisualStyleBackColor = True
         '
         'TabPage_Killer
         '
@@ -670,9 +625,93 @@ Partial Class MainForm
         Me.TextBox_Debug.Size = New System.Drawing.Size(764, 243)
         Me.TextBox_Debug.TabIndex = 0
         '
+        'TabPage_SysUpdate
+        '
+        Me.TabPage_SysUpdate.Controls.Add(Me.WL_SysUpdate)
+        Me.TabPage_SysUpdate.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage_SysUpdate.Name = "TabPage_SysUpdate"
+        Me.TabPage_SysUpdate.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage_SysUpdate.Size = New System.Drawing.Size(776, 285)
+        Me.TabPage_SysUpdate.TabIndex = 5
+        Me.TabPage_SysUpdate.Text = "Обновление"
+        Me.TabPage_SysUpdate.UseVisualStyleBackColor = True
+        '
         'Timer_LOG
         '
         Me.Timer_LOG.Interval = 1000
+        '
+        'WL_Mod
+        '
+        Me.WL_Mod.BackColor = System.Drawing.SystemColors.ControlLightLight
+        Me.WL_Mod.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.WL_Mod.Location = New System.Drawing.Point(3, 3)
+        Me.WL_Mod.Name = "WL_Mod"
+        Me.WL_Mod.Property_GameExeFileName = Nothing
+        Me.WL_Mod.Property_GameExeFilePath = Nothing
+        Me.WL_Mod.Property_GameModFolderName = Nothing
+        Me.WL_Mod.Property_ModInGameFileVersion = Nothing
+        Me.WL_Mod.Property_ModInPackFileVersion = Nothing
+        Me.WL_Mod.Property_ModStatus = False
+        Me.WL_Mod.Property_PatchDstFileName = Nothing
+        Me.WL_Mod.Property_PatchDstFilePath = Nothing
+        Me.WL_Mod.Property_PatchSrcFileName = Nothing
+        Me.WL_Mod.Property_PatchSrcFilePath = Nothing
+        Me.WL_Mod.Size = New System.Drawing.Size(770, 279)
+        Me.WL_Mod.TabIndex = 0
+        Me.WL_Mod.Text_Button_Disable = "Выкл. модификацию"
+        Me.WL_Mod.Text_Button_Enable = "Вкл. модификацию"
+        Me.WL_Mod.Text_Button_Path = "Исполняемый файл"
+        Me.WL_Mod.Text_Label_Bottom = ""
+        Me.WL_Mod.Text_Label_ModOff = "Выключить модификацию"
+        Me.WL_Mod.Text_Label_ModOn = "Включить модификацию"
+        '
+        'WL_Upd
+        '
+        Me.WL_Upd.BackColor = System.Drawing.SystemColors.ControlLightLight
+        Me.WL_Upd.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.WL_Upd.Location = New System.Drawing.Point(3, 3)
+        Me.WL_Upd.Name = "WL_Upd"
+        Me.WL_Upd.Property_GitList_AutoUpdate = True
+        Me.WL_Upd.Property_GitList_Interval = 120000
+        Me.WL_Upd.Property_GitList_SelString = Nothing
+        Me.WL_Upd.Property_Name_File_Download = Nothing
+        Me.WL_Upd.Property_Name_File_Meta = Nothing
+        Me.WL_Upd.Property_PackInGameVersion = Nothing
+        Me.WL_Upd.Property_Path_File_Download = Nothing
+        Me.WL_Upd.Property_Path_File_Meta = Nothing
+        Me.WL_Upd.Property_Path_Folder_Download = Nothing
+        Me.WL_Upd.Property_Path_Folder_Meta = Nothing
+        Me.WL_Upd.Size = New System.Drawing.Size(770, 279)
+        Me.WL_Upd.TabIndex = 0
+        Me.WL_Upd.Text_Button_Download = "Загрузить пакет обновлений"
+        Me.WL_Upd.Text_Button_InstallFull = "Полная установка"
+        Me.WL_Upd.Text_Label_Bottom = ""
+        Me.WL_Upd.Text_Label_Download = "Загрузка выбранного пакета обновлений"
+        Me.WL_Upd.Text_Label_InstallFull = "Локализация и шрифты"
+        '
+        'WL_SysUpdate
+        '
+        Me.WL_SysUpdate.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.WL_SysUpdate.Location = New System.Drawing.Point(3, 3)
+        Me.WL_SysUpdate.Name = "WL_SysUpdate"
+        Me.WL_SysUpdate.Property_AlertUpdate = True
+        Me.WL_SysUpdate.Property_ApplicationDateOnline = New Date(CType(0, Long))
+        Me.WL_SysUpdate.Property_ApplicationVersionLocal = Nothing
+        Me.WL_SysUpdate.Property_ApplicationVersionOnline = Nothing
+        Me.WL_SysUpdate.Property_GitListAutoUpdate = True
+        Me.WL_SysUpdate.Property_GitListInterval = 120000
+        Me.WL_SysUpdate.Property_Text_Label_Name_CurentVersion = "Версия:"
+        Me.WL_SysUpdate.Property_Text_Label_Name_OnlineDate = "Дата публикации:"
+        Me.WL_SysUpdate.Property_Text_Label_Name_OnlineInformation = "Дополнительная информация:"
+        Me.WL_SysUpdate.Property_Text_Label_Name_OnlineVersion = "Версия:"
+        Me.WL_SysUpdate.Property_Text_Label_Value_CurentVersion = ""
+        Me.WL_SysUpdate.Property_Text_Label_Value_OnlineDate = ""
+        Me.WL_SysUpdate.Property_Text_Label_Value_OnlineVersion = ""
+        Me.WL_SysUpdate.Property_Text_TextBox_Value_OnlineInformation = ""
+        Me.WL_SysUpdate.Property_URLApiApplication = Nothing
+        Me.WL_SysUpdate.Property_URLPageApplication = Nothing
+        Me.WL_SysUpdate.Size = New System.Drawing.Size(770, 279)
+        Me.WL_SysUpdate.TabIndex = 0
         '
         'MainForm
         '
@@ -691,7 +730,7 @@ Partial Class MainForm
         Me.ContextMenuStrip1.ResumeLayout(False)
         Me.TabControl.ResumeLayout(False)
         Me.TabPage_Patch.ResumeLayout(False)
-        Me.TabPage_Update.ResumeLayout(False)
+        Me.TabPage_Packages.ResumeLayout(False)
         Me.TabPage_Killer.ResumeLayout(False)
         Me.TableLayoutPanel4.ResumeLayout(False)
         Me.TableLayoutPanel4.PerformLayout()
@@ -701,6 +740,7 @@ Partial Class MainForm
         Me.TabPage_Debug.ResumeLayout(False)
         Me.TableLayoutPanel2.ResumeLayout(False)
         Me.TableLayoutPanel2.PerformLayout()
+        Me.TabPage_SysUpdate.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -721,7 +761,7 @@ Partial Class MainForm
     Friend WithEvents TableLayoutPanel2 As TableLayoutPanel
     Friend WithEvents TextBox_Debug As TextBox
     Friend WithEvents Timer_LOG As Timer
-    Friend WithEvents TabPage_Update As TabPage
+    Friend WithEvents TabPage_Packages As TabPage
     Friend WithEvents Update_ToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents InstallAll_ToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ClearLog_Button As Button
@@ -761,4 +801,6 @@ Partial Class MainForm
     Friend WithEvents ToEPTU_ToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents WL_Mod As WL_Modification
     Friend WithEvents WL_Upd As WL_Update
+    Friend WithEvents TabPage_SysUpdate As TabPage
+    Friend WithEvents WL_SysUpdate As WL_SysUpdate
 End Class

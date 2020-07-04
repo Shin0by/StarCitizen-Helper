@@ -4,7 +4,7 @@
   <description asmv2:iconFile="Other\Shin0by soft.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <application />
   <entryPoint>
-    <assemblyIdentity name="StarCitizen Helper" version="1.6.10.72" language="neutral" processorArchitecture="msil" />
+    <assemblyIdentity name="StarCitizen Helper" version="1.6.11.73" language="neutral" processorArchitecture="msil" />
     <commandLine file="StarCitizen Helper.exe" parameters="" />
   </entryPoint>
   <trustInfo>
@@ -53,14 +53,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="StarCitizen Helper.exe" size="2803648">
-      <assemblyIdentity name="StarCitizen Helper" version="1.6.10.72" language="neutral" processorArchitecture="msil" />
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="StarCitizen Helper.exe" size="2820032">
+      <assemblyIdentity name="StarCitizen Helper" version="1.6.11.73" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>0WFgqCBAa/2r7shKB8odDtEGh4IFFEfqANhC0RIC8+I=</dsig:DigestValue>
+        <dsig:DigestValue>HaNkwZokZfO+wMgt1w3wHkYlrIbqAT9FRsGZITpjddE=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -73,13 +73,13 @@
       <dsig:DigestValue>3ZkCqc+YOUiiEnrEcbdNXjFJG6FvhE8Uz7zuWUrCrCo=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="StarCitizen Helper.exe.config" size="1363">
+  <file name="StarCitizen Helper.exe.config" size="1340">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>JCI5d1K3z9VWSlYylVFJjihOciljBUnKNGJdHbqHyBc=</dsig:DigestValue>
+      <dsig:DigestValue>Ci0JBJkZvx8zVLIDNmZuCFg6D05TcIMeo7/ejKCYeW8=</dsig:DigestValue>
     </hash>
   </file>
   <compatibility xmlns="urn:schemas-microsoft-com:compatibility.v1">

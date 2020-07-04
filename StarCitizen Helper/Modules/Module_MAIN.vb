@@ -46,6 +46,9 @@ Module Module_MAIN
         MAIN_THREAD.WL_Mod.Property_PatchDstFileName = "CIGDevelopmentTools.dll"
         MAIN_THREAD.WL_Mod.Property_GameModFolderName = "data"
 
+        MAIN_THREAD.WL_SysUpdate.Property_Text_Label_Value_CurentVersion = _APP.Version
+        MAIN_THREAD.WL_SysUpdate.Property_SetupFileName = "Setup.exe"
+
         Module_HELPER.ConfigFile()
 
         '_WATCHFILE_THREAD = New Class_THREAD_WATCHFILE(MAIN_THREAD)
