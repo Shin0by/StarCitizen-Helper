@@ -6,7 +6,7 @@ Module Module_GIT
     Class Class_GIT
         Public _GIT_LIST As New Class_GitUpdateList
         Public _GIT_JSON As Object
-        Public _GIT_LatestElement As Class_GitUpdateElement
+        Public _GIT_LatestElement As Class_GitUpdateElement = Nothing
 
         Public Function _GetGitList(URL As String) As List(Of Class_GitUpdateElement)
             _GIT_LIST._Clear()
@@ -42,8 +42,6 @@ Module Module_GIT
             Dim result As Class_GitUpdateElement = Nothing
             Dim LastDate As DateTime = Nothing
             For Each elem In GitList
-                Dim aaa = DateTime.Compare(elem._published, LastDate)
-
                 If DateTime.Compare(elem._published, LastDate) > 0 Then
                     LastDate = elem._published
                     result = elem

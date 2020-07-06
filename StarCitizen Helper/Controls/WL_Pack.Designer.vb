@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
-Partial Class WL_Update
+Partial Class WL_Pack
     Inherits System.Windows.Forms.UserControl
 
     'UserControl overrides dispose to clean up the component list.
@@ -29,8 +29,10 @@ Partial Class WL_Update
         Me.Button_Download = New System.Windows.Forms.Button()
         Me.Label_Download = New System.Windows.Forms.Label()
         Me.Label_InstallFull = New System.Windows.Forms.Label()
-        Me.BackgroundWorker = New System.ComponentModel.BackgroundWorker()
         Me.WL_Download = New SC.WL_Download()
+        Me.CheckBox_ShowTestBuild = New System.Windows.Forms.CheckBox()
+        Me.WL_Updater = New SC.WL_Updater()
+        Me.BackgroundWorker = New System.ComponentModel.BackgroundWorker()
         Me.TableLayoutPanel.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -47,6 +49,8 @@ Partial Class WL_Update
         Me.TableLayoutPanel.Controls.Add(Me.Label_Download, 1, 1)
         Me.TableLayoutPanel.Controls.Add(Me.Label_InstallFull, 1, 2)
         Me.TableLayoutPanel.Controls.Add(Me.WL_Download, 0, 3)
+        Me.TableLayoutPanel.Controls.Add(Me.CheckBox_ShowTestBuild, 1, 0)
+        Me.TableLayoutPanel.Controls.Add(Me.WL_Updater, 2, 0)
         Me.TableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TableLayoutPanel.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
         Me.TableLayoutPanel.Location = New System.Drawing.Point(0, 0)
@@ -132,11 +136,6 @@ Partial Class WL_Update
         Me.Label_InstallFull.Text = "Локализация и шрифты"
         Me.Label_InstallFull.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'BackgroundWorker
-        '
-        Me.BackgroundWorker.WorkerReportsProgress = True
-        Me.BackgroundWorker.WorkerSupportsCancellation = True
-        '
         'WL_Download
         '
         Me.WL_Download.AutoEllipsis = False
@@ -153,12 +152,57 @@ Partial Class WL_Update
         Me.WL_Download.Size = New System.Drawing.Size(660, 88)
         Me.WL_Download.TabIndex = 14
         '
-        'WL_Update
+        'CheckBox_ShowTestBuild
+        '
+        Me.CheckBox_ShowTestBuild.AutoSize = True
+        Me.CheckBox_ShowTestBuild.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.CheckBox_ShowTestBuild.Location = New System.Drawing.Point(223, 3)
+        Me.CheckBox_ShowTestBuild.Name = "CheckBox_ShowTestBuild"
+        Me.CheckBox_ShowTestBuild.Size = New System.Drawing.Size(214, 24)
+        Me.CheckBox_ShowTestBuild.TabIndex = 15
+        Me.CheckBox_ShowTestBuild.Text = "Отображать тестовые сборки"
+        Me.CheckBox_ShowTestBuild.UseVisualStyleBackColor = True
+        '
+        'WL_Updater
+        '
+        Me.WL_Updater.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.WL_Updater.Location = New System.Drawing.Point(443, 3)
+        Me.WL_Updater.Name = "WL_Updater"
+        Me.WL_Updater.Property_AlertUpdate = True
+        Me.WL_Updater.Property_ApplicationDateOnline = New Date(CType(0, Long))
+        Me.WL_Updater.Property_ApplicationURLDownload = Nothing
+        Me.WL_Updater.Property_ApplicationVersionLocal = "14.0.25420.1 built by: D14REL"
+        Me.WL_Updater.Property_ApplicationVersionOnline = Nothing
+        Me.WL_Updater.Property_GitListAutoUpdate = True
+        Me.WL_Updater.Property_GitListInterval = 90000
+        Me.WL_Updater.Property_Name = Nothing
+        Me.WL_Updater.Property_SetupFileName = Nothing
+        Me.WL_Updater.Property_Text_Label_AutoUpdate = ""
+        Me.WL_Updater.Property_Text_Label_Name_CurentVersion = ""
+        Me.WL_Updater.Property_Text_Label_Name_OnlineDate = ""
+        Me.WL_Updater.Property_Text_Label_Name_OnlineInformation = ""
+        Me.WL_Updater.Property_Text_Label_Name_OnlineVersion = ""
+        Me.WL_Updater.Property_Text_Label_Value_CurentVersion = ""
+        Me.WL_Updater.Property_Text_Label_Value_OnlineDate = ""
+        Me.WL_Updater.Property_Text_Label_Value_OnlineVersion = ""
+        Me.WL_Updater.Property_Text_TextBox_Value_OnlineInformation = ""
+        Me.WL_Updater.Property_URLApiApplication = Nothing
+        Me.WL_Updater.Property_URLPageApplication = Nothing
+        Me.WL_Updater.Size = New System.Drawing.Size(216, 24)
+        Me.WL_Updater.TabIndex = 16
+        Me.WL_Updater.Visible = False
+        '
+        'BackgroundWorker
+        '
+        Me.BackgroundWorker.WorkerReportsProgress = True
+        Me.BackgroundWorker.WorkerSupportsCancellation = True
+        '
+        'WL_Pack
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.Controls.Add(Me.TableLayoutPanel)
-        Me.Name = "WL_Update"
+        Me.Name = "WL_Pack"
         Me.Size = New System.Drawing.Size(662, 301)
         Me.TableLayoutPanel.ResumeLayout(False)
         Me.TableLayoutPanel.PerformLayout()
@@ -175,4 +219,6 @@ Partial Class WL_Update
     Friend WithEvents Label_TextBottom As Label
     Friend WithEvents BackgroundWorker As System.ComponentModel.BackgroundWorker
     Friend WithEvents WL_Download As WL_Download
+    Friend WithEvents CheckBox_ShowTestBuild As CheckBox
+    Friend WithEvents WL_Updater As WL_Updater
 End Class

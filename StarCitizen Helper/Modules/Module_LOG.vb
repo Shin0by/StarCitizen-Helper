@@ -206,8 +206,10 @@ Module Module_LOG
                 Next
             End If
 
-            If line.Type = 0 Then MsgBox(temp, vbInformation + vbSystemModal, _APP.appName)
-            If line.Type = 1 Then MsgBox(temp, vbCritical + vbSystemModal, _APP.appName)
+            Using dummy As Form = New Form()
+                If line.Type = 0 Then MessageBox.Show(dummy, temp, _APP.appName, MessageBoxButtons.OK, MessageBoxIcon.Information)
+                If line.Type = 1 Then MessageBox.Show(dummy, temp, _APP.appName, MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Using
         End Sub
 
     End Class

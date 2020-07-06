@@ -38,18 +38,22 @@ Module Module_MAIN
         MAIN_THREAD.Text = _APP.appName & " " & _APP.Version
         MAIN_THREAD.NotifyIcon1.Text = _APP.appName
 
-        MAIN_THREAD.WL_Upd.Property_Path_Folder_Download = _FSO._CombinePath(_APP.exePath, "temp")
-        MAIN_THREAD.WL_Upd.Property_Name_File_Meta = "meta.txt"
+        MAIN_THREAD.WL_Pack.Property_Path_Folder_Download = _FSO._CombinePath(_APP.exePath, "temp")
+        MAIN_THREAD.WL_Pack.Property_Name_File_Meta = "meta.txt"
         MAIN_THREAD.WL_Mod.Property_GameExeFileName = "StarCitizen.exe"
         MAIN_THREAD.WL_Mod.Property_PatchSrcFileName = "patcher.bin"
-        MAIN_THREAD.WL_Mod.Property_PatchSrcFilePath = _FSO._CombinePath(MAIN_THREAD.WL_Upd.Property_Path_Folder_Download, MAIN_THREAD.WL_Mod.Property_PatchSrcFileName)
+        MAIN_THREAD.WL_Mod.Property_PatchSrcFilePath = _FSO._CombinePath(MAIN_THREAD.WL_Pack.Property_Path_Folder_Download, MAIN_THREAD.WL_Mod.Property_PatchSrcFileName)
         MAIN_THREAD.WL_Mod.Property_PatchDstFileName = "CIGDevelopmentTools.dll"
         MAIN_THREAD.WL_Mod.Property_GameModFolderName = "data"
 
         MAIN_THREAD.WL_SysUpdate.Property_Text_Label_Value_CurentVersion = _APP.Version
         MAIN_THREAD.WL_SysUpdate.Property_SetupFileName = "Setup.exe"
+        MAIN_THREAD.WL_SysUpdate.Property_Name = _APP.appName
+        MAIN_THREAD.WL_Pack.Property_UpdateTargetName = "пакета локализации"
 
         Module_HELPER.ConfigFile()
+
+        MAIN_THREAD.WL_Pack.Property_ApplicationDateOnline = _VARS.PackageVersionLatest_Date
 
         '_WATCHFILE_THREAD = New Class_THREAD_WATCHFILE(MAIN_THREAD)
         '_WATCHFILE_THREAD.StartThread()
@@ -165,6 +169,7 @@ Module Module_MAIN
         Public PackageGitURL_Master As String = Nothing
         Public PackageGitURL_Root As String = Nothing
         Public PackageGitURL_Api As String = Nothing
+        Public PackageVersionLatest_Date As DateTime = Nothing
 
         'PKiller
         Public PKillerEnabled As Boolean = False

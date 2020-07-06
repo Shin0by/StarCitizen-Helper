@@ -53,14 +53,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="StarCitizen Helper.exe" size="2820032">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="StarCitizen Helper.exe" size="3327936">
       <assemblyIdentity name="StarCitizen Helper" version="1.6.11.73" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>HaNkwZokZfO+wMgt1w3wHkYlrIbqAT9FRsGZITpjddE=</dsig:DigestValue>
+        <dsig:DigestValue>fPq22bwf2TI+7N7ChKnuQjLc787y0n0K1m/jIeJYtZk=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -73,13 +73,13 @@
       <dsig:DigestValue>3ZkCqc+YOUiiEnrEcbdNXjFJG6FvhE8Uz7zuWUrCrCo=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="StarCitizen Helper.exe.config" size="1340">
+  <file name="StarCitizen Helper.exe.config" size="1363">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>Ci0JBJkZvx8zVLIDNmZuCFg6D05TcIMeo7/ejKCYeW8=</dsig:DigestValue>
+      <dsig:DigestValue>JCI5d1K3z9VWSlYylVFJjihOciljBUnKNGJdHbqHyBc=</dsig:DigestValue>
     </hash>
   </file>
   <compatibility xmlns="urn:schemas-microsoft-com:compatibility.v1">

@@ -141,16 +141,16 @@
     <Compile Include="Controls\WL_Modification.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\WL_SysUpdate.Designer.vb">
-      <DependentUpon>WL_SysUpdate.vb</DependentUpon>
+    <Compile Include="Controls\WL_Updater.Designer.vb">
+      <DependentUpon>WL_Updater.vb</DependentUpon>
     </Compile>
-    <Compile Include="Controls\WL_SysUpdate.vb">
+    <Compile Include="Controls\WL_Updater.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\WL_Update.Designer.vb">
-      <DependentUpon>WL_Update.vb</DependentUpon>
+    <Compile Include="Controls\WL_Pack.Designer.vb">
+      <DependentUpon>WL_Pack.vb</DependentUpon>
     </Compile>
-    <Compile Include="Controls\WL_Update.vb">
+    <Compile Include="Controls\WL_Pack.vb">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Forms\ConvertForm.vb">
@@ -204,11 +204,11 @@
     <EmbeddedResource Include="Controls\WL_Modification.resx">
       <DependentUpon>WL_Modification.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\WL_SysUpdate.resx">
-      <DependentUpon>WL_SysUpdate.vb</DependentUpon>
+    <EmbeddedResource Include="Controls\WL_Updater.resx">
+      <DependentUpon>WL_Updater.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\WL_Update.resx">
-      <DependentUpon>WL_Update.vb</DependentUpon>
+    <EmbeddedResource Include="Controls\WL_Pack.resx">
+      <DependentUpon>WL_Pack.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ConvertForm.resx">
       <DependentUpon>ConvertForm.vb</DependentUpon>
@@ -243,6 +243,7 @@
     <None Include="Other\StarCitizen Helper_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\Shin0by soft.ico" />
     <None Include="packages.config" />
     <None Include="Resources\mouse_click.wav" />
     <None Include="Resources\core_fix.wav" />

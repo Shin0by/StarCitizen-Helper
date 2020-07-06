@@ -7,7 +7,8 @@ Public Class MainForm
     '<----------------------------------- Form
     Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         MAIN_THREAD.WL_Mod.Text_Label_Bottom = "Внимание! Все действия во вкладке [" & Me.TabPage_Patch.Text & "] Вы выполняете на свой страх и риск." & vbNewLine & "Задействование функции [" & Me.WL_Mod.Text_Button_Enable & "] нарушит условия лицензионного соглашения с CIG." & vbNewLine & vbNewLine & "Для включения или выключения модификации необходимо загрузить ядро модификаций и локализацию входящие в пакет обновлений. Для этого перейдите во вкладку [" & Me.TabPage_Packages.Text & "] и следуйте инструкциям." & vbNewLine & vbNewLine & "Примечание: Если был загружен и установлен новый пакет обновлений, то необходимо выключить и включить ядро модификаций, это задействует соответствующую версию ядра для соответствующей локализации. Программа не вносит изменния в исполняемый фалы игры, но модифицирует память и когда игра запускается, это значительно сложнее выявить." & vbNewLine & vbNewLine & "Автор программы против читов и бесчестной игры, данная программа не несет подобного функционала."
-        MAIN_THREAD.WL_Upd.Text_Label_Bottom = "Для загрузки пакета обновлений выберите в выпадающем списке актуальный пакет обновлений и нажмите [" & Me.WL_Upd.Text_Button_Download & "]. По завершении загрузки нажмите [" & Me.WL_Upd.Text_Button_InstallFull & "] - это установит необходимые файлы локализации в папку игры." & vbNewLine & "Для активации локализации требуется установить и включить ядро модификаций, для этого перейдите во вкладку [" & Me.TabPage_Patch.Text & "] и нажмите [" & Me.WL_Mod.Text_Button_Enable & "]." & vbNewLine & vbNewLine & "Примечание: Пакет локализации [Master] - это последняя версия сборки, еще не прошедшей проверку (не рекомендуется к установке)."
+        MAIN_THREAD.WL_Pack.Text_Label_Bottom = "Для загрузки пакета обновлений выберите в выпадающем списке актуальный пакет обновлений и нажмите [" & Me.WL_Pack.Text_Button_Download & "]. По завершении загрузки нажмите [" & Me.WL_Pack.Text_Button_InstallFull & "] - это установит необходимые файлы локализации в папку игры." & vbNewLine & "Для активации локализации требуется установить и включить ядро модификаций, для этого перейдите во вкладку [" & Me.TabPage_Patch.Text & "] и нажмите [" & Me.WL_Mod.Text_Button_Enable & "]." & vbNewLine & vbNewLine & "Примечание: Пакет локализации [Master] - это последняя версия сборки, еще не прошедшей проверку (не рекомендуется к установке)."
+
         MAIN_THREAD.WL_SysUpdate.Label_AutoUpdate.Text = "AAA"
     End Sub
 
@@ -171,7 +172,7 @@ Public Class MainForm
 
     Private Sub InstallAll_ToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles InstallAll_ToolStripMenuItem.Click
         'Full install menu
-        Me.WL_Upd.Button_InstallFull_Click(sender, e)
+        Me.WL_Pack.Button_InstallFull_Click(sender, e)
     End Sub
 
     Private Sub KillerThread_ToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles KillerThread_ToolStripMenuItem.Click
@@ -274,7 +275,7 @@ Public Class MainForm
             End If
         End If
 
-        If WL_Upd.Property_Path_File_Download IsNot Nothing Then
+        If WL_Pack.Property_Path_File_Download IsNot Nothing Then
             InstallAll_ToolStripMenuItem.Enabled = True
         Else
             InstallAll_ToolStripMenuItem.Enabled = False
@@ -311,25 +312,25 @@ Public Class MainForm
         MAIN_THREAD.WL_Mod._Update()
         MAIN_THREAD.WL_Mod.Property_PatchDstFilePath = _FSO._CombinePath(MAIN_THREAD.WL_Mod.Property_GameExeFolderPath, MAIN_THREAD.WL_Mod.Property_PatchDstFileName)
 
-        MAIN_THREAD.WL_Upd.Property_Path_Folder_Meta = MAIN_THREAD.WL_Mod.Property_GameRootFolderPath
-        MAIN_THREAD.WL_Upd.Property_Path_File_Meta = _FSO._CombinePath(MAIN_THREAD.WL_Upd.Property_Path_Folder_Meta, MAIN_THREAD.WL_Upd.Property_Name_File_Meta)
+        MAIN_THREAD.WL_Pack.Property_Path_Folder_Meta = MAIN_THREAD.WL_Mod.Property_GameRootFolderPath
+        MAIN_THREAD.WL_Pack.Property_Path_File_Meta = _FSO._CombinePath(MAIN_THREAD.WL_Pack.Property_Path_Folder_Meta, MAIN_THREAD.WL_Pack.Property_Name_File_Meta)
     End Sub
 
-    Sub Upd_Controls_Enabled(Enabled As Boolean) Handles WL_Upd._Event_Controls_Enabled_Before, WL_Upd._Event_Controls_Enabled_After
+    Sub Upd_Controls_Enabled(Enabled As Boolean) Handles WL_Pack._Event_Controls_Enabled_Before, WL_Pack._Event_Controls_Enabled_After
         MAIN_THREAD.WL_Mod.Enabled = Enabled
     End Sub
 
     Sub Mod_Controls_Enabled(Enabled As Boolean) Handles WL_Mod._Event_Controls_Enabled_Before, WL_Mod._Event_Controls_Enabled_After
-        MAIN_THREAD.WL_Upd.Enabled = Enabled
+        MAIN_THREAD.WL_Pack.Enabled = Enabled
     End Sub
 
-    Sub DownloadAfter(DownloadFrom As String, DownloadTo As String, e As WL_Download.DownloadProgressElement) Handles WL_Upd._Event_Download_After
+    Sub DownloadAfter(DownloadFrom As String, DownloadTo As String, e As WL_Download.DownloadProgressElement) Handles WL_Pack._Event_Download_After
         Dim result As New ResultClass(Me)
         result.ValueString = DownloadTo
-        _FSO._DeleteFile(_FSO._CombinePath(MAIN_THREAD.WL_Upd.Property_Path_Folder_Download, MAIN_THREAD.WL_Mod.Property_PatchSrcFileName))
-        If _FSO.ZIP.UnzipFileToFolder(MAIN_THREAD.WL_Upd.Property_Path_File_Download, "." & MAIN_THREAD.WL_Mod.Property_PatchSrcFileName, _FSO._CombinePath(MAIN_THREAD.WL_Upd.Property_Path_Folder_Download, MAIN_THREAD.WL_Mod.Property_PatchSrcFileName)) = False Then result.Err._Flag = True : result.Err._Description_App = "Не удалось извлечь ядро из загруженного пакета локадизации"
-        MAIN_THREAD.WL_Mod.Property_PatchSrcFilePath = _FSO._CombinePath(MAIN_THREAD.WL_Upd.Property_Path_Folder_Download, MAIN_THREAD.WL_Mod.Property_PatchSrcFileName)
-        MAIN_THREAD.WL_Mod.Property_ModInPackFileVersion = MAIN_THREAD.WL_Upd.Property_PackInPackVersion
+        _FSO._DeleteFile(_FSO._CombinePath(MAIN_THREAD.WL_Pack.Property_Path_Folder_Download, MAIN_THREAD.WL_Mod.Property_PatchSrcFileName))
+        If _FSO.ZIP.UnzipFileToFolder(MAIN_THREAD.WL_Pack.Property_Path_File_Download, "." & MAIN_THREAD.WL_Mod.Property_PatchSrcFileName, _FSO._CombinePath(MAIN_THREAD.WL_Pack.Property_Path_Folder_Download, MAIN_THREAD.WL_Mod.Property_PatchSrcFileName)) = False Then result.Err._Flag = True : result.Err._Description_App = "Не удалось извлечь ядро из загруженного пакета локадизации"
+        MAIN_THREAD.WL_Mod.Property_PatchSrcFilePath = _FSO._CombinePath(MAIN_THREAD.WL_Pack.Property_Path_Folder_Download, MAIN_THREAD.WL_Mod.Property_PatchSrcFileName)
+        MAIN_THREAD.WL_Mod.Property_ModInPackFileVersion = MAIN_THREAD.WL_Pack.Property_PackInPackVersion
         MAIN_THREAD.WL_Mod._Update()
         Me.UpdateInterface()
     End Sub
@@ -338,7 +339,7 @@ Public Class MainForm
         Me.UpdateInterface()
     End Sub
 
-    Sub UpdInstallFull_Click() Handles WL_Upd._Event_InstallFull_Button_Click_After
+    Sub UpdInstallFull_Click() Handles WL_Pack._Event_InstallFull_Button_Click_After
         Me.UpdateInterface()
     End Sub
 

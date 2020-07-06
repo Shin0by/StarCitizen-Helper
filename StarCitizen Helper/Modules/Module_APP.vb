@@ -23,14 +23,6 @@ Module Module_APP
             Return TimeStart
         End Function
 
-        Public Property _INIT_COMPLETE() As Boolean
-            Get
-                Return InitComplete
-            End Get
-            Set(ByVal Value As Boolean)
-                InitComplete = Value
-            End Set
-        End Property
         Public ReadOnly Property Version As String
             Get
                 Try

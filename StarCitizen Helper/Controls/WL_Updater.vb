@@ -1,8 +1,9 @@
 ﻿Imports System.Threading
 
-Public Class WL_SysUpdate
-    Private _SYS_GIT As New Class_GIT
+Public Class WL_Updater
+    Private _GIT_Request As New Class_GIT
     Public Event _Event_NewVersion_Available_After(JSON As Object)
+    Public Event _Event_Update_Complete_After(JSON As Object)
     Public Event _Event_AutoUpdate_Button_Click_Before()
     Public Event _Event_AutoUpdate_Button_Click_After()
 
@@ -12,16 +13,21 @@ Public Class WL_SysUpdate
     Private sURLApiApplication As String = Nothing 'GitHub App HomePage 
     Private sURLPageApplication As String = Nothing 'GitHub API page
 
-    Private sApplicationVersionLocal As String = _APP.Version
+    Private sApplicationVersionLocal As String = Nothing
     Private sApplicationVersionOnline As String = Nothing
     Private dApplicationDateOnline As DateTime = Nothing
     Private sApplicationURLDownload As String = Nothing
     Private sSetupFileName As String = Nothing 'FileName for find in GitHub attachment list
 
+    Private sName As String = Nothing 'Name of update what we check
+
     Private iUpdateGitListInterval As Integer = 90000
     Private bUpdateGitListEnable As Boolean = False
 
     Private bAlertUpdate As Boolean = True
+
+    Private JSON As Object = Nothing
+
 
     '<----------------------------------- Basic control
     Public Sub New()
@@ -46,6 +52,21 @@ Public Class WL_SysUpdate
             Elem.ForeColor = Me.cForeColor
         Next
     End Sub
+
+    Public ReadOnly Property Property_JSON As Object
+        Get
+            Return Me.JSON
+        End Get
+    End Property
+
+    Public Property Property_Name() As String
+        Get
+            Return Me.sName
+        End Get
+        Set(ByVal Value As String)
+            Me.sName = Value
+        End Set
+    End Property
 
     Public Property Property_Text_Label_Name_CurentVersion() As String
         Get
@@ -178,6 +199,7 @@ Public Class WL_SysUpdate
         End Get
         Set(ByVal Value As String)
             Me.sApplicationURLDownload = Value
+            If Initialization = True Then Exit Property
             If Me.sApplicationURLDownload IsNot Nothing Then
                 Me.Invoke(Sub() Me.Button_AutoUpdate.Enabled = True)
             Else
@@ -242,32 +264,34 @@ Public Class WL_SysUpdate
         Thread.Sleep(1300)
         Do
             If Me.Property_URLApiApplication IsNot Nothing Then
-                Dim NewGitList As List(Of Module_GIT.Class_GIT.Class_GitUpdateList.Class_GitUpdateElement) = _SYS_GIT._GetGitList(Me.Property_URLApiApplication)
+                Dim NewGitList As List(Of Module_GIT.Class_GIT.Class_GitUpdateList.Class_GitUpdateElement) = _GIT_Request._GetGitList(Me.Property_URLApiApplication)
                 If NewGitList.Count > 0 Then
-                    If Property_ApplicationDateOnline <> _SYS_GIT._GIT_LatestElement._published Then
-                        If Me.Property_SetupFileName IsNot Nothing Then Me.Property_ApplicationURLDownload = _SYS_GIT._GetAssetByFileName(Me.Property_SetupFileName)
+                    Me.JSON = _GIT_Request._GIT_JSON
+                    If Property_ApplicationDateOnline <> _GIT_Request._GIT_LatestElement._published Then
+                        If Me.Property_SetupFileName IsNot Nothing Then Me.Property_ApplicationURLDownload = _GIT_Request._GetAssetByFileName(Me.Property_SetupFileName)
                         If Property_AlertUpdate = True Then
                             Dim SubLine As New LOG_SubLine
                             Dim ListSubLine As New List(Of LOG_SubLine)
 
                             SubLine.Value = "Информация по актуальной версии:"
-                            SubLine.List.Add(vbTab & "Версия: " & _SYS_GIT._GIT_LatestElement._tag_name)
-                            SubLine.List.Add(vbTab & "Дата: " & _SYS_GIT._GIT_LatestElement._published)
+                            SubLine.List.Add(vbTab & "Версия: " & _GIT_Request._GIT_LatestElement._tag_name)
+                            SubLine.List.Add(vbTab & "Дата: " & _GIT_Request._GIT_LatestElement._published)
                             SubLine.List.Add("")
-                            SubLine.List.Add("Описание изменения доступно во вкладке [" & MAIN_THREAD.TabPage_SysUpdate.Text & "] или на Git странице проекта")
+                            SubLine.List.Add("Описание изменений доступно на Git странице проекта")
                             ListSubLine.Add(SubLine)
 
-                            _LOG._Add(Me.GetType().Name, "Доступна новая версия " & Chr(34) & _APP.appName & Chr(34), ListSubLine, 0, 0)
+                            _LOG._Add(Me.GetType().Name, "Доступна новая версия " & Chr(34) & Me.Property_Name & Chr(34), ListSubLine, 0, 0)
                         End If
                         Me.Invoke(Sub()
-                                      Me.Property_Text_Label_Value_OnlineVersion = _SYS_GIT._GIT_LatestElement._tag_name
-                                      Me.Property_Text_Label_Value_OnlineDate = _SYS_GIT._GIT_LatestElement._published
-                                      Me.Property_Text_TextBox_Value_OnlineInformation = _SYS_GIT._GIT_LatestElement._body
+                                      Me.Property_Text_Label_Value_OnlineVersion = _GIT_Request._GIT_LatestElement._tag_name
+                                      Me.Property_Text_Label_Value_OnlineDate = _GIT_Request._GIT_LatestElement._published
+                                      Me.Property_Text_TextBox_Value_OnlineInformation = _GIT_Request._GIT_LatestElement._body
                                   End Sub)
-                        RaiseEvent _Event_NewVersion_Available_After(_SYS_GIT._GIT_JSON)
+                        RaiseEvent _Event_NewVersion_Available_After(_GIT_Request._GIT_JSON)
                     End If
                 End If
-                Property_ApplicationDateOnline = _SYS_GIT._GIT_LatestElement._published
+                RaiseEvent _Event_Update_Complete_After(_GIT_Request._GIT_JSON)
+                Property_ApplicationDateOnline = _GIT_Request._GIT_LatestElement._published
             End If
             Thread.Sleep(iUpdateGitListInterval)
         Loop

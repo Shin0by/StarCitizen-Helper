@@ -282,7 +282,7 @@ Finalize:   If Me.sGameExeFileName IsNot Nothing Then
 
     '<----------------------------------- Logic
     Private Function CheckSourceModСonditions() As Byte
-        If MAIN_THREAD.WL_Upd.Property_Path_Folder_Download Is Nothing Then Return 3
+        If MAIN_THREAD.WL_Pack.Property_Path_Folder_Download Is Nothing Then Return 3
         If Me.Property_PatchSrcFileName Is Nothing Then Return 2
         If _FSO._FileExits(Me.Property_PatchSrcFilePath) = False Then Return 1
         Return 0

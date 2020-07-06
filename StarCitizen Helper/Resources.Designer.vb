@@ -95,5 +95,15 @@ Namespace My.Resources
                 Return ResourceManager.GetStream("process_kill", resourceCulture)
             End Get
         End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        '''</summary>
+        Friend ReadOnly Property Shin0by_soft() As System.Drawing.Icon
+            Get
+                Dim obj As Object = ResourceManager.GetObject("Shin0by_soft", resourceCulture)
+                Return CType(obj,System.Drawing.Icon)
+            End Get
+        End Property
     End Module
 End Namespace

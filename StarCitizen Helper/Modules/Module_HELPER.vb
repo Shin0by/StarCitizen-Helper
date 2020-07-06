@@ -15,10 +15,11 @@ WriteBlock: File.Create(_APP.configFullPath).Dispose()
                 _LOG._sAdd("CONFIG_FILE", "Запись в файл коифигурации невозможна, проверьте права на запись", _APP.configFullPath, 1)
                 GoTo ReadBlock
             End If
-            'FileWatcher
-            _INI._Write("CONFIGURATION", "FILES_WATCHER", 0)
+            'Configuration
+            _INI._Write("CONFIGURATION", "SHOW_TEST_BUILDS", 0)
 
-            'SysUpdate
+            'Updater
+            _INI._Write("UPDATE", "PACK_VERSION", "")
             _INI._Write("UPDATE", "APP_VERSION", _APP.Version)
             _INI._Write("UPDATE", "PACK_GIT_PAGE", "https://github.com/Shin0by/StarCitizen-Helper")
             _INI._Write("UPDATE", "PACK_GIT_API", "https://api.github.com/repos/Shin0by/StarCitizen-Helper/releases")
@@ -59,15 +60,17 @@ ReadBlock: _VARS.ConfigFileIsOK = True
 
         _VARS.FileWatcher = StringToBool(_INI._GET_VALUE("CONFIGURATION", "FILES_WATCHER", False, {"0", "1"}).Value)
 
-        'SysUpdate
+        'Updater
         MAIN_THREAD.WL_SysUpdate.Property_URLPageApplication = _INI._GET_VALUE("UPDATE", "PACK_GIT_PAGE", Nothing).Value
         MAIN_THREAD.WL_SysUpdate.Property_URLApiApplication = _INI._GET_VALUE("UPDATE", "PACK_GIT_API", Nothing).Value
 
-        'MOD & UPD
+        'Pack
         MAIN_THREAD.WL_Mod.Property_GameExeFilePath = _INI._GET_VALUE("EXTERNAL", "EXE_PATH", Nothing).Value
         MAIN_THREAD.WL_Mod.Property_ModInGameFileVersion = _INI._GET_VALUE("EXTERNAL", "MOD_GAME_VERSION", Nothing).Value
         MAIN_THREAD.WL_Mod.Property_ModInPackFileVersion = _INI._GET_VALUE("EXTERNAL", "MOD_PACK_VERSION", Nothing).Value
-        MAIN_THREAD.WL_Upd.Property_PackInGameVersion = _INI._GET_VALUE("EXTERNAL", "PACK_GAME_VERSION", Nothing).Value
+        MAIN_THREAD.WL_Pack.Property_PackInGameVersion = _INI._GET_VALUE("EXTERNAL", "PACK_GAME_VERSION", Nothing).Value
+        MAIN_THREAD.WL_Pack.Property_ShowTestBuild = StringToBool(_INI._GET_VALUE("CONFIGURATION", "SHOW_TEST_BUILDS", False, {"0", "1"}).Value)
+        _VARS.PackageVersionLatest_Date = Convert.ToDateTime(_INI._GET_VALUE("UPDATE", "PACK_VERSION", Nothing).Value)
 
         'GIT
         _VARS.PackageGitURL_Master = _INI._GET_VALUE("EXTERNAL", "PACK_GIT_MASTER", Nothing).Value

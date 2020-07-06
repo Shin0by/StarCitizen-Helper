@@ -3,7 +3,7 @@ Imports System.Net
 Imports System.Threading
 Imports SC.Class_GIT.Class_GitUpdateList
 
-Public Class WL_Update
+Public Class WL_Pack
     Public Event _Event_ListGit_List_Change_Before()
     Public Event _Event_ListGit_List_Change_After()
     Public Event _Event_ListGit_Selection_Change_Before()
@@ -12,6 +12,8 @@ Public Class WL_Update
     Public Event _Event_InstallFull_Button_Click_After()
     Public Event _Event_Download_Click_Before()
     Public Event _Event_Download_Click_After()
+    Public Event _Event_ShowTestBuild_Click_Before()
+    Public Event _Event_ShowTestBuild_Click_After()
 
     Public Event _Event_Controls_Enabled_Before(Enabled As Boolean)
     Public Event _Event_Controls_Enabled_After(Enabled As Boolean)
@@ -42,6 +44,11 @@ Public Class WL_Update
     Private hashGitList As String = Nothing
     Private hashCurrentList As String = Nothing
 
+    Private GIT_PACK_DATA As New Class_GIT.Class_GitUpdateList
+    Private GIT_PACK_LATEST As Class_GIT.Class_GitUpdateList.Class_GitUpdateElement
+    Private dApplicationDateOnline As DateTime = Nothing
+    Private FirstUpdate As Boolean = True
+
     '<----------------------------------- Basic control
     Public Sub New()
         InitializeComponent()
@@ -66,12 +73,40 @@ Public Class WL_Update
         Next
     End Sub
 
+    Public Property Property_ApplicationDateOnline() As DateTime
+        Get
+            Return Me.dApplicationDateOnline
+        End Get
+        Set(ByVal Value As DateTime)
+            Me.dApplicationDateOnline = Value
+            Me.WL_Updater.Property_ApplicationDateOnline = Me.dApplicationDateOnline
+        End Set
+    End Property
+
+    Public Property Property_UpdateTargetName() As String
+        Get
+            Return Me.WL_Updater.Property_Name
+        End Get
+        Set(ByVal Value As String)
+            Me.WL_Updater.Property_Name = Value
+        End Set
+    End Property
+
     Public Property Text_Label_Bottom() As String
         Get
             Return Me.Label_TextBottom.Text
         End Get
         Set(ByVal Value As String)
             Me.Label_TextBottom.Text = Value
+        End Set
+    End Property
+
+    Public Property Property_ShowTestBuild() As Boolean
+        Get
+            Return Me.CheckBox_ShowTestBuild.Checked
+        End Get
+        Set(ByVal Value As Boolean)
+            Me.CheckBox_ShowTestBuild.Checked = Value
         End Set
     End Property
 
@@ -199,6 +234,7 @@ Public Class WL_Update
         End Get
         Set(ByVal Value As Integer)
             Me.iUpdateGitList_Interval = Value
+            Me.WL_Updater.Property_GitListInterval = Me.Property_GitList_Interval
         End Set
     End Property
 
@@ -209,11 +245,8 @@ Public Class WL_Update
         Set(ByVal Value As Boolean)
             Me.bUpdateGitList_Enable = Value
             On Error Resume Next
-            If Me.bUpdateGitList_Enable = True Then
-                Me.BackgroundWorker.RunWorkerAsync()
-            Else
-                Me.BackgroundWorker.CancelAsync()
-            End If
+            Me.WL_Updater.Property_URLApiApplication = _VARS.PackageGitURL_Api
+            Me.WL_Updater.Property_GitListAutoUpdate = Property_GitList_AutoUpdate
         End Set
     End Property
 
@@ -226,6 +259,10 @@ Public Class WL_Update
             If temp > -1 Then
                 Me.Invoke(Sub() Me.List_Git.SelectedIndex = temp)
                 Me.sGitList_Value = Value
+            Else
+                If Me.List_Git.Items.Count > 0 Then
+                    Me.Invoke(Sub() Me.List_Git.SelectedIndex = 0)
+                End If
             End If
         End Set
     End Property
@@ -247,8 +284,8 @@ Public Class WL_Update
         Set(ByVal Path As String)
             Me.Text_Label_InstallFull = "Установлена версия: не определена"
             If Me.Property_Path_File_Meta Is Nothing Then Exit Property
-            If _FSO._ReadTextFile(MAIN_THREAD.WL_Upd.Property_Path_File_Meta, System.Text.Encoding.UTF8) IsNot Nothing Then
-                Me.sPackInGameVersion = _FSO._ReadTextFile(MAIN_THREAD.WL_Upd.Property_Path_File_Meta, System.Text.Encoding.UTF8)
+            If _FSO._ReadTextFile(MAIN_THREAD.WL_Pack.Property_Path_File_Meta, System.Text.Encoding.UTF8) IsNot Nothing Then
+                Me.sPackInGameVersion = _FSO._ReadTextFile(MAIN_THREAD.WL_Pack.Property_Path_File_Meta, System.Text.Encoding.UTF8)
                 _INI._Write("EXTERNAL", "PACK_GAME_VERSION", Me.sPackInGameVersion)
                 If Me.sPackInGameVersion IsNot Nothing Then Me.Text_Label_InstallFull = "Установлена версия: " & Me.sPackInGameVersion
             End If
@@ -282,7 +319,7 @@ Public Class WL_Update
         If Me.Property_Path_Folder_Download Is Nothing Then result.Err._Flag = True : result.Err._Description_App = "Не удалось получить доступ к папке загрузок" : result.Err._Description_Sys = Me.Property_Path_Folder_Download : GoTo Finalize
         If _FSO._DeleteFile(Path.Combine(Me.Property_Path_Folder_Download, "*.zip")).Err._Flag = True Then result.Err._Flag = True : result.Err._Description_App = "Не удалось удалить существующий файл пакета локализации в папке загрузки" : result.Err._Description_Sys = Me.Property_Path_Folder_Download : GoTo Finalize
         If Me.List_Git.FindString(Me.Property_GitList_SelString) = -1 Then result.Err._Flag = True : result.Err._Description_App = "Не выбрана версия загружаемого пакета локализации" : GoTo Finalize
-        Me.Download(_GIT._GIT_LIST._GetByName(Me.Property_GitList_SelString, _VARS.PackageGitMaster_Name)._zipball_url, _FSO._CombinePath(Me.Property_Path_Folder_Download, Me.List_Git.Text & ".zip"), _GIT._GIT_LIST._GetByName(Me.Property_GitList_SelString, _VARS.PackageGitMaster_Name)._isMaster)
+        Me.Download(Me.GIT_PACK_DATA._GetByName(Me.Property_GitList_SelString, _VARS.PackageGitMaster_Name)._zipball_url, _FSO._CombinePath(Me.Property_Path_Folder_Download, Me.List_Git.Text & ".zip"), GIT_PACK_DATA._GetByName(Me.Property_GitList_SelString, _VARS.PackageGitMaster_Name)._isMaster)
 
 Finalize: If result.Err._Flag = True Then
             result.Err._ToLOG(2)
@@ -314,6 +351,13 @@ Finalize: sender.Enabled = True
         Me.Property_GitList_SelString = Me.List_Git.Text
         _INI._Write("EXTERNAL", "PACK_GIT_SELECTED", Me.Property_GitList_SelString)
         RaiseEvent _Event_ListGit_Selection_Change_After()
+    End Sub
+
+    Private Sub CheckBox_ShowTestBuild_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox_ShowTestBuild.CheckedChanged
+        RaiseEvent _Event_ShowTestBuild_Click_Before()
+        _INI._Write("CONFIGURATION", "SHOW_TEST_BUILDS", BoolToString(sender.checked))
+        Me.WL_Updater_NewVersion_Available(Me.WL_Updater.Property_JSON)
+        RaiseEvent _Event_ShowTestBuild_Click_After()
     End Sub
     '-----------------------------------> Controls
 
@@ -362,7 +406,7 @@ Finalize: sender.Enabled = True
             _LOG._Add(Me.GetType().Name, "Ошибка загрузки:", logLines, 2)
             _FSO._DeleteFile(DownloadTo)
         Else
-            logLine.Value = "Name: " & _GIT._GIT_LIST._GetByName(Me.Property_GitList_SelString, _VARS.PackageGitMaster_Name)._name
+            logLine.Value = "Name: " & GIT_PACK_DATA._GetByName(Me.Property_GitList_SelString, _VARS.PackageGitMaster_Name)._name
             logLine.List.Add("Source URL: " & DownloadFrom)
             logLine.List.Add("Destination: " & DownloadTo)
             logLines.Add(logLine)
@@ -409,7 +453,51 @@ Finalize: sender.Enabled = True
         If Cntr = 1 Then Return result
         Return Nothing
     End Function
+
+    Private Sub UpdateListGit()
+        RaiseEvent _Event_ListGit_List_Change_Before()
+        Me.Invoke(Sub() Me.List_Git.Items.Clear())
+        For i = 0 To Me.GIT_PACK_DATA._GetAll.Count - 1
+            Me.Invoke(Sub() Me.List_Git.Items.Add(Me.GIT_PACK_DATA._GetAll.Item(i)._name))
+        Next
+        Me.Property_GitList_SelString = _INI._GET_VALUE("EXTERNAL", "PACK_GIT_SELECTED", "").Value
+        RaiseEvent _Event_ListGit_List_Change_After()
+    End Sub
+
     '-----------------------------------> Logic
+
+    '<----------------------------------- 'Callback
+    Private Sub WL_Update_Complete(JSON As Object) Handles WL_Updater._Event_Update_Complete_After
+        If Initialization = True Then Exit Sub
+        If Me.FirstUpdate = False Then Exit Sub
+        Me.FirstUpdate = False
+        WL_Updater_NewVersion_Available(JSON)
+    End Sub
+
+
+    Private Sub WL_Updater_NewVersion_Available(JSON As Object) Handles WL_Updater._Event_NewVersion_Available_After
+        If Initialization = True Then Exit Sub
+        Dim NewGitList As New List(Of Module_GIT.Class_GIT.Class_GitUpdateList.Class_GitUpdateElement)
+        Dim Assets As Object = Nothing
+        Me.Invoke(Sub() Me.List_Git.Items.Clear())
+
+        Me.GIT_PACK_DATA._Clear()
+        For Each elem In JSON("data")
+            Assets = Nothing
+            Assets = elem("assets")
+            Me.GIT_PACK_DATA._Add(elem("name"), elem("tag_name"), elem("zipball_url"), elem("published_at"), elem("body"), Assets, False)
+        Next
+        Me.GIT_PACK_LATEST = _GIT._GetLatestElement(Me.GIT_PACK_DATA._GetAll)
+        If Property_ShowTestBuild = True Then GIT_PACK_DATA._Add(("Master"), "Master", _VARS.PackageGitURL_Master, DateTime.Now, Nothing, Nothing, True)
+
+        If _VARS.PackageVersionLatest_Date <> Me.GIT_PACK_LATEST._published Then
+            _VARS.PackageVersionLatest_Date = Me.GIT_PACK_LATEST._published
+            _INI._Write("UPDATE", "PACK_VERSION", _VARS.PackageVersionLatest_Date.ToString)
+        End If
+
+        UpdateListGit()
+    End Sub
+    '-----------------------------------> 'Callback
 
     '<----------------------------------- 'Thread
     Private Sub BackgroundWorker_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles BackgroundWorker.DoWork
@@ -417,7 +505,7 @@ Finalize: sender.Enabled = True
         Dim LatestPackDate As DateTime = Nothing
         Do
             Dim NewGitList As List(Of Module_GIT.Class_GIT.Class_GitUpdateList.Class_GitUpdateElement) = _GIT._GetGitList(_VARS.PackageGitURL_Api)
-            NewGitList.Add(New Class_GitUpdateElement("Master", "Master", _VARS.PackageGitURL_Master, DateTime.Now, Nothing, True))
+            NewGitList.Add(New Class_GitUpdateElement("Master", "Master", _VARS.PackageGitURL_Master, DateTime.Now, Nothing, Nothing, True))
 
             If LatestPackDate <> _GIT._GIT_LatestElement._published Then
                 RaiseEvent _Event_ListGit_List_Change_Before()
@@ -432,5 +520,11 @@ Finalize: sender.Enabled = True
             Thread.Sleep(iUpdateGitList_Interval)
         Loop
     End Sub
+
+    Private Sub WL_Updater_Load(sender As Object, e As EventArgs)
+
+    End Sub
+
+
     '-----------------------------------> Thread
 End Class
