@@ -343,7 +343,21 @@ Public Class MainForm
         Me.UpdateInterface()
     End Sub
 
+    Sub UpdateAlert_NewVersion(LatestElement As Object, SenderName As WL_Updater) Handles WL_SysUpdate._Event_NewVersion_Alert, WL_Pack._Event_NewVersion_Alert
+        Dim SubLine As New LOG_SubLine
+        Dim ListSubLine As New List(Of LOG_SubLine)
 
+        SubLine.Value = "Версия: " & LatestElement._tag_name
+        SubLine.List.Add("Дата: " & LatestElement._published)
+        SubLine.List.Add("")
+        If SenderName.Name = "WL_SysUpdate" Then SubLine.List.Add("Описание изменений доступно во вкладке [" & Me.TabPage_SysUpdate.Text & "] или на Git странице проекта")
+        If SenderName.Name = "WL_PackUpdate" Then
+            SubLine.List.Add("Описание изменений доступно на Git странице проекта по адресу:")
+            SubLine.List.Add(_VARS.PackageGitURL_Root)
+        End If
+        ListSubLine.Add(SubLine)
 
+            _LOG._Add(Me.GetType().Name, "Доступна новая версия " & Chr(34) & SenderName.Property_Name & Chr(34), ListSubLine, 0, 0)
+    End Sub
     '-----------------------------------> 'Callback
 End Class

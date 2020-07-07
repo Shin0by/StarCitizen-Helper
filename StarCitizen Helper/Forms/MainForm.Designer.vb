@@ -296,6 +296,7 @@ Partial Class MainForm
         Me.WL_Pack.Dock = System.Windows.Forms.DockStyle.Fill
         Me.WL_Pack.Location = New System.Drawing.Point(3, 3)
         Me.WL_Pack.Name = "WL_Pack"
+        Me.WL_Pack.Property_ApplicationDateOnline = New Date(CType(0, Long))
         Me.WL_Pack.Property_GitList_AutoUpdate = True
         Me.WL_Pack.Property_GitList_Interval = 120000
         Me.WL_Pack.Property_GitList_SelString = Nothing
@@ -306,6 +307,8 @@ Partial Class MainForm
         Me.WL_Pack.Property_Path_File_Meta = Nothing
         Me.WL_Pack.Property_Path_Folder_Download = Nothing
         Me.WL_Pack.Property_Path_Folder_Meta = Nothing
+        Me.WL_Pack.Property_ShowTestBuild = False
+        Me.WL_Pack.Property_UpdateTargetName = Nothing
         Me.WL_Pack.Size = New System.Drawing.Size(770, 279)
         Me.WL_Pack.TabIndex = 0
         Me.WL_Pack.Text_Button_Download = "Загрузить пакет обновлений"
@@ -682,7 +685,7 @@ Partial Class MainForm
         Me.TabPage_SysUpdate.Padding = New System.Windows.Forms.Padding(3)
         Me.TabPage_SysUpdate.Size = New System.Drawing.Size(776, 285)
         Me.TabPage_SysUpdate.TabIndex = 5
-        Me.TabPage_SysUpdate.Text = "Обновление"
+        Me.TabPage_SysUpdate.Text = "Система"
         Me.TabPage_SysUpdate.UseVisualStyleBackColor = True
         '
         'WL_SysUpdate
@@ -697,6 +700,7 @@ Partial Class MainForm
         Me.WL_SysUpdate.Property_ApplicationVersionOnline = Nothing
         Me.WL_SysUpdate.Property_GitListAutoUpdate = True
         Me.WL_SysUpdate.Property_GitListInterval = 120000
+        Me.WL_SysUpdate.Property_Name = Nothing
         Me.WL_SysUpdate.Property_SetupFileName = Nothing
         Me.WL_SysUpdate.Property_Text_Label_AutoUpdate = ""
         Me.WL_SysUpdate.Property_Text_Label_Name_CurentVersion = "Версия:"

@@ -3,6 +3,7 @@
 Public Class WL_Updater
     Private _GIT_Request As New Class_GIT
     Public Event _Event_NewVersion_Available_After(JSON As Object)
+    Public Event _Event_NewVersion_Alert(JSON As Object, Self As WL_Updater)
     Public Event _Event_Update_Complete_After(JSON As Object)
     Public Event _Event_AutoUpdate_Button_Click_Before()
     Public Event _Event_AutoUpdate_Button_Click_After()
@@ -266,32 +267,20 @@ Public Class WL_Updater
             If Me.Property_URLApiApplication IsNot Nothing Then
                 Dim NewGitList As List(Of Module_GIT.Class_GIT.Class_GitUpdateList.Class_GitUpdateElement) = _GIT_Request._GetGitList(Me.Property_URLApiApplication)
                 If NewGitList.Count > 0 Then
-                    Me.JSON = _GIT_Request._GIT_JSON
-                    If Property_ApplicationDateOnline <> _GIT_Request._GIT_LatestElement._published Then
+                    Me.JSON = _GIT_Request._JSON
+                    If Property_ApplicationDateOnline <> _GIT_Request._LatestElement._published Then
                         If Me.Property_SetupFileName IsNot Nothing Then Me.Property_ApplicationURLDownload = _GIT_Request._GetAssetByFileName(Me.Property_SetupFileName)
-                        If Property_AlertUpdate = True Then
-                            Dim SubLine As New LOG_SubLine
-                            Dim ListSubLine As New List(Of LOG_SubLine)
-
-                            SubLine.Value = "Информация по актуальной версии:"
-                            SubLine.List.Add(vbTab & "Версия: " & _GIT_Request._GIT_LatestElement._tag_name)
-                            SubLine.List.Add(vbTab & "Дата: " & _GIT_Request._GIT_LatestElement._published)
-                            SubLine.List.Add("")
-                            SubLine.List.Add("Описание изменений доступно на Git странице проекта")
-                            ListSubLine.Add(SubLine)
-
-                            _LOG._Add(Me.GetType().Name, "Доступна новая версия " & Chr(34) & Me.Property_Name & Chr(34), ListSubLine, 0, 0)
-                        End If
+                        If Property_AlertUpdate = True Then RaiseEvent _Event_NewVersion_Alert(_GIT_Request._LatestElement, Me)
                         Me.Invoke(Sub()
-                                      Me.Property_Text_Label_Value_OnlineVersion = _GIT_Request._GIT_LatestElement._tag_name
-                                      Me.Property_Text_Label_Value_OnlineDate = _GIT_Request._GIT_LatestElement._published
-                                      Me.Property_Text_TextBox_Value_OnlineInformation = _GIT_Request._GIT_LatestElement._body
+                                      Me.Property_Text_Label_Value_OnlineVersion = _GIT_Request._LatestElement._tag_name
+                                      Me.Property_Text_Label_Value_OnlineDate = _GIT_Request._LatestElement._published
+                                      Me.Property_Text_TextBox_Value_OnlineInformation = _GIT_Request._LatestElement._body
                                   End Sub)
-                        RaiseEvent _Event_NewVersion_Available_After(_GIT_Request._GIT_JSON)
+                        RaiseEvent _Event_NewVersion_Available_After(_GIT_Request._JSON)
                     End If
                 End If
-                RaiseEvent _Event_Update_Complete_After(_GIT_Request._GIT_JSON)
-                Property_ApplicationDateOnline = _GIT_Request._GIT_LatestElement._published
+                RaiseEvent _Event_Update_Complete_After(_GIT_Request._JSON)
+                Property_ApplicationDateOnline = _GIT_Request._LatestElement._published
             End If
             Thread.Sleep(iUpdateGitListInterval)
         Loop

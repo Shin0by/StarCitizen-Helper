@@ -31,7 +31,7 @@ Partial Class WL_Pack
         Me.Label_InstallFull = New System.Windows.Forms.Label()
         Me.WL_Download = New SC.WL_Download()
         Me.CheckBox_ShowTestBuild = New System.Windows.Forms.CheckBox()
-        Me.WL_Updater = New SC.WL_Updater()
+        Me.WL_PackUpdate = New SC.WL_Updater()
         Me.BackgroundWorker = New System.ComponentModel.BackgroundWorker()
         Me.TableLayoutPanel.SuspendLayout()
         Me.SuspendLayout()
@@ -50,7 +50,7 @@ Partial Class WL_Pack
         Me.TableLayoutPanel.Controls.Add(Me.Label_InstallFull, 1, 2)
         Me.TableLayoutPanel.Controls.Add(Me.WL_Download, 0, 3)
         Me.TableLayoutPanel.Controls.Add(Me.CheckBox_ShowTestBuild, 1, 0)
-        Me.TableLayoutPanel.Controls.Add(Me.WL_Updater, 2, 0)
+        Me.TableLayoutPanel.Controls.Add(Me.WL_PackUpdate, 2, 0)
         Me.TableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TableLayoutPanel.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
         Me.TableLayoutPanel.Location = New System.Drawing.Point(0, 0)
@@ -163,34 +163,34 @@ Partial Class WL_Pack
         Me.CheckBox_ShowTestBuild.Text = "Отображать тестовые сборки"
         Me.CheckBox_ShowTestBuild.UseVisualStyleBackColor = True
         '
-        'WL_Updater
+        'WL_PackUpdate
         '
-        Me.WL_Updater.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.WL_Updater.Location = New System.Drawing.Point(443, 3)
-        Me.WL_Updater.Name = "WL_Updater"
-        Me.WL_Updater.Property_AlertUpdate = True
-        Me.WL_Updater.Property_ApplicationDateOnline = New Date(CType(0, Long))
-        Me.WL_Updater.Property_ApplicationURLDownload = Nothing
-        Me.WL_Updater.Property_ApplicationVersionLocal = "14.0.25420.1 built by: D14REL"
-        Me.WL_Updater.Property_ApplicationVersionOnline = Nothing
-        Me.WL_Updater.Property_GitListAutoUpdate = True
-        Me.WL_Updater.Property_GitListInterval = 90000
-        Me.WL_Updater.Property_Name = Nothing
-        Me.WL_Updater.Property_SetupFileName = Nothing
-        Me.WL_Updater.Property_Text_Label_AutoUpdate = ""
-        Me.WL_Updater.Property_Text_Label_Name_CurentVersion = ""
-        Me.WL_Updater.Property_Text_Label_Name_OnlineDate = ""
-        Me.WL_Updater.Property_Text_Label_Name_OnlineInformation = ""
-        Me.WL_Updater.Property_Text_Label_Name_OnlineVersion = ""
-        Me.WL_Updater.Property_Text_Label_Value_CurentVersion = ""
-        Me.WL_Updater.Property_Text_Label_Value_OnlineDate = ""
-        Me.WL_Updater.Property_Text_Label_Value_OnlineVersion = ""
-        Me.WL_Updater.Property_Text_TextBox_Value_OnlineInformation = ""
-        Me.WL_Updater.Property_URLApiApplication = Nothing
-        Me.WL_Updater.Property_URLPageApplication = Nothing
-        Me.WL_Updater.Size = New System.Drawing.Size(216, 24)
-        Me.WL_Updater.TabIndex = 16
-        Me.WL_Updater.Visible = False
+        Me.WL_PackUpdate.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.WL_PackUpdate.Location = New System.Drawing.Point(443, 3)
+        Me.WL_PackUpdate.Name = "WL_PackUpdate"
+        Me.WL_PackUpdate.Property_AlertUpdate = True
+        Me.WL_PackUpdate.Property_ApplicationDateOnline = New Date(CType(0, Long))
+        Me.WL_PackUpdate.Property_ApplicationURLDownload = Nothing
+        Me.WL_PackUpdate.Property_ApplicationVersionLocal = "14.0.25420.1 built by: D14REL"
+        Me.WL_PackUpdate.Property_ApplicationVersionOnline = Nothing
+        Me.WL_PackUpdate.Property_GitListAutoUpdate = True
+        Me.WL_PackUpdate.Property_GitListInterval = 90000
+        Me.WL_PackUpdate.Property_Name = Nothing
+        Me.WL_PackUpdate.Property_SetupFileName = Nothing
+        Me.WL_PackUpdate.Property_Text_Label_AutoUpdate = ""
+        Me.WL_PackUpdate.Property_Text_Label_Name_CurentVersion = ""
+        Me.WL_PackUpdate.Property_Text_Label_Name_OnlineDate = ""
+        Me.WL_PackUpdate.Property_Text_Label_Name_OnlineInformation = ""
+        Me.WL_PackUpdate.Property_Text_Label_Name_OnlineVersion = ""
+        Me.WL_PackUpdate.Property_Text_Label_Value_CurentVersion = ""
+        Me.WL_PackUpdate.Property_Text_Label_Value_OnlineDate = ""
+        Me.WL_PackUpdate.Property_Text_Label_Value_OnlineVersion = ""
+        Me.WL_PackUpdate.Property_Text_TextBox_Value_OnlineInformation = ""
+        Me.WL_PackUpdate.Property_URLApiApplication = Nothing
+        Me.WL_PackUpdate.Property_URLPageApplication = Nothing
+        Me.WL_PackUpdate.Size = New System.Drawing.Size(216, 24)
+        Me.WL_PackUpdate.TabIndex = 16
+        Me.WL_PackUpdate.Visible = False
         '
         'BackgroundWorker
         '
@@ -220,5 +220,5 @@ Partial Class WL_Pack
     Friend WithEvents BackgroundWorker As System.ComponentModel.BackgroundWorker
     Friend WithEvents WL_Download As WL_Download
     Friend WithEvents CheckBox_ShowTestBuild As CheckBox
-    Friend WithEvents WL_Updater As WL_Updater
+    Friend WithEvents WL_PackUpdate As WL_Updater
 End Class
