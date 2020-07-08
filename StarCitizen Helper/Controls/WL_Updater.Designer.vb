@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class WL_Updater
     Inherits System.Windows.Forms.UserControl
 
     'UserControl overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,7 +20,7 @@ Partial Class WL_Updater
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
@@ -35,9 +35,7 @@ Partial Class WL_Updater
         Me.Label_Name_OnlineDate = New System.Windows.Forms.Label()
         Me.Label_Name_OnlineVersion = New System.Windows.Forms.Label()
         Me.TextBox_Value_OnlineInformation = New System.Windows.Forms.TextBox()
-        Me.Button_AutoUpdate = New System.Windows.Forms.Button()
         Me.BackgroundWorker = New System.ComponentModel.BackgroundWorker()
-        Me.Label_AutoUpdate = New System.Windows.Forms.Label()
         Me.TableLayoutPanel1.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
         Me.TableLayoutPanel3.SuspendLayout()
@@ -122,22 +120,20 @@ Partial Class WL_Updater
         Me.TableLayoutPanel2.ColumnCount = 2
         Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
         Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 66.66667!))
-        Me.TableLayoutPanel2.Controls.Add(Me.Label_AutoUpdate, 1, 3)
         Me.TableLayoutPanel2.Controls.Add(Me.Label_Name_OnlineInformation, 0, 2)
         Me.TableLayoutPanel2.Controls.Add(Me.Label_Value_OnlineDate, 1, 1)
         Me.TableLayoutPanel2.Controls.Add(Me.Label_Value_OnlineVersion, 1, 0)
         Me.TableLayoutPanel2.Controls.Add(Me.Label_Name_OnlineDate, 0, 1)
         Me.TableLayoutPanel2.Controls.Add(Me.Label_Name_OnlineVersion, 0, 0)
         Me.TableLayoutPanel2.Controls.Add(Me.TextBox_Value_OnlineInformation, 1, 2)
-        Me.TableLayoutPanel2.Controls.Add(Me.Button_AutoUpdate, 0, 3)
         Me.TableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TableLayoutPanel2.Location = New System.Drawing.Point(3, 16)
         Me.TableLayoutPanel2.Name = "TableLayoutPanel2"
-        Me.TableLayoutPanel2.RowCount = 4
+        Me.TableLayoutPanel2.RowCount = 3
         Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
         Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
-        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
         Me.TableLayoutPanel2.Size = New System.Drawing.Size(682, 226)
         Me.TableLayoutPanel2.TabIndex = 0
         '
@@ -148,7 +144,7 @@ Partial Class WL_Updater
         Me.Label_Name_OnlineInformation.Location = New System.Drawing.Point(3, 63)
         Me.Label_Name_OnlineInformation.Margin = New System.Windows.Forms.Padding(3)
         Me.Label_Name_OnlineInformation.Name = "Label_Name_OnlineInformation"
-        Me.Label_Name_OnlineInformation.Size = New System.Drawing.Size(221, 77)
+        Me.Label_Name_OnlineInformation.Size = New System.Drawing.Size(221, 160)
         Me.Label_Name_OnlineInformation.TabIndex = 8
         '
         'Label_Value_OnlineDate
@@ -200,40 +196,19 @@ Partial Class WL_Updater
         Me.TextBox_Value_OnlineInformation.Multiline = True
         Me.TextBox_Value_OnlineInformation.Name = "TextBox_Value_OnlineInformation"
         Me.TextBox_Value_OnlineInformation.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.TextBox_Value_OnlineInformation.Size = New System.Drawing.Size(449, 77)
+        Me.TextBox_Value_OnlineInformation.Size = New System.Drawing.Size(449, 160)
         Me.TextBox_Value_OnlineInformation.TabIndex = 9
-        '
-        'Button_AutoUpdate
-        '
-        Me.Button_AutoUpdate.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Button_AutoUpdate.Enabled = False
-        Me.Button_AutoUpdate.Location = New System.Drawing.Point(3, 146)
-        Me.Button_AutoUpdate.Name = "Button_AutoUpdate"
-        Me.Button_AutoUpdate.Size = New System.Drawing.Size(221, 77)
-        Me.Button_AutoUpdate.TabIndex = 10
-        Me.Button_AutoUpdate.Text = "Обновить автоматически"
-        Me.Button_AutoUpdate.UseVisualStyleBackColor = True
         '
         'BackgroundWorker
         '
         Me.BackgroundWorker.WorkerSupportsCancellation = True
         '
-        'Label_AutoUpdate
-        '
-        Me.Label_AutoUpdate.AutoSize = True
-        Me.Label_AutoUpdate.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Label_AutoUpdate.Location = New System.Drawing.Point(230, 146)
-        Me.Label_AutoUpdate.Margin = New System.Windows.Forms.Padding(3)
-        Me.Label_AutoUpdate.Name = "Label_AutoUpdate"
-        Me.Label_AutoUpdate.Size = New System.Drawing.Size(449, 77)
-        Me.Label_AutoUpdate.TabIndex = 11
-        '
-        'WL_SysUpdate
+        'WL_Updater
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.Controls.Add(Me.TableLayoutPanel1)
-        Me.Name = "WL_SysUpdate"
+        Me.Name = "WL_Updater"
         Me.Size = New System.Drawing.Size(694, 306)
         Me.TableLayoutPanel1.ResumeLayout(False)
         Me.GroupBox1.ResumeLayout(False)
@@ -260,6 +235,4 @@ Partial Class WL_Updater
     Friend WithEvents Label_Name_OnlineDate As Label
     Friend WithEvents Label_Name_OnlineVersion As Label
     Friend WithEvents TextBox_Value_OnlineInformation As TextBox
-    Friend WithEvents Button_AutoUpdate As Button
-    Friend WithEvents Label_AutoUpdate As Label
 End Class

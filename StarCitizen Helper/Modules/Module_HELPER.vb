@@ -2,54 +2,65 @@
 Imports System.Net
 
 Module Module_HELPER
-    Public Sub ConfigFile()
-        _VARS.ConfigFileIsOK = True
-        If _FSO._FileExits(_APP.configFullPath) = False Then
-            'BUILD INI FILE
-WriteBlock: File.Create(_APP.configFullPath).Dispose()
-            _LOG._sAdd("CONFIG_FILE", "Файл конфигурации не найден, будет создан новый файл конфигурации", _APP.configFullPath, 2)
 
-            'Update latest DateTime start and check Write function
+    Public Function CheckConfigFile() As Boolean
+        If _FSO._FileExits(_APP.configFullPath) = False Then
+            _FSO._WriteTextFile("", _APP.configFullPath, System.Text.Encoding.UTF32, False)
             If _INI._Write("CONFIGURATION", "DT", Date.Now) = False Then
                 _VARS.ConfigFileIsOK = False
                 _LOG._sAdd("CONFIG_FILE", "Запись в файл коифигурации невозможна, проверьте права на запись", _APP.configFullPath, 1)
-                GoTo ReadBlock
+                Return False
+            Else
+                InitConfigFile()
             End If
-            'Configuration
-            _INI._Write("CONFIGURATION", "SHOW_TEST_BUILDS", 0)
-
-            'Updater
-            _INI._Write("UPDATE", "PACK_VERSION_DATE", "")
-            _INI._Write("UPDATE", "APP_VERSION", _APP.Version)
-            _INI._Write("UPDATE", "PACK_GIT_PAGE", "https://github.com/Shin0by/StarCitizen-Helper")
-            _INI._Write("UPDATE", "PACK_GIT_API", "https://api.github.com/repos/Shin0by/StarCitizen-Helper/releases")
-
-            'PKiller
-            _INI._Write("CONFIGURATION", "PKILLER_ENABLED", 0)
-            _INI._Write("CONFIGURATION", "PKILLER_KEY", 0)
-            _INI._Write("CONFIGURATION", "PKILLER_MOD", 0)
-            _INI._Write("CONFIGURATION", "PKILLER_LIST", "")
-
-            'Profiles
-            _INI._Write("EXTERNAL", "PROFILES_PROCESS_KILL_ENABLED", 1)
-            _INI._Write("EXTERNAL", "PROFILES_PROCESS_NAME_GAME", "starcitizen")
-            _INI._Write("EXTERNAL", "PROFILES_PROCESS_NAME_LAUNCHER", "RSI Launcher")
-
-            'GIT
-            _INI._Write("EXTERNAL", "PACK_GIT_MASTER", _VARS.PackageGitURL_Master)
-            _INI._Write("EXTERNAL", "PACK_GIT_PAGE", _VARS.PackageGitURL_Root)
-            _INI._Write("EXTERNAL", "PACK_GIT_API", _VARS.PackageGitURL_Api)
-            _INI._Write("EXTERNAL", "PACK_GIT_SELECTED", "Master")
-
-            _INI._Write("EXTERNAL", "PACK_PACK_VERSION", "")
-            _INI._Write("EXTERNAL", "PACK_GAME_VERSION", "")
-
-            _INI._Write("EXTERNAL", "MOD_PACK_VERSION", "")
-            _INI._Write("EXTERNAL", "MOD_GAME_VERSION", "")
+        Else
+            Return False
         End If
+        Return True
+    End Function
 
+    Private Sub InitConfigFile()
+        _LOG._sAdd("CONFIG_FILE", "Файл конфигурации не найден, будет создан новый файл конфигурации", _APP.configFullPath, 0)
+        _VARS.ConfigFileIsOK = True
+
+        'Configuration
+        _INI._Write("CONFIGURATION", "SHOW_TEST_BUILDS", 0)
+
+        'Updater
+        _INI._Write("UPDATE", "APP_VERSION", _APP.Version)
+        _INI._Write("UPDATE", "APP_DATE", "")
+        _INI._Write("UPDATE", "PACK_DATE", "")
+        _INI._Write("UPDATE", "PACK_GIT_PAGE", "https://github.com/Shin0by/StarCitizen-Helper")
+        _INI._Write("UPDATE", "PACK_GIT_API", "https://api.github.com/repos/Shin0by/StarCitizen-Helper/releases")
+        _INI._Write("UPDATE", "SETUP_PARAMETERS", _VARS.SetupParameters)
+
+        'PKiller
+        _INI._Write("CONFIGURATION", "PKILLER_ENABLED", 0)
+        _INI._Write("CONFIGURATION", "PKILLER_KEY", 0)
+        _INI._Write("CONFIGURATION", "PKILLER_MOD", 0)
+        _INI._Write("CONFIGURATION", "PKILLER_LIST", "")
+
+        'Profiles
+        _INI._Write("EXTERNAL", "PROFILES_PROCESS_KILL_ENABLED", 1)
+        _INI._Write("EXTERNAL", "PROFILES_PROCESS_NAME_GAME", "starcitizen")
+        _INI._Write("EXTERNAL", "PROFILES_PROCESS_NAME_LAUNCHER", "RSI Launcher")
+
+        'GIT
+        _INI._Write("EXTERNAL", "PACK_GIT_MASTER", _VARS.PackageGitURL_Master)
+        _INI._Write("EXTERNAL", "PACK_GIT_PAGE", _VARS.PackageGitURL_Root)
+        _INI._Write("EXTERNAL", "PACK_GIT_API", _VARS.PackageGitURL_Api)
+        _INI._Write("EXTERNAL", "PACK_GIT_SELECTED", "Master")
+
+        _INI._Write("EXTERNAL", "PACK_PACK_VERSION", "")
+        _INI._Write("EXTERNAL", "PACK_GAME_VERSION", "")
+
+        _INI._Write("EXTERNAL", "MOD_PACK_VERSION", "")
+        _INI._Write("EXTERNAL", "MOD_GAME_VERSION", "")
+    End Sub
+
+    Public Sub LoadConfigFile()
         'LOAD INI FILE
-ReadBlock: _VARS.ConfigFileIsOK = True
+        _VARS.ConfigFileIsOK = True
 
         'Update latest DateTime start and check Write function
         If _INI._Write("CONFIGURATION", "DT", Date.Now) = False Then
@@ -61,8 +72,11 @@ ReadBlock: _VARS.ConfigFileIsOK = True
         _VARS.FileWatcher = StringToBool(_INI._GET_VALUE("CONFIGURATION", "FILES_WATCHER", False, {"0", "1"}).Value)
 
         'Updater
-        MAIN_THREAD.WL_SysUpdate.Property_URLPageApplication = _INI._GET_VALUE("UPDATE", "PACK_GIT_PAGE", Nothing).Value
-        MAIN_THREAD.WL_SysUpdate.Property_URLApiApplication = _INI._GET_VALUE("UPDATE", "PACK_GIT_API", Nothing).Value
+        MAIN_THREAD.WL_SysUpdate.Property_URL = _INI._GET_VALUE("UPDATE", "PACK_GIT_PAGE", Nothing).Value
+        MAIN_THREAD.WL_SysUpdate.Property_URLApi = _INI._GET_VALUE("UPDATE", "PACK_GIT_API", Nothing).Value
+        _VARS.SetupParameters = _INI._GET_VALUE("UPDATE", "SETUP_PARAMETERS", _VARS.SetupParameters).Value
+        _VARS.AppLatestDate = Convert.ToDateTime(_INI._GET_VALUE("UPDATE", "APP_DATE", Nothing).Value)
+        _VARS.PackageLatestDate = Convert.ToDateTime(_INI._GET_VALUE("UPDATE", "PACK_DATE", Nothing).Value)
 
         'Pack
         MAIN_THREAD.WL_Mod.Property_GameExeFilePath = _INI._GET_VALUE("EXTERNAL", "EXE_PATH", Nothing).Value
@@ -70,7 +84,6 @@ ReadBlock: _VARS.ConfigFileIsOK = True
         MAIN_THREAD.WL_Mod.Property_ModInPackFileVersion = _INI._GET_VALUE("EXTERNAL", "MOD_PACK_VERSION", Nothing).Value
         MAIN_THREAD.WL_Pack.Property_PackInGameVersion = _INI._GET_VALUE("EXTERNAL", "PACK_GAME_VERSION", Nothing).Value
         MAIN_THREAD.WL_Pack.Property_ShowTestBuild = StringToBool(_INI._GET_VALUE("CONFIGURATION", "SHOW_TEST_BUILDS", False, {"0", "1"}).Value)
-        _VARS.PackageVersionLatest_Date = Convert.ToDateTime(_INI._GET_VALUE("UPDATE", "PACK_VERSION_DATE", Nothing).Value)
 
         'GIT
         _VARS.PackageGitURL_Master = _INI._GET_VALUE("EXTERNAL", "PACK_GIT_MASTER", Nothing).Value

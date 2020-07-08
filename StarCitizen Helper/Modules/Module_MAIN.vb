@@ -17,21 +17,22 @@ Module Module_MAIN
     Public _GIT As New Class_GIT
 
     Public Sub InitializeStart()
-
-
         _KEYS = New Class_KEYS(MAIN_THREAD)
         _INI._FSO = _APP.configFullPath
 
+
         _VARS.FilePathMinLen = 2
         _VARS.FileNameMinLen = 5
+        _VARS.SetupParameters = "/SILENT /COMPONENTS=""main"" /FORCECLOSEAPPLICATIONS /NOCANCEL /DIR=""{dir}"""
         _APP.appName = "StarCitizen Helper"
         _VARS.GameName = "StarCitizen"
         _VARS.PackageGitMaster_Name = "Master"
-        'Set Nothing when publish
+
         _VARS.PackageGitURL_Root = "https://github.com/defterai/StarCitizenModding"
         _VARS.PackageGitURL_Master = "https://codeload.github.com/defterai/StarCitizenModding/zip/master"
         _VARS.PackageGitURL_Api = "https://api.github.com/repos/defterai/StarCitizenModding/releases"
-        'Set Nothing when publish
+
+        Module_HELPER.CheckConfigFile()
     End Sub
 
     Public Sub InitializeEnd()
@@ -51,9 +52,13 @@ Module Module_MAIN
         MAIN_THREAD.WL_SysUpdate.Property_Name = _APP.appName
         MAIN_THREAD.WL_Pack.Property_UpdateTargetName = "пакета локализации"
 
-        Module_HELPER.ConfigFile()
+        Module_HELPER.LoadConfigFile()
 
-        MAIN_THREAD.WL_Pack.Property_ApplicationDateOnline = _VARS.PackageVersionLatest_Date
+        If _VARS.AppLatestDate = New DateTime Then _VARS.AppLatestDate = DateTime.Now
+        MAIN_THREAD.WL_SysUpdate.Property_DateOnline = _VARS.AppLatestDate
+
+        If _VARS.PackageLatestDate = New DateTime Then _VARS.PackageLatestDate = DateTime.Now
+        MAIN_THREAD.WL_Pack.Property_DateOnline = _VARS.PackageLatestDate
 
         '_WATCHFILE_THREAD = New Class_THREAD_WATCHFILE(MAIN_THREAD)
         '_WATCHFILE_THREAD.StartThread()
@@ -156,6 +161,8 @@ Module Module_MAIN
         'Global
         Public FilePathMinLen As Long = 2
         Public FileNameMinLen As Long = 5
+        Public sSetupParameters As String = Nothing
+        Public AppLatestDate As DateTime = Nothing
 
         'ConfigFile
         Public ConfigFileIsOK As Boolean = False
@@ -169,7 +176,7 @@ Module Module_MAIN
         Public PackageGitURL_Master As String = Nothing
         Public PackageGitURL_Root As String = Nothing
         Public PackageGitURL_Api As String = Nothing
-        Public PackageVersionLatest_Date As DateTime = Nothing
+        Public PackageLatestDate As DateTime = Nothing
 
         'PKiller
         Public PKillerEnabled As Boolean = False
@@ -180,5 +187,14 @@ Module Module_MAIN
         Public GameProcessKillerEnabled As Boolean = False
         Public GameProcessMain As String = Nothing
         Public GameProcessLauncher As String = Nothing
+
+        Public Property SetupParameters() As String
+            Get
+                Return Me.sSetupParameters
+            End Get
+            Set(ByVal Value As String)
+                Me.sSetupParameters = Replace(Value, "{dir}", _APP.exePath)
+            End Set
+        End Property
     End Class
 End Module

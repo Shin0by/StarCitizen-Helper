@@ -82,6 +82,8 @@ Partial Class MainForm
         Me.TabPage_SysUpdate = New System.Windows.Forms.TabPage()
         Me.WL_SysUpdate = New SC.WL_Updater()
         Me.Timer_LOG = New System.Windows.Forms.Timer(Me.components)
+        Me.TableLayoutPanel_SysUpdate = New System.Windows.Forms.TableLayoutPanel()
+        Me.Button1 = New System.Windows.Forms.Button()
         Me.ContextMenuStrip1.SuspendLayout()
         Me.TabControl.SuspendLayout()
         Me.TabPage_Patch.SuspendLayout()
@@ -93,6 +95,7 @@ Partial Class MainForm
         Me.TabPage_Debug.SuspendLayout()
         Me.TableLayoutPanel2.SuspendLayout()
         Me.TabPage_SysUpdate.SuspendLayout()
+        Me.TableLayoutPanel_SysUpdate.SuspendLayout()
         Me.SuspendLayout()
         '
         'ContextMenuStrip1
@@ -296,7 +299,7 @@ Partial Class MainForm
         Me.WL_Pack.Dock = System.Windows.Forms.DockStyle.Fill
         Me.WL_Pack.Location = New System.Drawing.Point(3, 3)
         Me.WL_Pack.Name = "WL_Pack"
-        Me.WL_Pack.Property_ApplicationDateOnline = New Date(CType(0, Long))
+        Me.WL_Pack.Property_DateOnline = New Date(CType(0, Long))
         Me.WL_Pack.Property_GitList_AutoUpdate = True
         Me.WL_Pack.Property_GitList_Interval = 120000
         Me.WL_Pack.Property_GitList_SelString = Nothing
@@ -679,7 +682,7 @@ Partial Class MainForm
         '
         'TabPage_SysUpdate
         '
-        Me.TabPage_SysUpdate.Controls.Add(Me.WL_SysUpdate)
+        Me.TabPage_SysUpdate.Controls.Add(Me.TableLayoutPanel_SysUpdate)
         Me.TabPage_SysUpdate.Location = New System.Drawing.Point(4, 22)
         Me.TabPage_SysUpdate.Name = "TabPage_SysUpdate"
         Me.TabPage_SysUpdate.Padding = New System.Windows.Forms.Padding(3)
@@ -694,15 +697,11 @@ Partial Class MainForm
         Me.WL_SysUpdate.Location = New System.Drawing.Point(3, 3)
         Me.WL_SysUpdate.Name = "WL_SysUpdate"
         Me.WL_SysUpdate.Property_AlertUpdate = True
-        Me.WL_SysUpdate.Property_ApplicationDateOnline = New Date(CType(0, Long))
-        Me.WL_SysUpdate.Property_ApplicationURLDownload = Nothing
-        Me.WL_SysUpdate.Property_ApplicationVersionLocal = Nothing
-        Me.WL_SysUpdate.Property_ApplicationVersionOnline = Nothing
+        Me.WL_SysUpdate.Property_DateOnline = New Date(CType(0, Long))
         Me.WL_SysUpdate.Property_GitListAutoUpdate = True
         Me.WL_SysUpdate.Property_GitListInterval = 120000
         Me.WL_SysUpdate.Property_Name = Nothing
         Me.WL_SysUpdate.Property_SetupFileName = Nothing
-        Me.WL_SysUpdate.Property_Text_Label_AutoUpdate = ""
         Me.WL_SysUpdate.Property_Text_Label_Name_CurentVersion = "Версия:"
         Me.WL_SysUpdate.Property_Text_Label_Name_OnlineDate = "Дата публикации:"
         Me.WL_SysUpdate.Property_Text_Label_Name_OnlineInformation = "Дополнительная информация:"
@@ -711,14 +710,43 @@ Partial Class MainForm
         Me.WL_SysUpdate.Property_Text_Label_Value_OnlineDate = ""
         Me.WL_SysUpdate.Property_Text_Label_Value_OnlineVersion = ""
         Me.WL_SysUpdate.Property_Text_TextBox_Value_OnlineInformation = ""
-        Me.WL_SysUpdate.Property_URLApiApplication = Nothing
-        Me.WL_SysUpdate.Property_URLPageApplication = Nothing
-        Me.WL_SysUpdate.Size = New System.Drawing.Size(770, 279)
+        Me.WL_SysUpdate.Property_URL = Nothing
+        Me.WL_SysUpdate.Property_URLApi = Nothing
+        Me.WL_SysUpdate.Property_URLDownload = Nothing
+        Me.WL_SysUpdate.Property_VersionLocal = Nothing
+        Me.WL_SysUpdate.Property_VersionOnline = Nothing
+        Me.WL_SysUpdate.Size = New System.Drawing.Size(764, 238)
         Me.WL_SysUpdate.TabIndex = 0
         '
         'Timer_LOG
         '
         Me.Timer_LOG.Interval = 1000
+        '
+        'TableLayoutPanel_SysUpdate
+        '
+        Me.TableLayoutPanel_SysUpdate.ColumnCount = 1
+        Me.TableLayoutPanel_SysUpdate.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel_SysUpdate.Controls.Add(Me.WL_SysUpdate, 0, 0)
+        Me.TableLayoutPanel_SysUpdate.Controls.Add(Me.Button1, 0, 1)
+        Me.TableLayoutPanel_SysUpdate.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel_SysUpdate.Location = New System.Drawing.Point(3, 3)
+        Me.TableLayoutPanel_SysUpdate.Margin = New System.Windows.Forms.Padding(0)
+        Me.TableLayoutPanel_SysUpdate.Name = "TableLayoutPanel_SysUpdate"
+        Me.TableLayoutPanel_SysUpdate.RowCount = 2
+        Me.TableLayoutPanel_SysUpdate.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel_SysUpdate.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35.0!))
+        Me.TableLayoutPanel_SysUpdate.Size = New System.Drawing.Size(770, 279)
+        Me.TableLayoutPanel_SysUpdate.TabIndex = 1
+        '
+        'Button1
+        '
+        Me.Button1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Button1.Location = New System.Drawing.Point(3, 247)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(764, 29)
+        Me.Button1.TabIndex = 1
+        Me.Button1.Text = "Button1"
+        Me.Button1.UseVisualStyleBackColor = True
         '
         'MainForm
         '
@@ -748,6 +776,7 @@ Partial Class MainForm
         Me.TableLayoutPanel2.ResumeLayout(False)
         Me.TableLayoutPanel2.PerformLayout()
         Me.TabPage_SysUpdate.ResumeLayout(False)
+        Me.TableLayoutPanel_SysUpdate.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -810,4 +839,6 @@ Partial Class MainForm
     Friend WithEvents WL_Pack As WL_Pack
     Friend WithEvents TabPage_SysUpdate As TabPage
     Friend WithEvents WL_SysUpdate As WL_Updater
+    Friend WithEvents TableLayoutPanel_SysUpdate As TableLayoutPanel
+    Friend WithEvents Button1 As Button
 End Class

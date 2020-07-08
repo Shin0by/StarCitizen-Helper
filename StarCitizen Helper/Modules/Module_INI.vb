@@ -32,7 +32,16 @@ Module Module_INI
                 Parser.WriteFile(Me.FilePath, data)
                 Return True
             Catch ex As Exception
-                _LOG._sAdd("INI", "Ошибка доступа к файлу конфигурации " & _APP.configName, Err.Description, 1, Err.Number)
+                Dim LogLine As New List(Of LOG_SubLine)
+                Dim LogSubLine As New LOG_SubLine
+                LogSubLine.List.Add("Подробности:")
+                LogSubLine.List.Add("Операция: Запись")
+                LogSubLine.List.Add(Key & " = " & Value)
+                LogSubLine.List.Add("Файл: " & _APP.configName)
+                LogSubLine.List.Add("")
+                LogSubLine.List.Add("Описание:" & Err.Description)
+                LogLine.Add(LogSubLine)
+                _LOG._Add("INI", "Ошибка доступа к файлу конфигурации", LogLine, 1, Err.Number)
                 Return False
             End Try
         End Function

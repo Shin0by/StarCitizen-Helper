@@ -2,22 +2,20 @@
 
 Public Class WL_Updater
     Private _GIT_Request As New Class_GIT
-    Public Event _Event_NewVersion_Available_After(JSON As Object)
-    Public Event _Event_NewVersion_Alert(JSON As Object, Self As WL_Updater)
-    Public Event _Event_Update_Complete_After(JSON As Object)
-    Public Event _Event_AutoUpdate_Button_Click_Before()
-    Public Event _Event_AutoUpdate_Button_Click_After()
+    Public Event _Event_NewVersion_Available_After(JSON As Object, LatestElement As Object, Self As WL_Updater)
+    Public Event _Event_NewVersion_Alert(JSON As Object, LatestElement As Object, Self As WL_Updater)
+    Public Event _Event_Update_Complete_After(JSON As Object, LatestElement As Object, Self As WL_Updater)
 
     Private cBackColor As Color = Me.BackColor
     Private cForeColor As Color = Me.ForeColor
 
-    Private sURLApiApplication As String = Nothing 'GitHub App HomePage 
-    Private sURLPageApplication As String = Nothing 'GitHub API page
+    Private sURL As String = Nothing 'GitHub App HomePage 
+    Private sURLApi As String = Nothing 'GitHub API page
 
-    Private sApplicationVersionLocal As String = Nothing
-    Private sApplicationVersionOnline As String = Nothing
-    Private dApplicationDateOnline As DateTime = Nothing
-    Private sApplicationURLDownload As String = Nothing
+    Private sVersionLocal As String = Nothing
+    Private sVersionOnline As String = Nothing
+    Private dDateOnline As DateTime = Nothing
+    Private sURLDownload As String = Nothing
     Private sSetupFileName As String = Nothing 'FileName for find in GitHub attachment list
 
     Private sName As String = Nothing 'Name of update what we check
@@ -141,71 +139,57 @@ Public Class WL_Updater
         End Set
     End Property
 
-    Public Property Property_Text_Label_AutoUpdate() As String
+    Public Property Property_URLApi() As String
         Get
-            Return Me.Label_AutoUpdate.Text
+            Return Me.sURLApi
         End Get
         Set(ByVal Value As String)
-            Me.Label_AutoUpdate.Text = Value
+            Me.sURLApi = Value
         End Set
     End Property
 
-    Public Property Property_URLApiApplication() As String
+    Public Property Property_URL() As String
         Get
-            Return Me.sURLApiApplication
+            Return Me.sURL
         End Get
         Set(ByVal Value As String)
-            Me.sURLApiApplication = Value
+            Me.sURL = Value
         End Set
     End Property
 
-    Public Property Property_URLPageApplication() As String
+    Public Property Property_VersionLocal() As String
         Get
-            Return Me.sURLPageApplication
+            Return Me.sVersionLocal
         End Get
         Set(ByVal Value As String)
-            Me.sURLPageApplication = Value
+            Me.sVersionLocal = Value
         End Set
     End Property
 
-    Public Property Property_ApplicationVersionLocal() As String
+    Public Property Property_VersionOnline() As String
         Get
-            Return Me.sApplicationVersionLocal
+            Return Me.sVersionOnline
         End Get
         Set(ByVal Value As String)
-            Me.sApplicationVersionLocal = Value
+            Me.sVersionOnline = Value
         End Set
     End Property
-
-    Public Property Property_ApplicationVersionOnline() As String
+    Public Property Property_DateOnline() As DateTime
         Get
-            Return Me.sApplicationVersionOnline
-        End Get
-        Set(ByVal Value As String)
-            Me.sApplicationVersionOnline = Value
-        End Set
-    End Property
-    Public Property Property_ApplicationDateOnline() As DateTime
-        Get
-            Return Me.dApplicationDateOnline
+            Return Me.dDateOnline
         End Get
         Set(ByVal Value As DateTime)
-            Me.dApplicationDateOnline = Value
+            Me.dDateOnline = Value
         End Set
     End Property
 
-    Public Property Property_ApplicationURLDownload() As String
+    Public Property Property_URLDownload() As String
         Get
-            Return Me.sApplicationURLDownload
+            Return Me.sURLDownload
         End Get
         Set(ByVal Value As String)
-            Me.sApplicationURLDownload = Value
+            Me.sURLDownload = Value
             If Initialization = True Then Exit Property
-            If Me.sApplicationURLDownload IsNot Nothing Then
-                Me.Invoke(Sub() Me.Button_AutoUpdate.Enabled = True)
-            Else
-                Me.Invoke(Sub() Me.Button_AutoUpdate.Enabled = False)
-            End If
         End Set
     End Property
 
@@ -253,34 +237,29 @@ Public Class WL_Updater
 
     '-----------------------------------> Properties
 
-    Private Sub Button_AutoUpdate_Click(sender As Object, e As EventArgs) Handles Button_AutoUpdate.Click
-        RaiseEvent _Event_AutoUpdate_Button_Click_Before()
-
-
-        RaiseEvent _Event_AutoUpdate_Button_Click_After()
-    End Sub
-
     '<----------------------------------- 'Thread
     Private Sub BackgroundWorker_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles BackgroundWorker.DoWork
         Thread.Sleep(1300)
         Do
-            If Me.Property_URLApiApplication IsNot Nothing Then
-                Dim NewGitList As List(Of Module_GIT.Class_GIT.Class_GitUpdateList.Class_GitUpdateElement) = _GIT_Request._GetGitList(Me.Property_URLApiApplication)
-                If NewGitList.Count > 0 Then
-                    Me.JSON = _GIT_Request._JSON
-                    If Property_ApplicationDateOnline <> _GIT_Request._LatestElement._published Then
-                        If Me.Property_SetupFileName IsNot Nothing Then Me.Property_ApplicationURLDownload = _GIT_Request._GetAssetByFileName(Me.Property_SetupFileName)
-                        If Property_AlertUpdate = True Then RaiseEvent _Event_NewVersion_Alert(_GIT_Request._LatestElement, Me)
-                        Me.Invoke(Sub()
-                                      Me.Property_Text_Label_Value_OnlineVersion = _GIT_Request._LatestElement._tag_name
-                                      Me.Property_Text_Label_Value_OnlineDate = _GIT_Request._LatestElement._published
-                                      Me.Property_Text_TextBox_Value_OnlineInformation = _GIT_Request._LatestElement._body
-                                  End Sub)
-                        RaiseEvent _Event_NewVersion_Available_After(_GIT_Request._JSON)
+            If _VARS.ConfigFileIsOK = True Then
+                If Me.Property_URLApi IsNot Nothing Then
+                    Dim NewGitList As List(Of Module_GIT.Class_GIT.Class_GitUpdateList.Class_GitUpdateElement) = _GIT_Request._GetGitList(Me.Property_URLApi)
+                    If NewGitList.Count > 0 Then
+                        Me.JSON = _GIT_Request._JSON
+                        If Property_DateOnline <> _GIT_Request._LatestElement._published Then
+                            If Me.Property_SetupFileName IsNot Nothing Then Me.Property_URLDownload = _GIT_Request._GetAssetByFileName(Me.Property_SetupFileName)
+                            If Property_AlertUpdate = True Then RaiseEvent _Event_NewVersion_Alert(_GIT_Request._JSON, _GIT_Request._LatestElement, Me)
+                            Me.Invoke(Sub()
+                                          Me.Property_Text_Label_Value_OnlineVersion = _GIT_Request._LatestElement._tag_name
+                                          Me.Property_Text_Label_Value_OnlineDate = _GIT_Request._LatestElement._published
+                                          Me.Property_Text_TextBox_Value_OnlineInformation = _GIT_Request._LatestElement._body
+                                      End Sub)
+                            RaiseEvent _Event_NewVersion_Available_After(_GIT_Request._JSON, _GIT_Request._LatestElement, Me)
+                        End If
                     End If
+                    RaiseEvent _Event_Update_Complete_After(_GIT_Request._JSON, _GIT_Request._LatestElement, Me)
+                    Property_DateOnline = _GIT_Request._LatestElement._published
                 End If
-                RaiseEvent _Event_Update_Complete_After(_GIT_Request._JSON)
-                Property_ApplicationDateOnline = _GIT_Request._LatestElement._published
             End If
             Thread.Sleep(iUpdateGitListInterval)
         Loop

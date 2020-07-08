@@ -8,8 +8,6 @@ Public Class MainForm
     Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         MAIN_THREAD.WL_Mod.Text_Label_Bottom = "Внимание! Все действия во вкладке [" & Me.TabPage_Patch.Text & "] Вы выполняете на свой страх и риск." & vbNewLine & "Задействование функции [" & Me.WL_Mod.Text_Button_Enable & "] нарушит условия лицензионного соглашения с CIG." & vbNewLine & vbNewLine & "Для включения или выключения модификации необходимо загрузить ядро модификаций и локализацию входящие в пакет обновлений. Для этого перейдите во вкладку [" & Me.TabPage_Packages.Text & "] и следуйте инструкциям." & vbNewLine & vbNewLine & "Примечание: Если был загружен и установлен новый пакет обновлений, то необходимо выключить и включить ядро модификаций, это задействует соответствующую версию ядра для соответствующей локализации. Программа не вносит изменния в исполняемый фалы игры, но модифицирует память и когда игра запускается, это значительно сложнее выявить." & vbNewLine & vbNewLine & "Автор программы против читов и бесчестной игры, данная программа не несет подобного функционала."
         MAIN_THREAD.WL_Pack.Text_Label_Bottom = "Для загрузки пакета обновлений выберите в выпадающем списке актуальный пакет обновлений и нажмите [" & Me.WL_Pack.Text_Button_Download & "]. По завершении загрузки нажмите [" & Me.WL_Pack.Text_Button_InstallFull & "] - это установит необходимые файлы локализации в папку игры." & vbNewLine & "Для активации локализации требуется установить и включить ядро модификаций, для этого перейдите во вкладку [" & Me.TabPage_Patch.Text & "] и нажмите [" & Me.WL_Mod.Text_Button_Enable & "]." & vbNewLine & vbNewLine & "Примечание: Пакет локализации [Master] - это последняя версия сборки, еще не прошедшей проверку (не рекомендуется к установке)."
-
-        MAIN_THREAD.WL_SysUpdate.Label_AutoUpdate.Text = "AAA"
     End Sub
 
 
@@ -343,21 +341,33 @@ Public Class MainForm
         Me.UpdateInterface()
     End Sub
 
-    Sub UpdateAlert_NewVersion(LatestElement As Object, SenderName As WL_Updater) Handles WL_SysUpdate._Event_NewVersion_Alert, WL_Pack._Event_NewVersion_Alert
+    Sub UpdateAlert_NewVersion(JSON As Object, LatestElement As Object, SenderName As WL_Updater) Handles WL_SysUpdate._Event_NewVersion_Alert, WL_Pack._Event_NewVersion_Alert
         Dim SubLine As New LOG_SubLine
         Dim ListSubLine As New List(Of LOG_SubLine)
 
         SubLine.Value = "Версия: " & LatestElement._tag_name
         SubLine.List.Add("Дата: " & LatestElement._published)
         SubLine.List.Add("")
-        If SenderName.Name = "WL_SysUpdate" Then SubLine.List.Add("Описание изменений доступно во вкладке [" & Me.TabPage_SysUpdate.Text & "] или на Git странице проекта")
+        If SenderName.Name = "WL_SysUpdate" Then
+            SubLine.List.Add("Описание изменений доступно во вкладке [" & Me.TabPage_SysUpdate.Text & "] или на Git странице проекта")
+            If _VARS.PackageLatestDate <> LatestElement._published Then
+                _VARS.PackageLatestDate = LatestElement._published
+                _INI._Write("UPDATE", "APP_DATE", _VARS.PackageLatestDate.ToString)
+            End If
+        End If
         If SenderName.Name = "WL_PackUpdate" Then
             SubLine.List.Add("Описание изменений доступно на Git странице проекта по адресу:")
             SubLine.List.Add(_VARS.PackageGitURL_Root)
         End If
         ListSubLine.Add(SubLine)
 
-            _LOG._Add(Me.GetType().Name, "Доступна новая версия " & Chr(34) & SenderName.Property_Name & Chr(34), ListSubLine, 0, 0)
+        _LOG._Add(Me.GetType().Name, "Доступна новая версия " & Chr(34) & SenderName.Property_Name & Chr(34), ListSubLine, 0, 0)
+    End Sub
+
+    Sub UpdateSysComplete(JSON As Object, LatestElement As Object, SenderName As WL_Updater) Handles WL_SysUpdate._Event_Update_Complete_After
+        Me.WL_SysUpdate.Property_Text_Label_Value_OnlineVersion = LatestElement._tag_name
+        Me.WL_SysUpdate.Property_Text_Label_Value_OnlineDate = LatestElement._published
+        Me.WL_SysUpdate.Property_Text_TextBox_Value_OnlineInformation = LatestElement._body
     End Sub
     '-----------------------------------> 'Callback
 End Class
