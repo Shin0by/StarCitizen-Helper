@@ -42,5 +42,10 @@ StarCitizen Helper
   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
 </summary>
 </member>
+<member name="P:SC.My.Resources.Resources.Shin0by_soft">
+<summary>
+  Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+</summary>
+</member>
 </members>
 </doc>

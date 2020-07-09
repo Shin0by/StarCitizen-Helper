@@ -1,10 +1,10 @@
 ﻿Imports System.Threading
 
-Public Class WL_Updater
+Public Class WL_Check
     Private _GIT_Request As New Class_GIT
-    Public Event _Event_NewVersion_Available_After(JSON As Object, LatestElement As Object, Self As WL_Updater)
-    Public Event _Event_NewVersion_Alert(JSON As Object, LatestElement As Object, Self As WL_Updater)
-    Public Event _Event_Update_Complete_After(JSON As Object, LatestElement As Object, Self As WL_Updater)
+    Public Event _Event_NewVersion_Available_After(JSON As Object, LatestElement As Object, Self As WL_Check)
+    Public Event _Event_NewVersion_Alert(JSON As Object, LatestElement As Object, Self As WL_Check)
+    Public Event _Event_Update_Complete_After(JSON As Object, LatestElement As Object, Self As WL_Check)
 
     Private cBackColor As Color = Me.BackColor
     Private cForeColor As Color = Me.ForeColor
@@ -258,7 +258,7 @@ Public Class WL_Updater
                         End If
                     End If
                     RaiseEvent _Event_Update_Complete_After(_GIT_Request._JSON, _GIT_Request._LatestElement, Me)
-                    Property_DateOnline = _GIT_Request._LatestElement._published
+                    If _GIT_Request._LatestElement IsNot Nothing Then Property_DateOnline = _GIT_Request._LatestElement._published
                 End If
             End If
             Thread.Sleep(iUpdateGitListInterval)

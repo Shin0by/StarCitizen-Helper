@@ -305,6 +305,7 @@ Public Class MainForm
 
     '<----------------------------------- 'Callback
     Sub GamePathUpdate(Path As String) Handles WL_Mod._Event_GameExeFile_Update_After
+        On Error Resume Next
         If Path Is Nothing Then Exit Sub
 
         MAIN_THREAD.WL_Mod._Update()
@@ -315,14 +316,17 @@ Public Class MainForm
     End Sub
 
     Sub Upd_Controls_Enabled(Enabled As Boolean) Handles WL_Pack._Event_Controls_Enabled_Before, WL_Pack._Event_Controls_Enabled_After
+        On Error Resume Next
         MAIN_THREAD.WL_Mod.Enabled = Enabled
     End Sub
 
     Sub Mod_Controls_Enabled(Enabled As Boolean) Handles WL_Mod._Event_Controls_Enabled_Before, WL_Mod._Event_Controls_Enabled_After
+        On Error Resume Next
         MAIN_THREAD.WL_Pack.Enabled = Enabled
     End Sub
 
     Sub DownloadAfter(DownloadFrom As String, DownloadTo As String, e As WL_Download.DownloadProgressElement) Handles WL_Pack._Event_Download_After
+        On Error Resume Next
         Dim result As New ResultClass(Me)
         result.ValueString = DownloadTo
         _FSO._DeleteFile(_FSO._CombinePath(MAIN_THREAD.WL_Pack.Property_Path_Folder_Download, MAIN_THREAD.WL_Mod.Property_PatchSrcFileName))
@@ -334,28 +338,40 @@ Public Class MainForm
     End Sub
 
     Sub ModStatus_Click() Handles WL_Mod._Event_PatchDisable_Click_After, WL_Mod._Event_PatchEnable_Click_After
+        On Error Resume Next
         Me.UpdateInterface()
     End Sub
 
     Sub UpdInstallFull_Click() Handles WL_Pack._Event_InstallFull_Button_Click_After
+        On Error Resume Next
         Me.UpdateInterface()
     End Sub
 
-    Sub UpdateAlert_NewVersion(JSON As Object, LatestElement As Object, SenderName As WL_Updater) Handles WL_SysUpdate._Event_NewVersion_Alert, WL_Pack._Event_NewVersion_Alert
+    Sub UpdateAlert_NewVersion(JSON As Object, LatestElement As Object, SenderName As WL_Check) Handles WL_SysUpdateCheck._Event_NewVersion_Alert, WL_Pack._Event_NewVersion_Alert
         Dim SubLine As New LOG_SubLine
         Dim ListSubLine As New List(Of LOG_SubLine)
 
         SubLine.Value = "Версия: " & LatestElement._tag_name
         SubLine.List.Add("Дата: " & LatestElement._published)
         SubLine.List.Add("")
-        If SenderName.Name = "WL_SysUpdate" Then
+        If SenderName.Name = Me.WL_SysUpdateCheck.Name Then
             SubLine.List.Add("Описание изменений доступно во вкладке [" & Me.TabPage_SysUpdate.Text & "] или на Git странице проекта")
             If _VARS.PackageLatestDate <> LatestElement._published Then
                 _VARS.PackageLatestDate = LatestElement._published
                 _INI._Write("UPDATE", "APP_DATE", _VARS.PackageLatestDate.ToString)
+                Me.Invoke(Sub()
+                              Me.WL_AppUpdate.Property_PatchDstFileName = MAIN_THREAD.WL_SysUpdateCheck.Property_SetupFileName
+                              Me.WL_AppUpdate.Property_PatchDstFilePath = Me.WL_Pack.Property_Path_Folder_Download
+                              Me.WL_AppUpdate.Property_PatchSrcFileName = Me.WL_AppUpdate.Property_PatchDstFileName
+                              Me.WL_AppUpdate.Property_PatchSrcFilePath = _GIT._GetAssetByFileName(Me.WL_AppUpdate.Property_PatchDstFileName, LatestElement)
+                              Me.WL_AppUpdate.Property_PatchDstParameters = _VARS.SetupParameters
+
+                              Me.WL_AppUpdate.Enabled = True
+                              If WL_AppUpdate.Enabled = True Then Me.TabControl.SelectedTab = Me.TabPage_SysUpdate
+                          End Sub)
             End If
         End If
-        If SenderName.Name = "WL_PackUpdate" Then
+        If SenderName.Name = "WL_PackUpdateCheck" Then
             SubLine.List.Add("Описание изменений доступно на Git странице проекта по адресу:")
             SubLine.List.Add(_VARS.PackageGitURL_Root)
         End If
@@ -364,10 +380,16 @@ Public Class MainForm
         _LOG._Add(Me.GetType().Name, "Доступна новая версия " & Chr(34) & SenderName.Property_Name & Chr(34), ListSubLine, 0, 0)
     End Sub
 
-    Sub UpdateSysComplete(JSON As Object, LatestElement As Object, SenderName As WL_Updater) Handles WL_SysUpdate._Event_Update_Complete_After
-        Me.WL_SysUpdate.Property_Text_Label_Value_OnlineVersion = LatestElement._tag_name
-        Me.WL_SysUpdate.Property_Text_Label_Value_OnlineDate = LatestElement._published
-        Me.WL_SysUpdate.Property_Text_TextBox_Value_OnlineInformation = LatestElement._body
+    Sub UpdateSysComplete(JSON As Object, LatestElement As Object, SenderName As WL_Check) Handles WL_SysUpdateCheck._Event_Update_Complete_After
+        On Error Resume Next
+        If LatestElement Is Nothing Then Exit Sub
+        Me.Invoke(Sub()
+                      Me.WL_SysUpdateCheck.Property_Text_Label_Value_OnlineVersion = LatestElement._tag_name
+                      Me.WL_SysUpdateCheck.Property_Text_Label_Value_OnlineDate = LatestElement._published
+                      Me.WL_SysUpdateCheck.Property_Text_TextBox_Value_OnlineInformation = LatestElement._body
+                  End Sub)
     End Sub
+
+
     '-----------------------------------> 'Callback
 End Class

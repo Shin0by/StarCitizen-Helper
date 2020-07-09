@@ -50,8 +50,15 @@ Module Module_GIT
             Return result
         End Function
 
-        Public Function _GetAssetByFileName(FileName As String) As Object
-            For Each elem In Me._LatestElement._assets
+        Public Function _GetAssetByFileName(FileName As String, Optional LatestElement As Object = Nothing) As Object
+            Dim List As Object
+            If LatestElement IsNot Nothing Then
+                List = LatestElement._assets
+            Else
+                List = Me._LatestElement._assets
+            End If
+
+            For Each elem In List
                 If Len(elem("browser_download_url")) > 1 Then
                     If LCase(Right(elem("browser_download_url"), Len(FileName))) = LCase(FileName) Then
                         Return elem("browser_download_url")

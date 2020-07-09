@@ -6,7 +6,7 @@ Module Module_HELPER
     Public Function CheckConfigFile() As Boolean
         If _FSO._FileExits(_APP.configFullPath) = False Then
             _FSO._WriteTextFile("", _APP.configFullPath, System.Text.Encoding.UTF32, False)
-            If _INI._Write("CONFIGURATION", "DT", Date.Now) = False Then
+            If _INI._Write("CONFIGURATION", "DT_START", Date.Now) = False Then
                 _VARS.ConfigFileIsOK = False
                 _LOG._sAdd("CONFIG_FILE", "Запись в файл коифигурации невозможна, проверьте права на запись", _APP.configFullPath, 1)
                 Return False
@@ -24,6 +24,7 @@ Module Module_HELPER
         _VARS.ConfigFileIsOK = True
 
         'Configuration
+        _INI._Write("CONFIGURATION", "DT_CREATE", DateTime.Now.ToString)
         _INI._Write("CONFIGURATION", "SHOW_TEST_BUILDS", 0)
 
         'Updater
@@ -63,7 +64,7 @@ Module Module_HELPER
         _VARS.ConfigFileIsOK = True
 
         'Update latest DateTime start and check Write function
-        If _INI._Write("CONFIGURATION", "DT", Date.Now) = False Then
+        If _INI._Write("CONFIGURATION", "DT_START", Date.Now) = False Then
             _VARS.ConfigFileIsOK = False
         Else
             _LOG._sAdd("CONFIG_FILE", "Загружена конфигурация из файла", _APP.configFullPath, 2)
@@ -72,8 +73,8 @@ Module Module_HELPER
         _VARS.FileWatcher = StringToBool(_INI._GET_VALUE("CONFIGURATION", "FILES_WATCHER", False, {"0", "1"}).Value)
 
         'Updater
-        MAIN_THREAD.WL_SysUpdate.Property_URL = _INI._GET_VALUE("UPDATE", "PACK_GIT_PAGE", Nothing).Value
-        MAIN_THREAD.WL_SysUpdate.Property_URLApi = _INI._GET_VALUE("UPDATE", "PACK_GIT_API", Nothing).Value
+        MAIN_THREAD.WL_SysUpdateCheck.Property_URL = _INI._GET_VALUE("UPDATE", "PACK_GIT_PAGE", Nothing).Value
+        MAIN_THREAD.WL_SysUpdateCheck.Property_URLApi = _INI._GET_VALUE("UPDATE", "PACK_GIT_API", Nothing).Value
         _VARS.SetupParameters = _INI._GET_VALUE("UPDATE", "SETUP_PARAMETERS", _VARS.SetupParameters).Value
         _VARS.AppLatestDate = Convert.ToDateTime(_INI._GET_VALUE("UPDATE", "APP_DATE", Nothing).Value)
         _VARS.PackageLatestDate = Convert.ToDateTime(_INI._GET_VALUE("UPDATE", "PACK_DATE", Nothing).Value)

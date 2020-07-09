@@ -20,6 +20,9 @@ Module Module_MAIN
         _KEYS = New Class_KEYS(MAIN_THREAD)
         _INI._FSO = _APP.configFullPath
 
+        _VARS.ResetConfig = False
+
+        _APP._ExecArgsuments()
 
         _VARS.FilePathMinLen = 2
         _VARS.FileNameMinLen = 5
@@ -47,18 +50,19 @@ Module Module_MAIN
         MAIN_THREAD.WL_Mod.Property_PatchDstFileName = "CIGDevelopmentTools.dll"
         MAIN_THREAD.WL_Mod.Property_GameModFolderName = "data"
 
-        MAIN_THREAD.WL_SysUpdate.Property_Text_Label_Value_CurentVersion = _APP.Version
-        MAIN_THREAD.WL_SysUpdate.Property_SetupFileName = "Setup.exe"
-        MAIN_THREAD.WL_SysUpdate.Property_Name = _APP.appName
+        MAIN_THREAD.WL_SysUpdateCheck.Property_Text_Label_Value_CurentVersion = _APP.Version
+        MAIN_THREAD.WL_SysUpdateCheck.Property_SetupFileName = "Setup.exe"
+        MAIN_THREAD.WL_SysUpdateCheck.Property_Name = _APP.appName
         MAIN_THREAD.WL_Pack.Property_UpdateTargetName = "пакета локализации"
 
         Module_HELPER.LoadConfigFile()
 
         If _VARS.AppLatestDate = New DateTime Then _VARS.AppLatestDate = DateTime.Now
-        MAIN_THREAD.WL_SysUpdate.Property_DateOnline = _VARS.AppLatestDate
+        MAIN_THREAD.WL_SysUpdateCheck.Property_DateOnline = _VARS.AppLatestDate
 
         If _VARS.PackageLatestDate = New DateTime Then _VARS.PackageLatestDate = DateTime.Now
         MAIN_THREAD.WL_Pack.Property_DateOnline = _VARS.PackageLatestDate
+
 
         '_WATCHFILE_THREAD = New Class_THREAD_WATCHFILE(MAIN_THREAD)
         '_WATCHFILE_THREAD.StartThread()
@@ -161,8 +165,9 @@ Module Module_MAIN
         'Global
         Public FilePathMinLen As Long = 2
         Public FileNameMinLen As Long = 5
-        Public sSetupParameters As String = Nothing
+        Private sSetupParameters As String = Nothing
         Public AppLatestDate As DateTime = Nothing
+        Public ResetConfig As Boolean = False
 
         'ConfigFile
         Public ConfigFileIsOK As Boolean = False

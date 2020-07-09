@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
-Partial Class WL_Updater
+Partial Class WL_Check
     Inherits System.Windows.Forms.UserControl
 
     'UserControl overrides dispose to clean up the component list.

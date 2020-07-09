@@ -12,6 +12,7 @@ Module Module_APP
         Public configName As String
         Public configPath As String
         Public configFullPath As String
+        Public argiments As List(Of String)
 
         Public Function _UPTIME() As TimeSpan
             Dim TimeEnd As Date = Date.Now
@@ -41,6 +42,16 @@ Module Module_APP
             configName = "config.ini"
             configPath = exePath
             configFullPath = configPath & configName
+        End Sub
+
+        Public Sub _ExecArgsuments()
+            For Each elem In Environment.GetCommandLineArgs()
+                elem = Trim(LCase(elem))
+                Select Case elem
+                    Case "updated"
+                        _LOG._sAdd("Module_APP", "Программа была обновлена на версию " & _APP.Version)
+                End Select
+            Next
         End Sub
     End Class
 End Module

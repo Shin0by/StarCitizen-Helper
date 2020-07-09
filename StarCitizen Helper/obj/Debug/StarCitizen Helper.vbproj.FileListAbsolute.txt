@@ -26,4 +26,6 @@ C:\Users\warfa\Desktop\StarCitizen-Helper-master\StarCitizen Helper\obj\Debug\St
 C:\Users\warfa\Desktop\StarCitizen-Helper-master\StarCitizen Helper\obj\Debug\StarCitizen Helper.xml
 C:\Users\warfa\Desktop\StarCitizen-Helper-master\StarCitizen Helper\obj\Debug\StarCitizen Helper.pdb
 C:\google\programming\GitHub\StarCitizen-Helper\StarCitizen Helper\obj\Debug\SC.WL_Pack.resources
-C:\google\programming\GitHub\StarCitizen-Helper\StarCitizen Helper\obj\Debug\SC.WL_Updater.resources
+C:\google\programming\GitHub\StarCitizen-Helper\StarCitizen Helper\obj\Debug\SC.WL_Check.resources
+C:\google\programming\GitHub\StarCitizen-Helper\StarCitizen Helper\obj\Debug\SC.WL_AppUpdate.resources
+C:\google\programming\GitHub\StarCitizen-Helper\StarCitizen Helper\obj\Debug\SC.SysUpdate_Form.resources

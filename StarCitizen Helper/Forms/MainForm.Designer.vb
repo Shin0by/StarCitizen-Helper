@@ -48,9 +48,7 @@ Partial Class MainForm
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
         Me.TabControl = New System.Windows.Forms.TabControl()
         Me.TabPage_Patch = New System.Windows.Forms.TabPage()
-        Me.WL_Mod = New SC.WL_Modification()
         Me.TabPage_Packages = New System.Windows.Forms.TabPage()
-        Me.WL_Pack = New SC.WL_Pack()
         Me.TabPage_Killer = New System.Windows.Forms.TabPage()
         Me.TableLayoutPanel4 = New System.Windows.Forms.TableLayoutPanel()
         Me.Label1 = New System.Windows.Forms.Label()
@@ -80,10 +78,12 @@ Partial Class MainForm
         Me.ClearLog_Button = New System.Windows.Forms.Button()
         Me.TextBox_Debug = New System.Windows.Forms.TextBox()
         Me.TabPage_SysUpdate = New System.Windows.Forms.TabPage()
-        Me.WL_SysUpdate = New SC.WL_Updater()
-        Me.Timer_LOG = New System.Windows.Forms.Timer(Me.components)
         Me.TableLayoutPanel_SysUpdate = New System.Windows.Forms.TableLayoutPanel()
-        Me.Button1 = New System.Windows.Forms.Button()
+        Me.Timer_LOG = New System.Windows.Forms.Timer(Me.components)
+        Me.WL_Mod = New SC.WL_Modification()
+        Me.WL_Pack = New SC.WL_Pack()
+        Me.WL_SysUpdateCheck = New SC.WL_Check()
+        Me.WL_AppUpdate = New SC.WL_AppUpdate()
         Me.ContextMenuStrip1.SuspendLayout()
         Me.TabControl.SuspendLayout()
         Me.TabPage_Patch.SuspendLayout()
@@ -257,31 +257,6 @@ Partial Class MainForm
         Me.TabPage_Patch.Text = "Модификация"
         Me.TabPage_Patch.UseVisualStyleBackColor = True
         '
-        'WL_Mod
-        '
-        Me.WL_Mod.BackColor = System.Drawing.SystemColors.ControlLightLight
-        Me.WL_Mod.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.WL_Mod.Location = New System.Drawing.Point(3, 3)
-        Me.WL_Mod.Name = "WL_Mod"
-        Me.WL_Mod.Property_GameExeFileName = Nothing
-        Me.WL_Mod.Property_GameExeFilePath = Nothing
-        Me.WL_Mod.Property_GameModFolderName = Nothing
-        Me.WL_Mod.Property_ModInGameFileVersion = Nothing
-        Me.WL_Mod.Property_ModInPackFileVersion = Nothing
-        Me.WL_Mod.Property_ModStatus = False
-        Me.WL_Mod.Property_PatchDstFileName = Nothing
-        Me.WL_Mod.Property_PatchDstFilePath = Nothing
-        Me.WL_Mod.Property_PatchSrcFileName = Nothing
-        Me.WL_Mod.Property_PatchSrcFilePath = Nothing
-        Me.WL_Mod.Size = New System.Drawing.Size(770, 279)
-        Me.WL_Mod.TabIndex = 0
-        Me.WL_Mod.Text_Button_Disable = "Выкл. модификацию"
-        Me.WL_Mod.Text_Button_Enable = "Вкл. модификацию"
-        Me.WL_Mod.Text_Button_Path = "Исполняемый файл"
-        Me.WL_Mod.Text_Label_Bottom = ""
-        Me.WL_Mod.Text_Label_ModOff = "Выключить модификацию"
-        Me.WL_Mod.Text_Label_ModOn = "Включить модификацию"
-        '
         'TabPage_Packages
         '
         Me.TabPage_Packages.Controls.Add(Me.WL_Pack)
@@ -292,33 +267,6 @@ Partial Class MainForm
         Me.TabPage_Packages.TabIndex = 2
         Me.TabPage_Packages.Text = "Локализация"
         Me.TabPage_Packages.UseVisualStyleBackColor = True
-        '
-        'WL_Pack
-        '
-        Me.WL_Pack.BackColor = System.Drawing.SystemColors.ControlLightLight
-        Me.WL_Pack.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.WL_Pack.Location = New System.Drawing.Point(3, 3)
-        Me.WL_Pack.Name = "WL_Pack"
-        Me.WL_Pack.Property_DateOnline = New Date(CType(0, Long))
-        Me.WL_Pack.Property_GitList_AutoUpdate = True
-        Me.WL_Pack.Property_GitList_Interval = 120000
-        Me.WL_Pack.Property_GitList_SelString = Nothing
-        Me.WL_Pack.Property_Name_File_Download = Nothing
-        Me.WL_Pack.Property_Name_File_Meta = Nothing
-        Me.WL_Pack.Property_PackInGameVersion = Nothing
-        Me.WL_Pack.Property_Path_File_Download = Nothing
-        Me.WL_Pack.Property_Path_File_Meta = Nothing
-        Me.WL_Pack.Property_Path_Folder_Download = Nothing
-        Me.WL_Pack.Property_Path_Folder_Meta = Nothing
-        Me.WL_Pack.Property_ShowTestBuild = False
-        Me.WL_Pack.Property_UpdateTargetName = Nothing
-        Me.WL_Pack.Size = New System.Drawing.Size(770, 279)
-        Me.WL_Pack.TabIndex = 0
-        Me.WL_Pack.Text_Button_Download = "Загрузить пакет обновлений"
-        Me.WL_Pack.Text_Button_InstallFull = "Полная установка"
-        Me.WL_Pack.Text_Label_Bottom = ""
-        Me.WL_Pack.Text_Label_Download = "Загрузка выбранного пакета обновлений"
-        Me.WL_Pack.Text_Label_InstallFull = "Локализация и шрифты"
         '
         'TabPage_Killer
         '
@@ -438,9 +386,10 @@ Partial Class MainForm
         Me.ProcessKillerModKey_ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.ProcessKillerModKey_ComboBox.FormattingEnabled = True
         Me.ProcessKillerModKey_ComboBox.Items.AddRange(New Object() {"Без модификатора", "Left ALT", "Left CTRL", "Left SHIFT", "Right ALT", "Right CTRL", "Right SHIFT"})
-        Me.ProcessKillerModKey_ComboBox.Location = New System.Drawing.Point(3, 63)
+        Me.ProcessKillerModKey_ComboBox.Location = New System.Drawing.Point(4, 63)
+        Me.ProcessKillerModKey_ComboBox.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.ProcessKillerModKey_ComboBox.Name = "ProcessKillerModKey_ComboBox"
-        Me.ProcessKillerModKey_ComboBox.Size = New System.Drawing.Size(245, 21)
+        Me.ProcessKillerModKey_ComboBox.Size = New System.Drawing.Size(243, 21)
         Me.ProcessKillerModKey_ComboBox.TabIndex = 6
         '
         'RemoveProccessKill_Button
@@ -691,43 +640,12 @@ Partial Class MainForm
         Me.TabPage_SysUpdate.Text = "Система"
         Me.TabPage_SysUpdate.UseVisualStyleBackColor = True
         '
-        'WL_SysUpdate
-        '
-        Me.WL_SysUpdate.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.WL_SysUpdate.Location = New System.Drawing.Point(3, 3)
-        Me.WL_SysUpdate.Name = "WL_SysUpdate"
-        Me.WL_SysUpdate.Property_AlertUpdate = True
-        Me.WL_SysUpdate.Property_DateOnline = New Date(CType(0, Long))
-        Me.WL_SysUpdate.Property_GitListAutoUpdate = True
-        Me.WL_SysUpdate.Property_GitListInterval = 120000
-        Me.WL_SysUpdate.Property_Name = Nothing
-        Me.WL_SysUpdate.Property_SetupFileName = Nothing
-        Me.WL_SysUpdate.Property_Text_Label_Name_CurentVersion = "Версия:"
-        Me.WL_SysUpdate.Property_Text_Label_Name_OnlineDate = "Дата публикации:"
-        Me.WL_SysUpdate.Property_Text_Label_Name_OnlineInformation = "Дополнительная информация:"
-        Me.WL_SysUpdate.Property_Text_Label_Name_OnlineVersion = "Версия:"
-        Me.WL_SysUpdate.Property_Text_Label_Value_CurentVersion = ""
-        Me.WL_SysUpdate.Property_Text_Label_Value_OnlineDate = ""
-        Me.WL_SysUpdate.Property_Text_Label_Value_OnlineVersion = ""
-        Me.WL_SysUpdate.Property_Text_TextBox_Value_OnlineInformation = ""
-        Me.WL_SysUpdate.Property_URL = Nothing
-        Me.WL_SysUpdate.Property_URLApi = Nothing
-        Me.WL_SysUpdate.Property_URLDownload = Nothing
-        Me.WL_SysUpdate.Property_VersionLocal = Nothing
-        Me.WL_SysUpdate.Property_VersionOnline = Nothing
-        Me.WL_SysUpdate.Size = New System.Drawing.Size(764, 238)
-        Me.WL_SysUpdate.TabIndex = 0
-        '
-        'Timer_LOG
-        '
-        Me.Timer_LOG.Interval = 1000
-        '
         'TableLayoutPanel_SysUpdate
         '
         Me.TableLayoutPanel_SysUpdate.ColumnCount = 1
         Me.TableLayoutPanel_SysUpdate.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel_SysUpdate.Controls.Add(Me.WL_SysUpdate, 0, 0)
-        Me.TableLayoutPanel_SysUpdate.Controls.Add(Me.Button1, 0, 1)
+        Me.TableLayoutPanel_SysUpdate.Controls.Add(Me.WL_SysUpdateCheck, 0, 0)
+        Me.TableLayoutPanel_SysUpdate.Controls.Add(Me.WL_AppUpdate, 0, 1)
         Me.TableLayoutPanel_SysUpdate.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TableLayoutPanel_SysUpdate.Location = New System.Drawing.Point(3, 3)
         Me.TableLayoutPanel_SysUpdate.Margin = New System.Windows.Forms.Padding(0)
@@ -738,15 +656,105 @@ Partial Class MainForm
         Me.TableLayoutPanel_SysUpdate.Size = New System.Drawing.Size(770, 279)
         Me.TableLayoutPanel_SysUpdate.TabIndex = 1
         '
-        'Button1
+        'Timer_LOG
         '
-        Me.Button1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Button1.Location = New System.Drawing.Point(3, 247)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(764, 29)
-        Me.Button1.TabIndex = 1
-        Me.Button1.Text = "Button1"
-        Me.Button1.UseVisualStyleBackColor = True
+        Me.Timer_LOG.Interval = 1000
+        '
+        'WL_Mod
+        '
+        Me.WL_Mod.BackColor = System.Drawing.SystemColors.ControlLightLight
+        Me.WL_Mod.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.WL_Mod.Location = New System.Drawing.Point(3, 3)
+        Me.WL_Mod.Name = "WL_Mod"
+        Me.WL_Mod.Property_GameExeFileName = Nothing
+        Me.WL_Mod.Property_GameExeFilePath = Nothing
+        Me.WL_Mod.Property_GameModFolderName = Nothing
+        Me.WL_Mod.Property_ModInGameFileVersion = Nothing
+        Me.WL_Mod.Property_ModInPackFileVersion = Nothing
+        Me.WL_Mod.Property_ModStatus = False
+        Me.WL_Mod.Property_PatchDstFileName = Nothing
+        Me.WL_Mod.Property_PatchDstFilePath = Nothing
+        Me.WL_Mod.Property_PatchSrcFileName = Nothing
+        Me.WL_Mod.Property_PatchSrcFilePath = Nothing
+        Me.WL_Mod.Size = New System.Drawing.Size(770, 279)
+        Me.WL_Mod.TabIndex = 0
+        Me.WL_Mod.Text_Button_Disable = "Выкл. модификацию"
+        Me.WL_Mod.Text_Button_Enable = "Вкл. модификацию"
+        Me.WL_Mod.Text_Button_Path = "Исполняемый файл"
+        Me.WL_Mod.Text_Label_Bottom = ""
+        Me.WL_Mod.Text_Label_ModOff = "Выключить модификацию"
+        Me.WL_Mod.Text_Label_ModOn = "Включить модификацию"
+        '
+        'WL_Pack
+        '
+        Me.WL_Pack.BackColor = System.Drawing.SystemColors.ControlLightLight
+        Me.WL_Pack.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.WL_Pack.Location = New System.Drawing.Point(3, 3)
+        Me.WL_Pack.Name = "WL_Pack"
+        Me.WL_Pack.Property_DateOnline = New Date(CType(0, Long))
+        Me.WL_Pack.Property_GitList_AutoUpdate = True
+        Me.WL_Pack.Property_GitList_Interval = 120000
+        Me.WL_Pack.Property_GitList_SelString = Nothing
+        Me.WL_Pack.Property_Name_File_Download = Nothing
+        Me.WL_Pack.Property_Name_File_Meta = Nothing
+        Me.WL_Pack.Property_PackInGameVersion = Nothing
+        Me.WL_Pack.Property_Path_File_Download = Nothing
+        Me.WL_Pack.Property_Path_File_Meta = Nothing
+        Me.WL_Pack.Property_Path_Folder_Download = Nothing
+        Me.WL_Pack.Property_Path_Folder_Meta = Nothing
+        Me.WL_Pack.Property_ShowTestBuild = False
+        Me.WL_Pack.Property_UpdateTargetName = Nothing
+        Me.WL_Pack.Size = New System.Drawing.Size(770, 279)
+        Me.WL_Pack.TabIndex = 0
+        Me.WL_Pack.Text_Button_Download = "Загрузить пакет обновлений"
+        Me.WL_Pack.Text_Button_InstallFull = "Полная установка"
+        Me.WL_Pack.Text_Label_Bottom = ""
+        Me.WL_Pack.Text_Label_Download = "Загрузка выбранного пакета обновлений"
+        Me.WL_Pack.Text_Label_InstallFull = "Локализация и шрифты"
+        '
+        'WL_SysUpdateCheck
+        '
+        Me.WL_SysUpdateCheck.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.WL_SysUpdateCheck.Location = New System.Drawing.Point(3, 3)
+        Me.WL_SysUpdateCheck.Name = "WL_SysUpdateCheck"
+        Me.WL_SysUpdateCheck.Property_AlertUpdate = True
+        Me.WL_SysUpdateCheck.Property_DateOnline = New Date(CType(0, Long))
+        Me.WL_SysUpdateCheck.Property_GitListAutoUpdate = True
+        Me.WL_SysUpdateCheck.Property_GitListInterval = 120000
+        Me.WL_SysUpdateCheck.Property_Name = Nothing
+        Me.WL_SysUpdateCheck.Property_SetupFileName = Nothing
+        Me.WL_SysUpdateCheck.Property_Text_Label_Name_CurentVersion = "Версия:"
+        Me.WL_SysUpdateCheck.Property_Text_Label_Name_OnlineDate = "Дата публикации:"
+        Me.WL_SysUpdateCheck.Property_Text_Label_Name_OnlineInformation = "Дополнительная информация:"
+        Me.WL_SysUpdateCheck.Property_Text_Label_Name_OnlineVersion = "Версия:"
+        Me.WL_SysUpdateCheck.Property_Text_Label_Value_CurentVersion = ""
+        Me.WL_SysUpdateCheck.Property_Text_Label_Value_OnlineDate = ""
+        Me.WL_SysUpdateCheck.Property_Text_Label_Value_OnlineVersion = ""
+        Me.WL_SysUpdateCheck.Property_Text_TextBox_Value_OnlineInformation = ""
+        Me.WL_SysUpdateCheck.Property_URL = Nothing
+        Me.WL_SysUpdateCheck.Property_URLApi = Nothing
+        Me.WL_SysUpdateCheck.Property_URLDownload = Nothing
+        Me.WL_SysUpdateCheck.Property_VersionLocal = Nothing
+        Me.WL_SysUpdateCheck.Property_VersionOnline = Nothing
+        Me.WL_SysUpdateCheck.Size = New System.Drawing.Size(764, 238)
+        Me.WL_SysUpdateCheck.TabIndex = 0
+        '
+        'WL_AppUpdate
+        '
+        Me.WL_AppUpdate.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.WL_AppUpdate.Enabled = False
+        Me.WL_AppUpdate.Location = New System.Drawing.Point(3, 247)
+        Me.WL_AppUpdate.Name = "WL_AppUpdate"
+        Me.WL_AppUpdate.Padding = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.WL_AppUpdate.Property_Name = Nothing
+        Me.WL_AppUpdate.Property_PatchDstFileName = Nothing
+        Me.WL_AppUpdate.Property_PatchDstFilePath = Nothing
+        Me.WL_AppUpdate.Property_PatchDstParameters = Nothing
+        Me.WL_AppUpdate.Property_PatchSrcFileName = Nothing
+        Me.WL_AppUpdate.Property_PatchSrcFilePath = Nothing
+        Me.WL_AppUpdate.Property_Text_Button_UpdateNow = "Обновить программу"
+        Me.WL_AppUpdate.Size = New System.Drawing.Size(764, 29)
+        Me.WL_AppUpdate.TabIndex = 1
         '
         'MainForm
         '
@@ -838,7 +846,7 @@ Partial Class MainForm
     Friend WithEvents WL_Mod As WL_Modification
     Friend WithEvents WL_Pack As WL_Pack
     Friend WithEvents TabPage_SysUpdate As TabPage
-    Friend WithEvents WL_SysUpdate As WL_Updater
+    Friend WithEvents WL_SysUpdateCheck As WL_Check
     Friend WithEvents TableLayoutPanel_SysUpdate As TableLayoutPanel
-    Friend WithEvents Button1 As Button
+    Friend WithEvents WL_AppUpdate As WL_AppUpdate
 End Class

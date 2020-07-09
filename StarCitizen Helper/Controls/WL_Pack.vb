@@ -15,7 +15,7 @@ Public Class WL_Pack
     Public Event _Event_ShowTestBuild_Click_Before()
     Public Event _Event_ShowTestBuild_Click_After()
 
-    Public Event _Event_NewVersion_Alert(JSON As Object, LatestElement As Object, Self As WL_Updater)
+    Public Event _Event_NewVersion_Alert(JSON As Object, LatestElement As Object, Self As WL_Check)
 
     Public Event _Event_Controls_Enabled_Before(Enabled As Boolean)
     Public Event _Event_Controls_Enabled_After(Enabled As Boolean)
@@ -81,16 +81,16 @@ Public Class WL_Pack
         End Get
         Set(ByVal Value As DateTime)
             Me.dDateOnline = Value
-            Me.WL_PackUpdate.Property_DateOnline = Me.dDateOnline
+            Me.WL_PackUpdateCheck.Property_DateOnline = Me.dDateOnline
         End Set
     End Property
 
     Public Property Property_UpdateTargetName() As String
         Get
-            Return Me.WL_PackUpdate.Property_Name
+            Return Me.WL_PackUpdateCheck.Property_Name
         End Get
         Set(ByVal Value As String)
-            Me.WL_PackUpdate.Property_Name = Value
+            Me.WL_PackUpdateCheck.Property_Name = Value
         End Set
     End Property
 
@@ -236,7 +236,7 @@ Public Class WL_Pack
         End Get
         Set(ByVal Value As Integer)
             Me.iUpdateGitList_Interval = Value
-            Me.WL_PackUpdate.Property_GitListInterval = Me.Property_GitList_Interval
+            Me.WL_PackUpdateCheck.Property_GitListInterval = Me.Property_GitList_Interval
         End Set
     End Property
 
@@ -247,8 +247,8 @@ Public Class WL_Pack
         Set(ByVal Value As Boolean)
             Me.bUpdateGitList_Enable = Value
             On Error Resume Next
-            Me.WL_PackUpdate.Property_URLApi = _VARS.PackageGitURL_Api
-            Me.WL_PackUpdate.Property_GitListAutoUpdate = Property_GitList_AutoUpdate
+            Me.WL_PackUpdateCheck.Property_URLApi = _VARS.PackageGitURL_Api
+            Me.WL_PackUpdateCheck.Property_GitListAutoUpdate = Property_GitList_AutoUpdate
         End Set
     End Property
 
@@ -358,7 +358,7 @@ Finalize: sender.Enabled = True
     Private Sub CheckBox_ShowTestBuild_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox_ShowTestBuild.CheckedChanged
         RaiseEvent _Event_ShowTestBuild_Click_Before()
         _INI._Write("CONFIGURATION", "SHOW_TEST_BUILDS", BoolToString(sender.checked))
-        Me.WL_Updater_NewVersion_Available(Me.WL_PackUpdate.Property_JSON, GIT_PACK_LATEST, Me.WL_PackUpdate)
+        Me.WL_Updater_NewVersion_Available(Me.WL_PackUpdateCheck.Property_JSON, GIT_PACK_LATEST, Me.WL_PackUpdateCheck)
 
         RaiseEvent _Event_ShowTestBuild_Click_After()
     End Sub
@@ -470,22 +470,24 @@ Finalize: sender.Enabled = True
     '-----------------------------------> Logic
 
     '<----------------------------------- 'Callback
-    Private Sub WL_Update_Complete(JSON As Object, LatestElement As Object, Self As WL_Updater) Handles WL_PackUpdate._Event_Update_Complete_After
+    Private Sub WL_Update_Complete(JSON As Object, LatestElement As Object, Self As WL_Check) Handles WL_PackUpdateCheck._Event_Update_Complete_After
         If Initialization = True Then Exit Sub
         If Me.FirstUpdate = False Then Exit Sub
         Me.FirstUpdate = False
         WL_Updater_NewVersion_Available(JSON, LatestElement, Self)
     End Sub
 
-    Private Sub NewVersion_Alert(JSON As Object, LatestElement As Object, Self As WL_Updater) Handles WL_PackUpdate._Event_NewVersion_Alert
+    Private Sub NewVersion_Alert(JSON As Object, LatestElement As Object, Self As WL_Check) Handles WL_PackUpdateCheck._Event_NewVersion_Alert
         RaiseEvent _Event_NewVersion_Alert(JSON, LatestElement, Self)
     End Sub
 
-    Private Sub WL_Updater_NewVersion_Available(JSON As Object, LatestElement As Object, Self As WL_Updater) Handles WL_PackUpdate._Event_NewVersion_Available_After
+    Private Sub WL_Updater_NewVersion_Available(JSON As Object, LatestElement As Object, Self As WL_Check) Handles WL_PackUpdateCheck._Event_NewVersion_Available_After
         If Initialization = True Then Exit Sub
         Dim NewGitList As New List(Of Module_GIT.Class_GIT.Class_GitUpdateList.Class_GitUpdateElement)
         Dim Assets As Object = Nothing
         Me.Invoke(Sub() Me.List_Git.Items.Clear())
+
+        If JSON Is Nothing Then Exit Sub
 
         Me.GIT_PACK_DATA._Clear()
         For Each elem In JSON("data")

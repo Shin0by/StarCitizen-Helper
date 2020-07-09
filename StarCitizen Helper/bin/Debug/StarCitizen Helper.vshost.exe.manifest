@@ -4,7 +4,7 @@
   <description asmv2:iconFile="Other\Shin0by soft.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <application />
   <entryPoint>
-    <assemblyIdentity name="StarCitizen Helper" version="1.6.11.73" language="neutral" processorArchitecture="msil" />
+    <assemblyIdentity name="StarCitizen Helper" version="1.6.12.78" language="neutral" processorArchitecture="msil" />
     <commandLine file="StarCitizen Helper.exe" parameters="" />
   </entryPoint>
   <trustInfo>
@@ -53,14 +53,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="StarCitizen Helper.exe" size="3328448">
-      <assemblyIdentity name="StarCitizen Helper" version="1.6.11.73" language="neutral" processorArchitecture="msil" />
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="StarCitizen Helper.exe" size="3841984">
+      <assemblyIdentity name="StarCitizen Helper" version="1.6.12.78" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>ImCTcjpWQQXRJu2Tpz0tHf/XqDysX/CbCHBi6jx5pi8=</dsig:DigestValue>
+        <dsig:DigestValue>/gr7tXo4Oq461rEQ0l6/MkGw07cjCQJMZu4aI91egRw=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

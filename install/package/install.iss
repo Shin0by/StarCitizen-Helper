@@ -1,6 +1,6 @@
 
 [Setup]
-AppVersion=1.6.10.72
+AppVersion=1.6.12.78
 AppName=StarCitizen Helper
 DefaultDirName={commonpf}\StarCitizen Helper
 DefaultGroupName=StarCitizen Helper
@@ -14,7 +14,7 @@ DisableDirPage=no
 [Files]
 Source: "StarCitizen Helper.exe"; DestDir: "{app}"; Components: main
 Source: "Shin0by soft.ico"; DestDir: "{app}"; Components: main
-Source: "config.ini"; DestDir: "{app}"; Components: main; Permissions: users-modify
+//Source: "config.ini"; DestDir: "{app}"; Components: main; Permissions: users-modify
 Source: "INIFileParser.dll"; DestDir: "{app}"; Components: main
 Source: "Newtonsoft.Json.dll"; DestDir: "{app}"; Components: main
 Source: "required\NDP472-KB4054531-Web.exe"; DestDir: "{tmp}"; Components: framework; AfterInstall: AfterInstallProcedure
@@ -35,7 +35,8 @@ Name: "links"; Description: "Ярлыки:"; Types: full
 Name: "links\desktop"; Description: "На рабочем столе"; Types: full
 Name: "links\mainmenu"; Description: "В главном меню"; Types: full
 
-
+[Run]
+Filename: "{app}\StarCitizen Helper.exe"; Parameters: "updated"; Flags: nowait skipifnotsilent;
 
 [Code]
 procedure AfterInstallProcedure();
