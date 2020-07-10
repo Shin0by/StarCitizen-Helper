@@ -1,15 +1,17 @@
 
 [Setup]
-AppVersion=1.6.12.78
+AppVersion=1.6.12.80
 AppName=StarCitizen Helper
-DefaultDirName={commonpf}\StarCitizen Helper
+DefaultDirName={userappdata}\StarCitizen Helper
 DefaultGroupName=StarCitizen Helper
 SourceDir=C:\google\programming\GitHub\StarCitizen-Helper\install\package\Input
 OutputDir=C:\google\programming\GitHub\StarCitizen-Helper\install\package\Output
-ArchitecturesInstallIn64BitMode=x64
 UninstallDisplayIcon={app}\StarCitizen Helper.exe
 AlwaysShowDirOnReadyPage=yes
 DisableDirPage=no
+//DefaultDirName={commonpf}\StarCitizen Helper
+//ArchitecturesInstallIn64BitMode=x64
+//PrivilegesRequired=lowest
 
 [Files]
 Source: "StarCitizen Helper.exe"; DestDir: "{app}"; Components: main

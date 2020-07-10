@@ -28,7 +28,6 @@ Module Module_HELPER
         _INI._Write("CONFIGURATION", "SHOW_TEST_BUILDS", 0)
 
         'Updater
-        _INI._Write("UPDATE", "APP_VERSION", _APP.Version)
         _INI._Write("UPDATE", "APP_DATE", "")
         _INI._Write("UPDATE", "STATUS", "NEW")
         _INI._Write("UPDATE", "PACK_DATE", "")

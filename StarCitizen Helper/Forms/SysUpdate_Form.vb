@@ -18,8 +18,8 @@
             End If
         End If
 
-        Me.Label_Info.Text = "Внимание!" & vbNewLine & "При успешном завершении загрузки будет выполнено автоматическое обновление." & vbNewLine & "От пользователя может потребоваться разрешение на запуск файла [" & Me.sPatchDstFileName & "]" & vbNewLine & vbNewLine & "Путь: " & Me.sPatchDstFilePath & vbNewLine & "Аргументы: " & Me.sPatchDstParameters
-        'StartUpdate()
+        Me.Label_Info.Text = "Внимание!" & vbNewLine & "При успешном завершении загрузки будет выполнено автоматическое обновление." & vbNewLine & "От пользователя может потребоваться разрешение на запуск файла [" & Me.sPatchDstFileName & "]" & vbNewLine & vbNewLine & "Путь к файлу: " & _FSO._CombinePath(Me.sPatchDstFilePath, Me.sPatchDstFileName)
+
         Me.WL_Download.DownloadStart()
     End Sub
 
@@ -44,13 +44,13 @@
     End Sub
 
     Private Sub StartUpdate()
+        _INI._Write("UPDATE", "STATUS", "BEGIN")
         Dim p As New ProcessStartInfo
         p.FileName = Me.WL_Download.DownloadTo
         p.Arguments = _VARS.SetupParameters
         p.Verb = "runas"
-        _INI._Write("UPDATE", "STATUS", "BEGIN")
         Process.Start(p)
 
-        Me.Dispose()
+        Unload()
     End Sub
 End Class

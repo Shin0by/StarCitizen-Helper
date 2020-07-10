@@ -241,8 +241,13 @@ Public Class WL_Check
     Private Sub BackgroundWorker_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles BackgroundWorker.DoWork
         Thread.Sleep(1300)
         Do
-            If _VARS.ConfigFileIsOK = True Then
-                If Me.Property_URLApi IsNot Nothing Then
+
+            Do
+                If _VARS.ConfigFileIsOK = True And Initialization = False Then Exit Do
+                Thread.Sleep(1000)
+            Loop
+
+            If Me.Property_URLApi IsNot Nothing Then
                     Dim NewGitList As List(Of Module_GIT.Class_GIT.Class_GitUpdateList.Class_GitUpdateElement) = _GIT_Request._GetGitList(Me.Property_URLApi)
                     If NewGitList.Count > 0 Then
                         Me.JSON = _GIT_Request._JSON
@@ -260,8 +265,8 @@ Public Class WL_Check
                     RaiseEvent _Event_Update_Complete_After(_GIT_Request._JSON, _GIT_Request._LatestElement, Me)
                     If _GIT_Request._LatestElement IsNot Nothing Then Property_DateOnline = _GIT_Request._LatestElement._published
                 End If
-            End If
-            Thread.Sleep(iUpdateGitListInterval)
+
+                Thread.Sleep(iUpdateGitListInterval)
         Loop
     End Sub
     '-----------------------------------> Thread

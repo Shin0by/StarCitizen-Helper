@@ -136,6 +136,7 @@ Module Module_LOG
             'Console.WriteLine("[LOG][WRITE FREE]: _LOG.Cleaner()")
         End Sub
         Public Function Publish() As String
+            On Error Resume Next
             Dim Buffer As String = Nothing
             For Each line In list
                 If line.Type <= 1 Then

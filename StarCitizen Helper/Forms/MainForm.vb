@@ -347,7 +347,7 @@ Public Class MainForm
         Me.UpdateInterface()
     End Sub
 
-    Sub UpdateAlert_NewVersion(JSON As Object, LatestElement As Object, SenderName As WL_Check) Handles WL_SysUpdateCheck._Event_NewVersion_Alert, WL_Pack._Event_NewVersion_Alert
+    Sub UpdateAlert_NewVersion(JSON As Object, LatestElement As Object, SenderName As WL_Check) Handles WL_Pack._Event_NewVersion_Alert
         Dim SubLine As New LOG_SubLine
         Dim ListSubLine As New List(Of LOG_SubLine)
 
@@ -356,7 +356,7 @@ Public Class MainForm
         SubLine.List.Add("")
         If SenderName.Name = Me.WL_SysUpdateCheck.Name Then
             SubLine.List.Add("Описание изменений доступно во вкладке [" & Me.TabPage_SysUpdate.Text & "] или на Git странице проекта")
-            If _VARS.PackageLatestDate <> LatestElement._published Then
+            If _VARS.PackageLatestDate <> LatestElement._published Or _APP.Version <> LatestElement._tag_name Then
                 If _APP.Version = LatestElement._tag_name Then
                     _VARS.PackageLatestDate = LatestElement._published
                     _INI._Write("UPDATE", "APP_DATE", _VARS.PackageLatestDate.ToString)
@@ -372,14 +372,17 @@ Public Class MainForm
                                   If WL_AppUpdate.Enabled = True Then Me.TabControl.SelectedTab = Me.TabPage_SysUpdate
                               End Sub)
                 End If
+
+                ListSubLine.Add(SubLine)
+                _LOG._Add(Me.GetType().Name, "Доступна новая версия " & Chr(34) & SenderName.Property_Name & Chr(34), ListSubLine, 0, 0)
             End If
         End If
         If SenderName.Name = "WL_PackUpdateCheck" Then
             SubLine.List.Add("Описание изменений доступно на Git странице проекта по адресу:")
             SubLine.List.Add(_VARS.PackageGitURL_Root)
+            ListSubLine.Add(SubLine)
+            _LOG._Add(Me.GetType().Name, "Доступна новая версия " & Chr(34) & SenderName.Property_Name & Chr(34), ListSubLine, 0, 0)
         End If
-        ListSubLine.Add(SubLine)
-        _LOG._Add(Me.GetType().Name, "Доступна новая версия " & Chr(34) & SenderName.Property_Name & Chr(34), ListSubLine, 0, 0)
     End Sub
 
     Sub UpdateSysComplete(JSON As Object, LatestElement As Object, SenderName As WL_Check) Handles WL_SysUpdateCheck._Event_Update_Complete_After
@@ -390,6 +393,10 @@ Public Class MainForm
                       Me.WL_SysUpdateCheck.Property_Text_Label_Value_OnlineDate = LatestElement._published
                       Me.WL_SysUpdateCheck.Property_Text_TextBox_Value_OnlineInformation = LatestElement._body
                   End Sub)
+
+        If _APP.Version <> LatestElement._tag_name Then
+            UpdateAlert_NewVersion(JSON, LatestElement, SenderName)
+        End If
     End Sub
 
 
