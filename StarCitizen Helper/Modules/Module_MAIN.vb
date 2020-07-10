@@ -20,10 +20,6 @@ Module Module_MAIN
         _KEYS = New Class_KEYS(MAIN_THREAD)
         _INI._FSO = _APP.configFullPath
 
-        _VARS.ResetConfig = False
-
-        _APP._ExecArgsuments()
-
         _VARS.FilePathMinLen = 2
         _VARS.FileNameMinLen = 5
         _VARS.SetupParameters = "/SILENT /COMPONENTS=""main"" /FORCECLOSEAPPLICATIONS /NOCANCEL /DIR=""{dir}"""
@@ -56,6 +52,7 @@ Module Module_MAIN
         MAIN_THREAD.WL_Pack.Property_UpdateTargetName = "пакета локализации"
 
         Module_HELPER.LoadConfigFile()
+        CheckUpdateStatus
 
         If _VARS.AppLatestDate = New DateTime Then _VARS.AppLatestDate = DateTime.Now
         MAIN_THREAD.WL_SysUpdateCheck.Property_DateOnline = _VARS.AppLatestDate
@@ -166,6 +163,7 @@ Module Module_MAIN
         Public FilePathMinLen As Long = 2
         Public FileNameMinLen As Long = 5
         Private sSetupParameters As String = Nothing
+        Private sUpdateStatus As String = Nothing
         Public AppLatestDate As DateTime = Nothing
         Public ResetConfig As Boolean = False
 
@@ -192,6 +190,18 @@ Module Module_MAIN
         Public GameProcessKillerEnabled As Boolean = False
         Public GameProcessMain As String = Nothing
         Public GameProcessLauncher As String = Nothing
+
+        Public Property UpdateStatus() As String
+            Get
+                Return Me.sUpdateStatus
+            End Get
+            Set(ByVal Value As String)
+                If Value <> Me.sUpdateStatus Then
+                    Me.sUpdateStatus = UCase(Value)
+                    _INI._Write("UPDATE", "STATUS", Me.sUpdateStatus)
+                End If
+            End Set
+        End Property
 
         Public Property SetupParameters() As String
             Get

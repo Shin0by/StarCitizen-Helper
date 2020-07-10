@@ -11,6 +11,7 @@ Option Explicit On
 '------------------------------------------------------------------------------
 
 Imports Microsoft.VisualBasic.ApplicationServices
+Imports SC.Class_APP
 
 Namespace My
 
@@ -46,6 +47,14 @@ Finalize:   Exit Sub
             On Error GoTo Finalize
             Unload()
 Finalize:   Exit Sub
+        End Sub
+
+        Private Sub MyApplication_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
+            _APP._ARGS = New Class_Arguments(e, Nothing)
+        End Sub
+
+        Private Sub MyApplication_StartupNextInstance(sender As Object, e As StartupNextInstanceEventArgs) Handles Me.StartupNextInstance
+            _APP._ARGS = New Class_Arguments(Nothing, e)
         End Sub
     End Class
 End Namespace

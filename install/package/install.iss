@@ -26,7 +26,7 @@ Name: "custom"; Description: "Выборочная установка"; Flags: iscustom
 
 [Icons]
 Name: "{commondesktop}\StarCitizen Helper"; Filename: "{app}\StarCitizen Helper.exe"; Components: links\desktop;
-Name: "{commondesktop}\StarCitizen Helper"; Filename: "{app}\StarCitizen Helper.exe"; Components: links\desktop;
+Name: "{commonprograms}\StarCitizen Helper"; Filename: "{app}\StarCitizen Helper.exe"; Components: links\mainmenu;
 
 [Components]
 Name: "main"; Description: "StarCitizen Helper"; Types: full compact custom; Flags: fixed
@@ -36,7 +36,7 @@ Name: "links\desktop"; Description: "На рабочем столе"; Types: full
 Name: "links\mainmenu"; Description: "В главном меню"; Types: full
 
 [Run]
-Filename: "{app}\StarCitizen Helper.exe"; Parameters: "updated"; Flags: nowait skipifnotsilent;
+Filename: "{app}\StarCitizen Helper.exe"; Parameters: "update={#SetupSetting("AppVersion")}"; Flags: nowait skipifnotsilent;
 
 [Code]
 procedure AfterInstallProcedure();

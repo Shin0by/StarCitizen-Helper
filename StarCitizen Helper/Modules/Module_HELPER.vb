@@ -30,6 +30,7 @@ Module Module_HELPER
         'Updater
         _INI._Write("UPDATE", "APP_VERSION", _APP.Version)
         _INI._Write("UPDATE", "APP_DATE", "")
+        _INI._Write("UPDATE", "STATUS", "NEW")
         _INI._Write("UPDATE", "PACK_DATE", "")
         _INI._Write("UPDATE", "PACK_GIT_PAGE", "https://github.com/Shin0by/StarCitizen-Helper")
         _INI._Write("UPDATE", "PACK_GIT_API", "https://api.github.com/repos/Shin0by/StarCitizen-Helper/releases")
@@ -78,6 +79,7 @@ Module Module_HELPER
         _VARS.SetupParameters = _INI._GET_VALUE("UPDATE", "SETUP_PARAMETERS", _VARS.SetupParameters).Value
         _VARS.AppLatestDate = Convert.ToDateTime(_INI._GET_VALUE("UPDATE", "APP_DATE", Nothing).Value)
         _VARS.PackageLatestDate = Convert.ToDateTime(_INI._GET_VALUE("UPDATE", "PACK_DATE", Nothing).Value)
+        _VARS.UpdateStatus = _INI._GET_VALUE("UPDATE", "STATUS", Nothing).Value
 
         'Pack
         MAIN_THREAD.WL_Mod.Property_GameExeFilePath = _INI._GET_VALUE("EXTERNAL", "EXE_PATH", Nothing).Value
@@ -117,6 +119,33 @@ Module Module_HELPER
         If Value = True Then Return "1"
         Return "0"
     End Function
+
+    Public Sub CheckUpdateStatus()
+
+        If _APP._ARGS._Get.ContainsKey("update") = False Then
+            If _VARS.UpdateStatus = "BEGIN" Then
+                _LOG._sAdd("CheckUpdateStatus", "При обновлении возникли проблемы", "Автоматический перезапуск программы не произведен. Если программа имеет актуальную версию (см. вкладку [" & MAIN_THREAD.TabPage_SysUpdate.Text & "] сравнив текущую и актульную версию), то данную ошибку можно игнорировать. Если версия не актуальна, то загрузите и установите новую версию программы вручную, с официального репозитория GitHub.", 1)
+            End If
+        Else
+            If _VARS.UpdateStatus = "BEGIN" Then
+                If _APP.Version <> _APP._ARGS._Get.Item("update") Then
+                    _LOG._sAdd("CheckUpdateStatus", "После обновления, текущая версия программы не соответствует загруженной", "Если программа имеет актуальную версию (см. вкладку [" & MAIN_THREAD.TabPage_SysUpdate.Text & "] сравнив текущую и актульную версию), то данную ошибку можно игнорировать. Если версия не актуальна, то загрузите и установите новую версию программы вручную, с официального репозитория GitHub.", 1)
+                Else
+                    _LOG._sAdd("CheckUpdateStatus", "Программа была успешно обновлена до актуальной версии", Nothing, 0)
+                End If
+            End If
+
+            If _VARS.UpdateStatus = "NEW" Then
+                If _APP.Version <> _APP._ARGS._Get.Item("update") Then
+                    _LOG._sAdd("CheckUpdateStatus", "После обновления, текущая версия программы не соответствует загруженной", "Если программа имеет актуальную версию (см. вкладку [" & MAIN_THREAD.TabPage_SysUpdate.Text & "] сравнив текущую и актульную версию), то данную ошибку можно игнорировать. Если версия не актуальна, то загрузите и установите новую версию программы вручную, с официального репозитория GitHub.", 1)
+                Else
+                    _LOG._sAdd("CheckUpdateStatus", "Программа была успешно обновлена до актуальной версии", Nothing, 0)
+                End If
+            End If
+        End If
+
+        _VARS.UpdateStatus = "COMPLETE"
+    End Sub
 
     Public Function RenameLIVEFolder(ToProfile As String, Optional OnlyCheck As Boolean = True) As ResultClass
         Dim result As ResultClass = _FSO._GetInfo(MAIN_THREAD.WL_Mod.Property_GameExeFilePath)

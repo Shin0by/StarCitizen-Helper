@@ -357,18 +357,21 @@ Public Class MainForm
         If SenderName.Name = Me.WL_SysUpdateCheck.Name Then
             SubLine.List.Add("Описание изменений доступно во вкладке [" & Me.TabPage_SysUpdate.Text & "] или на Git странице проекта")
             If _VARS.PackageLatestDate <> LatestElement._published Then
-                _VARS.PackageLatestDate = LatestElement._published
-                _INI._Write("UPDATE", "APP_DATE", _VARS.PackageLatestDate.ToString)
-                Me.Invoke(Sub()
-                              Me.WL_AppUpdate.Property_PatchDstFileName = MAIN_THREAD.WL_SysUpdateCheck.Property_SetupFileName
-                              Me.WL_AppUpdate.Property_PatchDstFilePath = Me.WL_Pack.Property_Path_Folder_Download
-                              Me.WL_AppUpdate.Property_PatchSrcFileName = Me.WL_AppUpdate.Property_PatchDstFileName
-                              Me.WL_AppUpdate.Property_PatchSrcFilePath = _GIT._GetAssetByFileName(Me.WL_AppUpdate.Property_PatchDstFileName, LatestElement)
-                              Me.WL_AppUpdate.Property_PatchDstParameters = _VARS.SetupParameters
+                If _APP.Version = LatestElement._tag_name Then
+                    _VARS.PackageLatestDate = LatestElement._published
+                    _INI._Write("UPDATE", "APP_DATE", _VARS.PackageLatestDate.ToString)
+                Else
+                    Me.Invoke(Sub()
+                                  Me.WL_AppUpdate.Property_PatchDstFileName = MAIN_THREAD.WL_SysUpdateCheck.Property_SetupFileName
+                                  Me.WL_AppUpdate.Property_PatchDstFilePath = Me.WL_Pack.Property_Path_Folder_Download
+                                  Me.WL_AppUpdate.Property_PatchSrcFileName = Me.WL_AppUpdate.Property_PatchDstFileName
+                                  Me.WL_AppUpdate.Property_PatchSrcFilePath = _GIT._GetAssetByFileName(Me.WL_AppUpdate.Property_PatchDstFileName, LatestElement)
+                                  Me.WL_AppUpdate.Property_PatchDstParameters = _VARS.SetupParameters
 
-                              Me.WL_AppUpdate.Enabled = True
-                              If WL_AppUpdate.Enabled = True Then Me.TabControl.SelectedTab = Me.TabPage_SysUpdate
-                          End Sub)
+                                  Me.WL_AppUpdate.Enabled = True
+                                  If WL_AppUpdate.Enabled = True Then Me.TabControl.SelectedTab = Me.TabPage_SysUpdate
+                              End Sub)
+                End If
             End If
         End If
         If SenderName.Name = "WL_PackUpdateCheck" Then
@@ -376,7 +379,6 @@ Public Class MainForm
             SubLine.List.Add(_VARS.PackageGitURL_Root)
         End If
         ListSubLine.Add(SubLine)
-
         _LOG._Add(Me.GetType().Name, "Доступна новая версия " & Chr(34) & SenderName.Property_Name & Chr(34), ListSubLine, 0, 0)
     End Sub
 

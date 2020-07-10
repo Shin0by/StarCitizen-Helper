@@ -53,14 +53,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="StarCitizen Helper.exe" size="3841984">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="StarCitizen Helper.exe" size="3845056">
       <assemblyIdentity name="StarCitizen Helper" version="1.6.12.78" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>/gr7tXo4Oq461rEQ0l6/MkGw07cjCQJMZu4aI91egRw=</dsig:DigestValue>
+        <dsig:DigestValue>c4BguLUat97HT7KoFGcDrBzaVUeukEOk0mEboc6Fgkg=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

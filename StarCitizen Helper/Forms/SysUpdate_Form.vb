@@ -48,6 +48,7 @@
         p.FileName = Me.WL_Download.DownloadTo
         p.Arguments = _VARS.SetupParameters
         p.Verb = "runas"
+        _INI._Write("UPDATE", "STATUS", "BEGIN")
         Process.Start(p)
 
         Me.Dispose()
