@@ -129,6 +129,12 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\WL_About.Designer.vb">
+      <DependentUpon>WL_About.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\WL_About.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Controls\WL_AppUpdate.Designer.vb">
       <DependentUpon>WL_AppUpdate.vb</DependentUpon>
     </Compile>
@@ -139,6 +145,12 @@
       <DependentUpon>WL_Download.vb</DependentUpon>
     </Compile>
     <Compile Include="Controls\WL_Download.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\WL_Language.Designer.vb">
+      <DependentUpon>WL_Language.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\WL_Language.vb">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Controls\WL_Modification.Designer.vb">
@@ -210,11 +222,17 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Controls\WL_About.resx">
+      <DependentUpon>WL_About.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\WL_AppUpdate.resx">
       <DependentUpon>WL_AppUpdate.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\WL_Download.resx">
       <DependentUpon>WL_Download.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\WL_Language.resx">
+      <DependentUpon>WL_Language.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\WL_Modification.resx">
       <DependentUpon>WL_Modification.vb</DependentUpon>
@@ -261,6 +279,8 @@
     <None Include="Other\StarCitizen Helper_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\Defter.CA.cer" />
+    <None Include="Resources\Defter.CoreSigning.cer" />
     <None Include="Resources\Shin0by soft.ico" />
     <None Include="packages.config" />
     <None Include="Resources\mouse_click.wav" />
@@ -280,6 +300,12 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\packages\SCModdingModule-master\example\CertificateVerifier\CertificateVerifier\CertificateVerifier.csproj">
+      <Project>{fb667987-7a18-426b-ab7f-cdf0a380bee7}</Project>
+      <Name>CertificateVerifier</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

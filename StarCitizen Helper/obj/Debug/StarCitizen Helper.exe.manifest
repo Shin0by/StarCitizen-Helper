@@ -29,6 +29,18 @@
     </dependentAssembly>
   </dependency>
   <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="CertificateVerifier.dll" size="10752">
+      <assemblyIdentity name="CertificateVerifier" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>9olhCBIVlgFcEDC1R1avsbFPmCRDPoCWtfC9odBIHIk=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="INIFileParser.dll" size="28672">
       <assemblyIdentity name="INIFileParser" version="2.5.2.0" publicKeyToken="79AF7B307B65CF3C" language="neutral" processorArchitecture="msil" />
       <hash>
@@ -53,14 +65,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="StarCitizen Helper.exe" size="3845568">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="StarCitizen Helper.exe" size="3862976">
       <assemblyIdentity name="StarCitizen Helper" version="1.6.12.80" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>0ZODryG7Q8Pp+rZxbT4dPmTLEnclv2zMer4cNcLv/I0=</dsig:DigestValue>
+        <dsig:DigestValue>snebQ4KeX37Eow5SduBJBqY97zeRd7JZM0Q54SwcR0U=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

@@ -25,3 +25,7 @@ C:\google\programming\GitHub\StarCitizen-Helper\StarCitizen Helper\obj\Release\S
 C:\google\programming\GitHub\StarCitizen-Helper\StarCitizen Helper\obj\Release\SC.WL_Check.resources
 C:\google\programming\GitHub\StarCitizen-Helper\StarCitizen Helper\obj\Release\SC.WL_Pack.resources
 C:\google\programming\GitHub\StarCitizen-Helper\StarCitizen Helper\obj\Release\SC.SysUpdate_Form.resources
+C:\google\programming\GitHub\StarCitizen-Helper\StarCitizen Helper\bin\Release\CertificateVerifier.dll
+C:\google\programming\GitHub\StarCitizen-Helper\StarCitizen Helper\bin\Release\CertificateVerifier.pdb
+C:\google\programming\GitHub\StarCitizen-Helper\StarCitizen Helper\obj\Release\SC.WL_About.resources
+C:\google\programming\GitHub\StarCitizen-Helper\StarCitizen Helper\obj\Release\SC.WL_Language.resources

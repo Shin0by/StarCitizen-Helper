@@ -1,5 +1,6 @@
 ﻿Imports System.IO
 Imports System.Net
+Imports Defter.CertificateVerifier.Security
 
 Module Module_HELPER
 
@@ -26,13 +27,14 @@ Module Module_HELPER
         'Configuration
         _INI._Write("CONFIGURATION", "DT_CREATE", DateTime.Now.ToString)
         _INI._Write("CONFIGURATION", "SHOW_TEST_BUILDS", 0)
+        _INI._Write("CONFIGURATION", "LANGUAGE", "ENGLISH")
 
         'Updater
         _INI._Write("UPDATE", "APP_DATE", "")
         _INI._Write("UPDATE", "STATUS", "NEW")
         _INI._Write("UPDATE", "PACK_DATE", "")
-        _INI._Write("UPDATE", "PACK_GIT_PAGE", "https://github.com/Shin0by/StarCitizen-Helper")
-        _INI._Write("UPDATE", "PACK_GIT_API", "https://api.github.com/repos/Shin0by/StarCitizen-Helper/releases")
+        _INI._Write("UPDATE", "PACK_GIT_PAGE", _VARS.URL_App)
+        _INI._Write("UPDATE", "PACK_GIT_API", _VARS.URL_App_Api)
         _INI._Write("UPDATE", "SETUP_PARAMETERS", _VARS.SetupParameters)
 
         'PKiller
@@ -48,9 +50,13 @@ Module Module_HELPER
 
         'GIT
         _INI._Write("EXTERNAL", "PACK_GIT_MASTER", _VARS.PackageGitURL_Master)
-        _INI._Write("EXTERNAL", "PACK_GIT_PAGE", _VARS.PackageGitURL_Root)
+        _INI._Write("EXTERNAL", "PACK_GIT_PAGE", _VARS.PackageGitURL_Page)
         _INI._Write("EXTERNAL", "PACK_GIT_API", _VARS.PackageGitURL_Api)
         _INI._Write("EXTERNAL", "PACK_GIT_SELECTED", "Master")
+
+        _INI._Write("EXTERNAL", "GIT_APP", _VARS.URL_App)
+        _INI._Write("EXTERNAL", "GIT_LOCALIZATION", _VARS.URL_Localization)
+        _INI._Write("EXTERNAL", "GIT_CORE", _VARS.URL_Core)
 
         _INI._Write("EXTERNAL", "PACK_PACK_VERSION", "")
         _INI._Write("EXTERNAL", "PACK_GAME_VERSION", "")
@@ -73,8 +79,8 @@ Module Module_HELPER
         _VARS.FileWatcher = StringToBool(_INI._GET_VALUE("CONFIGURATION", "FILES_WATCHER", False, {"0", "1"}).Value)
 
         'Updater
-        MAIN_THREAD.WL_SysUpdateCheck.Property_URL = _INI._GET_VALUE("UPDATE", "PACK_GIT_PAGE", Nothing).Value
-        MAIN_THREAD.WL_SysUpdateCheck.Property_URLApi = _INI._GET_VALUE("UPDATE", "PACK_GIT_API", Nothing).Value
+        MAIN_THREAD.WL_SysUpdateCheck.Property_URL = _INI._GET_VALUE("UPDATE", "PACK_GIT_PAGE", _VARS.URL_App).Value
+        MAIN_THREAD.WL_SysUpdateCheck.Property_URLApi = _INI._GET_VALUE("UPDATE", "PACK_GIT_API", _VARS.URL_App_Api).Value
         _VARS.SetupParameters = _INI._GET_VALUE("UPDATE", "SETUP_PARAMETERS", _VARS.SetupParameters).Value
         _VARS.AppLatestDate = Convert.ToDateTime(_INI._GET_VALUE("UPDATE", "APP_DATE", Nothing).Value)
         _VARS.PackageLatestDate = Convert.ToDateTime(_INI._GET_VALUE("UPDATE", "PACK_DATE", Nothing).Value)
@@ -88,9 +94,12 @@ Module Module_HELPER
         MAIN_THREAD.WL_Pack.Property_ShowTestBuild = StringToBool(_INI._GET_VALUE("CONFIGURATION", "SHOW_TEST_BUILDS", False, {"0", "1"}).Value)
 
         'GIT
-        _VARS.PackageGitURL_Master = _INI._GET_VALUE("EXTERNAL", "PACK_GIT_MASTER", Nothing).Value
-        _VARS.PackageGitURL_Root = _INI._GET_VALUE("EXTERNAL", "PACK_GIT_PAGE", Nothing).Value
-        _VARS.PackageGitURL_Api = _INI._GET_VALUE("EXTERNAL", "PACK_GIT_API", Nothing).Value
+        MAIN_THREAD.WL_Pack.Property_PackageGitURL_Api = _INI._GET_VALUE("EXTERNAL", "PACK_GIT_API", _VARS.PackageGitURL_Api).Value
+        MAIN_THREAD.WL_Pack.Property_PackageGitURL_Page = _INI._GET_VALUE("EXTERNAL", "PACK_GIT_PAGE", _VARS.PackageGitURL_Page).Value
+        MAIN_THREAD.WL_Pack.Property_PackageGitURL_Master = _INI._GET_VALUE("EXTERNAL", "PACK_GIT_MASTER", _VARS.PackageGitURL_Master).Value
+        MAIN_THREAD.WL_About.URL_SendIssueHelper = _INI._GET_VALUE("EXTERNAL", "GIT_ISSUE_APP", _VARS.URL_App).Value & _VARS.IssueGit_Prefix
+        MAIN_THREAD.WL_About.URL_SendIssueLocalization = _INI._GET_VALUE("EXTERNAL", "GIT_ISSUE_LOCALIZATION", _VARS.URL_Localization).Value & _VARS.IssueGit_Prefix
+        MAIN_THREAD.WL_About.URL_SendIssueCore = _INI._GET_VALUE("EXTERNAL", "GIT_ISSUE_CORE", _VARS.URL_Core).Value & _VARS.IssueGit_Prefix
 
         'PKiller
         _VARS.PKillerEnabled = StringToBool(_INI._GET_VALUE("CONFIGURATION", "PKILLER_ENABLED", False, {"0", "1"}).Value)
@@ -268,6 +277,34 @@ Fin:    Return result
             End If
         End If
         Return CheckedListBox.Items.Count
+    End Function
+
+    Public Function VerifyFile(sPath As String, Optional CoreOnFlag As Boolean = False) As Boolean
+        Dim result As Boolean = False
+        Dim LogSubline As New LOG_SubLine
+        Dim LogLine As New List(Of LOG_SubLine)
+
+        If CoreOnFlag = True Then LogSubline.Value = "Ядро не было включено" & vbNewLine
+        LogSubline.List.Add("Вероятно ядро было модифицировано, оно может быть потенциально опасно и содержать вирус" & vbNewLine)
+        LogSubline.List.Add("Рекомендуется загружать пакеты локализации из надежных источников" & vbNewLine)
+        LogSubline.List.Add("Пожалуйста перейдите во вкладку [" & MAIN_THREAD.TabPage_About.Text & "] и отправьте отзыв о том, откуда была загружена данная локализация, нажав кнопку [" & MAIN_THREAD.WL_About.Text_Button_SendIssueLocalization & "]" & vbNewLine)
+        LogSubline.List.Add("Файл: " & sPath)
+        Try
+            Dim CertVerifier As FileCertVerifier = New FileCertVerifier(My.Resources.Defter_CA, My.Resources.Defter_CoreSigning)
+            If CertVerifier.VerifyFile(sPath) = True Then
+                _LOG._sAdd("WINDOW_FORM", "Ядро успешно верифицировано", "Файл: " & sPath, 2)
+                result = True
+            Else
+                LogLine.Add(LogSubline)
+                _LOG._Add("WINDOW_FORM", "Ядро не прошло верификацию", LogLine, 1)
+            End If
+        Catch ex As Exception
+            LogSubline.List.Add("Описание: " & ex.Message)
+            LogLine.Add(LogSubline)
+            _LOG._Add("WINDOW_FORM", "Ядро не прошло верификацию", LogLine, 1)
+        End Try
+
+        Return result
     End Function
 
 End Module

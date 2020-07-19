@@ -21,6 +21,8 @@
         Me.Label_Info.Text = "Внимание!" & vbNewLine & "При успешном завершении загрузки будет выполнено автоматическое обновление." & vbNewLine & "От пользователя может потребоваться разрешение на запуск файла [" & Me.sPatchDstFileName & "]" & vbNewLine & vbNewLine & "Путь к файлу: " & _FSO._CombinePath(Me.sPatchDstFilePath, Me.sPatchDstFileName)
 
         Me.WL_Download.DownloadStart()
+
+        'StartUpdate()
     End Sub
 
     Private Sub DownloadComplete(DownloadFrom As String, DownloadTo As String, e As WL_Download.DownloadProgressElement) Handles WL_Download._Event_Complete_Event

@@ -1,8 +1,4 @@
-﻿Imports System.ComponentModel
-Imports System.IO
-Imports System.Net
-
-Public Class MainForm
+﻿Public Class MainForm
 
     '<----------------------------------- Form
     Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -335,6 +331,7 @@ Public Class MainForm
         MAIN_THREAD.WL_Mod.Property_ModInPackFileVersion = MAIN_THREAD.WL_Pack.Property_PackInPackVersion
         MAIN_THREAD.WL_Mod._Update()
         Me.UpdateInterface()
+        VerifyFile(MAIN_THREAD.WL_Mod.Property_PatchSrcFilePath)
     End Sub
 
     Sub ModStatus_Click() Handles WL_Mod._Event_PatchDisable_Click_After, WL_Mod._Event_PatchEnable_Click_After
@@ -379,7 +376,7 @@ Public Class MainForm
         End If
         If SenderName.Name = "WL_PackUpdateCheck" Then
             SubLine.List.Add("Описание изменений доступно на Git странице проекта по адресу:")
-            SubLine.List.Add(_VARS.PackageGitURL_Root)
+            SubLine.List.Add(Me.WL_Pack.Property_PackageGitURL_Page)
             ListSubLine.Add(SubLine)
             _LOG._Add(Me.GetType().Name, "Доступна новая версия " & Chr(34) & SenderName.Property_Name & Chr(34), ListSubLine, 0, 0)
         End If
@@ -397,6 +394,10 @@ Public Class MainForm
         If _APP.Version <> LatestElement._tag_name Then
             UpdateAlert_NewVersion(JSON, LatestElement, SenderName)
         End If
+    End Sub
+
+    Private Sub WL_About1_Load(sender As Object, e As EventArgs) Handles WL_About.Load
+
     End Sub
 
 

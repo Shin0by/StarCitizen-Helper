@@ -34,6 +34,9 @@ Public Class WL_Pack
     Private iUpdateGitList_Interval As Integer = 90000
     Private bUpdateGitList_Enable As Boolean = False
     Private sGitList_Value As String = Nothing
+    Private sPackageGitURL_Api As String = Nothing
+    Private sPackageGitURL_Page As String = Nothing
+    Private sPackageGitURL_Master As String = Nothing
 
     Private sPath_Folder_Download As String = Nothing
     Private sName_File_Download As String = Nothing
@@ -247,10 +250,41 @@ Public Class WL_Pack
         Set(ByVal Value As Boolean)
             Me.bUpdateGitList_Enable = Value
             On Error Resume Next
-            Me.WL_PackUpdateCheck.Property_URLApi = _VARS.PackageGitURL_Api
+            Me.WL_PackUpdateCheck.Property_URLApi = Property_PackageGitURL_Api
             Me.WL_PackUpdateCheck.Property_GitListAutoUpdate = Property_GitList_AutoUpdate
         End Set
     End Property
+
+
+    Public Property Property_PackageGitURL_Api() As String
+        Get
+            Return Me.sPackageGitURL_Api
+        End Get
+        Set(ByVal Value As String)
+            Me.sPackageGitURL_Api = Value
+            On Error Resume Next
+            Me.WL_PackUpdateCheck.Property_URLApi = Property_PackageGitURL_Api
+        End Set
+    End Property
+
+    Public Property Property_PackageGitURL_Page() As String
+        Get
+            Return Me.sPackageGitURL_Page
+        End Get
+        Set(ByVal Value As String)
+            Me.sPackageGitURL_Page = Value
+        End Set
+    End Property
+
+    Public Property Property_PackageGitURL_Master() As String
+        Get
+            Return Me.sPackageGitURL_Master
+        End Get
+        Set(ByVal Value As String)
+            Me.sPackageGitURL_Master = Value
+        End Set
+    End Property
+
 
     Public Property Property_GitList_SelString() As String
         Get
@@ -321,6 +355,7 @@ Public Class WL_Pack
         If Me.Property_Path_Folder_Download Is Nothing Then result.Err._Flag = True : result.Err._Description_App = "Не удалось получить доступ к папке загрузок" : result.Err._Description_Sys = Me.Property_Path_Folder_Download : GoTo Finalize
         If _FSO._DeleteFile(Path.Combine(Me.Property_Path_Folder_Download, "*.zip")).Err._Flag = True Then result.Err._Flag = True : result.Err._Description_App = "Не удалось удалить существующий файл пакета локализации в папке загрузки" : result.Err._Description_Sys = Me.Property_Path_Folder_Download : GoTo Finalize
         If Me.List_Git.FindString(Me.Property_GitList_SelString) = -1 Then result.Err._Flag = True : result.Err._Description_App = "Не выбрана версия загружаемого пакета локализации" : GoTo Finalize
+        Console.WriteLine(Me.GIT_PACK_DATA._GetByName(Me.Property_GitList_SelString, _VARS.PackageGitMaster_Name)._zipball_url)
         Me.Download(Me.GIT_PACK_DATA._GetByName(Me.Property_GitList_SelString, _VARS.PackageGitMaster_Name)._zipball_url, _FSO._CombinePath(Me.Property_Path_Folder_Download, Me.List_Git.Text & ".zip"), GIT_PACK_DATA._GetByName(Me.Property_GitList_SelString, _VARS.PackageGitMaster_Name)._isMaster)
 
 Finalize: If result.Err._Flag = True Then
@@ -359,7 +394,6 @@ Finalize: sender.Enabled = True
         RaiseEvent _Event_ShowTestBuild_Click_Before()
         _INI._Write("CONFIGURATION", "SHOW_TEST_BUILDS", BoolToString(sender.checked))
         Me.WL_Updater_NewVersion_Available(Me.WL_PackUpdateCheck.Property_JSON, GIT_PACK_LATEST, Me.WL_PackUpdateCheck)
-
         RaiseEvent _Event_ShowTestBuild_Click_After()
     End Sub
     '-----------------------------------> Controls
@@ -463,7 +497,8 @@ Finalize: sender.Enabled = True
         For i = 0 To Me.GIT_PACK_DATA._GetAll.Count - 1
             Me.Invoke(Sub() Me.List_Git.Items.Add(Me.GIT_PACK_DATA._GetAll.Item(i)._name))
         Next
-        Me.Property_GitList_SelString = _INI._GET_VALUE("EXTERNAL", "PACK_GIT_SELECTED", "").Value
+        'Me.Property_GitList_SelString = _INI._GET_VALUE("EXTERNAL", "PACK_GIT_SELECTED", "").Value
+        Me.Property_GitList_SelString = Me.List_Git.Items(0)
         RaiseEvent _Event_ListGit_List_Change_After()
     End Sub
 
@@ -496,7 +531,7 @@ Finalize: sender.Enabled = True
             Me.GIT_PACK_DATA._Add(elem("name"), elem("tag_name"), elem("zipball_url"), elem("published_at"), elem("body"), Assets, False)
         Next
         Me.GIT_PACK_LATEST = _GIT._GetLatestElement(Me.GIT_PACK_DATA._GetAll)
-        If Property_ShowTestBuild = True Then GIT_PACK_DATA._Add(("Master"), "Master", _VARS.PackageGitURL_Master, DateTime.Now, Nothing, Nothing, True)
+        If Property_ShowTestBuild = True Then GIT_PACK_DATA._Add(("Master"), "Master", Me.Property_PackageGitURL_Master, DateTime.Now, Nothing, Nothing, True)
 
         If _VARS.PackageLatestDate <> Me.GIT_PACK_LATEST._published Then
             _VARS.PackageLatestDate = Me.GIT_PACK_LATEST._published
@@ -505,6 +540,7 @@ Finalize: sender.Enabled = True
 
         UpdateListGit()
     End Sub
+
     '-----------------------------------> 'Callback
 
 

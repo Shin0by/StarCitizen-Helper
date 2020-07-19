@@ -27,6 +27,16 @@ StarCitizen Helper
   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
 </summary>
 </member>
+<member name="P:SC.My.Resources.Resources.Defter_CA">
+<summary>
+  Looks up a localized resource of type System.Byte[].
+</summary>
+</member>
+<member name="P:SC.My.Resources.Resources.Defter_CoreSigning">
+<summary>
+  Looks up a localized resource of type System.Byte[].
+</summary>
+</member>
 <member name="P:SC.My.Resources.Resources.disabled">
 <summary>
   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.

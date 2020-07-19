@@ -260,6 +260,12 @@ Finalize:   If Me.sGameExeFileName IsNot Nothing Then
         On Error Resume Next
         RaiseEvent _Event_PatchEnable_Click_Before()
         Me._Enabled(False)
+        If VerifyFile(Me.Property_PatchSrcFilePath, True) = False Then
+            Me._Enabled(True)
+            _Update(2)
+            RaiseEvent _Event_PatchEnable_Click_After()
+            Exit Sub
+        End If
         _Update()
         _FSO._CopyFile(Me.Property_PatchSrcFilePath, Me.Property_PatchDstFilePath)
         Me.Property_ModInGameFileVersion = Me.Property_ModInPackFileVersion

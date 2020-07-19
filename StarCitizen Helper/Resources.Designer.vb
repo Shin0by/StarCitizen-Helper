@@ -70,6 +70,26 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized resource of type System.Byte[].
+        '''</summary>
+        Friend ReadOnly Property Defter_CA() As Byte()
+            Get
+                Dim obj As Object = ResourceManager.GetObject("Defter_CA", resourceCulture)
+                Return CType(obj,Byte())
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Byte[].
+        '''</summary>
+        Friend ReadOnly Property Defter_CoreSigning() As Byte()
+            Get
+                Dim obj As Object = ResourceManager.GetObject("Defter_CoreSigning", resourceCulture)
+                Return CType(obj,Byte())
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
         '''</summary>
         Friend ReadOnly Property disabled() As System.IO.UnmanagedMemoryStream

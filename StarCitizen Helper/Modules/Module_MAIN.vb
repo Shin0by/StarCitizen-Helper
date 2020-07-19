@@ -1,4 +1,5 @@
 ﻿Imports System.IO
+Imports Defter.CertificateVerifier.Security
 Imports SC.Class_GIT.Class_GitUpdateList
 
 Module Module_MAIN
@@ -15,6 +16,7 @@ Module Module_MAIN
     Public _WATCHFILE_THREAD As Class_THREAD_WATCHFILE
     Public _PROCESS As New Class_PROCESSES
     Public _GIT As New Class_GIT
+    Public _DEFTER As New Class_Defter
 
     Public Sub InitializeStart()
         _KEYS = New Class_KEYS(MAIN_THREAD)
@@ -26,9 +28,17 @@ Module Module_MAIN
         _APP.appName = "StarCitizen Helper"
         _VARS.GameName = "StarCitizen"
         _VARS.PackageGitMaster_Name = "Master"
+        _VARS.IssueGit_Prefix = "issues"
 
-        _VARS.PackageGitURL_Root = "https://github.com/defterai/StarCitizenModding"
+        _VARS.URL_App_Api = "https://api.github.com/repos/Shin0by/StarCitizen-Helper/releases"
+
+        _VARS.URL_App = "https://github.com/Shin0by/StarCitizen-Helper/"
+        _VARS.URL_Core = "https://github.com/defterai/StarCitizenModding/"
+        'TODO:   Update localization root url
+        _VARS.URL_Localization = "https://github.com/defterai/StarCitizenModding/"
+
         _VARS.PackageGitURL_Master = "https://codeload.github.com/defterai/StarCitizenModding/zip/master"
+        _VARS.PackageGitURL_Page = "https://github.com/defterai/StarCitizenModding"
         _VARS.PackageGitURL_Api = "https://api.github.com/repos/defterai/StarCitizenModding/releases"
 
         Module_HELPER.CheckConfigFile()
@@ -176,10 +186,8 @@ Module Module_MAIN
 
         'Download
         Public PackageGitMaster_Name As String = Nothing
-        Public PackageGitURL_Master As String = Nothing
-        Public PackageGitURL_Root As String = Nothing
-        Public PackageGitURL_Api As String = Nothing
         Public PackageLatestDate As DateTime = Nothing
+        Public IssueGit_Prefix As String = Nothing
 
         'PKiller
         Public PKillerEnabled As Boolean = False
@@ -190,6 +198,16 @@ Module Module_MAIN
         Public GameProcessKillerEnabled As Boolean = False
         Public GameProcessMain As String = Nothing
         Public GameProcessLauncher As String = Nothing
+
+        'PreConfig
+        Public PackageGitURL_Api As String = Nothing
+        Public PackageGitURL_Master As String = Nothing
+        Public PackageGitURL_Page As String = Nothing
+
+        Public URL_Localization As String = Nothing
+        Public URL_Core As String = Nothing
+        Public URL_App As String = Nothing
+        Public URL_App_Api As String = Nothing
 
         Public Property UpdateStatus() As String
             Get
@@ -211,5 +229,9 @@ Module Module_MAIN
                 Me.sSetupParameters = Replace(Value, "{dir}", _APP.exePath)
             End Set
         End Property
+    End Class
+
+    Class Class_Defter
+        Public CertVerify As FileCertVerifier
     End Class
 End Module

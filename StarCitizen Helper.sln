@@ -5,16 +5,42 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "StarCitizen Helper", "StarCitizen Helper\StarCitizen Helper.vbproj", "{22BAE60D-DADF-4CA3-9594-ED61A5E19295}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CertificateVerifier", "packages\SCModdingModule-master\example\CertificateVerifier\CertificateVerifier\CertificateVerifier.csproj", "{FB667987-7A18-426B-AB7F-CDF0A380BEE7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Dev|Any CPU = Dev|Any CPU
+		Dev|x64 = Dev|x64
 		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{22BAE60D-DADF-4CA3-9594-ED61A5E19295}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{22BAE60D-DADF-4CA3-9594-ED61A5E19295}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22BAE60D-DADF-4CA3-9594-ED61A5E19295}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{22BAE60D-DADF-4CA3-9594-ED61A5E19295}.Debug|x64.Build.0 = Debug|Any CPU
+		{22BAE60D-DADF-4CA3-9594-ED61A5E19295}.Dev|Any CPU.ActiveCfg = Debug|Any CPU
+		{22BAE60D-DADF-4CA3-9594-ED61A5E19295}.Dev|Any CPU.Build.0 = Debug|Any CPU
+		{22BAE60D-DADF-4CA3-9594-ED61A5E19295}.Dev|x64.ActiveCfg = Debug|Any CPU
+		{22BAE60D-DADF-4CA3-9594-ED61A5E19295}.Dev|x64.Build.0 = Debug|Any CPU
 		{22BAE60D-DADF-4CA3-9594-ED61A5E19295}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{22BAE60D-DADF-4CA3-9594-ED61A5E19295}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22BAE60D-DADF-4CA3-9594-ED61A5E19295}.Release|x64.ActiveCfg = Release|Any CPU
+		{22BAE60D-DADF-4CA3-9594-ED61A5E19295}.Release|x64.Build.0 = Release|Any CPU
+		{FB667987-7A18-426B-AB7F-CDF0A380BEE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB667987-7A18-426B-AB7F-CDF0A380BEE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB667987-7A18-426B-AB7F-CDF0A380BEE7}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{FB667987-7A18-426B-AB7F-CDF0A380BEE7}.Debug|x64.Build.0 = Debug|Any CPU
+		{FB667987-7A18-426B-AB7F-CDF0A380BEE7}.Dev|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB667987-7A18-426B-AB7F-CDF0A380BEE7}.Dev|Any CPU.Build.0 = Debug|Any CPU
+		{FB667987-7A18-426B-AB7F-CDF0A380BEE7}.Dev|x64.ActiveCfg = Debug|Any CPU
+		{FB667987-7A18-426B-AB7F-CDF0A380BEE7}.Dev|x64.Build.0 = Debug|Any CPU
+		{FB667987-7A18-426B-AB7F-CDF0A380BEE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB667987-7A18-426B-AB7F-CDF0A380BEE7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB667987-7A18-426B-AB7F-CDF0A380BEE7}.Release|x64.ActiveCfg = Release|Any CPU
+		{FB667987-7A18-426B-AB7F-CDF0A380BEE7}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

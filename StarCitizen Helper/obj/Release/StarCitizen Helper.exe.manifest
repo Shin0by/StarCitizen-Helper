@@ -4,7 +4,7 @@
   <description asmv2:iconFile="Other\Shin0by soft.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <application />
   <entryPoint>
-    <assemblyIdentity name="StarCitizen Helper" version="1.6.12.80" language="neutral" processorArchitecture="msil" />
+    <assemblyIdentity name="StarCitizen Helper" version="1.6.13.85" language="neutral" processorArchitecture="msil" />
     <commandLine file="StarCitizen Helper.exe" parameters="" />
   </entryPoint>
   <trustInfo>
@@ -26,6 +26,18 @@
   <dependency>
     <dependentAssembly dependencyType="preRequisite" allowDelayedBinding="true">
       <assemblyIdentity name="Microsoft.Windows.CommonLanguageRuntime" version="4.0.30319.0" />
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="CertificateVerifier.dll" size="10240">
+      <assemblyIdentity name="CertificateVerifier" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>kQW8+L/pB5W7cKjNRPmJFQ0cVItQFPS2iZxNFCeV5vw=</dsig:DigestValue>
+      </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
@@ -53,14 +65,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="StarCitizen Helper.exe" size="3834816">
-      <assemblyIdentity name="StarCitizen Helper" version="1.6.12.80" language="neutral" processorArchitecture="msil" />
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="StarCitizen Helper.exe" size="3851712">
+      <assemblyIdentity name="StarCitizen Helper" version="1.6.13.85" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>Vn7mrPrfefOf59VuN/rqUzLMsYfkReKlk5kibaQc7F0=</dsig:DigestValue>
+        <dsig:DigestValue>Qvh3H5hHxGHQL/O/26fmmvrIOTpFYDxnpVABZT5v5EU=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

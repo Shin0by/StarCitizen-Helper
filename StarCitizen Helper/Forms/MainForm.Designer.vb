@@ -79,11 +79,15 @@ Partial Class MainForm
         Me.TextBox_Debug = New System.Windows.Forms.TextBox()
         Me.TabPage_SysUpdate = New System.Windows.Forms.TabPage()
         Me.TableLayoutPanel_SysUpdate = New System.Windows.Forms.TableLayoutPanel()
+        Me.TabPage_SysSettings = New System.Windows.Forms.TabPage()
+        Me.TabPage_About = New System.Windows.Forms.TabPage()
         Me.Timer_LOG = New System.Windows.Forms.Timer(Me.components)
         Me.WL_Mod = New SC.WL_Modification()
         Me.WL_Pack = New SC.WL_Pack()
         Me.WL_SysUpdateCheck = New SC.WL_Check()
         Me.WL_AppUpdate = New SC.WL_AppUpdate()
+        Me.WL_Language = New SC.WL_Language()
+        Me.WL_About = New SC.WL_About()
         Me.ContextMenuStrip1.SuspendLayout()
         Me.TabControl.SuspendLayout()
         Me.TabPage_Patch.SuspendLayout()
@@ -96,6 +100,8 @@ Partial Class MainForm
         Me.TableLayoutPanel2.SuspendLayout()
         Me.TabPage_SysUpdate.SuspendLayout()
         Me.TableLayoutPanel_SysUpdate.SuspendLayout()
+        Me.TabPage_SysSettings.SuspendLayout()
+        Me.TabPage_About.SuspendLayout()
         Me.SuspendLayout()
         '
         'ContextMenuStrip1
@@ -239,6 +245,8 @@ Partial Class MainForm
         Me.TabControl.Controls.Add(Me.TabPage_GameProfiles)
         Me.TabControl.Controls.Add(Me.TabPage_Debug)
         Me.TabControl.Controls.Add(Me.TabPage_SysUpdate)
+        Me.TabControl.Controls.Add(Me.TabPage_SysSettings)
+        Me.TabControl.Controls.Add(Me.TabPage_About)
         Me.TabControl.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TabControl.Location = New System.Drawing.Point(0, 0)
         Me.TabControl.Name = "TabControl"
@@ -637,7 +645,7 @@ Partial Class MainForm
         Me.TabPage_SysUpdate.Padding = New System.Windows.Forms.Padding(3)
         Me.TabPage_SysUpdate.Size = New System.Drawing.Size(776, 285)
         Me.TabPage_SysUpdate.TabIndex = 5
-        Me.TabPage_SysUpdate.Text = "Система"
+        Me.TabPage_SysUpdate.Text = "Обновление программы"
         Me.TabPage_SysUpdate.UseVisualStyleBackColor = True
         '
         'TableLayoutPanel_SysUpdate
@@ -655,6 +663,26 @@ Partial Class MainForm
         Me.TableLayoutPanel_SysUpdate.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35.0!))
         Me.TableLayoutPanel_SysUpdate.Size = New System.Drawing.Size(770, 279)
         Me.TableLayoutPanel_SysUpdate.TabIndex = 1
+        '
+        'TabPage_SysSettings
+        '
+        Me.TabPage_SysSettings.Controls.Add(Me.WL_Language)
+        Me.TabPage_SysSettings.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage_SysSettings.Name = "TabPage_SysSettings"
+        Me.TabPage_SysSettings.Size = New System.Drawing.Size(776, 285)
+        Me.TabPage_SysSettings.TabIndex = 6
+        Me.TabPage_SysSettings.Text = "Системные настройки"
+        Me.TabPage_SysSettings.UseVisualStyleBackColor = True
+        '
+        'TabPage_About
+        '
+        Me.TabPage_About.Controls.Add(Me.WL_About)
+        Me.TabPage_About.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage_About.Name = "TabPage_About"
+        Me.TabPage_About.Size = New System.Drawing.Size(776, 285)
+        Me.TabPage_About.TabIndex = 7
+        Me.TabPage_About.Text = "О программе"
+        Me.TabPage_About.UseVisualStyleBackColor = True
         '
         'Timer_LOG
         '
@@ -697,6 +725,9 @@ Partial Class MainForm
         Me.WL_Pack.Property_GitList_SelString = Nothing
         Me.WL_Pack.Property_Name_File_Download = Nothing
         Me.WL_Pack.Property_Name_File_Meta = Nothing
+        Me.WL_Pack.Property_PackageGitURL_Api = Nothing
+        Me.WL_Pack.Property_PackageGitURL_Master = Nothing
+        Me.WL_Pack.Property_PackageGitURL_Page = Nothing
         Me.WL_Pack.Property_PackInGameVersion = Nothing
         Me.WL_Pack.Property_Path_File_Download = Nothing
         Me.WL_Pack.Property_Path_File_Meta = Nothing
@@ -756,6 +787,24 @@ Partial Class MainForm
         Me.WL_AppUpdate.Size = New System.Drawing.Size(764, 29)
         Me.WL_AppUpdate.TabIndex = 1
         '
+        'WL_Language
+        '
+        Me.WL_Language.Location = New System.Drawing.Point(341, 95)
+        Me.WL_Language.Name = "WL_Language"
+        Me.WL_Language.Property_Name = Nothing
+        Me.WL_Language.Property_PatchFolder = Nothing
+        Me.WL_Language.Size = New System.Drawing.Size(122, 86)
+        Me.WL_Language.TabIndex = 0
+        '
+        'WL_About
+        '
+        Me.WL_About.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.WL_About.Location = New System.Drawing.Point(0, 0)
+        Me.WL_About.Name = "WL_About"
+        Me.WL_About.Property_Name = Nothing
+        Me.WL_About.Size = New System.Drawing.Size(776, 285)
+        Me.WL_About.TabIndex = 0
+        '
         'MainForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -785,6 +834,8 @@ Partial Class MainForm
         Me.TableLayoutPanel2.PerformLayout()
         Me.TabPage_SysUpdate.ResumeLayout(False)
         Me.TableLayoutPanel_SysUpdate.ResumeLayout(False)
+        Me.TabPage_SysSettings.ResumeLayout(False)
+        Me.TabPage_About.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -849,4 +900,8 @@ Partial Class MainForm
     Friend WithEvents WL_SysUpdateCheck As WL_Check
     Friend WithEvents TableLayoutPanel_SysUpdate As TableLayoutPanel
     Friend WithEvents WL_AppUpdate As WL_AppUpdate
+    Friend WithEvents TabPage_SysSettings As TabPage
+    Friend WithEvents WL_Language As WL_Language
+    Friend WithEvents TabPage_About As TabPage
+    Friend WithEvents WL_About As WL_About
 End Class
