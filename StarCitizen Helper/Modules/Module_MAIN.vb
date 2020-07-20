@@ -35,11 +35,11 @@ Module Module_MAIN
         _VARS.URL_App = "https://github.com/Shin0by/StarCitizen-Helper/"
         _VARS.URL_Core = "https://github.com/defterai/StarCitizenModding/"
         'TODO:   Update localization root url
-        _VARS.URL_Localization = "https://github.com/defterai/StarCitizenModding/"
+        _VARS.URL_Localization = "https://github.com/n1ghter/SC_ru/"
 
-        _VARS.PackageGitURL_Master = "https://codeload.github.com/defterai/StarCitizenModding/zip/master"
-        _VARS.PackageGitURL_Page = "https://github.com/defterai/StarCitizenModding"
-        _VARS.PackageGitURL_Api = "https://api.github.com/repos/defterai/StarCitizenModding/releases"
+        _VARS.PackageGitURL_Master = "https://codeload.github.com/n1ghter/SC_ru/zip/master"
+        _VARS.PackageGitURL_Page = "https://github.com/n1ghter/SC_ru"
+        _VARS.PackageGitURL_Api = "https://api.github.com/repos/n1ghter/SC_ru/releases"
 
         Module_HELPER.CheckConfigFile()
     End Sub

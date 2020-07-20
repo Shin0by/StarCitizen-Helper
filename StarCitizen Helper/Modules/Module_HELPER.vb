@@ -97,7 +97,7 @@ Module Module_HELPER
         MAIN_THREAD.WL_Pack.Property_PackageGitURL_Api = _INI._GET_VALUE("EXTERNAL", "PACK_GIT_API", _VARS.PackageGitURL_Api).Value
         MAIN_THREAD.WL_Pack.Property_PackageGitURL_Page = _INI._GET_VALUE("EXTERNAL", "PACK_GIT_PAGE", _VARS.PackageGitURL_Page).Value
         MAIN_THREAD.WL_Pack.Property_PackageGitURL_Master = _INI._GET_VALUE("EXTERNAL", "PACK_GIT_MASTER", _VARS.PackageGitURL_Master).Value
-        MAIN_THREAD.WL_About.URL_SendIssueHelper = _INI._GET_VALUE("EXTERNAL", "GIT_ISSUE_APP", _VARS.URL_App).Value & _VARS.IssueGit_Prefix
+        MAIN_THREAD.WL_About.URL_SendIssueApp = _INI._GET_VALUE("EXTERNAL", "GIT_ISSUE_APP", _VARS.URL_App).Value & _VARS.IssueGit_Prefix
         MAIN_THREAD.WL_About.URL_SendIssueLocalization = _INI._GET_VALUE("EXTERNAL", "GIT_ISSUE_LOCALIZATION", _VARS.URL_Localization).Value & _VARS.IssueGit_Prefix
         MAIN_THREAD.WL_About.URL_SendIssueCore = _INI._GET_VALUE("EXTERNAL", "GIT_ISSUE_CORE", _VARS.URL_Core).Value & _VARS.IssueGit_Prefix
 

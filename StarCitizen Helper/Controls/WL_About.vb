@@ -49,10 +49,10 @@ Public Class WL_About
 
     Public Property Text_Button_SendIssueHelper() As String
         Get
-            Return Me.Button_SendIssueHelper.Text
+            Return Me.Button_SendIssueApp.Text
         End Get
         Set(ByVal Value As String)
-            Me.Button_SendIssueHelper.Text = Value
+            Me.Button_SendIssueApp.Text = Value
         End Set
     End Property
 
@@ -74,12 +74,40 @@ Public Class WL_About
         End Set
     End Property
 
-    Public Property URL_SendIssueHelper() As String
+    Public Property Text_Label_SendIssueApp() As String
         Get
-            Return Me.Button_SendIssueHelper.Tag
+            Return Me.Label_SendIssueApp.Text
         End Get
         Set(ByVal Value As String)
-            Me.Button_SendIssueHelper.Tag = Value
+            Me.Label_SendIssueApp.Text = Value
+        End Set
+    End Property
+
+    Public Property Text_Label__SendIssueLocalization() As String
+        Get
+            Return Me.Label__SendIssueLocalization.Text
+        End Get
+        Set(ByVal Value As String)
+            Me.Label__SendIssueLocalization.Text = Value
+        End Set
+    End Property
+
+    Public Property Text_Label_SendIssueCore() As String
+        Get
+            Return Me.Label_SendIssueCore.Text
+        End Get
+        Set(ByVal Value As String)
+            Me.Label_SendIssueCore.Text = Value
+        End Set
+    End Property
+
+
+    Public Property URL_SendIssueApp() As String
+        Get
+            Return Me.Button_SendIssueApp.Tag
+        End Get
+        Set(ByVal Value As String)
+            Me.Button_SendIssueApp.Tag = Value
         End Set
     End Property
 
@@ -102,11 +130,11 @@ Public Class WL_About
     End Property
     '-----------------------------------> Properties
 
-    Private Sub Button_Send_Click(sender As Object, e As EventArgs) Handles Button_SendIssueHelper.Click, Button_SendIssueLocalization.Click, Button_SendIssueCore.Click
+    Private Sub Button_Send_Click(sender As Object, e As EventArgs) Handles Button_SendIssueApp.Click, Button_SendIssueLocalization.Click, Button_SendIssueCore.Click
 
         Try
             Select Case sender.name
-                Case Me.Button_SendIssueHelper.Name
+                Case Me.Button_SendIssueApp.Name
                     RaiseEvent _Event_SendIssueHelper_Button_Click_Before()
                 Case Me.Button_SendIssueLocalization.Name
                     RaiseEvent _Event_SendIssueLocalization_Button_Click_Before()
@@ -121,7 +149,7 @@ Public Class WL_About
             Process.Start(sender.tag)
 
             Select Case sender.name
-                Case Me.Button_SendIssueHelper.Name
+                Case Me.Button_SendIssueApp.Name
                     RaiseEvent _Event_SendIssueHelper_Button_Click_After()
                 Case Me.Button_SendIssueLocalization.Name
                     RaiseEvent _Event_SendIssueLocalization_Button_Click_After()

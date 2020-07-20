@@ -24,9 +24,9 @@ Partial Class WL_About
     Private Sub InitializeComponent()
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
         Me.Label__SendIssueLocalization = New System.Windows.Forms.Label()
-        Me.Label_SendIssueHelper = New System.Windows.Forms.Label()
+        Me.Label_SendIssueApp = New System.Windows.Forms.Label()
         Me.Button_SendIssueLocalization = New System.Windows.Forms.Button()
-        Me.Button_SendIssueHelper = New System.Windows.Forms.Button()
+        Me.Button_SendIssueApp = New System.Windows.Forms.Button()
         Me.Label_SendIssueCore = New System.Windows.Forms.Label()
         Me.Button_SendIssueCore = New System.Windows.Forms.Button()
         Me.TableLayoutPanel1.SuspendLayout()
@@ -38,9 +38,9 @@ Partial Class WL_About
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.0!))
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 67.0!))
         Me.TableLayoutPanel1.Controls.Add(Me.Label__SendIssueLocalization, 1, 1)
-        Me.TableLayoutPanel1.Controls.Add(Me.Label_SendIssueHelper, 1, 0)
+        Me.TableLayoutPanel1.Controls.Add(Me.Label_SendIssueApp, 1, 0)
         Me.TableLayoutPanel1.Controls.Add(Me.Button_SendIssueLocalization, 0, 1)
-        Me.TableLayoutPanel1.Controls.Add(Me.Button_SendIssueHelper, 0, 0)
+        Me.TableLayoutPanel1.Controls.Add(Me.Button_SendIssueApp, 0, 0)
         Me.TableLayoutPanel1.Controls.Add(Me.Label_SendIssueCore, 1, 2)
         Me.TableLayoutPanel1.Controls.Add(Me.Button_SendIssueCore, 0, 2)
         Me.TableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill
@@ -66,17 +66,17 @@ Partial Class WL_About
         Me.Label__SendIssueLocalization.Text = "Отправить отзыв о проблеме с ядром"
         Me.Label__SendIssueLocalization.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'Label_SendIssueHelper
+        'Label_SendIssueApp
         '
-        Me.Label_SendIssueHelper.AutoSize = True
-        Me.Label_SendIssueHelper.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Label_SendIssueHelper.Location = New System.Drawing.Point(165, 3)
-        Me.Label_SendIssueHelper.Margin = New System.Windows.Forms.Padding(3)
-        Me.Label_SendIssueHelper.Name = "Label_SendIssueHelper"
-        Me.Label_SendIssueHelper.Size = New System.Drawing.Size(325, 24)
-        Me.Label_SendIssueHelper.TabIndex = 6
-        Me.Label_SendIssueHelper.Text = "Отправить отзыв о проблеме с ядром"
-        Me.Label_SendIssueHelper.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.Label_SendIssueApp.AutoSize = True
+        Me.Label_SendIssueApp.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Label_SendIssueApp.Location = New System.Drawing.Point(165, 3)
+        Me.Label_SendIssueApp.Margin = New System.Windows.Forms.Padding(3)
+        Me.Label_SendIssueApp.Name = "Label_SendIssueApp"
+        Me.Label_SendIssueApp.Size = New System.Drawing.Size(325, 24)
+        Me.Label_SendIssueApp.TabIndex = 6
+        Me.Label_SendIssueApp.Text = "Отправить отзыв о проблеме с ядром"
+        Me.Label_SendIssueApp.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'Button_SendIssueLocalization
         '
@@ -88,15 +88,15 @@ Partial Class WL_About
         Me.Button_SendIssueLocalization.Text = "Отзыв о локализации"
         Me.Button_SendIssueLocalization.UseVisualStyleBackColor = True
         '
-        'Button_SendIssueHelper
+        'Button_SendIssueApp
         '
-        Me.Button_SendIssueHelper.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Button_SendIssueHelper.Location = New System.Drawing.Point(3, 3)
-        Me.Button_SendIssueHelper.Name = "Button_SendIssueHelper"
-        Me.Button_SendIssueHelper.Size = New System.Drawing.Size(156, 24)
-        Me.Button_SendIssueHelper.TabIndex = 0
-        Me.Button_SendIssueHelper.Text = "Отзыв о программе"
-        Me.Button_SendIssueHelper.UseVisualStyleBackColor = True
+        Me.Button_SendIssueApp.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Button_SendIssueApp.Location = New System.Drawing.Point(3, 3)
+        Me.Button_SendIssueApp.Name = "Button_SendIssueApp"
+        Me.Button_SendIssueApp.Size = New System.Drawing.Size(156, 24)
+        Me.Button_SendIssueApp.TabIndex = 0
+        Me.Button_SendIssueApp.Text = "Отзыв о программе"
+        Me.Button_SendIssueApp.UseVisualStyleBackColor = True
         '
         'Label_SendIssueCore
         '
@@ -135,9 +135,9 @@ Partial Class WL_About
 
     Friend WithEvents TableLayoutPanel1 As TableLayoutPanel
     Friend WithEvents Label__SendIssueLocalization As Label
-    Friend WithEvents Label_SendIssueHelper As Label
+    Friend WithEvents Label_SendIssueApp As Label
     Friend WithEvents Button_SendIssueLocalization As Button
-    Friend WithEvents Button_SendIssueHelper As Button
+    Friend WithEvents Button_SendIssueApp As Button
     Friend WithEvents Label_SendIssueCore As Label
     Friend WithEvents Button_SendIssueCore As Button
 End Class
