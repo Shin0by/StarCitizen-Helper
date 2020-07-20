@@ -260,6 +260,7 @@ Finalize:   If Me.sGameExeFileName IsNot Nothing Then
         On Error Resume Next
         RaiseEvent _Event_PatchEnable_Click_Before()
         Me._Enabled(False)
+        _LOG._sAdd("MODIFICATION", "Начата верификация ядра", "Файл: " & Me.Property_PatchSrcFilePath, 2, 0)
         If VerifyFile(Me.Property_PatchSrcFilePath, True) = False Then
             Me._Enabled(True)
             _Update(2)

@@ -186,7 +186,7 @@ Partial Class WL_Pack
         Me.WL_PackUpdateCheck.Property_URL = Nothing
         Me.WL_PackUpdateCheck.Property_URLApi = Nothing
         Me.WL_PackUpdateCheck.Property_URLDownload = Nothing
-        Me.WL_PackUpdateCheck.Property_VersionLocal = ""
+        Me.WL_PackUpdateCheck.Property_VersionLocal = Nothing
         Me.WL_PackUpdateCheck.Property_VersionOnline = Nothing
         Me.WL_PackUpdateCheck.Size = New System.Drawing.Size(216, 24)
         Me.WL_PackUpdateCheck.TabIndex = 16

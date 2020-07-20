@@ -331,6 +331,7 @@
         MAIN_THREAD.WL_Mod.Property_ModInPackFileVersion = MAIN_THREAD.WL_Pack.Property_PackInPackVersion
         MAIN_THREAD.WL_Mod._Update()
         Me.UpdateInterface()
+        _LOG._sAdd("WINDOW_FORM", "Начата верификация ядра", "Файл: " & MAIN_THREAD.WL_Mod.Property_PatchSrcFilePath, 2, 0)
         VerifyFile(MAIN_THREAD.WL_Mod.Property_PatchSrcFilePath)
     End Sub
 

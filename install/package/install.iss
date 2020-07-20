@@ -1,6 +1,6 @@
 
 [Setup]
-AppVersion=1.6.13.85
+AppVersion=1.6.13.86
 AppName=StarCitizen Helper
 DefaultDirName={userappdata}\StarCitizen Helper
 DefaultGroupName=StarCitizen Helper
@@ -19,6 +19,7 @@ Source: "Shin0by soft.ico"; DestDir: "{app}"; Components: main
 //Source: "config.ini"; DestDir: "{app}"; Components: main; Permissions: users-modify
 Source: "INIFileParser.dll"; DestDir: "{app}"; Components: main
 Source: "Newtonsoft.Json.dll"; DestDir: "{app}"; Components: main
+Source: "CertificateVerifier.dll"; DestDir: "{app}"; Components: main
 Source: "required\NDP472-KB4054531-Web.exe"; DestDir: "{tmp}"; Components: framework; AfterInstall: AfterInstallProcedure
 
 [Types]

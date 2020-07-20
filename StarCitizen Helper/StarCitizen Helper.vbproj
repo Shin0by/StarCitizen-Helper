@@ -279,6 +279,7 @@
     <None Include="Other\StarCitizen Helper_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\CertificateVerifier.dll" />
     <None Include="Resources\Defter.CA.cer" />
     <None Include="Resources\Defter.CoreSigning.cer" />
     <None Include="Resources\Shin0by soft.ico" />
