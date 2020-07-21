@@ -23,7 +23,7 @@ Partial Class WL_About
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
-        Me.Label__SendIssueLocalization = New System.Windows.Forms.Label()
+        Me.Label_SendIssueLocalization = New System.Windows.Forms.Label()
         Me.Label_SendIssueApp = New System.Windows.Forms.Label()
         Me.Button_SendIssueLocalization = New System.Windows.Forms.Button()
         Me.Button_SendIssueApp = New System.Windows.Forms.Button()
@@ -37,7 +37,7 @@ Partial Class WL_About
         Me.TableLayoutPanel1.ColumnCount = 2
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.0!))
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 67.0!))
-        Me.TableLayoutPanel1.Controls.Add(Me.Label__SendIssueLocalization, 1, 1)
+        Me.TableLayoutPanel1.Controls.Add(Me.Label_SendIssueLocalization, 1, 1)
         Me.TableLayoutPanel1.Controls.Add(Me.Label_SendIssueApp, 1, 0)
         Me.TableLayoutPanel1.Controls.Add(Me.Button_SendIssueLocalization, 0, 1)
         Me.TableLayoutPanel1.Controls.Add(Me.Button_SendIssueApp, 0, 0)
@@ -54,17 +54,17 @@ Partial Class WL_About
         Me.TableLayoutPanel1.Size = New System.Drawing.Size(493, 198)
         Me.TableLayoutPanel1.TabIndex = 1
         '
-        'Label__SendIssueLocalization
+        'Label_SendIssueLocalization
         '
-        Me.Label__SendIssueLocalization.AutoSize = True
-        Me.Label__SendIssueLocalization.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Label__SendIssueLocalization.Location = New System.Drawing.Point(165, 33)
-        Me.Label__SendIssueLocalization.Margin = New System.Windows.Forms.Padding(3)
-        Me.Label__SendIssueLocalization.Name = "Label__SendIssueLocalization"
-        Me.Label__SendIssueLocalization.Size = New System.Drawing.Size(325, 24)
-        Me.Label__SendIssueLocalization.TabIndex = 7
-        Me.Label__SendIssueLocalization.Text = "Отправить отзыв о проблеме с ядром"
-        Me.Label__SendIssueLocalization.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.Label_SendIssueLocalization.AutoSize = True
+        Me.Label_SendIssueLocalization.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Label_SendIssueLocalization.Location = New System.Drawing.Point(165, 33)
+        Me.Label_SendIssueLocalization.Margin = New System.Windows.Forms.Padding(3)
+        Me.Label_SendIssueLocalization.Name = "Label_SendIssueLocalization"
+        Me.Label_SendIssueLocalization.Size = New System.Drawing.Size(325, 24)
+        Me.Label_SendIssueLocalization.TabIndex = 7
+        Me.Label_SendIssueLocalization.Text = "Отправить отзыв о проблеме с ядром"
+        Me.Label_SendIssueLocalization.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'Label_SendIssueApp
         '
@@ -134,7 +134,7 @@ Partial Class WL_About
     End Sub
 
     Friend WithEvents TableLayoutPanel1 As TableLayoutPanel
-    Friend WithEvents Label__SendIssueLocalization As Label
+    Friend WithEvents Label_SendIssueLocalization As Label
     Friend WithEvents Label_SendIssueApp As Label
     Friend WithEvents Button_SendIssueLocalization As Button
     Friend WithEvents Button_SendIssueApp As Button

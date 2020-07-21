@@ -75,14 +75,16 @@ Partial Class MainForm
         Me.Label_BeforeKillProcess = New System.Windows.Forms.Label()
         Me.Button_ToLIVE = New System.Windows.Forms.Button()
         Me.Label_ToLivePtu = New System.Windows.Forms.Label()
-        Me.TabPage_Debug = New System.Windows.Forms.TabPage()
-        Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
-        Me.ClearLog_Button = New System.Windows.Forms.Button()
-        Me.TextBox_Debug = New System.Windows.Forms.TextBox()
         Me.TabPage_SysUpdate = New System.Windows.Forms.TabPage()
         Me.TableLayoutPanel_SysUpdate = New System.Windows.Forms.TableLayoutPanel()
         Me.WL_SysUpdateCheck = New SC.WL_Check()
         Me.WL_AppUpdate = New SC.WL_AppUpdate()
+        Me.TabPage_SysSettings = New System.Windows.Forms.TabPage()
+        Me.Button1 = New System.Windows.Forms.Button()
+        Me.TabPage_Debug = New System.Windows.Forms.TabPage()
+        Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
+        Me.ClearLog_Button = New System.Windows.Forms.Button()
+        Me.TextBox_Debug = New System.Windows.Forms.TextBox()
         Me.TabPage_About = New System.Windows.Forms.TabPage()
         Me.WL_About = New SC.WL_About()
         Me.Timer_LOG = New System.Windows.Forms.Timer(Me.components)
@@ -94,10 +96,11 @@ Partial Class MainForm
         Me.TableLayoutPanel4.SuspendLayout()
         Me.TabPage_GameProfiles.SuspendLayout()
         Me.TableLayoutPanel5.SuspendLayout()
-        Me.TabPage_Debug.SuspendLayout()
-        Me.TableLayoutPanel2.SuspendLayout()
         Me.TabPage_SysUpdate.SuspendLayout()
         Me.TableLayoutPanel_SysUpdate.SuspendLayout()
+        Me.TabPage_SysSettings.SuspendLayout()
+        Me.TabPage_Debug.SuspendLayout()
+        Me.TableLayoutPanel2.SuspendLayout()
         Me.TabPage_About.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -240,8 +243,9 @@ Partial Class MainForm
         Me.TabControl.Controls.Add(Me.TabPage_Packages)
         Me.TabControl.Controls.Add(Me.TabPage_Killer)
         Me.TabControl.Controls.Add(Me.TabPage_GameProfiles)
-        Me.TabControl.Controls.Add(Me.TabPage_Debug)
         Me.TabControl.Controls.Add(Me.TabPage_SysUpdate)
+        Me.TabControl.Controls.Add(Me.TabPage_SysSettings)
+        Me.TabControl.Controls.Add(Me.TabPage_Debug)
         Me.TabControl.Controls.Add(Me.TabPage_About)
         Me.TabControl.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TabControl.Location = New System.Drawing.Point(0, 0)
@@ -637,57 +641,6 @@ Partial Class MainForm
         Me.Label_ToLivePtu.Text = "Переименовать папку игры в LIVE, PTU, EPTU"
         Me.Label_ToLivePtu.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'TabPage_Debug
-        '
-        Me.TabPage_Debug.Controls.Add(Me.TableLayoutPanel2)
-        Me.TabPage_Debug.Location = New System.Drawing.Point(4, 22)
-        Me.TabPage_Debug.Name = "TabPage_Debug"
-        Me.TabPage_Debug.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage_Debug.Size = New System.Drawing.Size(776, 285)
-        Me.TabPage_Debug.TabIndex = 1
-        Me.TabPage_Debug.Text = "Лог"
-        Me.TabPage_Debug.UseVisualStyleBackColor = True
-        '
-        'TableLayoutPanel2
-        '
-        Me.TableLayoutPanel2.ColumnCount = 2
-        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel2.Controls.Add(Me.ClearLog_Button, 0, 0)
-        Me.TableLayoutPanel2.Controls.Add(Me.TextBox_Debug, 0, 0)
-        Me.TableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TableLayoutPanel2.Location = New System.Drawing.Point(3, 3)
-        Me.TableLayoutPanel2.Name = "TableLayoutPanel2"
-        Me.TableLayoutPanel2.RowCount = 2
-        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
-        Me.TableLayoutPanel2.Size = New System.Drawing.Size(770, 279)
-        Me.TableLayoutPanel2.TabIndex = 0
-        '
-        'ClearLog_Button
-        '
-        Me.TableLayoutPanel2.SetColumnSpan(Me.ClearLog_Button, 2)
-        Me.ClearLog_Button.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.ClearLog_Button.Location = New System.Drawing.Point(3, 252)
-        Me.ClearLog_Button.Name = "ClearLog_Button"
-        Me.ClearLog_Button.Size = New System.Drawing.Size(764, 24)
-        Me.ClearLog_Button.TabIndex = 2
-        Me.ClearLog_Button.Text = "Очистить лог"
-        Me.ClearLog_Button.UseVisualStyleBackColor = True
-        '
-        'TextBox_Debug
-        '
-        Me.TextBox_Debug.BackColor = System.Drawing.SystemColors.Menu
-        Me.TableLayoutPanel2.SetColumnSpan(Me.TextBox_Debug, 2)
-        Me.TextBox_Debug.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TextBox_Debug.Location = New System.Drawing.Point(3, 3)
-        Me.TextBox_Debug.MaxLength = 65536
-        Me.TextBox_Debug.Multiline = True
-        Me.TextBox_Debug.Name = "TextBox_Debug"
-        Me.TextBox_Debug.ScrollBars = System.Windows.Forms.ScrollBars.Both
-        Me.TextBox_Debug.Size = New System.Drawing.Size(764, 243)
-        Me.TextBox_Debug.TabIndex = 0
-        '
         'TabPage_SysUpdate
         '
         Me.TabPage_SysUpdate.Controls.Add(Me.TableLayoutPanel_SysUpdate)
@@ -759,6 +712,78 @@ Partial Class MainForm
         Me.WL_AppUpdate.Size = New System.Drawing.Size(764, 29)
         Me.WL_AppUpdate.TabIndex = 1
         '
+        'TabPage_SysSettings
+        '
+        Me.TabPage_SysSettings.Controls.Add(Me.Button1)
+        Me.TabPage_SysSettings.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage_SysSettings.Name = "TabPage_SysSettings"
+        Me.TabPage_SysSettings.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage_SysSettings.Size = New System.Drawing.Size(776, 285)
+        Me.TabPage_SysSettings.TabIndex = 8
+        Me.TabPage_SysSettings.Text = "Системные настройки"
+        Me.TabPage_SysSettings.UseVisualStyleBackColor = True
+        '
+        'Button1
+        '
+        Me.Button1.Location = New System.Drawing.Point(8, 6)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(79, 33)
+        Me.Button1.TabIndex = 0
+        Me.Button1.Tag = "1"
+        Me.Button1.Text = "Button1"
+        Me.Button1.UseVisualStyleBackColor = True
+        '
+        'TabPage_Debug
+        '
+        Me.TabPage_Debug.Controls.Add(Me.TableLayoutPanel2)
+        Me.TabPage_Debug.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage_Debug.Name = "TabPage_Debug"
+        Me.TabPage_Debug.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage_Debug.Size = New System.Drawing.Size(776, 285)
+        Me.TabPage_Debug.TabIndex = 1
+        Me.TabPage_Debug.Text = "Лог"
+        Me.TabPage_Debug.UseVisualStyleBackColor = True
+        '
+        'TableLayoutPanel2
+        '
+        Me.TableLayoutPanel2.ColumnCount = 2
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel2.Controls.Add(Me.ClearLog_Button, 0, 0)
+        Me.TableLayoutPanel2.Controls.Add(Me.TextBox_Debug, 0, 0)
+        Me.TableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel2.Location = New System.Drawing.Point(3, 3)
+        Me.TableLayoutPanel2.Name = "TableLayoutPanel2"
+        Me.TableLayoutPanel2.RowCount = 2
+        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel2.Size = New System.Drawing.Size(770, 279)
+        Me.TableLayoutPanel2.TabIndex = 0
+        '
+        'ClearLog_Button
+        '
+        Me.TableLayoutPanel2.SetColumnSpan(Me.ClearLog_Button, 2)
+        Me.ClearLog_Button.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.ClearLog_Button.Location = New System.Drawing.Point(3, 252)
+        Me.ClearLog_Button.Name = "ClearLog_Button"
+        Me.ClearLog_Button.Size = New System.Drawing.Size(764, 24)
+        Me.ClearLog_Button.TabIndex = 2
+        Me.ClearLog_Button.Text = "Очистить лог"
+        Me.ClearLog_Button.UseVisualStyleBackColor = True
+        '
+        'TextBox_Debug
+        '
+        Me.TextBox_Debug.BackColor = System.Drawing.SystemColors.Menu
+        Me.TableLayoutPanel2.SetColumnSpan(Me.TextBox_Debug, 2)
+        Me.TextBox_Debug.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TextBox_Debug.Location = New System.Drawing.Point(3, 3)
+        Me.TextBox_Debug.MaxLength = 65536
+        Me.TextBox_Debug.Multiline = True
+        Me.TextBox_Debug.Name = "TextBox_Debug"
+        Me.TextBox_Debug.ScrollBars = System.Windows.Forms.ScrollBars.Both
+        Me.TextBox_Debug.Size = New System.Drawing.Size(764, 243)
+        Me.TextBox_Debug.TabIndex = 0
+        '
         'TabPage_About
         '
         Me.TabPage_About.Controls.Add(Me.WL_About)
@@ -777,10 +802,10 @@ Partial Class MainForm
         Me.WL_About.Property_Name = Nothing
         Me.WL_About.Size = New System.Drawing.Size(776, 285)
         Me.WL_About.TabIndex = 0
+        Me.WL_About.Text_Button_SendIssueApp = "Отзыв о программе"
         Me.WL_About.Text_Button_SendIssueCore = "Отзыв о ядре"
-        Me.WL_About.Text_Button_SendIssueHelper = "Отзыв о программе"
         Me.WL_About.Text_Button_SendIssueLocalization = "Отзыв о локализации"
-        Me.WL_About.Text_Label__SendIssueLocalization = "Отправить отзыв о проблеме или ошибкае в переводе"
+        Me.WL_About.Text_Label_SendIssueLocalization = "Отправить отзыв о проблеме или ошибке в переводе"
         Me.WL_About.Text_Label_SendIssueApp = "Отправить отзыв о проблеме с Программой"
         Me.WL_About.Text_Label_SendIssueCore = "Отправить отзыв о не подписанном ядре"
         Me.WL_About.URL_SendIssueApp = Nothing
@@ -815,11 +840,12 @@ Partial Class MainForm
         Me.TabPage_GameProfiles.ResumeLayout(False)
         Me.TableLayoutPanel5.ResumeLayout(False)
         Me.TableLayoutPanel5.PerformLayout()
+        Me.TabPage_SysUpdate.ResumeLayout(False)
+        Me.TableLayoutPanel_SysUpdate.ResumeLayout(False)
+        Me.TabPage_SysSettings.ResumeLayout(False)
         Me.TabPage_Debug.ResumeLayout(False)
         Me.TableLayoutPanel2.ResumeLayout(False)
         Me.TableLayoutPanel2.PerformLayout()
-        Me.TabPage_SysUpdate.ResumeLayout(False)
-        Me.TableLayoutPanel_SysUpdate.ResumeLayout(False)
         Me.TabPage_About.ResumeLayout(False)
         Me.ResumeLayout(False)
 
@@ -887,4 +913,6 @@ Partial Class MainForm
     Friend WithEvents WL_AppUpdate As WL_AppUpdate
     Friend WithEvents TabPage_About As TabPage
     Friend WithEvents WL_About As WL_About
+    Friend WithEvents TabPage_SysSettings As TabPage
+    Friend WithEvents Button1 As Button
 End Class

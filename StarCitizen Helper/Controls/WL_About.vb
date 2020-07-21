@@ -47,7 +47,7 @@ Public Class WL_About
         End Set
     End Property
 
-    Public Property Text_Button_SendIssueHelper() As String
+    Public Property Text_Button_SendIssueApp() As String
         Get
             Return Me.Button_SendIssueApp.Text
         End Get
@@ -83,12 +83,12 @@ Public Class WL_About
         End Set
     End Property
 
-    Public Property Text_Label__SendIssueLocalization() As String
+    Public Property Text_Label_SendIssueLocalization() As String
         Get
-            Return Me.Label__SendIssueLocalization.Text
+            Return Me.Label_SendIssueLocalization.Text
         End Get
         Set(ByVal Value As String)
-            Me.Label__SendIssueLocalization.Text = Value
+            Me.Label_SendIssueLocalization.Text = Value
         End Set
     End Property
 

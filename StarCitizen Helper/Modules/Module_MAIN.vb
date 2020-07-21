@@ -4,6 +4,7 @@ Imports SC.Class_GIT.Class_GitUpdateList
 
 Module Module_MAIN
     Public Initialization As Boolean = True
+    Public _LANG As New Class_Lang
     Public MAIN_THREAD As MainForm
     Public _KEYS As Class_KEYS
     Public _FSO As New Class_FSO
@@ -41,10 +42,15 @@ Module Module_MAIN
         _VARS.PackageGitURL_Page = "https://github.com/n1ghter/SC_ru"
         _VARS.PackageGitURL_Api = "https://api.github.com/repos/n1ghter/SC_ru/releases"
 
+        _VARS.LangFolder_Name = "lang"
+        _VARS.LangFile_Name = "russian.txt"
+        _LANG._LOAD(_FSO._CombinePath(_APP.exePath, _VARS.LangFolder_Name, "russian.txt"))
         Module_HELPER.CheckConfigFile()
     End Sub
 
     Public Sub InitializeEnd()
+        SetLanguageLink()
+
         MAIN_THREAD.Text = _APP.appName & " " & _APP.Version
         MAIN_THREAD.NotifyIcon1.Text = _APP.appName
 
@@ -62,7 +68,7 @@ Module Module_MAIN
         MAIN_THREAD.WL_Pack.Property_UpdateTargetName = "пакета локализации"
 
         Module_HELPER.LoadConfigFile()
-        CheckUpdateStatus
+        CheckUpdateStatus()
 
         If _VARS.AppLatestDate = New DateTime Then _VARS.AppLatestDate = DateTime.Now
         MAIN_THREAD.WL_SysUpdateCheck.Property_DateOnline = _VARS.AppLatestDate
@@ -177,8 +183,10 @@ Module Module_MAIN
         Public AppLatestDate As DateTime = Nothing
         Public ResetConfig As Boolean = False
 
-        'ConfigFile
+        'Config
         Public ConfigFileIsOK As Boolean = False
+        Public LangFolder_Name As String = Nothing
+        Public LangFile_Name As String = Nothing
 
         'Patcher
         Public GameName As String = Nothing

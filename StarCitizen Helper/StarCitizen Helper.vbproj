@@ -190,6 +190,7 @@
     <Compile Include="Forms\SysUpdate_Form.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Modules\Module_LANG.vb" />
     <Compile Include="Modules\Module_APP.vb" />
     <Compile Include="Modules\Module_CRYPTO.vb" />
     <Compile Include="Modules\Module_ERR.vb" />
@@ -198,6 +199,7 @@
     <Compile Include="Modules\Module_HELPER.vb" />
     <Compile Include="Modules\Module_INI.vb" />
     <Compile Include="Modules\Module_KEYS.vb" />
+    <Compile Include="Modules\Module_LANG_LINK.vb" />
     <Compile Include="Modules\Module_LOG.vb" />
     <Compile Include="Modules\Module_MAIN.vb" />
     <Compile Include="Modules\Module_INET.vb" />
