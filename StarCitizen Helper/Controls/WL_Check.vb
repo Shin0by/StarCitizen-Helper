@@ -67,6 +67,24 @@ Public Class WL_Check
         End Set
     End Property
 
+    Public Property Property_Text_Group_Installed() As String
+        Get
+            Return Me.GroupBox1.Text
+        End Get
+        Set(ByVal Value As String)
+            Me.GroupBox1.Text = Value
+        End Set
+    End Property
+
+    Public Property Property_Text_Group_Actual() As String
+        Get
+            Return Me.GroupBox2.Text
+        End Get
+        Set(ByVal Value As String)
+            Me.GroupBox2.Text = Value
+        End Set
+    End Property
+
     Public Property Property_Text_Label_Name_CurentVersion() As String
         Get
             Return Me.Label_Name_CurentVersion.Text

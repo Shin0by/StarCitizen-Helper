@@ -29,10 +29,10 @@ Partial Class WL_Pack
         Me.Button_Download = New System.Windows.Forms.Button()
         Me.Label_Download = New System.Windows.Forms.Label()
         Me.Label_InstallFull = New System.Windows.Forms.Label()
-        Me.WL_Download = New SC.WL_Download()
         Me.CheckBox_ShowTestBuild = New System.Windows.Forms.CheckBox()
-        Me.WL_PackUpdateCheck = New SC.WL_Check()
         Me.BackgroundWorker = New System.ComponentModel.BackgroundWorker()
+        Me.WL_Download = New SC.WL_Download()
+        Me.WL_PackUpdateCheck = New SC.WL_Check()
         Me.TableLayoutPanel.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -121,7 +121,7 @@ Partial Class WL_Pack
         Me.Label_Download.Name = "Label_Download"
         Me.Label_Download.Size = New System.Drawing.Size(436, 24)
         Me.Label_Download.TabIndex = 2
-        Me.Label_Download.Text = "Загрузка выбранного пакета обновлений"
+        Me.Label_Download.Text = "Загрузка выбранного пакета обновлений (включая ядро)"
         Me.Label_Download.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'Label_InstallFull
@@ -136,6 +136,22 @@ Partial Class WL_Pack
         Me.Label_InstallFull.TabIndex = 8
         Me.Label_InstallFull.Text = "Локализация и шрифты"
         Me.Label_InstallFull.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'CheckBox_ShowTestBuild
+        '
+        Me.CheckBox_ShowTestBuild.AutoSize = True
+        Me.CheckBox_ShowTestBuild.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.CheckBox_ShowTestBuild.Location = New System.Drawing.Point(223, 3)
+        Me.CheckBox_ShowTestBuild.Name = "CheckBox_ShowTestBuild"
+        Me.CheckBox_ShowTestBuild.Size = New System.Drawing.Size(214, 24)
+        Me.CheckBox_ShowTestBuild.TabIndex = 15
+        Me.CheckBox_ShowTestBuild.Text = "Отображать тестовые сборки"
+        Me.CheckBox_ShowTestBuild.UseVisualStyleBackColor = True
+        '
+        'BackgroundWorker
+        '
+        Me.BackgroundWorker.WorkerReportsProgress = True
+        Me.BackgroundWorker.WorkerSupportsCancellation = True
         '
         'WL_Download
         '
@@ -153,17 +169,6 @@ Partial Class WL_Pack
         Me.WL_Download.Size = New System.Drawing.Size(660, 88)
         Me.WL_Download.TabIndex = 14
         '
-        'CheckBox_ShowTestBuild
-        '
-        Me.CheckBox_ShowTestBuild.AutoSize = True
-        Me.CheckBox_ShowTestBuild.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.CheckBox_ShowTestBuild.Location = New System.Drawing.Point(223, 3)
-        Me.CheckBox_ShowTestBuild.Name = "CheckBox_ShowTestBuild"
-        Me.CheckBox_ShowTestBuild.Size = New System.Drawing.Size(214, 24)
-        Me.CheckBox_ShowTestBuild.TabIndex = 15
-        Me.CheckBox_ShowTestBuild.Text = "Отображать тестовые сборки"
-        Me.CheckBox_ShowTestBuild.UseVisualStyleBackColor = True
-        '
         'WL_PackUpdateCheck
         '
         Me.WL_PackUpdateCheck.Dock = System.Windows.Forms.DockStyle.Fill
@@ -175,6 +180,8 @@ Partial Class WL_Pack
         Me.WL_PackUpdateCheck.Property_GitListInterval = 90000
         Me.WL_PackUpdateCheck.Property_Name = Nothing
         Me.WL_PackUpdateCheck.Property_SetupFileName = Nothing
+        Me.WL_PackUpdateCheck.Property_Text_Group_Actual = "Актуальная версия"
+        Me.WL_PackUpdateCheck.Property_Text_Group_Installed = "Установлена версия"
         Me.WL_PackUpdateCheck.Property_Text_Label_Name_CurentVersion = ""
         Me.WL_PackUpdateCheck.Property_Text_Label_Name_OnlineDate = ""
         Me.WL_PackUpdateCheck.Property_Text_Label_Name_OnlineInformation = ""
@@ -191,11 +198,6 @@ Partial Class WL_Pack
         Me.WL_PackUpdateCheck.Size = New System.Drawing.Size(216, 24)
         Me.WL_PackUpdateCheck.TabIndex = 16
         Me.WL_PackUpdateCheck.Visible = False
-        '
-        'BackgroundWorker
-        '
-        Me.BackgroundWorker.WorkerReportsProgress = True
-        Me.BackgroundWorker.WorkerSupportsCancellation = True
         '
         'WL_Pack
         '

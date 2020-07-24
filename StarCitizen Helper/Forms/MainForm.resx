@@ -8495,17 +8495,17 @@
   <metadata name="OpenFileDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>293, 15</value>
   </metadata>
-  <data name="Label1.Text" xml:space="preserve">
+  <data name="Label_ProcessKillerBottomInfo.Text" xml:space="preserve">
     <value>Завершение процессов - это функция, позволяющая завершить указанные процессы одним нажатием выбранной горячей клавиши.
 Данный функционал полезен, когда требуется завершить зависшее приложение, которое нельзя свернуть и получить доступ к диспетчеру задач.
 
 Для корректной работы требуется запуск программы с правами Администратора.
 Вы можете указать один или несколько процессов и все они будут завершены одновременно, если были запущены.</value>
   </data>
-  <metadata name="ProcessKillerModKey_ComboBox.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="ComboBox_ProcessKillerModKey.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <data name="Label2.Text" xml:space="preserve">
+  <data name="Label_ProfilesBottomInfo.Text" xml:space="preserve">
     <value>Позволяет быстро переименовать папку LIVE, PTU, EPTU.
 
 Опция [Предварительное завершение] предварительно завершит процесс игры и лаунчера (если они были запущены), после чего выполнит переименование папки [LIVE, PTU, EPTU]. Данная опция не связана со списком указанных процессов в [Завершение процессов] и завершает только конкретные процессы игры и лаунчера.

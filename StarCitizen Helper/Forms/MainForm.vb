@@ -2,8 +2,8 @@
 
     '<----------------------------------- Form
     Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        MAIN_THREAD.WL_Mod.Text_Label_Bottom = "Внимание! Все действия во вкладке [" & Me.TabPage_Patch.Text & "] Вы выполняете на свой страх и риск." & vbNewLine & "Задействование функции [" & Me.WL_Mod.Text_Button_Enable & "] нарушит условия лицензионного соглашения с CIG." & vbNewLine & vbNewLine & "Для включения или выключения модификации необходимо загрузить ядро модификаций и локализацию входящие в пакет обновлений. Для этого перейдите во вкладку [" & Me.TabPage_Packages.Text & "] и следуйте инструкциям." & vbNewLine & vbNewLine & "Примечание: Если был загружен и установлен новый пакет обновлений, то необходимо выключить и включить ядро модификаций, это задействует соответствующую версию ядра для соответствующей локализации. Программа не вносит изменния в исполняемый фалы игры, но модифицирует память и когда игра запускается, это значительно сложнее выявить." & vbNewLine & vbNewLine & "Автор программы против читов и бесчестной игры, данная программа не несет подобного функционала."
-        MAIN_THREAD.WL_Pack.Text_Label_Bottom = "Для загрузки пакета обновлений выберите в выпадающем списке актуальный пакет обновлений и нажмите [" & Me.WL_Pack.Text_Button_Download & "]. По завершении загрузки нажмите [" & Me.WL_Pack.Text_Button_InstallFull & "] - это установит необходимые файлы локализации в папку игры." & vbNewLine & "Для активации локализации требуется установить и включить ядро модификаций, для этого перейдите во вкладку [" & Me.TabPage_Patch.Text & "] и нажмите [" & Me.WL_Mod.Text_Button_Enable & "]." & vbNewLine & vbNewLine & "Примечание: Пакет локализации [Master] - это последняя версия сборки, еще не прошедшей проверку (не рекомендуется к установке)."
+
+
     End Sub
 
 
@@ -32,10 +32,10 @@
     Private Sub CheckBox_KillerThread_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox_KillerThread.CheckedChanged
         If Me.CheckBox_KillerThread.Checked = True Then
             If _KEYS.ThreadState = False Then _KEYS.ThreadStart()
-            Me.Label_KillerThread.Text = "Функция активирована"
+            Me.Label_KillerThread.Text = _LANG._Get("FunctionEnabled")
         Else
             _KEYS.ThreadStop()
-            Me.Label_KillerThread.Text = "Функция выключена"
+            Me.Label_KillerThread.Text = _LANG._Get("FunctionDisabled")
         End If
 
         _VARS.PKillerEnabled = Me.CheckBox_KillerThread.Checked
@@ -43,74 +43,74 @@
         _INI._Write("CONFIGURATION", "PKILLER_ENABLED", BoolToString(_VARS.PKillerEnabled))
     End Sub
 
-    Private Sub SetKeyKill_Button_Click(sender As Object, e As EventArgs) Handles SetKeyKill_Button.Click
-        SetKeyKill_Button.Enabled = False
+    Private Sub SetKeyKill_Button_Click(sender As Object, e As EventArgs) Handles Button_SetKeyKill.Click
+        Button_SetKeyKill.Enabled = False
         If _KEYS.ThreadState = False Then _KEYS.ThreadStart()
         Dim NewKey As Class_KEYS.Class_KEY = _KEYS._SetNewKey
         _VARS.PKillerKeyID = NewKey.ID
         _KEYS._Clear()
-        _KEYS._Add(_VARS.PKillerKeyID, KeyModifierListToKeys(Me.ProcessKillerModKey_ComboBox.SelectedIndex), "KillProcess", _VARS.PKillerKeyID)
+        _KEYS._Add(_VARS.PKillerKeyID, KeyModifierListToKeys(Me.ComboBox_ProcessKillerModKey.SelectedIndex), "KillProcess", _VARS.PKillerKeyID)
 
         _INI._Write("CONFIGURATION", "PKILLER_KEY", _VARS.PKillerKeyID)
         My.Computer.Audio.Play(My.Resources.process_kill, AudioPlayMode.Background)
         If _VARS.PKillerEnabled = False Then _KEYS.ThreadStop()
-        Me.SetKeyKill_Button.Enabled = True
+        Me.Button_SetKeyKill.Enabled = True
         UpdateInterface()
     End Sub
 
-    Private Sub ProcessKillerModKey_ComboBox_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ProcessKillerModKey_ComboBox.SelectedIndexChanged
+    Private Sub ProcessKillerModKey_ComboBox_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox_ProcessKillerModKey.SelectedIndexChanged
         If Initialization = True Then Exit Sub
-        _VARS.PKillerKeyMod = Me.ProcessKillerModKey_ComboBox.SelectedIndex
-        Me.Label_ProcessKillerModKey.Text = "Имя клавиши: " & Chr(34) & _KEYS._GetKeyNameByID(KeyModifierListToKeys(Me.ProcessKillerModKey_ComboBox.SelectedIndex)) & Chr(34) & vbNewLine & "ID клавиши: " & KeyModifierListToKeys(Me.ProcessKillerModKey_ComboBox.SelectedIndex)
+        _VARS.PKillerKeyMod = Me.ComboBox_ProcessKillerModKey.SelectedIndex
+        Me.Label_ProcessKillerModKey.Text = _LANG._Get("ProcessKiller_MSG_KeyInfo", _KEYS._GetKeyNameByID(KeyModifierListToKeys(Me.ComboBox_ProcessKillerModKey.SelectedIndex)), KeyModifierListToKeys(Me.ComboBox_ProcessKillerModKey.SelectedIndex))
         _KEYS._Clear()
-        _KEYS._Add(_VARS.PKillerKeyID, KeyModifierListToKeys(Me.ProcessKillerModKey_ComboBox.SelectedIndex), "KillProcess", _VARS.PKillerKeyID)
+        _KEYS._Add(_VARS.PKillerKeyID, KeyModifierListToKeys(Me.ComboBox_ProcessKillerModKey.SelectedIndex), "KillProcess", _VARS.PKillerKeyID)
         _INI._Write("CONFIGURATION", "PKILLER_MOD", _VARS.PKillerKeyMod)
     End Sub
 
-    Private Sub AddProccessKill_Button_Click(sender As Object, e As EventArgs) Handles AddProccessKill_Button.Click
-        If Len(Trim(Me.AddProccessKill_TextBox.Text)) = 0 Then
-            _LOG._sAdd("WINDOW_FORM", "Требуется указать имя процесса")
+    Private Sub AddProccessKill_Button_Click(sender As Object, e As EventArgs) Handles Button_AddProccessKill.Click
+        If Len(Trim(Me.TextBox_AddProccessKill.Text)) = 0 Then
+            _LOG._sAdd("WINDOW_FORM", _LANG._Get("ProcessKiller_MSG_ProcessRequiredName"))
             Exit Sub
         End If
-        For Each line In Me.ProccessKill_CheckedListBox.Items
-            If LCase(line) = LCase(AddProccessKill_TextBox.Text) Then
-                _LOG._sAdd("WINDOW_FORM", "Указанный процесс уже в списке")
+        For Each line In Me.CheckedListBox_ProccessKill.Items
+            If LCase(line) = LCase(TextBox_AddProccessKill.Text) Then
+                _LOG._sAdd("WINDOW_FORM", _LANG._Get("ProcessKiller_MSG_ProcessAlreadyInList"))
                 Exit Sub
             End If
         Next
-        Me.ProccessKill_CheckedListBox.Items.Add(AddProccessKill_TextBox.Text)
-        Me.AddProccessKill_TextBox.Text = Nothing
-        Me.RemoveProccessKill_Button.Enabled = True
-        ProccessKill_CheckedListBox_Update(ProccessKill_CheckedListBox, False)
+        Me.CheckedListBox_ProccessKill.Items.Add(TextBox_AddProccessKill.Text)
+        Me.TextBox_AddProccessKill.Text = Nothing
+        Me.Button_RemoveProccessKill.Enabled = True
+        ProccessKill_CheckedListBox_Update(CheckedListBox_ProccessKill, False)
     End Sub
 
-    Private Sub RemoveProccessKill_Button_Click(sender As Object, e As EventArgs) Handles RemoveProccessKill_Button.Click
-        If Me.ProccessKill_CheckedListBox.SelectedIndex = -1 Then
-            _LOG._sAdd("WINDOW_FORM", "Требуется выбрать имя процесса")
+    Private Sub RemoveProccessKill_Button_Click(sender As Object, e As EventArgs) Handles Button_RemoveProccessKill.Click
+        If Me.CheckedListBox_ProccessKill.SelectedIndex = -1 Then
+            _LOG._sAdd("WINDOW_FORM", _LANG._Get("ProcessKiller_MSG_ProcessSelectFromList"))
             Exit Sub
         End If
-        Me.ProccessKill_CheckedListBox.Items.RemoveAt(ProccessKill_CheckedListBox.SelectedIndex)
-        If ProccessKill_CheckedListBox.Items.Count = 0 Then RemoveProccessKill_Button.Enabled = False
-        ProccessKill_CheckedListBox_Update(ProccessKill_CheckedListBox, False)
+        Me.CheckedListBox_ProccessKill.Items.RemoveAt(CheckedListBox_ProccessKill.SelectedIndex)
+        If CheckedListBox_ProccessKill.Items.Count = 0 Then Button_RemoveProccessKill.Enabled = False
+        ProccessKill_CheckedListBox_Update(CheckedListBox_ProccessKill, False)
     End Sub
 
-    Private Sub AddProccessKill_TextBox_TextChanged(sender As Object, e As EventArgs) Handles AddProccessKill_TextBox.TextChanged
-        Me.ProccessList_ListBox.Items.Clear()
-        If Len(AddProccessKill_TextBox.Text) < 1 Then Exit Sub
-        Dim pList As List(Of Process) = _PROCESS._Get(AddProccessKill_TextBox.Text)
+    Private Sub AddProccessKill_TextBox_TextChanged(sender As Object, e As EventArgs) Handles TextBox_AddProccessKill.TextChanged
+        Me.ListBox_ProccessList.Items.Clear()
+        If Len(TextBox_AddProccessKill.Text) < 1 Then Exit Sub
+        Dim pList As List(Of Process) = _PROCESS._Get(TextBox_AddProccessKill.Text)
         For Each elem In pList
-            Me.ProccessList_ListBox.Items.Add(elem.ProcessName)
+            Me.ListBox_ProccessList.Items.Add(elem.ProcessName)
         Next
     End Sub
 
-    Private Sub ProccessKill_CheckedListBox_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ProccessKill_CheckedListBox.SelectedIndexChanged
-        ProccessKill_CheckedListBox_Update(ProccessKill_CheckedListBox, False)
+    Private Sub ProccessKill_CheckedListBox_SelectedIndexChanged(sender As Object, e As EventArgs) Handles CheckedListBox_ProccessKill.SelectedIndexChanged
+        ProccessKill_CheckedListBox_Update(CheckedListBox_ProccessKill, False)
     End Sub
 
-    Private Sub ProccessList_ListBox_MouseClick(sender As Object, e As MouseEventArgs) Handles ProccessList_ListBox.MouseClick
+    Private Sub ProccessList_ListBox_MouseClick(sender As Object, e As MouseEventArgs) Handles ListBox_ProccessList.MouseClick
         On Error Resume Next
-        If Len(ProccessList_ListBox.SelectedItem.ToString) > 0 Then
-            Me.AddProccessKill_TextBox.Text = ProccessList_ListBox.SelectedItem.ToString
+        If Len(ListBox_ProccessList.SelectedItem.ToString) > 0 Then
+            Me.TextBox_AddProccessKill.Text = ListBox_ProccessList.SelectedItem.ToString
         End If
     End Sub
     '-----------------------------------> 'Process killer
@@ -215,10 +215,10 @@
         'Hide menu
         If Me.Visible = False Then
             Me.Show()
-            Me.ShowWinToolStripMenuItem.Text = "Скрыть программу"
+            Me.ShowWinToolStripMenuItem.Text = _LANG._Get("Menu_Main_HideApp")
         Else
             Me.Hide()
-            Me.ShowWinToolStripMenuItem.Text = "Отобразить программу"
+            Me.ShowWinToolStripMenuItem.Text = _LANG._Get("Menu_Main_ShowApp")
         End If
     End Sub
 
@@ -278,19 +278,19 @@
         'PKIller
         Me.CheckBox_KillerThread.Checked = _VARS.PKillerEnabled
         Me.KillerThread_ToolStripMenuItem.Checked = _VARS.PKillerEnabled
-        Me.ProcessKillerModKey_ComboBox.SelectedIndex = _VARS.PKillerKeyMod
+        Me.ComboBox_ProcessKillerModKey.SelectedIndex = _VARS.PKillerKeyMod
         If _VARS.PKillerKeyID = 0 Then
-            Me.Label_SetKeyKill.Text = "Клавиша модификатор не задана"
+            Me.Label_SetKeyKill.Text = _LANG._Get("ProcessKiller_ListInfo_KeyModifier")
         Else
-            Me.Label_ProcessKillerModKey.Text = "Имя клавиши: " & Chr(34) & _KEYS._GetKeyNameByID(KeyModifierListToKeys(Me.ProcessKillerModKey_ComboBox.SelectedIndex)) & Chr(34) & vbNewLine & "ID клавиши: " & KeyModifierListToKeys(Me.ProcessKillerModKey_ComboBox.SelectedIndex)
+            Me.Label_ProcessKillerModKey.Text = _LANG._Get("ProcessKiller_MSG_KeyInfo", _KEYS._GetKeyNameByID(KeyModifierListToKeys(Me.ComboBox_ProcessKillerModKey.SelectedIndex)), KeyModifierListToKeys(Me.ComboBox_ProcessKillerModKey.SelectedIndex))
         End If
 
-        If ProccessKill_CheckedListBox_Update(Me.ProccessKill_CheckedListBox, True) > 0 Then Me.RemoveProccessKill_Button.Enabled = True
+        If ProccessKill_CheckedListBox_Update(Me.CheckedListBox_ProccessKill, True) > 0 Then Me.Button_RemoveProccessKill.Enabled = True
         If _VARS.PKillerKeyID = 0 Then
-            Me.Label_SetKeyKill.Text = "Горячая клавиша не задана"
+            Me.Label_SetKeyKill.Text = _LANG._Get("ProcessKiller_ButtonInfo_SetHotKey")
         Else
-            Me.Label_SetKeyKill.Text = "Имя клавиши: " & Chr(34) & _KEYS._GetKeyNameByID(_VARS.PKillerKeyID) & Chr(34) & vbNewLine & "ID клавиши: " & _VARS.PKillerKeyID
-            _KEYS._Add(_VARS.PKillerKeyID, KeyModifierListToKeys(ProcessKillerModKey_ComboBox.SelectedIndex), "KillProcess", _VARS.PKillerKeyID)
+            Me.Label_SetKeyKill.Text = _LANG._Get("ProcessKiller_MSG_KeyInfo", _KEYS._GetKeyNameByID(_VARS.PKillerKeyID), _VARS.PKillerKeyID)
+            _KEYS._Add(_VARS.PKillerKeyID, KeyModifierListToKeys(ComboBox_ProcessKillerModKey.SelectedIndex), "KillProcess", _VARS.PKillerKeyID)
         End If
 
         'Profiles
@@ -331,7 +331,7 @@
         MAIN_THREAD.WL_Mod.Property_ModInPackFileVersion = MAIN_THREAD.WL_Pack.Property_PackInPackVersion
         MAIN_THREAD.WL_Mod._Update()
         Me.UpdateInterface()
-        _LOG._sAdd("WINDOW_FORM", "Начата верификация ядра", "Файл: " & MAIN_THREAD.WL_Mod.Property_PatchSrcFilePath, 2, 0)
+        _LOG._sAdd("WINDOW_FORM", _LANG._Get("Core_MSG_BeginVerification"), _LANG._Get("l_File", MAIN_THREAD.WL_Mod.Property_PatchSrcFilePath), 2, 0)
         VerifyFile(MAIN_THREAD.WL_Mod.Property_PatchSrcFilePath)
     End Sub
 
@@ -353,7 +353,7 @@
         SubLine.List.Add("Дата: " & LatestElement._published)
         SubLine.List.Add("")
         If SenderName.Name = Me.WL_SysUpdateCheck.Name Then
-            SubLine.List.Add("Описание изменений доступно во вкладке [" & Me.TabPage_SysUpdate.Text & "] или на Git странице проекта")
+            SubLine.List.Add(_LANG._Get("SysUpdate_MSG_ChangesInfo", Me.TabPage_SysUpdate.Text))
             If _VARS.PackageLatestDate <> LatestElement._published Or _APP.Version <> LatestElement._tag_name Then
                 If _APP.Version = LatestElement._tag_name Then
                     _VARS.PackageLatestDate = LatestElement._published
@@ -372,14 +372,13 @@
                 End If
 
                 ListSubLine.Add(SubLine)
-                _LOG._Add(Me.GetType().Name, "Доступна новая версия " & Chr(34) & SenderName.Property_Name & Chr(34), ListSubLine, 0, 0)
+                _LOG._Add(Me.GetType().Name, _LANG._Get("l_NewVersionAvailable", SenderName.Property_Name), ListSubLine, 0, 0)
             End If
         End If
         If SenderName.Name = "WL_PackUpdateCheck" Then
-            SubLine.List.Add("Описание изменений доступно на Git странице проекта по адресу:")
-            SubLine.List.Add(Me.WL_Pack.Property_PackageGitURL_Page)
+            SubLine.List.Add(_LANG._Get("Pack_MSG_ChangesInfo", Me.WL_Pack.Property_PackageGitURL_Page))
             ListSubLine.Add(SubLine)
-            _LOG._Add(Me.GetType().Name, "Доступна новая версия " & Chr(34) & SenderName.Property_Name & Chr(34), ListSubLine, 0, 0)
+            _LOG._Add(Me.GetType().Name, _LANG._Get("l_NewVersionAvailable", SenderName.Property_Name), ListSubLine, 0, 0)
         End If
     End Sub
 
@@ -410,7 +409,8 @@
             _LANG._LOAD(_FSO._CombinePath(_APP.exePath, _VARS.LangFolder_Name, "english.txt"))
         End If
         _LANG._UpdateLinked()
-        Console.WriteLine(WL_About.Text_Button_SendIssueApp)
+        SetLanguageLink()
+        UpdateInterface()
     End Sub
 
 

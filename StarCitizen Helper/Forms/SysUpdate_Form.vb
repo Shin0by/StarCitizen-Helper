@@ -13,13 +13,12 @@
         If _FSO._FileExits(Me.WL_Download.DownloadTo) = True Then
             result = _FSO._DeleteFile(Me.WL_Download.DownloadTo)
             If result.Err._Flag = True Then
-                _LOG._sAdd("SysUpdate_FORM", "Ошибка при удалении файла", Me.WL_Download.DownloadTo, 2, result.Err._Number)
+                _LOG._sAdd("SysUpdate_FORM", _LANG._Get("File_MSG_CannotDelExsFile", Me.WL_Download.DownloadTo), Nothing, 2, result.Err._Number)
                 Me.Dispose()
             End If
         End If
 
-        Me.Label_Info.Text = "Внимание!" & vbNewLine & "При успешном завершении загрузки будет выполнено автоматическое обновление." & vbNewLine & "От пользователя может потребоваться разрешение на запуск файла [" & Me.sPatchDstFileName & "]" & vbNewLine & vbNewLine & "Путь к файлу: " & _FSO._CombinePath(Me.sPatchDstFilePath, Me.sPatchDstFileName)
-
+        Me.Label_Info.Text = _LANG._Get("SysUpdate_Bottom_Info", Me.sPatchDstFileName, _FSO._CombinePath(Me.sPatchDstFilePath, Me.sPatchDstFileName))
         Me.WL_Download.DownloadStart()
 
         'StartUpdate()
@@ -28,19 +27,17 @@
     Private Sub DownloadComplete(DownloadFrom As String, DownloadTo As String, e As WL_Download.DownloadProgressElement) Handles WL_Download._Event_Complete_Event
         Dim logLines As List(Of LOG_SubLine) = New List(Of LOG_SubLine)
         Dim logLine As LOG_SubLine = New LOG_SubLine
+        logLine.List.Add(_LANG._Get("l_SourceURL", DownloadFrom))
+        logLine.List.Add(_LANG._Get("l_Destination", DownloadTo))
         If e.Err IsNot Nothing Then
             logLine.Value = e.Err.Message
-            logLine.List.Add("Source URL: " & DownloadFrom)
-            logLine.List.Add("Destination: " & DownloadTo)
             logLines.Add(logLine)
-            _LOG._Add(Me.GetType().Name, "Ошибка загрузки:", logLines, 2)
+            _LOG._Add(Me.GetType().Name, _LANG._Get("ErrorDownload"), logLines, 2)
             _FSO._DeleteFile(DownloadTo)
         Else
-            logLine.Value = "Name: Системное обновление"
-            logLine.List.Add("Source URL: " & DownloadFrom)
-            logLine.List.Add("Destination: " & DownloadTo)
+            logLine.Value = _LANG._Get("SysUpdate_MSG_SysUpdateTitle")
             logLines.Add(logLine)
-            _LOG._Add(Me.GetType().Name, "Загрузка системного обновления успешно завершена:", logLines, 2)
+            _LOG._Add(Me.GetType().Name, _LANG._Get("l_UpdateComplete", _LANG._Get("SystemUpdateNameT")), logLines, 2)
             StartUpdate()
         End If
     End Sub

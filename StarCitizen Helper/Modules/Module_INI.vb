@@ -34,14 +34,14 @@ Module Module_INI
             Catch ex As Exception
                 Dim LogLine As New List(Of LOG_SubLine)
                 Dim LogSubLine As New LOG_SubLine
-                LogSubLine.List.Add("Подробности:")
-                LogSubLine.List.Add("Операция: Запись")
+                LogSubLine.List.Add(_LANG._Get("Information") & ":")
+                LogSubLine.List.Add(_LANG._Get("l_Operation", _LANG._Get("Write")))
                 LogSubLine.List.Add(Key & " = " & Value)
-                LogSubLine.List.Add("Файл: " & _APP.configName)
+                LogSubLine.List.Add(_LANG._Get("l_File", _APP.configName))
                 LogSubLine.List.Add("")
-                LogSubLine.List.Add("Описание:" & Err.Description)
+                LogSubLine.List.Add(_LANG._Get("l_Description", Err.Description))
                 LogLine.Add(LogSubLine)
-                _LOG._Add("INI", "Ошибка доступа к файлу конфигурации", LogLine, 1, Err.Number)
+                _LOG._Add("INI", _LANG._Get("File_MSG_ErrorAccessConfigFile"), LogLine, 1, Err.Number)
                 Return False
             End Try
         End Function
@@ -51,12 +51,13 @@ Module Module_INI
             result.Section = Section
             result.Key = Key
             result.Value = DefaultValue
-            result.ErrDescription = "Секция [" & Section & "] не найдена в файле " & _APP.configFullPath
+            result.ErrDescription = _LANG._Get("File_MSG_SectionNotFound", Section, _APP.configFullPath)
+
             Try
                 Dim Data As IniParser.Model.SectionDataCollection = Me.Config.ReadFile(Me.FilePath).sections
                 If Data.ContainsSection(Section) Then
                     If Data(Section).ContainsKey(Key) Then
-                        result.ErrDescription = "Не найден параметр [" & Key & "] для секции [" & Section & "] в файле " & _APP.configFullPath
+                        result.ErrDescription = _LANG._Get("File_MSG_ParameterNotFound", Key, Section, _APP.configFullPath)
                         If Len(Data(Section).GetKeyData(Key).Value) > 0 Then
 
                             If Variants Is Nothing Then

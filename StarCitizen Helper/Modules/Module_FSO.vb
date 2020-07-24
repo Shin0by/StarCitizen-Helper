@@ -281,15 +281,15 @@ Module Module_FSO
         Public Function _Add(sPath As String) As Boolean
             Dim fo As ResultClass = _FSO._GetInfo(sPath)
             If fo.Err._Flag = True Or fo.ValueObject Is Nothing Then
-                _LOG._Add("FILE_SYSTEM", "Не удалось включить наблюдение за файлом, файл отсутствует или доступ к нему ограничен", fo.LogList(sPath), 2)
+                _LOG._Add("FILE_SYSTEM", _LANG._Get("Watcher_MSG_AddErrorFileNotExist"), fo.LogList(sPath), 2)
                 Return False
             End If
             If _Get(sPath) IsNot Nothing Then
-                _LOG._sAdd("FILE_SYSTEM", "Не удалось включить наблюдение за файлом, файл уже в списке наблюдения", sPath, 3)
+                _LOG._sAdd("FILE_SYSTEM", _LANG._Get("Watcher_MSG_AddErrorAlreadyInList", sPath), Nothing, 3)
                 Return False
             End If
             Me.data.Add(fo.ValueObject)
-            _LOG._sAdd("FILE_SYSTEM", "Включено слежение за изменениями файла", sPath, 2)
+            _LOG._sAdd("FILE_SYSTEM", _LANG._Get("Watcher_MSG_AddOK", sPath), Nothing, 2)
             Return True
         End Function
 
@@ -322,13 +322,13 @@ Module Module_FSO
 
         Public Function _Update(sPath As String) As IO.FileInfo
             If _Get(sPath) Is Nothing Then
-                _LOG._sAdd("FILE_SYSTEM", "Запрос на обновление статуса файла не может быть выполнен, файл отсутствует в списке отслеживания изменений", sPath, 3)
+                _LOG._sAdd("FILE_SYSTEM", _LANG._Get("Watcher_MSG_ErrorRequest", sPath), Nothing, 3)
                 Return Nothing
             End If
 
             Dim fo As ResultClass = _FSO._GetInfo(sPath)
             If fo.Err._Flag = True Or fo.ValueObject Is Nothing Then
-                _LOG._Add("FILE_SYSTEM", "Не удалось получить обновленные данные по файлу, файл отсутствует или доступ к нему ограничен", fo.LogList(sPath), 2)
+                _LOG._Add("FILE_SYSTEM", _LANG._Get("Watcher_MSG_ErrorAccess"), fo.LogList(sPath), 2)
                 Return Nothing
             End If
 

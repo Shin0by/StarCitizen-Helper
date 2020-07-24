@@ -48,37 +48,33 @@ Partial Class MainForm
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
         Me.TabControl = New System.Windows.Forms.TabControl()
         Me.TabPage_Patch = New System.Windows.Forms.TabPage()
-        Me.WL_Mod = New SC.WL_Modification()
         Me.TabPage_Packages = New System.Windows.Forms.TabPage()
-        Me.WL_Pack = New SC.WL_Pack()
         Me.TabPage_Killer = New System.Windows.Forms.TabPage()
         Me.TableLayoutPanel4 = New System.Windows.Forms.TableLayoutPanel()
-        Me.Label1 = New System.Windows.Forms.Label()
+        Me.Label_ProcessKillerBottomInfo = New System.Windows.Forms.Label()
         Me.Label_SetKeyKill = New System.Windows.Forms.Label()
-        Me.AddProccessKill_Button = New System.Windows.Forms.Button()
+        Me.Button_AddProccessKill = New System.Windows.Forms.Button()
         Me.CheckBox_KillerThread = New System.Windows.Forms.CheckBox()
-        Me.SetKeyKill_Button = New System.Windows.Forms.Button()
+        Me.Button_SetKeyKill = New System.Windows.Forms.Button()
         Me.Label_KillerThread = New System.Windows.Forms.Label()
-        Me.ProcessKillerModKey_ComboBox = New System.Windows.Forms.ComboBox()
-        Me.RemoveProccessKill_Button = New System.Windows.Forms.Button()
-        Me.AddProccessKill_TextBox = New System.Windows.Forms.TextBox()
-        Me.ProccessList_ListBox = New System.Windows.Forms.ListBox()
+        Me.ComboBox_ProcessKillerModKey = New System.Windows.Forms.ComboBox()
+        Me.Button_RemoveProccessKill = New System.Windows.Forms.Button()
+        Me.TextBox_AddProccessKill = New System.Windows.Forms.TextBox()
+        Me.ListBox_ProccessList = New System.Windows.Forms.ListBox()
         Me.Label_ProcessKillerModKey = New System.Windows.Forms.Label()
         Me.Label4 = New System.Windows.Forms.Label()
-        Me.ProccessKill_CheckedListBox = New System.Windows.Forms.CheckedListBox()
+        Me.CheckedListBox_ProccessKill = New System.Windows.Forms.CheckedListBox()
         Me.TabPage_GameProfiles = New System.Windows.Forms.TabPage()
         Me.TableLayoutPanel5 = New System.Windows.Forms.TableLayoutPanel()
         Me.Button_ToEPTU = New System.Windows.Forms.Button()
         Me.CheckBox_BeforeKillProcess = New System.Windows.Forms.CheckBox()
         Me.Button_ToPTU = New System.Windows.Forms.Button()
-        Me.Label2 = New System.Windows.Forms.Label()
+        Me.Label_ProfilesBottomInfo = New System.Windows.Forms.Label()
         Me.Label_BeforeKillProcess = New System.Windows.Forms.Label()
         Me.Button_ToLIVE = New System.Windows.Forms.Button()
         Me.Label_ToLivePtu = New System.Windows.Forms.Label()
         Me.TabPage_SysUpdate = New System.Windows.Forms.TabPage()
         Me.TableLayoutPanel_SysUpdate = New System.Windows.Forms.TableLayoutPanel()
-        Me.WL_SysUpdateCheck = New SC.WL_Check()
-        Me.WL_AppUpdate = New SC.WL_AppUpdate()
         Me.TabPage_SysSettings = New System.Windows.Forms.TabPage()
         Me.Button1 = New System.Windows.Forms.Button()
         Me.TabPage_Debug = New System.Windows.Forms.TabPage()
@@ -86,8 +82,12 @@ Partial Class MainForm
         Me.ClearLog_Button = New System.Windows.Forms.Button()
         Me.TextBox_Debug = New System.Windows.Forms.TextBox()
         Me.TabPage_About = New System.Windows.Forms.TabPage()
-        Me.WL_About = New SC.WL_About()
         Me.Timer_LOG = New System.Windows.Forms.Timer(Me.components)
+        Me.WL_Mod = New SC.WL_Modification()
+        Me.WL_Pack = New SC.WL_Pack()
+        Me.WL_SysUpdateCheck = New SC.WL_Check()
+        Me.WL_AppUpdate = New SC.WL_AppUpdate()
+        Me.WL_About = New SC.WL_About()
         Me.ContextMenuStrip1.SuspendLayout()
         Me.TabControl.SuspendLayout()
         Me.TabPage_Patch.SuspendLayout()
@@ -265,31 +265,6 @@ Partial Class MainForm
         Me.TabPage_Patch.Text = "Модификация"
         Me.TabPage_Patch.UseVisualStyleBackColor = True
         '
-        'WL_Mod
-        '
-        Me.WL_Mod.BackColor = System.Drawing.SystemColors.ControlLightLight
-        Me.WL_Mod.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.WL_Mod.Location = New System.Drawing.Point(3, 3)
-        Me.WL_Mod.Name = "WL_Mod"
-        Me.WL_Mod.Property_GameExeFileName = Nothing
-        Me.WL_Mod.Property_GameExeFilePath = Nothing
-        Me.WL_Mod.Property_GameModFolderName = Nothing
-        Me.WL_Mod.Property_ModInGameFileVersion = Nothing
-        Me.WL_Mod.Property_ModInPackFileVersion = Nothing
-        Me.WL_Mod.Property_ModStatus = False
-        Me.WL_Mod.Property_PatchDstFileName = Nothing
-        Me.WL_Mod.Property_PatchDstFilePath = Nothing
-        Me.WL_Mod.Property_PatchSrcFileName = Nothing
-        Me.WL_Mod.Property_PatchSrcFilePath = Nothing
-        Me.WL_Mod.Size = New System.Drawing.Size(770, 279)
-        Me.WL_Mod.TabIndex = 0
-        Me.WL_Mod.Text_Button_Disable = "Выкл. модификацию"
-        Me.WL_Mod.Text_Button_Enable = "Вкл. модификацию"
-        Me.WL_Mod.Text_Button_Path = "Исполняемый файл"
-        Me.WL_Mod.Text_Label_Bottom = ""
-        Me.WL_Mod.Text_Label_ModOff = "Выключить модификацию"
-        Me.WL_Mod.Text_Label_ModOn = "Включить модификацию"
-        '
         'TabPage_Packages
         '
         Me.TabPage_Packages.Controls.Add(Me.WL_Pack)
@@ -300,36 +275,6 @@ Partial Class MainForm
         Me.TabPage_Packages.TabIndex = 2
         Me.TabPage_Packages.Text = "Локализация"
         Me.TabPage_Packages.UseVisualStyleBackColor = True
-        '
-        'WL_Pack
-        '
-        Me.WL_Pack.BackColor = System.Drawing.SystemColors.ControlLightLight
-        Me.WL_Pack.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.WL_Pack.Location = New System.Drawing.Point(3, 3)
-        Me.WL_Pack.Name = "WL_Pack"
-        Me.WL_Pack.Property_DateOnline = New Date(CType(0, Long))
-        Me.WL_Pack.Property_GitList_AutoUpdate = True
-        Me.WL_Pack.Property_GitList_Interval = 120000
-        Me.WL_Pack.Property_GitList_SelString = Nothing
-        Me.WL_Pack.Property_Name_File_Download = Nothing
-        Me.WL_Pack.Property_Name_File_Meta = Nothing
-        Me.WL_Pack.Property_PackageGitURL_Api = Nothing
-        Me.WL_Pack.Property_PackageGitURL_Master = Nothing
-        Me.WL_Pack.Property_PackageGitURL_Page = Nothing
-        Me.WL_Pack.Property_PackInGameVersion = Nothing
-        Me.WL_Pack.Property_Path_File_Download = Nothing
-        Me.WL_Pack.Property_Path_File_Meta = Nothing
-        Me.WL_Pack.Property_Path_Folder_Download = Nothing
-        Me.WL_Pack.Property_Path_Folder_Meta = Nothing
-        Me.WL_Pack.Property_ShowTestBuild = False
-        Me.WL_Pack.Property_UpdateTargetName = Nothing
-        Me.WL_Pack.Size = New System.Drawing.Size(770, 279)
-        Me.WL_Pack.TabIndex = 0
-        Me.WL_Pack.Text_Button_Download = "Загрузить пакет обновлений"
-        Me.WL_Pack.Text_Button_InstallFull = "Полная установка"
-        Me.WL_Pack.Text_Label_Bottom = ""
-        Me.WL_Pack.Text_Label_Download = "Загрузка выбранного пакета обновлений"
-        Me.WL_Pack.Text_Label_InstallFull = "Локализация и шрифты"
         '
         'TabPage_Killer
         '
@@ -348,19 +293,19 @@ Partial Class MainForm
         Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334!))
         Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
         Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334!))
-        Me.TableLayoutPanel4.Controls.Add(Me.Label1, 0, 6)
+        Me.TableLayoutPanel4.Controls.Add(Me.Label_ProcessKillerBottomInfo, 0, 6)
         Me.TableLayoutPanel4.Controls.Add(Me.Label_SetKeyKill, 1, 1)
-        Me.TableLayoutPanel4.Controls.Add(Me.AddProccessKill_Button, 0, 3)
+        Me.TableLayoutPanel4.Controls.Add(Me.Button_AddProccessKill, 0, 3)
         Me.TableLayoutPanel4.Controls.Add(Me.CheckBox_KillerThread, 0, 0)
-        Me.TableLayoutPanel4.Controls.Add(Me.SetKeyKill_Button, 0, 1)
+        Me.TableLayoutPanel4.Controls.Add(Me.Button_SetKeyKill, 0, 1)
         Me.TableLayoutPanel4.Controls.Add(Me.Label_KillerThread, 1, 0)
-        Me.TableLayoutPanel4.Controls.Add(Me.ProcessKillerModKey_ComboBox, 0, 2)
-        Me.TableLayoutPanel4.Controls.Add(Me.RemoveProccessKill_Button, 0, 4)
-        Me.TableLayoutPanel4.Controls.Add(Me.AddProccessKill_TextBox, 1, 3)
-        Me.TableLayoutPanel4.Controls.Add(Me.ProccessList_ListBox, 3, 0)
+        Me.TableLayoutPanel4.Controls.Add(Me.ComboBox_ProcessKillerModKey, 0, 2)
+        Me.TableLayoutPanel4.Controls.Add(Me.Button_RemoveProccessKill, 0, 4)
+        Me.TableLayoutPanel4.Controls.Add(Me.TextBox_AddProccessKill, 1, 3)
+        Me.TableLayoutPanel4.Controls.Add(Me.ListBox_ProccessList, 3, 0)
         Me.TableLayoutPanel4.Controls.Add(Me.Label_ProcessKillerModKey, 1, 2)
         Me.TableLayoutPanel4.Controls.Add(Me.Label4, 2, 3)
-        Me.TableLayoutPanel4.Controls.Add(Me.ProccessKill_CheckedListBox, 1, 4)
+        Me.TableLayoutPanel4.Controls.Add(Me.CheckedListBox_ProccessKill, 1, 4)
         Me.TableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TableLayoutPanel4.Location = New System.Drawing.Point(0, 0)
         Me.TableLayoutPanel4.Name = "TableLayoutPanel4"
@@ -375,18 +320,18 @@ Partial Class MainForm
         Me.TableLayoutPanel4.Size = New System.Drawing.Size(776, 285)
         Me.TableLayoutPanel4.TabIndex = 3
         '
-        'Label1
+        'Label_ProcessKillerBottomInfo
         '
-        Me.Label1.AutoSize = True
-        Me.TableLayoutPanel4.SetColumnSpan(Me.Label1, 4)
-        Me.Label1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Label1.Location = New System.Drawing.Point(3, 193)
-        Me.Label1.Margin = New System.Windows.Forms.Padding(3)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(770, 89)
-        Me.Label1.TabIndex = 13
-        Me.Label1.Text = resources.GetString("Label1.Text")
-        Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.Label_ProcessKillerBottomInfo.AutoSize = True
+        Me.TableLayoutPanel4.SetColumnSpan(Me.Label_ProcessKillerBottomInfo, 4)
+        Me.Label_ProcessKillerBottomInfo.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Label_ProcessKillerBottomInfo.Location = New System.Drawing.Point(3, 193)
+        Me.Label_ProcessKillerBottomInfo.Margin = New System.Windows.Forms.Padding(3)
+        Me.Label_ProcessKillerBottomInfo.Name = "Label_ProcessKillerBottomInfo"
+        Me.Label_ProcessKillerBottomInfo.Size = New System.Drawing.Size(770, 89)
+        Me.Label_ProcessKillerBottomInfo.TabIndex = 13
+        Me.Label_ProcessKillerBottomInfo.Text = resources.GetString("Label_ProcessKillerBottomInfo.Text")
+        Me.Label_ProcessKillerBottomInfo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'Label_SetKeyKill
         '
@@ -400,15 +345,15 @@ Partial Class MainForm
         Me.Label_SetKeyKill.Text = "Горячая клавиша не задана"
         Me.Label_SetKeyKill.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'AddProccessKill_Button
+        'Button_AddProccessKill
         '
-        Me.AddProccessKill_Button.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.AddProccessKill_Button.Location = New System.Drawing.Point(3, 93)
-        Me.AddProccessKill_Button.Name = "AddProccessKill_Button"
-        Me.AddProccessKill_Button.Size = New System.Drawing.Size(245, 24)
-        Me.AddProccessKill_Button.TabIndex = 4
-        Me.AddProccessKill_Button.Text = "Добавить процесс"
-        Me.AddProccessKill_Button.UseVisualStyleBackColor = True
+        Me.Button_AddProccessKill.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Button_AddProccessKill.Location = New System.Drawing.Point(3, 93)
+        Me.Button_AddProccessKill.Name = "Button_AddProccessKill"
+        Me.Button_AddProccessKill.Size = New System.Drawing.Size(245, 24)
+        Me.Button_AddProccessKill.TabIndex = 4
+        Me.Button_AddProccessKill.Text = "Добавить процесс"
+        Me.Button_AddProccessKill.UseVisualStyleBackColor = True
         '
         'CheckBox_KillerThread
         '
@@ -421,15 +366,15 @@ Partial Class MainForm
         Me.CheckBox_KillerThread.Text = "Включить Завершение процессов"
         Me.CheckBox_KillerThread.UseVisualStyleBackColor = True
         '
-        'SetKeyKill_Button
+        'Button_SetKeyKill
         '
-        Me.SetKeyKill_Button.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SetKeyKill_Button.Location = New System.Drawing.Point(3, 33)
-        Me.SetKeyKill_Button.Name = "SetKeyKill_Button"
-        Me.SetKeyKill_Button.Size = New System.Drawing.Size(245, 24)
-        Me.SetKeyKill_Button.TabIndex = 1
-        Me.SetKeyKill_Button.Text = "Назначить горячую клавишу"
-        Me.SetKeyKill_Button.UseVisualStyleBackColor = True
+        Me.Button_SetKeyKill.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Button_SetKeyKill.Location = New System.Drawing.Point(3, 33)
+        Me.Button_SetKeyKill.Name = "Button_SetKeyKill"
+        Me.Button_SetKeyKill.Size = New System.Drawing.Size(245, 24)
+        Me.Button_SetKeyKill.TabIndex = 1
+        Me.Button_SetKeyKill.Text = "Назначить горячую клавишу"
+        Me.Button_SetKeyKill.UseVisualStyleBackColor = True
         '
         'Label_KillerThread
         '
@@ -443,48 +388,48 @@ Partial Class MainForm
         Me.Label_KillerThread.Text = "Функция выключена"
         Me.Label_KillerThread.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'ProcessKillerModKey_ComboBox
+        'ComboBox_ProcessKillerModKey
         '
-        Me.ProcessKillerModKey_ComboBox.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.ProcessKillerModKey_ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.ProcessKillerModKey_ComboBox.FormattingEnabled = True
-        Me.ProcessKillerModKey_ComboBox.Items.AddRange(New Object() {"Без модификатора", "Left ALT", "Left CTRL", "Left SHIFT", "Right ALT", "Right CTRL", "Right SHIFT"})
-        Me.ProcessKillerModKey_ComboBox.Location = New System.Drawing.Point(4, 63)
-        Me.ProcessKillerModKey_ComboBox.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
-        Me.ProcessKillerModKey_ComboBox.Name = "ProcessKillerModKey_ComboBox"
-        Me.ProcessKillerModKey_ComboBox.Size = New System.Drawing.Size(243, 21)
-        Me.ProcessKillerModKey_ComboBox.TabIndex = 6
+        Me.ComboBox_ProcessKillerModKey.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.ComboBox_ProcessKillerModKey.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.ComboBox_ProcessKillerModKey.FormattingEnabled = True
+        Me.ComboBox_ProcessKillerModKey.Items.AddRange(New Object() {"No modifier", "Left ALT", "Left CTRL", "Left SHIFT", "Right ALT", "Right CTRL", "Right SHIFT"})
+        Me.ComboBox_ProcessKillerModKey.Location = New System.Drawing.Point(4, 63)
+        Me.ComboBox_ProcessKillerModKey.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
+        Me.ComboBox_ProcessKillerModKey.Name = "ComboBox_ProcessKillerModKey"
+        Me.ComboBox_ProcessKillerModKey.Size = New System.Drawing.Size(243, 21)
+        Me.ComboBox_ProcessKillerModKey.TabIndex = 6
         '
-        'RemoveProccessKill_Button
+        'Button_RemoveProccessKill
         '
-        Me.RemoveProccessKill_Button.Enabled = False
-        Me.RemoveProccessKill_Button.Location = New System.Drawing.Point(3, 123)
-        Me.RemoveProccessKill_Button.Name = "RemoveProccessKill_Button"
-        Me.RemoveProccessKill_Button.Size = New System.Drawing.Size(245, 24)
-        Me.RemoveProccessKill_Button.TabIndex = 5
-        Me.RemoveProccessKill_Button.Text = "Удалить процесс"
-        Me.RemoveProccessKill_Button.UseVisualStyleBackColor = True
+        Me.Button_RemoveProccessKill.Enabled = False
+        Me.Button_RemoveProccessKill.Location = New System.Drawing.Point(3, 123)
+        Me.Button_RemoveProccessKill.Name = "Button_RemoveProccessKill"
+        Me.Button_RemoveProccessKill.Size = New System.Drawing.Size(245, 24)
+        Me.Button_RemoveProccessKill.TabIndex = 5
+        Me.Button_RemoveProccessKill.Text = "Удалить процесс"
+        Me.Button_RemoveProccessKill.UseVisualStyleBackColor = True
         '
-        'AddProccessKill_TextBox
+        'TextBox_AddProccessKill
         '
-        Me.AddProccessKill_TextBox.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.AddProccessKill_TextBox.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.AddProccessKill_TextBox.Location = New System.Drawing.Point(254, 94)
-        Me.AddProccessKill_TextBox.Margin = New System.Windows.Forms.Padding(3, 4, 3, 1)
-        Me.AddProccessKill_TextBox.Name = "AddProccessKill_TextBox"
-        Me.AddProccessKill_TextBox.Size = New System.Drawing.Size(246, 21)
-        Me.AddProccessKill_TextBox.TabIndex = 12
+        Me.TextBox_AddProccessKill.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TextBox_AddProccessKill.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.TextBox_AddProccessKill.Location = New System.Drawing.Point(254, 94)
+        Me.TextBox_AddProccessKill.Margin = New System.Windows.Forms.Padding(3, 4, 3, 1)
+        Me.TextBox_AddProccessKill.Name = "TextBox_AddProccessKill"
+        Me.TextBox_AddProccessKill.Size = New System.Drawing.Size(246, 21)
+        Me.TextBox_AddProccessKill.TabIndex = 12
         '
-        'ProccessList_ListBox
+        'ListBox_ProccessList
         '
-        Me.ProccessList_ListBox.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.ProccessList_ListBox.FormattingEnabled = True
-        Me.ProccessList_ListBox.IntegralHeight = False
-        Me.ProccessList_ListBox.Location = New System.Drawing.Point(526, 3)
-        Me.ProccessList_ListBox.Name = "ProccessList_ListBox"
-        Me.TableLayoutPanel4.SetRowSpan(Me.ProccessList_ListBox, 6)
-        Me.ProccessList_ListBox.Size = New System.Drawing.Size(247, 184)
-        Me.ProccessList_ListBox.TabIndex = 14
+        Me.ListBox_ProccessList.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.ListBox_ProccessList.FormattingEnabled = True
+        Me.ListBox_ProccessList.IntegralHeight = False
+        Me.ListBox_ProccessList.Location = New System.Drawing.Point(526, 3)
+        Me.ListBox_ProccessList.Name = "ListBox_ProccessList"
+        Me.TableLayoutPanel4.SetRowSpan(Me.ListBox_ProccessList, 6)
+        Me.ListBox_ProccessList.Size = New System.Drawing.Size(247, 184)
+        Me.ListBox_ProccessList.TabIndex = 14
         '
         'Label_ProcessKillerModKey
         '
@@ -510,16 +455,16 @@ Partial Class MainForm
         Me.Label4.Text = "<"
         Me.Label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'ProccessKill_CheckedListBox
+        'CheckedListBox_ProccessKill
         '
-        Me.ProccessKill_CheckedListBox.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.ProccessKill_CheckedListBox.FormattingEnabled = True
-        Me.ProccessKill_CheckedListBox.IntegralHeight = False
-        Me.ProccessKill_CheckedListBox.Location = New System.Drawing.Point(254, 123)
-        Me.ProccessKill_CheckedListBox.Name = "ProccessKill_CheckedListBox"
-        Me.TableLayoutPanel4.SetRowSpan(Me.ProccessKill_CheckedListBox, 2)
-        Me.ProccessKill_CheckedListBox.Size = New System.Drawing.Size(246, 64)
-        Me.ProccessKill_CheckedListBox.TabIndex = 16
+        Me.CheckedListBox_ProccessKill.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.CheckedListBox_ProccessKill.FormattingEnabled = True
+        Me.CheckedListBox_ProccessKill.IntegralHeight = False
+        Me.CheckedListBox_ProccessKill.Location = New System.Drawing.Point(254, 123)
+        Me.CheckedListBox_ProccessKill.Name = "CheckedListBox_ProccessKill"
+        Me.TableLayoutPanel4.SetRowSpan(Me.CheckedListBox_ProccessKill, 2)
+        Me.CheckedListBox_ProccessKill.Size = New System.Drawing.Size(246, 64)
+        Me.CheckedListBox_ProccessKill.TabIndex = 16
         '
         'TabPage_GameProfiles
         '
@@ -543,7 +488,7 @@ Partial Class MainForm
         Me.TableLayoutPanel5.Controls.Add(Me.Button_ToEPTU, 2, 0)
         Me.TableLayoutPanel5.Controls.Add(Me.CheckBox_BeforeKillProcess, 0, 1)
         Me.TableLayoutPanel5.Controls.Add(Me.Button_ToPTU, 1, 0)
-        Me.TableLayoutPanel5.Controls.Add(Me.Label2, 0, 5)
+        Me.TableLayoutPanel5.Controls.Add(Me.Label_ProfilesBottomInfo, 0, 5)
         Me.TableLayoutPanel5.Controls.Add(Me.Label_BeforeKillProcess, 3, 1)
         Me.TableLayoutPanel5.Controls.Add(Me.Button_ToLIVE, 0, 0)
         Me.TableLayoutPanel5.Controls.Add(Me.Label_ToLivePtu, 3, 0)
@@ -592,18 +537,18 @@ Partial Class MainForm
         Me.Button_ToPTU.Text = "PTU"
         Me.Button_ToPTU.UseVisualStyleBackColor = True
         '
-        'Label2
+        'Label_ProfilesBottomInfo
         '
-        Me.Label2.AutoSize = True
-        Me.TableLayoutPanel5.SetColumnSpan(Me.Label2, 5)
-        Me.Label2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Label2.Location = New System.Drawing.Point(3, 153)
-        Me.Label2.Margin = New System.Windows.Forms.Padding(3)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(764, 123)
-        Me.Label2.TabIndex = 11
-        Me.Label2.Text = resources.GetString("Label2.Text")
-        Me.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.Label_ProfilesBottomInfo.AutoSize = True
+        Me.TableLayoutPanel5.SetColumnSpan(Me.Label_ProfilesBottomInfo, 5)
+        Me.Label_ProfilesBottomInfo.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Label_ProfilesBottomInfo.Location = New System.Drawing.Point(3, 153)
+        Me.Label_ProfilesBottomInfo.Margin = New System.Windows.Forms.Padding(3)
+        Me.Label_ProfilesBottomInfo.Name = "Label_ProfilesBottomInfo"
+        Me.Label_ProfilesBottomInfo.Size = New System.Drawing.Size(764, 123)
+        Me.Label_ProfilesBottomInfo.TabIndex = 11
+        Me.Label_ProfilesBottomInfo.Text = resources.GetString("Label_ProfilesBottomInfo.Text")
+        Me.Label_ProfilesBottomInfo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'Label_BeforeKillProcess
         '
@@ -667,50 +612,6 @@ Partial Class MainForm
         Me.TableLayoutPanel_SysUpdate.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35.0!))
         Me.TableLayoutPanel_SysUpdate.Size = New System.Drawing.Size(770, 279)
         Me.TableLayoutPanel_SysUpdate.TabIndex = 1
-        '
-        'WL_SysUpdateCheck
-        '
-        Me.WL_SysUpdateCheck.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.WL_SysUpdateCheck.Location = New System.Drawing.Point(3, 3)
-        Me.WL_SysUpdateCheck.Name = "WL_SysUpdateCheck"
-        Me.WL_SysUpdateCheck.Property_AlertUpdate = True
-        Me.WL_SysUpdateCheck.Property_DateOnline = New Date(CType(0, Long))
-        Me.WL_SysUpdateCheck.Property_GitListAutoUpdate = True
-        Me.WL_SysUpdateCheck.Property_GitListInterval = 120000
-        Me.WL_SysUpdateCheck.Property_Name = Nothing
-        Me.WL_SysUpdateCheck.Property_SetupFileName = Nothing
-        Me.WL_SysUpdateCheck.Property_Text_Label_Name_CurentVersion = "Версия:"
-        Me.WL_SysUpdateCheck.Property_Text_Label_Name_OnlineDate = "Дата публикации:"
-        Me.WL_SysUpdateCheck.Property_Text_Label_Name_OnlineInformation = "Дополнительная информация:"
-        Me.WL_SysUpdateCheck.Property_Text_Label_Name_OnlineVersion = "Версия:"
-        Me.WL_SysUpdateCheck.Property_Text_Label_Value_CurentVersion = ""
-        Me.WL_SysUpdateCheck.Property_Text_Label_Value_OnlineDate = ""
-        Me.WL_SysUpdateCheck.Property_Text_Label_Value_OnlineVersion = ""
-        Me.WL_SysUpdateCheck.Property_Text_TextBox_Value_OnlineInformation = ""
-        Me.WL_SysUpdateCheck.Property_URL = Nothing
-        Me.WL_SysUpdateCheck.Property_URLApi = Nothing
-        Me.WL_SysUpdateCheck.Property_URLDownload = Nothing
-        Me.WL_SysUpdateCheck.Property_VersionLocal = Nothing
-        Me.WL_SysUpdateCheck.Property_VersionOnline = Nothing
-        Me.WL_SysUpdateCheck.Size = New System.Drawing.Size(764, 238)
-        Me.WL_SysUpdateCheck.TabIndex = 0
-        '
-        'WL_AppUpdate
-        '
-        Me.WL_AppUpdate.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.WL_AppUpdate.Enabled = False
-        Me.WL_AppUpdate.Location = New System.Drawing.Point(3, 247)
-        Me.WL_AppUpdate.Name = "WL_AppUpdate"
-        Me.WL_AppUpdate.Padding = New System.Windows.Forms.Padding(2, 0, 2, 0)
-        Me.WL_AppUpdate.Property_Name = Nothing
-        Me.WL_AppUpdate.Property_PatchDstFileName = Nothing
-        Me.WL_AppUpdate.Property_PatchDstFilePath = Nothing
-        Me.WL_AppUpdate.Property_PatchDstParameters = Nothing
-        Me.WL_AppUpdate.Property_PatchSrcFileName = Nothing
-        Me.WL_AppUpdate.Property_PatchSrcFilePath = Nothing
-        Me.WL_AppUpdate.Property_Text_Button_UpdateNow = "Обновить программу"
-        Me.WL_AppUpdate.Size = New System.Drawing.Size(764, 29)
-        Me.WL_AppUpdate.TabIndex = 1
         '
         'TabPage_SysSettings
         '
@@ -794,6 +695,112 @@ Partial Class MainForm
         Me.TabPage_About.Text = "О программе"
         Me.TabPage_About.UseVisualStyleBackColor = True
         '
+        'Timer_LOG
+        '
+        Me.Timer_LOG.Interval = 1000
+        '
+        'WL_Mod
+        '
+        Me.WL_Mod.BackColor = System.Drawing.SystemColors.ControlLightLight
+        Me.WL_Mod.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.WL_Mod.Location = New System.Drawing.Point(3, 3)
+        Me.WL_Mod.Name = "WL_Mod"
+        Me.WL_Mod.Property_GameExeFileName = Nothing
+        Me.WL_Mod.Property_GameExeFilePath = Nothing
+        Me.WL_Mod.Property_GameModFolderName = Nothing
+        Me.WL_Mod.Property_ModInGameFileVersion = Nothing
+        Me.WL_Mod.Property_ModInPackFileVersion = Nothing
+        Me.WL_Mod.Property_ModStatus = False
+        Me.WL_Mod.Property_PatchDstFileName = Nothing
+        Me.WL_Mod.Property_PatchDstFilePath = Nothing
+        Me.WL_Mod.Property_PatchSrcFileName = Nothing
+        Me.WL_Mod.Property_PatchSrcFilePath = Nothing
+        Me.WL_Mod.Size = New System.Drawing.Size(770, 279)
+        Me.WL_Mod.TabIndex = 0
+        Me.WL_Mod.Text_Button_Disable = "Выкл. модификацию"
+        Me.WL_Mod.Text_Button_Enable = "Вкл. модификацию"
+        Me.WL_Mod.Text_Button_Path = "Исполняемый файл"
+        Me.WL_Mod.Text_Label_Bottom = ""
+        Me.WL_Mod.Text_Label_ModOff = "Выключить модификацию"
+        Me.WL_Mod.Text_Label_ModOn = "Включить модификацию"
+        '
+        'WL_Pack
+        '
+        Me.WL_Pack.BackColor = System.Drawing.SystemColors.ControlLightLight
+        Me.WL_Pack.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.WL_Pack.Location = New System.Drawing.Point(3, 3)
+        Me.WL_Pack.Name = "WL_Pack"
+        Me.WL_Pack.Property_DateOnline = New Date(CType(0, Long))
+        Me.WL_Pack.Property_GitList_AutoUpdate = True
+        Me.WL_Pack.Property_GitList_Interval = 120000
+        Me.WL_Pack.Property_GitList_SelString = Nothing
+        Me.WL_Pack.Property_Name_File_Download = Nothing
+        Me.WL_Pack.Property_Name_File_Meta = Nothing
+        Me.WL_Pack.Property_PackageGitURL_Api = Nothing
+        Me.WL_Pack.Property_PackageGitURL_Master = Nothing
+        Me.WL_Pack.Property_PackageGitURL_Page = Nothing
+        Me.WL_Pack.Property_PackInGameVersion = Nothing
+        Me.WL_Pack.Property_Path_File_Download = Nothing
+        Me.WL_Pack.Property_Path_File_Meta = Nothing
+        Me.WL_Pack.Property_Path_Folder_Download = Nothing
+        Me.WL_Pack.Property_Path_Folder_Meta = Nothing
+        Me.WL_Pack.Property_ShowTestBuild = False
+        Me.WL_Pack.Property_UpdateTargetName = Nothing
+        Me.WL_Pack.Size = New System.Drawing.Size(770, 279)
+        Me.WL_Pack.TabIndex = 0
+        Me.WL_Pack.Text_Button_Download = "Загрузить пакет обновлений"
+        Me.WL_Pack.Text_Button_InstallFull = "Полная установка"
+        Me.WL_Pack.Text_Check_ShowTestBuild = "Отображать тестовые сборки"
+        Me.WL_Pack.Text_Label_Bottom = ""
+        Me.WL_Pack.Text_Label_Download = "Загрузка выбранного пакета обновлений"
+        Me.WL_Pack.Text_Label_InstallFull = "Локализация и шрифты"
+        '
+        'WL_SysUpdateCheck
+        '
+        Me.WL_SysUpdateCheck.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.WL_SysUpdateCheck.Location = New System.Drawing.Point(3, 3)
+        Me.WL_SysUpdateCheck.Name = "WL_SysUpdateCheck"
+        Me.WL_SysUpdateCheck.Property_AlertUpdate = True
+        Me.WL_SysUpdateCheck.Property_DateOnline = New Date(CType(0, Long))
+        Me.WL_SysUpdateCheck.Property_GitListAutoUpdate = True
+        Me.WL_SysUpdateCheck.Property_GitListInterval = 120000
+        Me.WL_SysUpdateCheck.Property_Name = Nothing
+        Me.WL_SysUpdateCheck.Property_SetupFileName = Nothing
+        Me.WL_SysUpdateCheck.Property_Text_Group_Actual = "Актуальная версия"
+        Me.WL_SysUpdateCheck.Property_Text_Group_Installed = "Установлена версия"
+        Me.WL_SysUpdateCheck.Property_Text_Label_Name_CurentVersion = "Версия:"
+        Me.WL_SysUpdateCheck.Property_Text_Label_Name_OnlineDate = "Дата публикации:"
+        Me.WL_SysUpdateCheck.Property_Text_Label_Name_OnlineInformation = "Дополнительная информация:"
+        Me.WL_SysUpdateCheck.Property_Text_Label_Name_OnlineVersion = "Версия:"
+        Me.WL_SysUpdateCheck.Property_Text_Label_Value_CurentVersion = ""
+        Me.WL_SysUpdateCheck.Property_Text_Label_Value_OnlineDate = ""
+        Me.WL_SysUpdateCheck.Property_Text_Label_Value_OnlineVersion = ""
+        Me.WL_SysUpdateCheck.Property_Text_TextBox_Value_OnlineInformation = ""
+        Me.WL_SysUpdateCheck.Property_URL = Nothing
+        Me.WL_SysUpdateCheck.Property_URLApi = Nothing
+        Me.WL_SysUpdateCheck.Property_URLDownload = Nothing
+        Me.WL_SysUpdateCheck.Property_VersionLocal = Nothing
+        Me.WL_SysUpdateCheck.Property_VersionOnline = Nothing
+        Me.WL_SysUpdateCheck.Size = New System.Drawing.Size(764, 238)
+        Me.WL_SysUpdateCheck.TabIndex = 0
+        '
+        'WL_AppUpdate
+        '
+        Me.WL_AppUpdate.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.WL_AppUpdate.Enabled = False
+        Me.WL_AppUpdate.Location = New System.Drawing.Point(3, 247)
+        Me.WL_AppUpdate.Name = "WL_AppUpdate"
+        Me.WL_AppUpdate.Padding = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.WL_AppUpdate.Property_Name = Nothing
+        Me.WL_AppUpdate.Property_PatchDstFileName = Nothing
+        Me.WL_AppUpdate.Property_PatchDstFilePath = Nothing
+        Me.WL_AppUpdate.Property_PatchDstParameters = Nothing
+        Me.WL_AppUpdate.Property_PatchSrcFileName = Nothing
+        Me.WL_AppUpdate.Property_PatchSrcFilePath = Nothing
+        Me.WL_AppUpdate.Property_Text_Button_UpdateNow = "Обновить программу"
+        Me.WL_AppUpdate.Size = New System.Drawing.Size(764, 29)
+        Me.WL_AppUpdate.TabIndex = 1
+        '
         'WL_About
         '
         Me.WL_About.Dock = System.Windows.Forms.DockStyle.Fill
@@ -805,16 +812,12 @@ Partial Class MainForm
         Me.WL_About.Text_Button_SendIssueApp = "Отзыв о программе"
         Me.WL_About.Text_Button_SendIssueCore = "Отзыв о ядре"
         Me.WL_About.Text_Button_SendIssueLocalization = "Отзыв о локализации"
-        Me.WL_About.Text_Label_SendIssueLocalization = "Отправить отзыв о проблеме или ошибке в переводе"
         Me.WL_About.Text_Label_SendIssueApp = "Отправить отзыв о проблеме с Программой"
         Me.WL_About.Text_Label_SendIssueCore = "Отправить отзыв о не подписанном ядре"
+        Me.WL_About.Text_Label_SendIssueLocalization = "Отправить отзыв о проблеме или ошибке в переводе"
         Me.WL_About.URL_SendIssueApp = Nothing
         Me.WL_About.URL_SendIssueCore = Nothing
         Me.WL_About.URL_SendIssueLocalization = Nothing
-        '
-        'Timer_LOG
-        '
-        Me.Timer_LOG.Interval = 1000
         '
         'MainForm
         '
@@ -875,17 +878,17 @@ Partial Class MainForm
     Friend WithEvents TableLayoutPanel4 As TableLayoutPanel
     Friend WithEvents Label_ProcessKillerModKey As Label
     Friend WithEvents Label_SetKeyKill As Label
-    Friend WithEvents RemoveProccessKill_Button As Button
-    Friend WithEvents AddProccessKill_Button As Button
+    Friend WithEvents Button_RemoveProccessKill As Button
+    Friend WithEvents Button_AddProccessKill As Button
     Friend WithEvents CheckBox_KillerThread As CheckBox
-    Friend WithEvents SetKeyKill_Button As Button
+    Friend WithEvents Button_SetKeyKill As Button
     Friend WithEvents Label_KillerThread As Label
-    Friend WithEvents ProcessKillerModKey_ComboBox As ComboBox
-    Friend WithEvents AddProccessKill_TextBox As TextBox
-    Friend WithEvents Label1 As Label
-    Friend WithEvents ProccessList_ListBox As ListBox
+    Friend WithEvents ComboBox_ProcessKillerModKey As ComboBox
+    Friend WithEvents TextBox_AddProccessKill As TextBox
+    Friend WithEvents Label_ProcessKillerBottomInfo As Label
+    Friend WithEvents ListBox_ProccessList As ListBox
     Friend WithEvents Label4 As Label
-    Friend WithEvents ProccessKill_CheckedListBox As CheckedListBox
+    Friend WithEvents CheckedListBox_ProccessKill As CheckedListBox
     Friend WithEvents PKill_ToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents KillerThread_ToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripSeparator3 As ToolStripSeparator
@@ -893,7 +896,7 @@ Partial Class MainForm
     Friend WithEvents TabPage_GameProfiles As TabPage
     Friend WithEvents TableLayoutPanel5 As TableLayoutPanel
     Friend WithEvents Button_ToPTU As Button
-    Friend WithEvents Label2 As Label
+    Friend WithEvents Label_ProfilesBottomInfo As Label
     Friend WithEvents Label_BeforeKillProcess As Label
     Friend WithEvents Button_ToLIVE As Button
     Friend WithEvents Label_ToLivePtu As Label

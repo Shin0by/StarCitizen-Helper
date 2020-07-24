@@ -129,7 +129,7 @@ Finalize:   If Me.sGameExeFileName IsNot Nothing Then
                 Me.Label_Path.Text = Me.sGameExeFilePath
                 _Update()
             Else
-                Me.Label_Path.Text = "Не указан путь к исполняемому файлу игры"
+                Me.Label_Path.Text = _LANG._Get("File_MSG_PathNotAssign", _LANG._Get("FileGameExecT"))
                 Me.Button_Disable.Enabled = False
                 Me.Button_Enable.Enabled = False
             End If
@@ -247,7 +247,7 @@ Finalize:   If Me.sGameExeFileName IsNot Nothing Then
     Private Sub Button_Path_Click(sender As Object, e As EventArgs) Handles Button_Path.Click
         Dim Path As String = Nothing
         _Enabled(False)
-        MAIN_THREAD.OpenFileDialog1.Filter = "Файл игры |" & Me.Property_GameExeFileName & "|Exe (*.exe)|*.exe" & "|Все файлы (*.*)|*.*"
+        MAIN_THREAD.OpenFileDialog1.Filter = _LANG._Get("Modification_OpenFileDialog_GameFile") & " |" & Me.Property_GameExeFileName & "|Exe (*.exe)|*.exe" & "|" & _LANG._Get("FileAllFiles") & " (*.*)|*.*"
         MAIN_THREAD.OpenFileDialog1.FilterIndex = 1
         MAIN_THREAD.OpenFileDialog1.RestoreDirectory = True
         If (MAIN_THREAD.OpenFileDialog1.ShowDialog() = DialogResult.OK) Then
@@ -260,7 +260,7 @@ Finalize:   If Me.sGameExeFileName IsNot Nothing Then
         On Error Resume Next
         RaiseEvent _Event_PatchEnable_Click_Before()
         Me._Enabled(False)
-        _LOG._sAdd("MODIFICATION", "Начата верификация ядра", "Файл: " & Me.Property_PatchSrcFilePath, 2, 0)
+        _LOG._sAdd("MODIFICATION", _LANG._Get("Core_MSG_BeginVerification"), _LANG._Get("l_File", Me.Property_PatchSrcFilePath), 2, 0)
         If VerifyFile(Me.Property_PatchSrcFilePath, True) = False Then
             Me._Enabled(True)
             _Update(2)
@@ -319,28 +319,28 @@ Finalize:   If Me.sGameExeFileName IsNot Nothing Then
 
         If Me.Button_Enable.Enabled = True Then
             Me.Property_ModStatus = False
-            _LOG._sAdd("MODIFICATION", "Модификация: Выключена", Me.Property_ModInGameFileVersion, LogType)
+            _LOG._sAdd("MODIFICATION", _LANG._Get("l_Modification", _LANG._Get("DisabledT")), Me.Property_ModInGameFileVersion, LogType)
         End If
 
         If Me.Button_Disable.Enabled = True Then
             Me.Property_ModStatus = True
-            _LOG._sAdd("MODIFICATION", "Модификация: Включена (v." & Me.Property_ModInGameFileVersion & "):", Me.Property_GameExeFilePath, LogType)
+            _LOG._sAdd("MODIFICATION", _LANG._Get("l_Modification", _LANG._Get("l_EnabledT", "(v." & Me.Property_ModInGameFileVersion & "):")), Me.Property_GameExeFilePath, LogType)
         End If
 
         If Me.sModInPackFileVersion Is Nothing Then
-            Me.Label_ModOn.Text = "Модуль модификации не найден, смотрите описание в нижней части окна"
+            Me.Label_ModOn.Text = _LANG._Get("Modification_MSG_CoreNotFound", _LANG._Get("ModificationModule"))
         Else
-            Me.Label_ModOn.Text = "Включить модификацию v." & Me.sModInPackFileVersion
+            Me.Label_ModOn.Text = _LANG._Get("l_Enable", _LANG._Get("ModificationModule")) & " v." & Me.sModInPackFileVersion
         End If
 
-        Me.Label_ModOff.Text = "Выключить модуль модификации"
+        Me.Label_ModOff.Text = _LANG._Get("l_Disable", _LANG._Get("ModificationModule"))
         If Me.sModInGameFileVersion Is Nothing Then
             If Me.Property_ModStatus = True Then
-                Me.Label_ModOff.Text = "Выключить неизвестный модуль модификации"
+                Me.Label_ModOff.Text = _LANG._Get("l_Disable", _LANG._Get("ModificationModule")) & " " & _LANG._Get("Modification_MSG_VersionUnspecified")
             End If
         Else
             If Me.Property_ModStatus = True Then
-                Me.Label_ModOff.Text = "Выключить модуль модификации v." & Me.sModInGameFileVersion
+                Me.Label_ModOff.Text = _LANG._Get("l_Disable", _LANG._Get("ModificationModule")) & " v." & Me.sModInGameFileVersion
             End If
         End If
     End Sub

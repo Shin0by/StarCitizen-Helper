@@ -192,7 +192,7 @@ Module Module_KEYS
             Next
 
 Fin:        If Err.Number > 0 Then
-                If LatestKey IsNot Nothing Then _LOG._sAdd("_KEYS._Update()->CallByName", "Ошибка при вызове: " & LatestKey.HandlerName & "(" & LatestKey.HandlerValue & ")", Err.Description, 2, Err.Number)
+                If LatestKey IsNot Nothing Then _LOG._sAdd("_KEYS._Update()->CallByName", _LANG._Get("Key_MSG_CallError", LatestKey.HandlerName, LatestKey.HandlerValue), Err.Description, 2, Err.Number)
             End If
         End Sub
 
@@ -257,10 +257,10 @@ Fin:        If Err.Number > 0 Then
             Function KillProcess(Value As String) As Object
                 On Error GoTo fin
                 Dim result As Boolean = False
-                If MAIN_THREAD.ProccessKill_CheckedListBox.Items.Count = 0 Then Return result
+                If MAIN_THREAD.CheckedListBox_ProccessKill.Items.Count = 0 Then Return result
                 My.Computer.Audio.Play(My.Resources.process_kill, AudioPlayMode.Background)
-                For Each elem In MAIN_THREAD.ProccessKill_CheckedListBox.Items
-                    If MAIN_THREAD.ProccessKill_CheckedListBox.GetItemCheckState(MAIN_THREAD.ProccessKill_CheckedListBox.Items.IndexOf(elem)) = 1 Then
+                For Each elem In MAIN_THREAD.CheckedListBox_ProccessKill.Items
+                    If MAIN_THREAD.CheckedListBox_ProccessKill.GetItemCheckState(MAIN_THREAD.CheckedListBox_ProccessKill.Items.IndexOf(elem)) = 1 Then
                         If Len(Trim(elem.ToString)) > 0 Then _PROCESS._Kill(elem.ToString)
                     End If
                 Next

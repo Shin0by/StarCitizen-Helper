@@ -18,9 +18,9 @@ Module Module_PATCH
         Public Function Patch(sPath As String, sHexSearch As String, sHexReplacement As String, Optional OnlySearch As Boolean = False) As Class_PatchResult
             Dim result As New Class_PatchResult
             If OnlySearch = True Then
-                _LOG._sAdd("PATCHER", "Проверка файла [" & sPath & "]", "HEX_BLOCK1: [" & sHexSearch & "]" & vbNewLine & "HEX_BLOCK2: [" & sHexReplacement & "]", 2)
+                _LOG._sAdd("PATCHER", _LANG._Get("File_MSG_CheckFile", sPath), _LANG._Get("Patch_MSG_Blocks", sHexSearch, sHexReplacement), 2)
             Else
-                _LOG._sAdd("PATCHER", "Модифицирование файла " & sPath, "HEX_BLOCK1: [" & sHexSearch & "]" & vbNewLine & "HEX_BLOCK2: [" & sHexReplacement & "]", 2)
+                _LOG._sAdd("PATCHER", _LANG._Get("File_MSG_ChangeFile", sPath), _LANG._Get("Patch_MSG_Blocks", sHexSearch, sHexReplacement), 2)
             End If
             Try
                 result.UsedAppProcess = True

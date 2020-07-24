@@ -43,8 +43,8 @@ Module Module_MAIN
         _VARS.PackageGitURL_Api = "https://api.github.com/repos/n1ghter/SC_ru/releases"
 
         _VARS.LangFolder_Name = "lang"
-        _VARS.LangFile_Name = "russian.txt"
-        _LANG._LOAD(_FSO._CombinePath(_APP.exePath, _VARS.LangFolder_Name, "russian.txt"))
+        _VARS.LangFile_Name = "english.txt"
+        _LANG._LOAD(_FSO._CombinePath(_APP.exePath, _VARS.LangFolder_Name, _VARS.LangFile_Name))
         Module_HELPER.CheckConfigFile()
     End Sub
 
@@ -65,7 +65,7 @@ Module Module_MAIN
         MAIN_THREAD.WL_SysUpdateCheck.Property_Text_Label_Value_CurentVersion = _APP.Version
         MAIN_THREAD.WL_SysUpdateCheck.Property_SetupFileName = "Setup.exe"
         MAIN_THREAD.WL_SysUpdateCheck.Property_Name = _APP.appName
-        MAIN_THREAD.WL_Pack.Property_UpdateTargetName = "пакета локализации"
+        MAIN_THREAD.WL_Pack.Property_UpdateTargetName = _LANG._Get("PackUpdateNameT")
 
         Module_HELPER.LoadConfigFile()
         CheckUpdateStatus()
@@ -162,12 +162,12 @@ Module Module_MAIN
             If Me.Err._Flag = True Then
                 LogSubLine.List.Add("")
                 If Err._Description_App IsNot Nothing Then
-                    LogSubLine.List.Add("Ошибка: " & Err._Description_App)
-                    If Err._Description_Sys IsNot Nothing Then LogSubLine.List.Add("Подробности: " & Err._Description_Sys)
+                    LogSubLine.List.Add(_LANG._Get("Error") & ": " & Err._Description_App)
+                    If Err._Description_Sys IsNot Nothing Then LogSubLine.List.Add(_LANG._Get("Description") & ": " & Err._Description_Sys)
                 Else
-                    If Err._Description_Sys IsNot Nothing Then LogSubLine.List.Add("Ошибка: " & Err._Description_Sys)
+                    If Err._Description_Sys IsNot Nothing Then LogSubLine.List.Add(_LANG._Get("Error") & ": " & Err._Description_Sys)
                 End If
-                If Err._Number <> 0 Then LogSubLine.List.Add("Номер: " & Err._Number)
+                If Err._Number <> 0 Then LogSubLine.List.Add(_LANG._Get("Number") & ": " & Err._Number)
             End If
             Me.lLogList.Add(LogSubLine)
             Return Me.lLogList

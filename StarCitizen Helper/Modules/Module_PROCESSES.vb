@@ -52,9 +52,9 @@
             Dim pList As List(Of Process) = Me._Get(Name, OnlyUniqName, FullMatch)
 
             For Each Process In pList
-                If Process.ProcessName = _APP.appProcess.ProcessName Then _LOG._sAdd("_PROCESSES._Kill()", "Завершение процесса - игнорировано", Process.ProcessName, 2) : Continue For
+                If Process.ProcessName = _APP.appProcess.ProcessName Then _LOG._sAdd("_PROCESSES._Kill()", _LANG._Get("ProcessKiller_MSG_KillIgnore"), Process.ProcessName, 2) : Continue For
                 Process.Kill()
-                _LOG._sAdd("_PROCESSES._Kill()", "Завершение процесса", Process.ProcessName, 2)
+                _LOG._sAdd("_PROCESSES._Kill()", _LANG._Get("ProcessKiller_MSG_Kill"), Process.ProcessName, 2)
             Next
         End Sub
     End Class

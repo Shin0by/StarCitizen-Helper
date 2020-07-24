@@ -51,13 +51,13 @@ Execute:        Thread.Sleep(3000)
 
                 If after Is Nothing Then
                     WatchList._Remove(before.FullName)
-                    _LOG._sAdd("WATCHER", "Отслеживаемый файл был удален, слежение за файлом отключено", before.FullName, Me.LogFlag)
+                    _LOG._sAdd("WATCHER", _LANG._Get("Watcher_MSG_FileChangedDisable"), before.FullName, Me.LogFlag)
                     Me.LogFlag = 0
                     Exit Sub
                 End If
 
                 If before.LastWriteTime <> after.LastWriteTime Then
-                    _LOG._sAdd("WATCHER", "Отслеживаемый файл был изменен", before.FullName, Me.LogFlag)
+                    _LOG._sAdd("WATCHER", _LANG._Get("Watcher_MSG_FileChanged"), before.FullName, Me.LogFlag)
                     Me.LogFlag = 0
                 End If
 

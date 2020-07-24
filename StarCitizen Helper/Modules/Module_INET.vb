@@ -14,7 +14,7 @@ Module Module_INET
             If Left(temp, 7) = "mailto:" Then Type = 2
 
             If Type = 0 Then
-                _LOG._sAdd("NET", "Неверная строка в URL запросе", sURL, 1)
+                _LOG._sAdd("NET", _LANG._Get("INET_MSG_IncorrectURLString"), sURL, 1)
                 Return False
             End If
             Process.Start(sURL)
@@ -26,7 +26,7 @@ Module Module_INET
             result.Err._Flag = True
 
             Dim fo As ResultClass = _FSO._DeleteFile(Path)
-            If fo.Err._Flag = True Then result.Err._Description_App = "Не удалось удалить существующий файл " & Chr(34) & Path & Chr(34) : Return result
+            If fo.Err._Flag = True Then result.Err._Description_App = _LANG._Get("File_MSG_CannotDelExsFile", Path) : Return result
 
             Try
                 Dim content = New MemoryStream()
@@ -45,9 +45,9 @@ Module Module_INET
                     End Using
                 End Using
 
-                If _FSO._FileExits(Path) = False Then result.Err._Description_App = "Запись файла невозможна, проверьте права на запись для файла и папки " & Chr(34) & Path & Chr(34) : Return result
+                If _FSO._FileExits(Path) = False Then result.Err._Description_App = _LANG._Get("File_MSG_CannotWriteCheckPermission", Path) : Return result
                 fo = _FSO._GetInfo(Path)
-                If CType(fo.ValueObject, IO.FileInfo).Length <> content.Length Then result.Err._Description_App = "Неверен размер загруженного файла " & Chr(34) & Path & Chr(34) : Return result
+                If CType(fo.ValueObject, IO.FileInfo).Length <> content.Length Then result.Err._Description_App = _LANG._Get("File_MSG_IncorrectDownloadedSize", Path) : Return result
                 result.Err._Flag = False
                 result.Err._Description_Sys = Nothing
             Catch ex As Exception

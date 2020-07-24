@@ -157,7 +157,7 @@ Public Class WL_Download
     Private Sub DownloadFileCompleted(ByVal sender As Object, ByVal e As AsyncCompletedEventArgs) Handles DownloadClient.DownloadFileCompleted
         If e.Error IsNot Nothing Then
             Me.DownloadProgress.Err = e.Error
-            Me.Invoke(Sub() Me.LabelFromElement.Text = "Ошибка загрузки")
+            Me.Invoke(Sub() Me.LabelFromElement.Text = _LANG._Get("ErrorDownload"))
             Me.Invoke(Sub() Me.LabelToElement.Text = Me.DownloadProgress.Err.Message)
         Else
             Me.DownloadProgress.Complete = True

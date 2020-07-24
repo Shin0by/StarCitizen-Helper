@@ -9,7 +9,7 @@ Module Module_HELPER
             _FSO._WriteTextFile("", _APP.configFullPath, System.Text.Encoding.UTF32, False)
             If _INI._Write("CONFIGURATION", "DT_START", Date.Now) = False Then
                 _VARS.ConfigFileIsOK = False
-                _LOG._sAdd("CONFIG_FILE", "Запись в файл коифигурации невозможна, проверьте права на запись", _APP.configFullPath, 1)
+                _LOG._sAdd("CONFIG_FILE", _LANG._Get("File_MSG_CannotWriteCheckPermission", _APP.configFullPath),, 1)
                 Return False
             Else
                 InitConfigFile()
@@ -21,7 +21,7 @@ Module Module_HELPER
     End Function
 
     Private Sub InitConfigFile()
-        _LOG._sAdd("CONFIG_FILE", "Файл конфигурации не найден, будет создан новый файл конфигурации", _APP.configFullPath, 0)
+        _LOG._sAdd("CONFIG_FILE", _LANG._Get("Helper_MSG_ConfigFileNotFoundCreateNew", _APP.configFullPath),, 0)
         _VARS.ConfigFileIsOK = True
 
         'Configuration
@@ -73,7 +73,7 @@ Module Module_HELPER
         If _INI._Write("CONFIGURATION", "DT_START", Date.Now) = False Then
             _VARS.ConfigFileIsOK = False
         Else
-            _LOG._sAdd("CONFIG_FILE", "Загружена конфигурация из файла", _APP.configFullPath, 2)
+            _LOG._sAdd("CONFIG_FILE", _LANG._Get("Helper_MSG_ConfigFileLoadFrom", _APP.configFullPath),, 2)
         End If
 
         _VARS.FileWatcher = StringToBool(_INI._GET_VALUE("CONFIGURATION", "FILES_WATCHER", False, {"0", "1"}).Value)
@@ -129,25 +129,24 @@ Module Module_HELPER
     End Function
 
     Public Sub CheckUpdateStatus()
-
         If _APP._ARGS._Get.ContainsKey("update") = False Then
             If _VARS.UpdateStatus = "BEGIN" Then
-                _LOG._sAdd("CheckUpdateStatus", "При обновлении возникли проблемы", "Автоматический перезапуск программы не произведен. Если программа имеет актуальную версию (см. вкладку [" & MAIN_THREAD.TabPage_SysUpdate.Text & "] сравнив текущую и актульную версию), то данную ошибку можно игнорировать. Если версия не актуальна, то загрузите и установите новую версию программы вручную, с официального репозитория GitHub.", 1)
+                _LOG._sAdd("CheckUpdateStatus", _LANG._Get("Helper_MSG_UpdateErrorTitle"), _LANG._Get("Helper_MSG_UpdateErrorBody", _LANG._Get("Helper_MSG_UpdateErrorBodyLong", MAIN_THREAD.TabPage_SysUpdate.Text)), 1)
             End If
         Else
             If _VARS.UpdateStatus = "BEGIN" Then
                 If _APP.Version <> _APP._ARGS._Get.Item("update") Then
-                    _LOG._sAdd("CheckUpdateStatus", "После обновления, текущая версия программы не соответствует загруженной", "Если программа имеет актуальную версию (см. вкладку [" & MAIN_THREAD.TabPage_SysUpdate.Text & "] сравнив текущую и актульную версию), то данную ошибку можно игнорировать. Если версия не актуальна, то загрузите и установите новую версию программы вручную, с официального репозитория GitHub.", 1)
+                    _LOG._sAdd("CheckUpdateStatus", _LANG._Get("Helper_MSG_AfterUpdateErrorTitle"), _LANG._Get("Helper_MSG_UpdateErrorBodyLong", MAIN_THREAD.TabPage_SysUpdate.Text), 1)
                 Else
-                    _LOG._sAdd("CheckUpdateStatus", "Программа была успешно обновлена до актуальной версии", Nothing, 0)
+                    _LOG._sAdd("CheckUpdateStatus", _LANG._Get("Helper_MSG_UpdateOK"), Nothing, 0)
                 End If
             End If
 
             If _VARS.UpdateStatus = "NEW" Then
                 If _APP.Version <> _APP._ARGS._Get.Item("update") Then
-                    _LOG._sAdd("CheckUpdateStatus", "После обновления, текущая версия программы не соответствует загруженной", "Если программа имеет актуальную версию (см. вкладку [" & MAIN_THREAD.TabPage_SysUpdate.Text & "] сравнив текущую и актульную версию), то данную ошибку можно игнорировать. Если версия не актуальна, то загрузите и установите новую версию программы вручную, с официального репозитория GitHub.", 1)
+                    _LOG._sAdd("CheckUpdateStatus", _LANG._Get("Helper_MSG_AfterUpdateErrorTitle"), _LANG._Get("Helper_MSG_UpdateErrorBodyLong", MAIN_THREAD.TabPage_SysUpdate.Text), 1)
                 Else
-                    _LOG._sAdd("CheckUpdateStatus", "Программа была успешно обновлена до актуальной версии", Nothing, 0)
+                    _LOG._sAdd("CheckUpdateStatus", _LANG._Get("Helper_MSG_UpdateOK"), Nothing, 0)
                 End If
             End If
         End If
@@ -187,9 +186,9 @@ Module Module_HELPER
         If FolderSrc IsNot Nothing And FolderDest IsNot Nothing And OnlyCheck = False Then
             result = _FSO._RenameFolder(File.Directory.Parent.FullName, ToProfile)
             If result.Err._Flag = True Then
-                _LOG._Add("LIVE-PTU-EPTU", "Ошибка при переименовании папки игры", result.LogList(), 1, result.Err._Number)
+                _LOG._Add("LIVE-PTU-EPTU", _LANG._Get("Helper_MSG_RenameGameFolderError"), result.LogList(), 1, result.Err._Number)
             Else
-                _LOG._sAdd("LIVE-PTU-EPTU", "Папка игры успешно переименована", File.Directory.Parent.FullName & " -> " & FolderDest, 2, 0)
+                _LOG._sAdd("LIVE-PTU-EPTU", _LANG._Get("Helper_MSG_RenameGameFolderError"), File.Directory.Parent.FullName & " -> " & FolderDest, 2, 0)
                 MAIN_THREAD.WL_Mod.Property_GameExeFilePath = (_FSO._CombinePath(FolderDest, File.Directory.Name, File.Name))
                 result.ValueString = MAIN_THREAD.WL_Mod.Property_GameExeFilePath
             End If
@@ -284,24 +283,22 @@ Fin:    Return result
         Dim LogSubline As New LOG_SubLine
         Dim LogLine As New List(Of LOG_SubLine)
 
-        If CoreOnFlag = True Then LogSubline.Value = "Ядро не было включено" & vbNewLine
-        LogSubline.List.Add("Вероятно ядро было модифицировано, оно может быть потенциально опасно и содержать вирус" & vbNewLine)
-        LogSubline.List.Add("Рекомендуется загружать пакеты локализации из надежных источников" & vbNewLine)
-        LogSubline.List.Add("Пожалуйста перейдите во вкладку [" & MAIN_THREAD.TabPage_About.Text & "] и отправьте отзыв о том, откуда была загружена данная локализация, нажав кнопку [" & MAIN_THREAD.WL_About.Text_Button_SendIssueLocalization & "]" & vbNewLine)
-        LogSubline.List.Add("Файл: " & sPath)
+        If CoreOnFlag = True Then LogSubline.Value = _LANG._Get("Helper_MSG_CoreNotEnabled")
+        LogSubline.List.Add(_LANG._Get("Helper_MSG_CoreErrorRecomendation", MAIN_THREAD.TabPage_About.Text, MAIN_THREAD.WL_About.Text_Button_SendIssueLocalization))
+        LogSubline.List.Add(_LANG._Get("l_File", sPath))
         Try
             Dim CertVerifier As FileCertVerifier = New FileCertVerifier(My.Resources.Defter_CA, My.Resources.Defter_CoreSigning)
             If CertVerifier.VerifyFile(sPath) = True Then
-                _LOG._sAdd("WINDOW_FORM", "Ядро успешно верифицировано", "Файл: " & sPath, 2)
+                _LOG._sAdd("WINDOW_FORM", _LANG._Get("Helper_MSG_CoreVerificationOK"), _LANG._Get("l_File", sPath), 2)
                 result = True
             Else
                 LogLine.Add(LogSubline)
-                _LOG._Add("WINDOW_FORM", "Ядро не прошло верификацию", LogLine, 1)
+                _LOG._Add("WINDOW_FORM", _LANG._Get("Helper_MSG_CoreVerificationError"), LogLine, 1)
             End If
         Catch ex As Exception
-            LogSubline.List.Add("Описание: " & ex.Message)
+            LogSubline.List.Add(_LANG._Get("l_Description", ex.Message))
             LogLine.Add(LogSubline)
-            _LOG._Add("WINDOW_FORM", "Ядро не прошло верификацию", LogLine, 1)
+            _LOG._Add("WINDOW_FORM", _LANG._Get("Helper_MSG_CoreVerificationError"), LogLine, 1)
         End Try
 
         Return result

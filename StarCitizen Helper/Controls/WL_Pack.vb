@@ -106,12 +106,23 @@ Public Class WL_Pack
         End Set
     End Property
 
+
+
     Public Property Property_ShowTestBuild() As Boolean
         Get
             Return Me.CheckBox_ShowTestBuild.Checked
         End Get
         Set(ByVal Value As Boolean)
             Me.CheckBox_ShowTestBuild.Checked = Value
+        End Set
+    End Property
+
+    Public Property Text_Check_ShowTestBuild() As String
+        Get
+            Return Me.CheckBox_ShowTestBuild.Text
+        End Get
+        Set(ByVal Value As String)
+            Me.CheckBox_ShowTestBuild.Text = Value
         End Set
     End Property
 
@@ -161,8 +172,8 @@ Public Class WL_Pack
                 Me.sPath_Folder_Download = Nothing
                 Exit Property
             End If
-            If result.ValueBoolean = False Then _LOG._sAdd(Me.GetType().Name, "Создана папка для загрузки пакетов локализации", Value, 2)
-            _LOG._sAdd(Me.GetType().Name, "Задана папка для загрузки пакетов локализации", Value, 2)
+            If result.ValueBoolean = False Then _LOG._sAdd(Me.GetType().Name, _LANG._Get("Pack_MSG_CreateTempFolder", Value), Nothing, 2)
+            _LOG._sAdd(Me.GetType().Name, _LANG._Get("Pack_MSG_AssignTempFolder", Value), Nothing, 2)
             Me.sPath_Folder_Download = Value
             Me.Property_Name_File_Download = GetDownloadedPackFileName()
             If Property_Name_File_Download IsNot Nothing Then
@@ -184,9 +195,9 @@ Public Class WL_Pack
             End If
             Dim Version As String = Property_PackInPackVersion
             If Version Is Nothing Then
-                Me.Text_Label_Download = "Загружена версия: не определена"
+                Me.Text_Label_Download = _LANG._Get("Pack_MSG_DownloadedVersion", _LANG._Get("Pack_MSG_VersionUnspecified"))
             Else
-                Me.Text_Label_Download = "Загружена версия: " & Version
+                Me.Text_Label_Download = _LANG._Get("Pack_MSG_DownloadedVersion", Version)
             End If
         End Set
     End Property
@@ -318,12 +329,12 @@ Public Class WL_Pack
             Return Me.sPackInGameVersion
         End Get
         Set(ByVal Path As String)
-            Me.Text_Label_InstallFull = "Установлена версия: не определена"
+            Me.Text_Label_InstallFull = _LANG._Get("Pack_MSG_InstalledVersion", _LANG._Get("Pack_MSG_VersionUnspecified"))
             If Me.Property_Path_File_Meta Is Nothing Then Exit Property
             If _FSO._ReadTextFile(MAIN_THREAD.WL_Pack.Property_Path_File_Meta, System.Text.Encoding.UTF8) IsNot Nothing Then
                 Me.sPackInGameVersion = _FSO._ReadTextFile(MAIN_THREAD.WL_Pack.Property_Path_File_Meta, System.Text.Encoding.UTF8)
                 _INI._Write("EXTERNAL", "PACK_GAME_VERSION", Me.sPackInGameVersion)
-                If Me.sPackInGameVersion IsNot Nothing Then Me.Text_Label_InstallFull = "Установлена версия: " & Me.sPackInGameVersion
+                If Me.sPackInGameVersion IsNot Nothing Then Me.Text_Label_InstallFull = _LANG._Get("Pack_MSG_InstalledVersion", Me.sPackInGameVersion)
             End If
         End Set
     End Property
@@ -352,9 +363,9 @@ Public Class WL_Pack
         RaiseEvent _Event_Download_Before()
 
         Dim result As New ResultClass(Me)
-        If Me.Property_Path_Folder_Download Is Nothing Then result.Err._Flag = True : result.Err._Description_App = "Не удалось получить доступ к папке загрузок" : result.Err._Description_Sys = Me.Property_Path_Folder_Download : GoTo Finalize
-        If _FSO._DeleteFile(Path.Combine(Me.Property_Path_Folder_Download, "*.zip")).Err._Flag = True Then result.Err._Flag = True : result.Err._Description_App = "Не удалось удалить существующий файл пакета локализации в папке загрузки" : result.Err._Description_Sys = Me.Property_Path_Folder_Download : GoTo Finalize
-        If Me.List_Git.FindString(Me.Property_GitList_SelString) = -1 Then result.Err._Flag = True : result.Err._Description_App = "Не выбрана версия загружаемого пакета локализации" : GoTo Finalize
+        If Me.Property_Path_Folder_Download Is Nothing Then result.Err._Flag = True : result.Err._Description_App = _LANG._Get("Pack_MSG_ErrorAccessTempFolder") : result.Err._Description_Sys = Me.Property_Path_Folder_Download : GoTo Finalize
+        If _FSO._DeleteFile(Path.Combine(Me.Property_Path_Folder_Download, "*.zip")).Err._Flag = True Then result.Err._Flag = True : result.Err._Description_App = _LANG._Get("Pack_MSG_ErrorClearTempFolder") : result.Err._Description_Sys = Me.Property_Path_Folder_Download : GoTo Finalize
+        If Me.List_Git.FindString(Me.Property_GitList_SelString) = -1 Then result.Err._Flag = True : result.Err._Description_App = _LANG._Get("Pack_MSG_ErrorNotSelectPack") : GoTo Finalize
         Console.WriteLine(Me.GIT_PACK_DATA._GetByName(Me.Property_GitList_SelString, _VARS.PackageGitMaster_Name)._zipball_url)
         Me.Download(Me.GIT_PACK_DATA._GetByName(Me.Property_GitList_SelString, _VARS.PackageGitMaster_Name)._zipball_url, _FSO._CombinePath(Me.Property_Path_Folder_Download, Me.List_Git.Text & ".zip"), GIT_PACK_DATA._GetByName(Me.Property_GitList_SelString, _VARS.PackageGitMaster_Name)._isMaster)
 
@@ -369,10 +380,10 @@ Finalize: If result.Err._Flag = True Then
         RaiseEvent _Event_Download_Click_Before()
         sender.Enabled = False
 
-        If MAIN_THREAD.WL_Mod.Property_GameExeFilePath Is Nothing Then _LOG._sAdd(Me.Name, "Не указан путь к исполняемому файлу игры", Nothing, 1) : GoTo Finalize
-        If _FSO._FileExits(Property_Path_File_Download) = False Then _LOG._sAdd(Me.Name, "Не удалось получить доступ к файлу обновлений:", Property_Path_File_Download, 1) : GoTo Finalize
+        If MAIN_THREAD.WL_Mod.Property_GameExeFilePath Is Nothing Then _LOG._sAdd(Me.Name, _LANG._Get("File_MSG_PathNotAssign", _LANG._Get("FileGameExecT")), Nothing, 1) : GoTo Finalize
+        If _FSO._FileExits(Property_Path_File_Download) = False Then _LOG._sAdd(Me.Name, _LANG._Get("Pack_MSG_ErrorAccessPackFile", Property_Path_File_Download), Nothing, 1) : GoTo Finalize
         _FSO._DeleteFolder(MAIN_THREAD.WL_Mod.Property_GameModFolderPath)
-        If _FSO.ZIP.UnzipFolderToFolder(Property_Path_File_Download, ".data", MAIN_THREAD.WL_Mod.Property_GameModFolderPath) = False Then _LOG._sAdd(Me.Name, "Не удалось распаковать пакет обновлений в папку игры", "Исходный архив: " & Property_Path_File_Download & vbNewLine & "Путь установки: " & MAIN_THREAD.WL_Mod.Property_GameModFolderPath, 1) : GoTo Finalize
+        If _FSO.ZIP.UnzipFolderToFolder(Property_Path_File_Download, ".data", MAIN_THREAD.WL_Mod.Property_GameModFolderPath) = False Then _LOG._sAdd(Me.Name, _LANG._Get("Pack_MSG_ErrorUnpackPackToGame", Property_Path_File_Download, MAIN_THREAD.WL_Mod.Property_GameModFolderPath), Nothing, 1) : GoTo Finalize
 
         _FSO._DeleteFile(Me.Property_Path_File_Meta).Err._Flag = False
         _FSO._WriteTextFile(Me.Property_PackInPackVersion, Me.Property_Path_File_Meta, System.Text.Encoding.UTF8)
@@ -420,7 +431,7 @@ Finalize: sender.Enabled = True
 
             Dim e As ResultClass = _INET._GetFile(DownloadFrom, DownloadTo, Net.SecurityProtocolType.Tls12, Headers)
             If e.Err._Flag = True Then
-                Me.WL_Download.DownloadFrom = "Ошибка загрузки"
+                Me.WL_Download.DownloadFrom = _LANG._Get("ErrorDownload")
                 Me.WL_Download.DownloadTo = e.Err._Description_Sys
             End If
 
@@ -435,19 +446,17 @@ Finalize: sender.Enabled = True
         Me._Enabled(True)
         Dim logLines As List(Of LOG_SubLine) = New List(Of LOG_SubLine)
         Dim logLine As LOG_SubLine = New LOG_SubLine
+        logLine.List.Add(_LANG._Get("l_SourceURL", DownloadFrom))
+        logLine.List.Add(_LANG._Get("l_Destination", DownloadTo))
         If e.Err IsNot Nothing Then
             logLine.Value = e.Err.Message
-            logLine.List.Add("Source URL: " & DownloadFrom)
-            logLine.List.Add("Destination: " & DownloadTo)
             logLines.Add(logLine)
-            _LOG._Add(Me.GetType().Name, "Ошибка загрузки:", logLines, 2)
+            _LOG._Add(Me.GetType().Name, _LANG._Get("ErrorDownload") & ": ", logLines, 2)
             _FSO._DeleteFile(DownloadTo)
         Else
-            logLine.Value = "Name: " & GIT_PACK_DATA._GetByName(Me.Property_GitList_SelString, _VARS.PackageGitMaster_Name)._name
-            logLine.List.Add("Source URL: " & DownloadFrom)
-            logLine.List.Add("Destination: " & DownloadTo)
+            logLine.Value = _LANG._Get("l_Name", GIT_PACK_DATA._GetByName(Me.Property_GitList_SelString, _VARS.PackageGitMaster_Name)._name)
             logLines.Add(logLine)
-            _LOG._Add(Me.GetType().Name, "Загрузка пакета локализации успешно завершена:", logLines, 2)
+            _LOG._Add(Me.GetType().Name, _LANG._Get("l_UpdateComplete", _LANG._Get("PackUpdateNameT")), logLines, 2)
         End If
 
         Property_Path_File_Download = DownloadTo
