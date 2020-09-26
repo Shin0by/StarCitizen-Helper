@@ -10,6 +10,12 @@
         _LANG._Link(MAIN_THREAD.TabPage_Debug, "Text", "Window_Tab_Log")
         _LANG._Link(MAIN_THREAD.TabPage_About, "Text", "Window_Tab_About")
 
+        'TabPage SysSettings
+        _LANG._Link(MAIN_THREAD.WL_SysLang, "Property_Name", "SysLang_Name")
+        _LANG._Link(MAIN_THREAD.WL_SysLang, "Property_Text_Group_SystemLanguage", "SysLang_Group_Language")
+        _LANG._Link(MAIN_THREAD.WL_SysLang, "Property_Text_Label_SetLanguage", "SysLang_ListInfo_LanguageList")
+        _LANG._Link(MAIN_THREAD.WL_SysLang, "Text_Button_SetLanguage", "SysLang_ButtonName_SetLanguage")
+
         'TabPage_Patch
         _LANG._Link(MAIN_THREAD.WL_Mod, "Text_Button_Path", "Modification_ButtonName_Path", _LANG._Get("FileGameExec"))
         _LANG._Link(MAIN_THREAD.WL_Mod, "Text_Button_Enable", "Modification_ButtonName_Enable", _LANG._Get("ModificationModule"))

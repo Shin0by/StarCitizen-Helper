@@ -29,6 +29,9 @@ Module Module_HELPER
         _INI._Write("CONFIGURATION", "SHOW_TEST_BUILDS", 0)
         _INI._Write("CONFIGURATION", "LANGUAGE", "ENGLISH")
 
+        'SystemLanguage
+        _INI._Write("LANGUAGE", "LANGUAGE", _VARS.LangFile_Name)
+
         'Updater
         _INI._Write("UPDATE", "APP_DATE", "")
         _INI._Write("UPDATE", "STATUS", "NEW")

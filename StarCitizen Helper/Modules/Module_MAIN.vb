@@ -43,13 +43,15 @@ Module Module_MAIN
         _VARS.PackageGitURL_Api = "https://api.github.com/repos/n1ghter/SC_ru/releases"
 
         _VARS.LangFolder_Name = "lang"
-        _VARS.LangFile_Name = "english.txt"
+        _VARS.LangFile_Name = "_current_.txt"
         _LANG._LOAD(_FSO._CombinePath(_APP.exePath, _VARS.LangFolder_Name, _VARS.LangFile_Name))
         Module_HELPER.CheckConfigFile()
     End Sub
 
     Public Sub InitializeEnd()
         SetLanguageLink()
+        MAIN_THREAD.WL_SysLang.Property_File_Name_Current = _VARS.LangFile_Name
+        MAIN_THREAD.WL_SysLang.Property_Path_Folder_Language = _FSO._CombinePath(_APP.exePath, _VARS.LangFolder_Name)
 
         MAIN_THREAD.Text = _APP.appName & " " & _APP.Version
         MAIN_THREAD.NotifyIcon1.Text = _APP.appName
@@ -185,8 +187,8 @@ Module Module_MAIN
 
         'Config
         Public ConfigFileIsOK As Boolean = False
-        Public LangFolder_Name As String = Nothing
-        Public LangFile_Name As String = Nothing
+        Public LangFolder_Name = Nothing
+        Public LangFile_Name = Nothing
 
         'Patcher
         Public GameName As String = Nothing

@@ -106,8 +106,6 @@ Public Class WL_Pack
         End Set
     End Property
 
-
-
     Public Property Property_ShowTestBuild() As Boolean
         Get
             Return Me.CheckBox_ShowTestBuild.Checked
@@ -551,6 +549,5 @@ Finalize: sender.Enabled = True
     End Sub
 
     '-----------------------------------> 'Callback
-
 
 End Class

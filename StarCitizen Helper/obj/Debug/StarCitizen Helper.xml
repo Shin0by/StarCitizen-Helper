@@ -57,5 +57,19 @@ StarCitizen Helper
   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
 </summary>
 </member>
+<member name="T:SC.Module_LANG">
+ Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+If Button1.Tag = 0 Then
+Button1.Tag = 1
+_LANG._LOAD(_FSO._CombinePath(_APP.exePath, _VARS.LangFolder_Name, "russian.txt"))
+Else
+Button1.Tag = 0
+_LANG._LOAD(_FSO._CombinePath(_APP.exePath, _VARS.LangFolder_Name, "english.txt"))
+End If
+_LANG._UpdateLinked()
+SetLanguageLink()
+UpdateInterface()
+End Sub
+</member>
 </members>
 </doc>

@@ -177,18 +177,6 @@ publish/
 # in these scripts will be unencrypted
 PublishScripts/
 
-# NuGet Packages
-*.nupkg
-# The packages folder can be ignored because of Package Restore
-**/[Pp]ackages/*
-# except build/, which is used as an MSBuild target.
-!**/[Pp]ackages/build/
-# Uncomment if necessary however generally it will be regenerated when needed
-#!**/[Pp]ackages/repositories.config
-# NuGet v3's project.json files produces more ignorable files
-*.nuget.props
-*.nuget.targets
-
 # Microsoft Azure Build Output
 csx/
 *.build.csdef
@@ -328,3 +316,15 @@ ASALocalRun/
 
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
+
+
+#WL
+.vs/StarCitizen Helper/v14/*
+StarCitizen Helper/obj/Debug/*
+StarCitizen Helper/obj/Release/*
+StarCitizen Helper/bin/*
+StarCitizen Helper/Other/StarCitizen Helper_TemporaryKey.pfx
+!StarCitizen Helper/bin/Debug/lang
+!StarCitizen Helper/bin/Debug/config.ini
+!StarCitizen Helper/bin/Release/lang
+!StarCitizen Helper/bin/Release/config.ini

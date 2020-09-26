@@ -296,6 +296,8 @@
         'Profiles
         Me.CheckBox_BeforeKillProcess.Checked = _VARS.GameProcessKillerEnabled
 
+        'SystemLanguage
+        Me.WL_SysLang._LoadLanguageList()
     End Sub
     '-----------------------------------> 'Form logic
 
@@ -395,24 +397,6 @@
             UpdateAlert_NewVersion(JSON, LatestElement, SenderName)
         End If
     End Sub
-
-    Private Sub WL_About1_Load(sender As Object, e As EventArgs) Handles WL_About.Load
-
-    End Sub
-
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        If Button1.Tag = 0 Then
-            Button1.Tag = 1
-            _LANG._LOAD(_FSO._CombinePath(_APP.exePath, _VARS.LangFolder_Name, "russian.txt"))
-        Else
-            Button1.Tag = 0
-            _LANG._LOAD(_FSO._CombinePath(_APP.exePath, _VARS.LangFolder_Name, "english.txt"))
-        End If
-        _LANG._UpdateLinked()
-        SetLanguageLink()
-        UpdateInterface()
-    End Sub
-
 
     '-----------------------------------> 'Callback
 End Class
