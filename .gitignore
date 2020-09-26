@@ -319,12 +319,12 @@ ASALocalRun/
 
 
 #WL
-.vs/StarCitizen Helper/v14/*
-StarCitizen Helper/obj/Debug/*
-StarCitizen Helper/obj/Release/*
-StarCitizen Helper/bin/*
-StarCitizen Helper/Other/StarCitizen Helper_TemporaryKey.pfx
-!StarCitizen Helper/bin/Debug/lang
-!StarCitizen Helper/bin/Debug/config.ini
-!StarCitizen Helper/bin/Release/lang
-!StarCitizen Helper/bin/Release/config.ini
+/.vs/StarCitizen Helper/v14
+/StarCitizen Helper/obj/Debug
+/StarCitizen Helper/obj/Release
+/StarCitizen Helper/bin/*
+/StarCitizen Helper/Other/StarCitizen Helper_TemporaryKey.pfx
+!/StarCitizen Helper/bin/Debug/lang
+!/StarCitizen Helper/bin/Debug/config.ini
+!/StarCitizen Helper/bin/Release/lang
+!/StarCitizen Helper/bin/Release/config.ini
