@@ -19,7 +19,7 @@ Module Module_GIT
                 If result.Err._Number = 403 Then
                     result.Err._Description_Sys = _LANG._Get("GIT_MSG_AccessDeniedLimit", result.Err._Description_Sys)
                 End If
-                _LOG._sAdd("GIT_NET", _LANG._Get("GIT_MSG_CannotLoadBuildList", result.Err._Description_Sys), URL, 1) : Return _LIST._GetAll
+                _LOG._sAdd("GIT_NET", _LANG._Get("GIT_MSG_CannotLoadBuildList", result.Err._Description_Sys), URL, 2) : Return _LIST._GetAll
             Else
                 temp = result.ValueString
             End If
