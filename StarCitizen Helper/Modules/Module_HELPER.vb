@@ -27,7 +27,7 @@ Module Module_HELPER
         'Configuration
         _INI._Write("CONFIGURATION", "DT_CREATE", DateTime.Now.ToString)
         _INI._Write("CONFIGURATION", "SHOW_TEST_BUILDS", 0)
-        _INI._Write("CONFIGURATION", "LANGUAGE", "ENGLISH")
+        _INI._Write("CONFIGURATION", "PRERELEASE", 0)
 
         'SystemLanguage
         _INI._Write("LANGUAGE", "LANGUAGE", _VARS.LangFile_Name)

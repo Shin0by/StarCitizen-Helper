@@ -70,6 +70,12 @@ Module Module_MAIN
         MAIN_THREAD.WL_Pack.Property_UpdateTargetName = _LANG._Get("PackUpdateNameT")
 
         Module_HELPER.LoadConfigFile()
+        If StringToBool(_INI._GET_VALUE("CONFIGURATION", "PRERELEASE", "0").Value) = True Then
+            MAIN_THREAD.WL_SysUpdateCheck.Property_PreRelease = True
+        Else
+            MAIN_THREAD.WL_SysUpdateCheck.Property_PreRelease = _VARS.PreRelease_SysUpdate
+            _INI._Write("CONFIGURATION", "PRERELEASE", "0")
+        End If
         CheckUpdateStatus()
 
         If _VARS.AppLatestDate = New DateTime Then _VARS.AppLatestDate = DateTime.Now
@@ -193,6 +199,7 @@ Module Module_MAIN
         Private sUpdateStatus As String = Nothing
         Public AppLatestDate As DateTime = Nothing
         Public ResetConfig As Boolean = False
+        Public PreRelease_SysUpdate As Boolean = False
 
         'Config
         Public ConfigFileIsOK As Boolean = False

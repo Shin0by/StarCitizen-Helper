@@ -9,6 +9,8 @@ Public Class WL_Check
     Private cBackColor As Color = Me.BackColor
     Private cForeColor As Color = Me.ForeColor
 
+    Private bPreRelease As Boolean = True
+
     Private sURL As String = Nothing 'GitHub App HomePage 
     Private sURLApi As String = Nothing 'GitHub API page
 
@@ -64,6 +66,15 @@ Public Class WL_Check
         End Get
         Set(ByVal Value As String)
             Me.sName = Value
+        End Set
+    End Property
+
+    Public Property Property_PreRelease() As Boolean
+        Get
+            Return Me.bPreRelease
+        End Get
+        Set(ByVal Value As Boolean)
+            Me.bPreRelease = Value
         End Set
     End Property
 
@@ -266,7 +277,7 @@ Public Class WL_Check
             Loop
 
             If Me.Property_URLApi IsNot Nothing Then
-                Dim NewGitList As List(Of Module_GIT.Class_GIT.Class_GitUpdateList.Class_GitUpdateElement) = _GIT_Request._GetGitList(Me.Property_URLApi)
+                Dim NewGitList As List(Of Module_GIT.Class_GIT.Class_GitUpdateList.Class_GitUpdateElement) = _GIT_Request._GetGitList(Me.Property_URLApi, Property_PreRelease)
                 If NewGitList.Count > 0 Then
                     Me.JSON = _GIT_Request._JSON
                     If Property_DateOnline <> _GIT_Request._LatestElement._published Then

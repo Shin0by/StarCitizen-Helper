@@ -8,7 +8,7 @@ Module Module_GIT
         Public _JSON As Object
         Public _LatestElement As Class_GitUpdateElement = Nothing
 
-        Public Function _GetGitList(URL As String) As List(Of Class_GitUpdateElement)
+        Public Function _GetGitList(URL As String, PreRelease As Boolean) As List(Of Class_GitUpdateElement)
             _LIST._Clear()
             Dim Header As New Net.WebHeaderCollection
             Header.Add("Accept-Encoding:gzip,deflate")
@@ -31,7 +31,9 @@ Module Module_GIT
             For Each elem In _JSON("data")
                 Assets = Nothing
                 Assets = elem("assets")
-                _LIST._Add(elem("name"), elem("tag_name"), elem("zipball_url"), elem("published_at"), elem("body"), Assets, False)
+                If PreRelease = True Or StringToBool(elem("prerelease").ToString) = False Then
+                    _LIST._Add(elem("name"), elem("tag_name"), elem("zipball_url"), elem("published_at"), elem("body"), Assets, StringToBool(elem("prerelease").ToString), False)
+                End If
             Next
 
             Me._LatestElement = Me._GetLatestElement(_LIST._GetAll)
@@ -75,8 +77,8 @@ Module Module_GIT
                 Me.data.Clear()
             End Sub
 
-            Public Sub _Add(Name As String, TagName As String, ZIPBallURL As String, Published As String, Body As String, Assets As Object, Optional isMaster As Boolean = False)
-                data.Add(New Class_GitUpdateElement(Name, TagName, ZIPBallURL, Published, Body, Assets, isMaster))
+            Public Sub _Add(Name As String, TagName As String, ZIPBallURL As String, Published As String, Body As String, Assets As Object, PreRelease As Boolean, Optional isMaster As Boolean = False)
+                data.Add(New Class_GitUpdateElement(Name, TagName, ZIPBallURL, Published, Body, Assets, PreRelease, isMaster))
             End Sub
 
             Public Function _GetAll() As List(Of Class_GitUpdateElement)
@@ -104,8 +106,9 @@ Module Module_GIT
                 Public _zipball_url As String = Nothing
                 Public _published As DateTime = Nothing
                 Public _assets As Object = Nothing
+                Public _prerelease As Boolean = False
 
-                Sub New(Name As String, TagName As String, ZIPBallURL As String, Published As String, Body As String, Assets As Object, Optional isMaster As Boolean = False)
+                Sub New(Name As String, TagName As String, ZIPBallURL As String, Published As String, Body As String, Assets As Object, Prerelease As Boolean, Optional isMaster As Boolean = False)
                     Me._isMaster = isMaster
                     Me._tag_name = TagName
                     Me._name = Name
@@ -114,6 +117,7 @@ Module Module_GIT
                     Me._published = Convert.ToDateTime(Published)
                     Me._assets = Assets
                     Me._parsed_name = Replace(Me._name, Me._tag_name, "").Replace("(", "").Replace(")", "").Trim
+                    Me._prerelease = Prerelease
                     Dim temp As String() = Split(Me._parsed_name, " ")
                     For Each elem In temp
                         If InStr(UCase(elem), ("LIVE")) > 0 Or InStr(UCase(elem), ("PTU")) > 0 Or InStr(UCase(elem), ("EPTU")) > 0 Then
