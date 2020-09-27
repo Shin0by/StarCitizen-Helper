@@ -9,6 +9,7 @@ OutputDir=C:\google\programming\GitHub\StarCitizen-Helper\install\package\Output
 UninstallDisplayIcon={app}\StarCitizen Helper.exe
 AlwaysShowDirOnReadyPage=yes
 DisableDirPage=no
+
 //DefaultDirName={commonpf}\StarCitizen Helper
 //ArchitecturesInstallIn64BitMode=x64
 //PrivilegesRequired=lowest
