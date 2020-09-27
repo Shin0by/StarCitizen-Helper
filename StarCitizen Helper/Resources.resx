@@ -139,4 +139,10 @@
   <data name="Defter_CoreSigning" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\Defter.CoreSigning.cer;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="default_english" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\default_english.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1251</value>
+  </data>
+  <data name="default_russian" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\default_russian.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1251</value>
+  </data>
 </root>

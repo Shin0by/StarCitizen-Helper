@@ -266,25 +266,25 @@ Public Class WL_Check
             Loop
 
             If Me.Property_URLApi IsNot Nothing Then
-                    Dim NewGitList As List(Of Module_GIT.Class_GIT.Class_GitUpdateList.Class_GitUpdateElement) = _GIT_Request._GetGitList(Me.Property_URLApi)
-                    If NewGitList.Count > 0 Then
-                        Me.JSON = _GIT_Request._JSON
-                        If Property_DateOnline <> _GIT_Request._LatestElement._published Then
-                            If Me.Property_SetupFileName IsNot Nothing Then Me.Property_URLDownload = _GIT_Request._GetAssetByFileName(Me.Property_SetupFileName)
-                            If Property_AlertUpdate = True Then RaiseEvent _Event_NewVersion_Alert(_GIT_Request._JSON, _GIT_Request._LatestElement, Me)
-                            Me.Invoke(Sub()
-                                          Me.Property_Text_Label_Value_OnlineVersion = _GIT_Request._LatestElement._tag_name
-                                          Me.Property_Text_Label_Value_OnlineDate = _GIT_Request._LatestElement._published
-                                          Me.Property_Text_TextBox_Value_OnlineInformation = _GIT_Request._LatestElement._body
-                                      End Sub)
-                            RaiseEvent _Event_NewVersion_Available_After(_GIT_Request._JSON, _GIT_Request._LatestElement, Me)
-                        End If
+                Dim NewGitList As List(Of Module_GIT.Class_GIT.Class_GitUpdateList.Class_GitUpdateElement) = _GIT_Request._GetGitList(Me.Property_URLApi)
+                If NewGitList.Count > 0 Then
+                    Me.JSON = _GIT_Request._JSON
+                    If Property_DateOnline <> _GIT_Request._LatestElement._published Then
+                        If Me.Property_SetupFileName IsNot Nothing Then Me.Property_URLDownload = _GIT_Request._GetAssetByFileName(Me.Property_SetupFileName)
+                        If Property_AlertUpdate = True Then RaiseEvent _Event_NewVersion_Alert(_GIT_Request._JSON, _GIT_Request._LatestElement, Me)
+                        Me.Invoke(Sub()
+                                      Me.Property_Text_Label_Value_OnlineVersion = _GIT_Request._LatestElement._tag_name
+                                      Me.Property_Text_Label_Value_OnlineDate = _GIT_Request._LatestElement._published
+                                      Me.Property_Text_TextBox_Value_OnlineInformation = _GIT_Request._LatestElement._body
+                                  End Sub)
+                        RaiseEvent _Event_NewVersion_Available_After(_GIT_Request._JSON, _GIT_Request._LatestElement, Me)
                     End If
-                    RaiseEvent _Event_Update_Complete_After(_GIT_Request._JSON, _GIT_Request._LatestElement, Me)
-                    If _GIT_Request._LatestElement IsNot Nothing Then Property_DateOnline = _GIT_Request._LatestElement._published
                 End If
+                RaiseEvent _Event_Update_Complete_After(_GIT_Request._JSON, _GIT_Request._LatestElement, Me)
+                If _GIT_Request._LatestElement IsNot Nothing Then Property_DateOnline = _GIT_Request._LatestElement._published
+            End If
 
-                Thread.Sleep(iUpdateGitListInterval)
+            Thread.Sleep(iUpdateGitListInterval)
         Loop
     End Sub
     '-----------------------------------> Thread

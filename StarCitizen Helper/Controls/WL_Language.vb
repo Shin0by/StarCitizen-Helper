@@ -120,6 +120,7 @@ Public Class WL_Language
                 If _FSO._FileExits(_FSO._CombinePath(Me.sPath_Folder_Language, Me.Property_File_Name_Current)) Then
                     Me.sPathe_File_Current = _FSO._CombinePath(Me.sPath_Folder_Language, Me.Property_File_Name_Current)
                 End If
+                GenerateDefaultLanguageFiles()
             End If
         End Set
     End Property
@@ -142,6 +143,14 @@ Public Class WL_Language
     End Property
 
     '-----------------------------------> Properties
+    Private Sub GenerateDefaultlanguageFiles()
+        If _FSO._FileExits(_FSO._CombinePath(Property_Path_Folder_Language, "default_english.txt")) = False Then
+            _FSO._WriteTextFile(My.Resources.default_english, _FSO._CombinePath(Property_Path_Folder_Language, "default_english.txt"), Encoding.Unicode, False)
+        End If
+        If _FSO._FileExits(_FSO._CombinePath(Property_Path_Folder_Language, "default_russian.txt")) = False Then
+            _FSO._WriteTextFile(My.Resources.default_russian, _FSO._CombinePath(Property_Path_Folder_Language, "default_russian.txt"), Encoding.Unicode, False)
+        End If
+    End Sub
 
     Public Sub _LoadLanguageList()
         If Me.Property_File_Name_Current Is Nothing Then
@@ -151,6 +160,7 @@ Public Class WL_Language
         Dim list As String() = Directory.GetFiles(Me.Property_Path_Folder_Language)
         Dim File As FileInfo
         Dim FileLanguageName As String = Nothing
+        Me.aLanguageList.Clear()
         If list.Count > 0 Then
             For Each elem In list
                 File = CType(_FSO._GetInfo(elem).ValueObject, FileInfo)
@@ -208,7 +218,9 @@ Public Class WL_Language
             If LCase(aElem.sName) = LCase(Me.ComboBox_LanguageList.Text) Then
                 If _FSO._CopyFile(_FSO._CombinePath(aElem.sPath, aElem.sFile), _FSO._CombinePath(sPath_Folder_Language, sFile_Name_Current), True) = True Then
                     _INI._Write("LANGUAGE", "LANGUAGE", Me.ComboBox_LanguageList.Text)
-                    Application.Exit()
+                    'Application.Exit()
+                    'Application.Restart()
+                    RaiseEvent _Event_SetLanguage_Button_Click_After()
                     Exit Sub
                 Else
                     _LOG._sAdd(Me.Name, _LANG._Get("File_MSG_CannotCopyFile", _FSO._CombinePath(aElem.sPath, aElem.sFile), _FSO._CombinePath(sPath_Folder_Language, sFile_Name_Current)), Nothing, 1)

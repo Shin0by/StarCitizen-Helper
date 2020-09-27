@@ -398,5 +398,13 @@
         End If
     End Sub
 
+    Sub SetNewLanguage() Handles WL_SysLang._Event_SetLanguage_Button_Click_After
+        Restart()
+    End Sub
+
+    Public Sub Restart()
+        Application.Restart()
+        End
+    End Sub
     '-----------------------------------> 'Callback
 End Class

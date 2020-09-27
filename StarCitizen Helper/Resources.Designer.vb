@@ -70,6 +70,46 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to #LANGUAGE NAME - USED IN APPLICATION LANGUAGE LIST
+        '''Language = English [default]
+        '''.
+        '''</summary>
+        Friend ReadOnly Property default_english() As String
+            Get
+                Return ResourceManager.GetString("default_english", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to #LANGUAGE NAME - USED IN APPLICATION LANGUAGE LIST
+        '''Language = Русский [стандартный]
+        '''
+        '''#GLOBAL SHORT
+        '''Error = Ошибка
+        '''Number = Номер
+        '''Description = Описание
+        '''CallError = Ошибка при вызове
+        '''File = Файл
+        '''FileAllFiles = Все файлы
+        '''Information = Информация
+        '''Operation = Операция
+        '''Read = Чтение
+        '''Write = Запись
+        '''ErrorDownload = Ошибка загрузки
+        '''SourceURL = Исходный URL
+        '''Destination = Назначение
+        '''FunctionEnabled = Функция включена
+        '''FunctionDisabled = Функция выключена
+        '''Modification = Модификация
+        '''ModificationModul [rest of string was truncated]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property default_russian() As String
+            Get
+                Return ResourceManager.GetString("default_russian", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized resource of type System.Byte[].
         '''</summary>
         Friend ReadOnly Property Defter_CA() As Byte()

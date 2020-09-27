@@ -1,6 +1,6 @@
 
 [Setup]
-AppVersion=1.6.13.86
+AppVersion=1.7.14.90
 AppName=StarCitizen Helper
 DefaultDirName={userappdata}\StarCitizen Helper
 DefaultGroupName=StarCitizen Helper
@@ -13,10 +13,16 @@ DisableDirPage=no
 //ArchitecturesInstallIn64BitMode=x64
 //PrivilegesRequired=lowest
 
+[Dirs]
+Name: "{app}\lang"
+
 [Files]
 Source: "StarCitizen Helper.exe"; DestDir: "{app}"; Components: main
 Source: "Shin0by soft.ico"; DestDir: "{app}"; Components: main
 //Source: "config.ini"; DestDir: "{app}"; Components: main; Permissions: users-modify
+Source: "lang\_current_.txt"; DestDir: "{app}\lang"; Components: main
+Source: "lang\default_english.txt"; DestDir: "{app}\lang"; Components: main
+Source: "lang\default_russian.txt"; DestDir: "{app}\lang"; Components: main
 Source: "INIFileParser.dll"; DestDir: "{app}"; Components: main
 Source: "Newtonsoft.Json.dll"; DestDir: "{app}"; Components: main
 Source: "CertificateVerifier.dll"; DestDir: "{app}"; Components: main

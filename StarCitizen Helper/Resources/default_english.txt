@@ -1,0 +1,209 @@
+#LANGUAGE NAME - USED IN APPLICATION LANGUAGE LIST
+Language = English
+
+#GLOBAL SHORT
+Error = Error
+Number = Number
+Description = Description
+CallError = Call Error
+File = File
+FileAllFiles = All files
+Information = Information
+Operation = Operation
+Read = Read
+Write = Write
+ErrorDownload = Download error
+SourceURL = Source URL
+Destination = Destination
+FunctionEnabled = Function Enabled
+FunctionDisabled = Function Disabled
+Modification = Modification
+ModificationModule = Modification
+ModificationModuleT = Modification
+Enable = Enable
+Disable = Disable
+EnabledT = Enabled
+DisabledT = Disabled
+EnabledS = Enabled
+DisabledS = Disabled
+NewVersionAvailable = New version available
+Name = Name
+SystemUpdateName = system update
+SystemUpdateNameT = system update
+PackUpdateName = localization pack
+PackUpdateNameT = localization pack
+UpdateComplete = Download {0} successfully complete
+FileGameExec = game executive file
+FileGameExecT = game executive file
+
+#GLOBAL LONG
+l_Error = Error: {0}
+l_Number = Number: {0}
+l_Description = Description: {0}
+l_CallError = Call error: {0}
+l_File = File: {0}
+l_Information = Information: {0}
+l_Operation = Operation: {0}
+l_Read = Read: {0}
+l_Write = Write: {0}
+l_ErrorDownload = Download error: {0}
+l_SourceURL = Source URL: {0}
+l_Destination = Destination: {0}
+l_FunctionEnabled = Function [{0}] enabled
+l_FunctionDisabled = Function [{0}] disabled
+l_Modification = Modification: {0}
+l_ModificationModule = Modification: {0}
+l_Enable = Enable {0}
+l_Disable = Disable {0}
+l_EnabledT = Enabled {0}
+l_DisabledT = Disabled {0}
+l_NewVersionAvailable = New version of "{0}" available
+l_Name = Name: {0}
+l_UpdateComplete = Download {0} successfully complete:
+
+#FileSystem
+File_MSG_CheckFile = Checking file [{0}]
+File_MSG_ChangeFile = Modifying file [{0}]
+File_MSG_ErrorAccessConfigFile = Error accessing the configuration file
+File_MSG_SectionNotFound = Section [{0}] is missing from file\n\t{1}
+File_MSG_ParameterNotFound = Parameter [{0}] for section [{1}] is missing from file\n\t{2}
+File_MSG_CannotDelExsFile = Error deleting file \n\t{0}
+File_MSG_CannotWriteCheckPermission = Error writing to file, check write right for file and folder\n\t{0}
+File_MSG_IncorrectDownloadedSize = Incorrect size of downloaded file\n\t{0}
+File_MSG_PathNotAssign = Specify path to {0}
+File_MSG_CannotCopyFile = Error copying file\n\tSource: {0}\n\tDestination: {1}
+
+#Window Tabs
+Window_Tab_Modification = Modification
+Window_Tab_Localization = Localization
+Window_Tab_ProcessKiller = Force ñlose
+Window_Tab_Profiles = Profiles
+Window_Tab_Log = Log
+Window_Tab_SysUpdate = Update
+Window_Tab_SysSettings = System
+Window_Tab_About = About
+
+#Window Menu
+Menu_Main_HideApp = Hide App
+Menu_Main_ShowApp = Show App
+
+#Window other
+Core_MSG_BeginVerification = Core verification started
+
+#Tab About
+About_ButtonName_Application = Feedback by Program
+About_ButtonInfo_Application = Send feedback about the program
+About_ButtonName_Localization = Feedback by Localization
+About_ButtonInfo_Localization = Send feedback about the localization
+About_ButtonName_Core = Feedback by Core
+About_ButtonInfo_Core = Send feedback about not signed core
+
+#Tab Log
+Log_Button_ClearLog = Clear log
+
+#Tab Profiles
+Profiles_ButtonsInfo_RenameGameFolder = Rename game folder to LIVE, PTU, EPTU
+Profiles_CheckName_FinishInAdvance = Force Close
+Profiles_CheckInfo_FinishInAdvance = Ends game and launcher processes before renaming folder
+Profiles_Bottom_Info = Allows you to quickly rename between LIVE, PTU, EPTU.\n\n[Force Close] function ends launcher and game processes (if any of then launched) before renaming to [LIVE, PTU, EPTU]. This function does not affect [Force Close] and closes only game and launcher processes.\n\n*LIVE - Public version\n*PTU - Public test version\n*EPTU - Closed to Evocati test version
+
+#Module PATCH
+Patch_MSG_Blocks = HEX_BLOCK1: [{0}]\nHEX_BLOCK2: [{1}]
+
+#Module INET
+INet_MSG_IncorrectURLString = Incorrect URL string
+
+#Module HELPER
+Helper_MSG_UpdateOK = Successfully updated to the latest version
+Helper_MSG_ConfigFileNotFoundCreateNew = Configuration file not found, creating new one\n\t{0}
+Helper_MSG_ConfigFileLoadFrom = Configuration loaded from file:\n\t{0}
+Helper_MSG_UpdateErrorTitle = Update error
+Helper_MSG_UpdateErrorBody = Automatic restart of the program was not performed. {0}
+Helper_MSG_AfterUpdateErrorTitle = After update current version of the program does not match with downloaded
+Helper_MSG_AfterUpdateErrorBody = If program is up to date ([{0}] tab - compare current and latest version), you may ignore this message. If program is not up to date, you may download and install latest version from Github.
+Helper_MSG_RenameGameFolderError = Folder can't be renamed
+Helper_MSG_RenameGameFolder = Folder successfully renamed
+Helper_MSG_CoreVerificationOK = Core successfully verified
+Helper_MSG_CoreVerificationError = Core not verified
+Helper_MSG_CoreNotEnabled = Core not enabled\n
+Helper_MSG_CoreErrorRecomendation = Core modified! It may contain malicious content. Are you sure you want use this localization package?\n\nStrongly recommended to download localization packages only from trusted sources.\n\nPlease, navigate to [{0}] tab and send review with link where you download this one by clicking [{1}] button.\n\n
+
+Module GIT
+GIT_MSG_AccessDeniedLimit = Access denied, exceeded limit of requests\n{0}
+GIT_MSG_CannotLoadBuildList = Cannot load actual data from Github\n{0}
+
+#Watcher
+Watcher_MSG_FileChangedDisable = Tracked file deleted, tracking disabled
+Watcher_MSG_FileChanged = Tracked file changed
+Watcher_MSG_AddErrorFileNotExist = Unable to enable file tracking, missing access to file or missing file
+Watcher_MSG_AddErrorAlreadyInList = Unable to enable file tracking; already in tracking list\n\t{0}
+Watcher_MSG_AddOK = File tracking enabled\n\t{0}
+Watcher_MSG_ErrorRequest = Request cannot be done, file is not in tracking list\n\t{0}
+Watcher_MSG_ErrorAccess = Unable to file data, missing access to file or missing file
+
+#SystemUpdate
+SysUpdateCheck_Group_Installed = Installed
+SysUpdateCheck_Group_Actual = Actual
+SysUpdateCheck_Name_CurentVersion = Version:
+SysUpdateCheck_Name_OnlineDate = Date of publication:
+SysUpdateCheck_Name_OnlineInformation = Additional information:
+SysUpdateCheck_Name_OnlineVersion = Version:
+SysUpdate_Bottom_Info = Warning!\nAfter successful download program will be automatically updated.\nMay require access to [{0}]\n\nFolder path: {1}
+SysUpdate_MSG_SysUpdateTitle = Name: Update
+SysUpdate_MSG_ChangesInfo = Changelog may be read at [{0}] tab or on Github page
+
+#ProcessKiller
+ProcessKiller_CheckName_Enable = Enable Force Process Close
+ProcessKiller_CheckInfo_Enable = Enabled
+ProcessKiller_ButtonName_SetHotKey = Select Hotkey
+ProcessKiller_ButtonInfo_SetHotKey = No Hotkey Selected
+ProcessKiller_ListInfo_KeyModifier = Hotkey modifier not chosen
+ProcessKiller_ButtonName_AddProcess = Add to Force Process Close List
+ProcessKiller_ButtonName_RemoveProcess = Remove from Force Process Close List
+ProcessKiller_Bottom_Info = Force close allows you to end choosed processes by pressing Hotkey.\nUseful when you need to close hanged program what can't be closed other way.\n\nFor correct work you need to launch SCH with Admin rights.\nYou may choose one or more processes to close at once.
+ProcessKiller_MSG_KillIgnore = Force closing process - ignored
+ProcessKiller_MSG_Kill = Force closing process
+ProcessKiller_MSG_CallError = Call Error: {0}({1})
+ProcessKiller_MSG_KeyInfo = Key: "{0}"\nKey ID: {1}
+ProcessKiller_MSG_ProcessRequiredName = Process name required
+ProcessKiller_MSG_ProcessAlreadyInList = Process already in list
+ProcessKiller_MSG_ProcessSelectFromList = Choose one process
+
+#Localization
+Pack_CheckName_ShowTestBuild = Show test packages
+Pack_ButtonName_DownloadPack = Download package
+Pack_ButtonInfo_DownloadPack = Download chosen pack (includes core)
+Pack_ButtonName_PackInstallAll = Full install
+Pack_ButtonInfo_PackInstallAll = Localization and Fonts
+Pack_Bottom_Info = To download {0} choose one {1} in dropdown menu and click [{2}]. After download click [{3}] to push required files into game directory.\nTo enable localization you need to enable {4}, navigate to [{5}] tab and click [{6}].\n\nNote: {1} [Master] - is the last package which is not verified and may cause bugs (not recommended to download).
+Pack_MSG_ChangesInfo = Changelog available on: {0}
+Pack_MSG_CreateTempFolder = Created folder for downloaded localization packs:\n\t{0}
+Pack_MSG_AssignTempFolder = Setted folder for downloaded localization packs:\n\t{0}
+Pack_MSG_DownloadedVersion = Downloaded version: {0}
+Pack_MSG_InstalledVersion = Installed version: {0}
+Pack_MSG_VersionUnspecified = unknown
+Pack_MSG_ErrorAccessTempFolder = Missing access to downloads folder
+Pack_MSG_ErrorClearTempFolder = Existing localization package cannot be deleted
+Pack_MSG_ErrorNotSelectPack = Needed select localization package
+Pack_MSG_ErrorAccessPackFile = Missing access to localization package:\n\t{0}
+Pack_MSG_ErrorUnpackPackToGame = Localization package cannot be installed into game folder\n\tSource archive: {0}\n\tDestination path: {1}
+
+#Modification!
+Modification_ButtonName_Path = Select {0}
+Modification_ButtonName_Enable = Enable {0}
+Modification_ButtonInfo_Enable = Enable {0}
+Modification_ButtonName_Disable = Disable {0}
+Modification_ButtonInfo_Disable = Disable {0}
+Modification_Bottom_Info = Warning! All listed in [{0}] tab things you performing at your own risk.\nBy pressing [{1}] button you will violate CIG EULA.\n\nTo enable or disable {2} you need to download it. Navigate to [{4}] tab and follow listed instructions.\n\nNote: When you downloading and installing new {3} you need to reenable {5}. It will enable appropriate {2} for appropriate localization. Program does not making changes in any game files, but modify memory at game launch which is much harder to detect.\n\nThe author of the program is strongly against any cheats and other methods not allowed by CIG, this program not carry such functional.
+Modification_OpenFileDialog_GameFile = Game exec file
+Modification_MSG_CoreNotFound = {0} not found, check instruction at the bottom of the window
+Modification_MSG_VersionUnspecified = unknown version
+
+#SysLanguage
+Pack_MSG_CreateLangFolder = Created folder for application language packs:\n\t{0}
+Pack_MSG_AssignLangFolder = Setted folder for application language packs:\n\t{0}
+SysLanguage_ButtonName_SetLanguage = Set
+SysLanguage_ButtonInfo_SetLanguage = Interface language
+SysLanguage_Group_Language = System language
+
+#END

@@ -57,7 +57,7 @@ Public Class WL_Pack
     '<----------------------------------- Basic control
     Public Sub New()
         InitializeComponent()
-        Me.Property_GitList_AutoUpdate = True
+        'Me.Property_GitList_AutoUpdate = True
     End Sub
     '-----------------------------------> Basic control
 

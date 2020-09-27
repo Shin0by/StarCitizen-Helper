@@ -78,11 +78,20 @@ Module Module_MAIN
         If _VARS.PackageLatestDate = New DateTime Then _VARS.PackageLatestDate = DateTime.Now
         MAIN_THREAD.WL_Pack.Property_DateOnline = _VARS.PackageLatestDate
 
-
         '_WATCHFILE_THREAD = New Class_THREAD_WATCHFILE(MAIN_THREAD)
         '_WATCHFILE_THREAD.StartThread()
         MAIN_THREAD.UpdateInterface()
         MAIN_THREAD.WL_Mod._Update(2)
+
+        'Show additional language window
+        If _INI._GET_VALUE("LANGUAGE", "LANGUAGE", _VARS.LangFile_Name).Value = _VARS.LangFile_Name Then
+            MAIN_THREAD.Hide()
+            MAIN_THREAD.ShowWinToolStripMenuItem.Text = _LANG._Get("Menu_Main_ShowApp")
+            SysLangForm.WL_SysLangModal.Property_File_Name_Current = _VARS.LangFile_Name
+            SysLangForm.WL_SysLangModal.Property_Path_Folder_Language = _FSO._CombinePath(_APP.exePath, _VARS.LangFolder_Name)
+            SysLangForm.WL_SysLangModal._LoadLanguageList()
+            SysLangForm.ShowDialog()
+        End If
     End Sub
 
     Public Sub Unload()

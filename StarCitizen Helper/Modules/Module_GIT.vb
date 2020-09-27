@@ -19,11 +19,11 @@ Module Module_GIT
                 If result.Err._Number = 403 Then
                     result.Err._Description_Sys = _LANG._Get("GIT_MSG_AccessDeniedLimit", result.Err._Description_Sys)
                 End If
-                _LOG._sAdd("GIT_NET", _LANG._Get("GIT_MSG_CannotLoadBuildList", result.Err._Description_Sys), Nothing, 1) : Return _LIST._GetAll
+                _LOG._sAdd("GIT_NET", _LANG._Get("GIT_MSG_CannotLoadBuildList", result.Err._Description_Sys), URL, 1) : Return _LIST._GetAll
             Else
                 temp = result.ValueString
             End If
-            If Len(temp) < 10 Then _LOG._sAdd("GIT_NET", _LANG._Get("GIT_MSG_CannotLoadBuildList", result.Err._Description_Sys), Nothing, 1) : Return _LIST._GetAll
+            If Len(temp) < 10 Then _LOG._sAdd("GIT_NET", _LANG._Get("GIT_MSG_CannotLoadBuildList", result.Err._Description_Sys), Nothing, 2) : Return _LIST._GetAll
 
             temp = "{" & Chr(34) & "data" & Chr(34) & ":" & temp & "}"
             Me._JSON = JsonConvert.DeserializeObject(temp)

@@ -122,7 +122,7 @@ Module Module_FSO
                 If (Not Directory.Exists(Dir)) Then Directory.CreateDirectory(Dir)
 
                 Dim file As StreamWriter
-                file = My.Computer.FileSystem.OpenTextFileWriter(Path, True, Encoding)
+                file = My.Computer.FileSystem.OpenTextFileWriter(Path, Append, Encoding)
                 If Append = True Then
                     file.WriteLine(Str)
                 Else
