@@ -46,7 +46,8 @@ Name: "links\desktop"; Description: "На рабочем столе"; Types: full
 Name: "links\mainmenu"; Description: "В главном меню"; Types: full
 
 [Run]
-Filename: "{app}\StarCitizen Helper.exe"; Parameters: "update={#SetupSetting("AppVersion")} reset"; Flags: nowait skipifnotsilent;
+Filename: "{app}\StarCitizen Helper.exe"; Parameters: "update={#SetupSetting("AppVersion")}"; Flags: nowait skipifnotsilent;
+//Filename: "{app}\StarCitizen Helper.exe"; Parameters: "update={#SetupSetting("AppVersion")} reset"; Flags: nowait skipifnotsilent;
 
 [Code]
 procedure AfterInstallProcedure();
