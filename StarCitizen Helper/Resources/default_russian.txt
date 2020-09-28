@@ -1,5 +1,15 @@
-#LANGUAGE NAME - USED IN APPLICATION LANGUAGE LIST
 Language = Русский
+
+########################### Info ###########################
+#                                                          #
+# LANGUAGE - USED IN APPLICATION LANGUAGE LIST             #
+# Name = Value - Basic                                     #
+# NameT - declension of a word, not used in many languages #
+# {0},{1}...{10} - Variable replaced programmatically      #
+# \n - New line                                            #
+# \t - Tab character                                       #
+#                                                          #
+############################################################
 
 #GLOBAL SHORT
 Error = Ошибка
