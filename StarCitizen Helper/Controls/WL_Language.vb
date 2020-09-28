@@ -212,7 +212,7 @@ Public Class WL_Language
         Return Nothing
     End Function
 
-    Private Sub Button_SetLagguage_Click(sender As Object, e As EventArgs) Handles Button_SetLagguage.Click
+    Public Sub Button_SetLagguage_Click(sender As Object, e As EventArgs) Handles Button_SetLagguage.Click
         RaiseEvent _Event_SetLanguage_Button_Click_Before()
         For Each aElem In aLanguageList
             If LCase(aElem.sName) = LCase(Me.ComboBox_LanguageList.Text) Then
@@ -229,5 +229,21 @@ Public Class WL_Language
                 End If
             End If
         Next
+    End Sub
+
+    Private Sub GroupBox1_Enter(sender As Object, e As EventArgs) Handles GroupBox1.Enter
+
+    End Sub
+
+    Private Sub Label_SetLanguage_Click(sender As Object, e As EventArgs) Handles Label_SetLanguage.Click
+
+    End Sub
+
+    Private Sub TableLayoutPanel3_Paint(sender As Object, e As PaintEventArgs) Handles TableLayoutPanel3.Paint
+
+    End Sub
+
+    Private Sub ComboBox_LanguageList_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox_LanguageList.SelectedIndexChanged
+
     End Sub
 End Class
