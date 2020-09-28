@@ -120,7 +120,7 @@ Public Class WL_Language
                 If _FSO._FileExits(_FSO._CombinePath(Me.sPath_Folder_Language, Me.Property_File_Name_Current)) Then
                     Me.sPathe_File_Current = _FSO._CombinePath(Me.sPath_Folder_Language, Me.Property_File_Name_Current)
                 End If
-                GenerateDefaultLanguageFiles()
+                GenerateDefaultlanguageFiles()
             End If
         End Set
     End Property
@@ -144,6 +144,9 @@ Public Class WL_Language
 
     '-----------------------------------> Properties
     Private Sub GenerateDefaultlanguageFiles()
+        If _FSO._FileExits(_FSO._CombinePath(Property_Path_Folder_Language, "_current_.txt")) = False Then
+            _FSO._WriteTextFile(My.Resources.default_english, _FSO._CombinePath(Property_Path_Folder_Language, "_current_.txt"), Encoding.Unicode, False)
+        End If
         If _FSO._FileExits(_FSO._CombinePath(Property_Path_Folder_Language, "default_english.txt")) = False Then
             _FSO._WriteTextFile(My.Resources.default_english, _FSO._CombinePath(Property_Path_Folder_Language, "default_english.txt"), Encoding.Unicode, False)
         End If
@@ -152,9 +155,11 @@ Public Class WL_Language
         End If
     End Sub
 
-    Public Sub _LoadLanguageList()
+    Public Function _LoadLanguageList() As List(Of Class_LanguageList_Element)
+        Dim result As New List(Of Class_LanguageList_Element)
+
         If Me.Property_File_Name_Current Is Nothing Then
-            Exit Sub
+            Return result
         End If
 
         Dim list As String() = Directory.GetFiles(Me.Property_Path_Folder_Language)
@@ -180,7 +185,9 @@ Public Class WL_Language
 
         Me.Property_LanguageList_SelString = _INI._GET_VALUE("LANGUAGE", "LANGUAGE", "_current_.txt").Value
         'Me.Property_GitList_SelString = Me.List_Git.Items(0)
-    End Sub
+
+        Return result
+    End Function
 
     Private Function ReadFile(ByVal Path As String) As String
         Dim result As String = Nothing
