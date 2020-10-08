@@ -1,0 +1,219 @@
+Language = Korean
+
+########################### Info ###########################
+#                                                          #
+# LANGUAGE - USED IN APPLICATION LANGUAGE LIST             #
+# Name = Value - Basic                                     #
+# NameT - declension of a word, not used in many languages #
+# {0},{1}...{10} - Variable replaced programmatically      #
+# \n - New line                                            #
+# \t - Tab character                                       #
+#                                                          #
+############################################################
+
+#GLOBAL SHORT
+Error = 오류
+Number = 숫자
+Description = 설명
+CallError = 호출 오류
+File = 파일
+FileAllFiles = 모든 파일
+Information = 정보
+Operation = Operation
+Read = 읽기
+Write = 쓰기
+ErrorDownload = 다운로드 에러
+SourceURL = 소스 URL
+Destination = 대상
+FunctionEnabled = 기능 활성화됨
+FunctionDisabled = 기능 비활성화됨
+Modification = 언어 변경
+ModificationModule = 언어 변경
+ModificationModuleT = 언어 변경
+Enable = 활성화
+Disable = 비활성화
+EnabledT = 활성화
+DisabledT = 비활성화
+EnabledS = 활성화
+DisabledS = 비활성화
+NewVersionAvailable = 새 버전 사용가능
+Name = 이름
+SystemUpdateName = 시스템 업데이트
+SystemUpdateNameT = 시스템 업데이트
+PackUpdateName = 언어 팩
+PackUpdateNameT = 언어 팩
+UpdateComplete = {0} 다운로드 완료
+FileGameExec = 게임 실행 파일
+FileGameExecT = 게임 실행 파일
+
+#GLOBAL LONG
+l_Error = 오류: {0}
+l_Number = 숫자: {0}
+l_Description = 설명: {0}
+l_CallError = 호출 오류: {0}
+l_File = 파일: {0}
+l_Information = 정보: {0}
+l_Operation = 작동: {0}
+l_Read = 읽기: {0}
+l_Write = 쓰기: {0}
+l_ErrorDownload = 다운로드 오류: {0}
+l_SourceURL = 소스 URL: {0}
+l_Destination = 대상: {0}
+l_FunctionEnabled = [{0}] 기능 활성화
+l_FunctionDisabled = [{0}] 기능 비활성화
+l_Modification = 언어 변경: {0}
+l_ModificationModule = 언어 변경: {0}
+l_Enable = {0} 활성화
+l_Disable = {0} 비활성화
+l_EnabledT = {0} 활성화
+l_DisabledT = {0} 비활성화
+l_NewVersionAvailable = 새로운 버전의 "{0}" 사용 가능
+l_Name = 이름: {0}
+l_UpdateComplete = {0} 다운로드 완료 :
+
+#FileSystem
+File_MSG_CheckFile = [{0}] 파일 확인 중
+File_MSG_ChangeFile = [{0}] 파일 수정 중
+File_MSG_ErrorAccessConfigFile = 구성 파일 액세스 오류
+File_MSG_SectionNotFound = [{0}] 섹션이 파일에서 누락되었습니다. \n\t{1}
+File_MSG_ParameterNotFound = [{0}] 섹션에 대한 매개 변수 [{1}] 이/가 파일에서 누락되었습니다.\n\t{2}
+File_MSG_CannotDelExsFile = 파일 삭제 오류 \n\t{0}
+File_MSG_CannotWriteCheckPermission = 파일 쓰기 오류, 파일 및 폴더에 대한 쓰기 권한을 확인하십시오.\n\t{0}
+File_MSG_IncorrectDownloadedSize = 다운로드한 파일의 크기가 올바르지 않습니다.\n\t{0}
+File_MSG_PathNotAssign = {0}에 대한 경로 지정
+File_MSG_CannotCopyFile = 파일 복사 오류\n\t원본: {0}\n\t대상: {1}
+
+#Window Tabs
+Window_Tab_Modification = 언어 변경
+Window_Tab_Localization = 현지화
+Window_Tab_ProcessKiller = 강제 종료
+Window_Tab_Profiles = 프로필
+Window_Tab_Log = 로그
+Window_Tab_SysUpdate = 업데이트
+Window_Tab_SysSettings = 시스템
+Window_Tab_About = 소개
+
+#Window Menu
+Menu_Main_HideApp = 프로그램 숨기기
+Menu_Main_ShowApp = 프로그램 나타내기
+
+#Window other
+Core_MSG_BeginVerification = 코어 검증 시작
+
+#Tab About
+About_ButtonName_Application = 프로그램에 대한 피드백
+About_ButtonInfo_Application = 프로그램에 대한 피드백 보내기
+About_ButtonName_Localization = 현지화에 대한 피드백
+About_ButtonInfo_Localization = 현지화에 대한 피드백 보내기
+About_ButtonName_Core = 코어에 대한 피드백
+About_ButtonInfo_Core = 서명되지 않은 코어에 대한 피드백 보내기
+
+#Tab Log
+Log_Button_ClearLog = 로그 제거
+
+#Tab Profiles
+Profiles_ButtonsInfo_RenameGameFolder = LIVE, PTU, EPTU 로 게임 폴더 이름 변경
+Profiles_CheckName_FinishInAdvance = 강제 종료
+Profiles_CheckInfo_FinishInAdvance = 폴더 이름을 바꾸기 전 게임 및 런처 프로그램을 종료하여 주십시오.
+Profiles_Bottom_Info = 게임 폴더 이름을 빠르게 LIVE, PTU, EPTU 중 하나로 바꿀 수 있습니다.\n\n[강제 종료] 기능은 [LIVE, PTU, EPTU] 중 하나로 이름을 변경하기 전에 게임 런처 및 프로세스를 종료합니다. 이 기능은 [강제 종료]탭에 설정된 프로세서가 아닌 게임과 게임 런처 프로세스만 종료합니다. \n\n*LIVE - 공개 버전\n*PTU - 공개 테스트 버전\n*EPTU - 에보카티를 위한 비공개 테스트 버전
+
+#Module PATCH
+Patch_MSG_Blocks = HEX_BLOCK1: [{0}]\nHEX_BLOCK2: [{1}]
+
+#Module INET
+INet_MSG_IncorrectURLString = 잘못된 URL 문자열
+
+#Module HELPER
+Helper_MSG_UpdateOK = 최신 버전으로 업데이트 되었습니다.
+Helper_MSG_ConfigFileNotFoundCreateNew = 설정 파일을 찾음, 새로 생성됨 \n\t{0}
+Helper_MSG_ConfigFileLoadFrom = 설정 파일에서 로드됨 :\n\t{0}
+Helper_MSG_UpdateErrorTitle = 업데이트 오류
+Helper_MSG_UpdateErrorBody = 프로그램 자동 재시작이 수행되지 않았습니다. {0}
+Helper_MSG_AfterUpdateErrorTitle = 업데이트 될 프로그램에 대한 버전이 다운로드 된 버전과 일치하지 않습니다.
+Helper_MSG_AfterUpdateErrorBody = 프로그램이 최신 상태인 경우 ([{0}] 탭에서 현재 버전과 최신 버전을 확인하십시오.) 이 메시지를 무시할 수 있습니다. \n프로그램이 최신 버전이 아닌 경우 Github에서 최신 버전을 다운로드하여 설치 할 수 있습니다.
+Helper_MSG_RenameGameFolderError = 폴더 이름을 변경할 수 없습니다.
+Helper_MSG_RenameGameFolder = 폴더 이름이 변경 변경되었습니다.
+Helper_MSG_CoreVerificationOK = 코어가 확인 되었습니다.
+Helper_MSG_CoreVerificationError = 코어를 확인할 수 없습니다.
+Helper_MSG_CoreNotEnabled = 코어가 활성화되지 않았습니다.\n
+Helper_MSG_CoreErrorRecomendation = 코어가 수정되었습니다! 악성 콘텐츠가 포함될 수 있습니다. 이 언어팩을 사용하시겠습니까? \n\n언어팩은 신뢰할 수 있는 출처에서 다운로드 하는 것이 좋습니다.\n\n[{0}] 탭으로 이동한 후 [{1}] 버튼을 클릭하여 다운로드 할 수 있는 링크와 후기를 보내주시면 감사드립니다.\n\n
+
+#Module GIT
+GIT_MSG_AccessDeniedLimit = 액세스가 거부되었습니다. 요청 회수 제한 초과\n{0}
+GIT_MSG_CannotLoadBuildList = 깃허브에서 실제 데이터를 로드 할 수 없습니다.\n{0}
+
+#Watcher
+Watcher_MSG_FileChangedDisable = 트래킹된 파일이 삭제됨 트래킹이 비활성화됨.
+Watcher_MSG_FileChanged = 트래킹 된 파일이 변경되었습니다.
+Watcher_MSG_AddErrorFileNotExist = 파일 트래킹을 활성화 할 수 없거나 파일에 대한 엑세스 권한이나 파일이 없습니다.
+Watcher_MSG_AddErrorAlreadyInList = 파일 트래킹을 활성화 할 수 없습니다. 이미 트래킹 목록에 있습니다.\n\t{0}
+Watcher_MSG_AddOK = 파일 트래킹 활성화\n\t{0}
+Watcher_MSG_ErrorRequest = 요청을 수행 할 수 없습니다. 파일이 추적 목록에 없습니다.\n\t{0}
+Watcher_MSG_ErrorAccess = 파일을 사용할 수 없거나 파일에 대한 엑세스 권한이나 파일이 없습니다.
+
+#SystemUpdate
+SysUpdateCheck_Group_Installed = 설치됨
+SysUpdateCheck_Group_Actual = 현재 버전
+SysUpdateCheck_Name_CurentVersion = 버전:
+SysUpdateCheck_Name_OnlineDate = 업데이트 날짜:
+SysUpdateCheck_Name_OnlineInformation = 추가 정보:
+SysUpdateCheck_Name_OnlineVersion = 버전:
+SysUpdate_Bottom_Info = 경고! 성공적으로 다운로드 되면 프로그램아 자동으로 업데이트 됩니다. \n[{0}]에 대한 액세스가 필요할 수 있습니다. \n\n폴더 경로: {1}
+SysUpdate_MSG_SysUpdateTitle = 이름: 업데이트
+SysUpdate_MSG_ChangesInfo = 변경 내역은 [{0}] 탭 또는 깃허브 페이지에서 읽을 수 있습니다.
+
+#ProcessKiller
+ProcessKiller_CheckName_Enable = 강제 프로세스 종료 활성화
+ProcessKiller_CheckInfo_Enable = 활성화
+ProcessKiller_ButtonName_SetHotKey = 단축키 선택
+ProcessKiller_ButtonInfo_SetHotKey = 선택된 단축키 없음
+ProcessKiller_ListInfo_KeyModifier = 변경될 단축키가 선택되지 않음
+ProcessKiller_ButtonName_AddProcess = 프로세스 강제 종료 목록에 추가
+ProcessKiller_ButtonName_RemoveProcess = 프로세스 강제 종료 목록에서 제거
+ProcessKiller_Bottom_Info = 강제 종료를 사용하면 단축키를 눌러 등록한 프로세스를 종료 할 수 있습니다.\n닫을 수 없는 중단 된 프로그램을 닫아야 할 때 유요합니다.\n\n원활한 작동을 위해서는 관리자 권한으로 본 프로그램을 시작해야 합니다.\n한번에 하나 이상의 프로세스를 종료할 수 있습니다.
+ProcessKiller_MSG_KillIgnore = 프로세스 강제 종료 - 무시됨
+ProcessKiller_MSG_Kill = 프로세스 강제 종료
+ProcessKiller_MSG_CallError = 호출 오류: {0}({1})
+ProcessKiller_MSG_KeyInfo = Key: "{0}"\nKey ID: {1}
+ProcessKiller_MSG_ProcessRequiredName = 프로세스 이름 필요
+ProcessKiller_MSG_ProcessAlreadyInList = 프로세스가 이미 리스트에 있음
+ProcessKiller_MSG_ProcessSelectFromList = 프로세스 선택
+
+#Localization
+Pack_CheckName_ShowTestBuild = 테스트용 팩 보기
+Pack_ButtonName_DownloadPack = 팩 다운로드
+Pack_ButtonInfo_DownloadPack = 선택한 팩 다운로드 (코어 포함)
+Pack_ButtonName_PackInstallAll = 전체 설치
+Pack_ButtonInfo_PackInstallAll = 현지화와 글꼴
+Pack_Bottom_Info = {0}을 다운로드하려면 드롭다운 메뉴에서 {1}을 선택하고 [{2}]를 클릭합니다. 다운로드 후 [{3}]을 클릭하여 필요한 파일을 게임 폴더로 옮깁니다. \n언어팩을 적용하려면 {4}을 활성화해야합니다. [{5}]탭으로 이동하여 [{6}]을 클릭합니다.\n\n참고: [Master]버전 언어팩은 개발 중인 최신 버전이며 문제를 일으킬 수 있습니다. (사용을 추천하지 않습니다.)
+Pack_MSG_ChangesInfo = 변경된 점: {0}
+Pack_MSG_CreateTempFolder = 다운로드된 언어팩을 위한 폴더 생성:\n\t{0}
+Pack_MSG_AssignTempFolder = 다운로드 한 언어팩을 위한 설정된 폴더:\n\t{0}
+Pack_MSG_DownloadedVersion = 다운로드된 버전: {0}
+Pack_MSG_InstalledVersion = 설치된 버전: {0}
+Pack_MSG_VersionUnspecified = 알 수 없음
+Pack_MSG_ErrorAccessTempFolder = 다운로드 폴더에 대한 엑세스 권한이 없습니다.
+Pack_MSG_ErrorClearTempFolder = 기존 언어 팩을 삭제할 수 없습니다.
+Pack_MSG_ErrorNotSelectPack = 언어팩 선택이 필요합니다.
+Pack_MSG_ErrorAccessPackFile = 언어팩에 대한 액세스 권한이 없음:\n\t{0}
+Pack_MSG_ErrorUnpackPackToGame = 언어팩은 게임 폴더에 설치할 수 없습니다.\n\t원본 위치: {0}\n\t대상 경로: {1}
+
+#Modification!
+Modification_ButtonName_Path = {0} 선택
+Modification_ButtonName_Enable = {0} 활성화
+Modification_ButtonInfo_Enable = {0} 활성화
+Modification_ButtonName_Disable = {0} 비활성화
+Modification_ButtonInfo_Disable = {0} 비활성화
+Modification_Bottom_Info = 경고! [{0}] 탭에 나열된 모든 기능에 대한 사용으로 초래된 결과는 모두 사용자의 책임입니다. \n[{1}]를 누르면 CIG의 EULA를 위반하게 됩니다. \n\n{2}을 활성화 또는 비활성화 하려면 다운로드 해야합니다. [{4}] 탭으로 이동하여 표시된 지침을 따릅니다.\n\n참고: 새로운 {3}을 다운로드하고 설치할때 {5}을 활성화해야 합니다. 의도한 언어 패치를 위하여 적절한 {2}을 활성화합니다. 프로그램은 어떠한 게임파일을 변경하지 않으며 게임 실행시 메모리를 수정합니다.\n\n본 프로그램 제작자는 CIG에서 허용하지 않는 치트와 방법을 매우 반대합니다. 이 프로그램은 이러한 기능을 수행하지 않습니다.
+Modification_OpenFileDialog_GameFile = 게임 실행파일
+Modification_MSG_CoreNotFound = {0} 을/를 찾을 수 없습니다. 창 하단의 지침을 확인하십시오.
+Modification_MSG_VersionUnspecified = 알 수 없는 버전
+
+#SysLanguage
+Pack_MSG_CreateLangFolder = 애플리케이션 언어팩을 위한 폴더 생성됨:\n\t{0}
+Pack_MSG_AssignLangFolder = 애플리케이션 언어팩을 위한 설정된 폴더:\n\t{0}
+SysLanguage_ButtonName_SetLanguage = 설정
+SysLanguage_ButtonInfo_SetLanguage = 인터페이스 언어
+SysLanguage_Group_Language = 시스템 언어
+
+#END
