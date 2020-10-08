@@ -145,4 +145,7 @@
   <data name="default_russian" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>resources\default_russian.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1251</value>
   </data>
+  <data name="default_korean" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\default_korean.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
 </root>

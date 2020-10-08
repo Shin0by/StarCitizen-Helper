@@ -1,6 +1,6 @@
 
 [Setup]
-AppVersion=1.7.14.91
+AppVersion=1.7.14.92
 AppName=StarCitizen Helper
 DefaultDirName={userappdata}\StarCitizen Helper
 DefaultGroupName=StarCitizen Helper
@@ -24,6 +24,7 @@ Source: "Shin0by soft.ico"; DestDir: "{app}"; Components: main
 Source: "lang\_current_.txt"; DestDir: "{app}\lang"; Components: main
 Source: "lang\default_english.txt"; DestDir: "{app}\lang"; Components: main
 Source: "lang\default_russian.txt"; DestDir: "{app}\lang"; Components: main
+Source: "lang\default_korean.txt"; DestDir: "{app}\lang"; Components: main
 Source: "INIFileParser.dll"; DestDir: "{app}"; Components: main
 Source: "Newtonsoft.Json.dll"; DestDir: "{app}"; Components: main
 Source: "CertificateVerifier.dll"; DestDir: "{app}"; Components: main

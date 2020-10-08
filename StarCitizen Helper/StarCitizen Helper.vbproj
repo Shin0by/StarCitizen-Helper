@@ -292,6 +292,7 @@
     <None Include="Other\packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\default_korean.txt" />
     <None Include="Resources\default_russian.txt" />
     <None Include="Resources\default_english.txt" />
     <None Include="Resources\CertificateVerifier.dll" />

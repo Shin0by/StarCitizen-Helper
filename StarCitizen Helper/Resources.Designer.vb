@@ -70,9 +70,16 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to #LANGUAGE NAME - USED IN APPLICATION LANGUAGE LIST
-        '''Language = English [default]
-        '''.
+        '''  Looks up a localized string similar to Language = English
+        '''
+        '''########################### Info ###########################
+        '''#                                                          #
+        '''# LANGUAGE - USED IN APPLICATION LANGUAGE LIST             #
+        '''# Name = Value - Basic                                     #
+        '''# NameT - declension of a word, not used in many languages #
+        '''# {0},{1}...{10} - Variable replaced programmatically      #
+        '''# \n - New line                                            #
+        '''# \t - Tab character                                     [rest of string was truncated]&quot;;.
         '''</summary>
         Friend ReadOnly Property default_english() As String
             Get
@@ -81,27 +88,34 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to #LANGUAGE NAME - USED IN APPLICATION LANGUAGE LIST
-        '''Language = Русский [стандартный]
+        '''  Looks up a localized string similar to Language = Korean
         '''
-        '''#GLOBAL SHORT
-        '''Error = Ошибка
-        '''Number = Номер
-        '''Description = Описание
-        '''CallError = Ошибка при вызове
-        '''File = Файл
-        '''FileAllFiles = Все файлы
-        '''Information = Информация
-        '''Operation = Операция
-        '''Read = Чтение
-        '''Write = Запись
-        '''ErrorDownload = Ошибка загрузки
-        '''SourceURL = Исходный URL
-        '''Destination = Назначение
-        '''FunctionEnabled = Функция включена
-        '''FunctionDisabled = Функция выключена
-        '''Modification = Модификация
-        '''ModificationModul [rest of string was truncated]&quot;;.
+        '''########################### Info ###########################
+        '''#                                                          #
+        '''# LANGUAGE - USED IN APPLICATION LANGUAGE LIST             #
+        '''# Name = Value - Basic                                     #
+        '''# NameT - declension of a word, not used in many languages #
+        '''# {0},{1}...{10} - Variable replaced programmatically      #
+        '''# \n - New line                                            #
+        '''# \t - Tab character                                      [rest of string was truncated]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property default_korean() As String
+            Get
+                Return ResourceManager.GetString("default_korean", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Language = Русский
+        '''
+        '''########################### Info ###########################
+        '''#                                                          #
+        '''# LANGUAGE - USED IN APPLICATION LANGUAGE LIST             #
+        '''# Name = Value - Basic                                     #
+        '''# NameT - declension of a word, not used in many languages #
+        '''# {0},{1}...{10} - Variable replaced programmatically      #
+        '''# \n - New line                                            #
+        '''# \t - Tab character                                     [rest of string was truncated]&quot;;.
         '''</summary>
         Friend ReadOnly Property default_russian() As String
             Get
