@@ -43,7 +43,7 @@
     End Sub
 
     Private Sub StartUpdate()
-        _INI._Write("UPDATE", "STATUS", "BEGIN")
+        _JSETTINGS._SetValue("configuration.main.update", "status", "BEGIN", True)
         Dim p As New ProcessStartInfo
         p.FileName = Me.WL_Download.DownloadTo
         p.Arguments = _VARS.SetupParameters

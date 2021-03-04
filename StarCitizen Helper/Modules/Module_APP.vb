@@ -42,7 +42,7 @@ Module Module_APP
             If Right(exePath, 1) <> "\" Then exePath = exePath & "\"
             exeFullPath = Application.ExecutablePath
             exeName = Process.GetCurrentProcess.ProcessName.ToString
-            configName = "config.ini"
+            configName = "config.json"
             configPath = exePath
             configFullPath = configPath & configName
         End Sub

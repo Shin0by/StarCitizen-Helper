@@ -29,10 +29,10 @@ Partial Class WL_Pack
         Me.Button_Download = New System.Windows.Forms.Button()
         Me.Label_Download = New System.Windows.Forms.Label()
         Me.Label_InstallFull = New System.Windows.Forms.Label()
-        Me.CheckBox_ShowTestBuild = New System.Windows.Forms.CheckBox()
-        Me.BackgroundWorker = New System.ComponentModel.BackgroundWorker()
         Me.WL_Download = New SC.WL_Download()
+        Me.CheckBox_ShowTestBuild = New System.Windows.Forms.CheckBox()
         Me.WL_PackUpdateCheck = New SC.WL_Check()
+        Me.BackgroundWorker = New System.ComponentModel.BackgroundWorker()
         Me.TableLayoutPanel.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -55,7 +55,7 @@ Partial Class WL_Pack
         Me.TableLayoutPanel.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
         Me.TableLayoutPanel.Location = New System.Drawing.Point(0, 0)
         Me.TableLayoutPanel.Name = "TableLayoutPanel"
-        Me.TableLayoutPanel.RowCount = 7
+        Me.TableLayoutPanel.RowCount = 8
         Me.TableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
         Me.TableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
         Me.TableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
@@ -137,22 +137,6 @@ Partial Class WL_Pack
         Me.Label_InstallFull.Text = "Локализация и шрифты"
         Me.Label_InstallFull.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'CheckBox_ShowTestBuild
-        '
-        Me.CheckBox_ShowTestBuild.AutoSize = True
-        Me.CheckBox_ShowTestBuild.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.CheckBox_ShowTestBuild.Location = New System.Drawing.Point(223, 3)
-        Me.CheckBox_ShowTestBuild.Name = "CheckBox_ShowTestBuild"
-        Me.CheckBox_ShowTestBuild.Size = New System.Drawing.Size(214, 24)
-        Me.CheckBox_ShowTestBuild.TabIndex = 15
-        Me.CheckBox_ShowTestBuild.Text = "Отображать тестовые сборки"
-        Me.CheckBox_ShowTestBuild.UseVisualStyleBackColor = True
-        '
-        'BackgroundWorker
-        '
-        Me.BackgroundWorker.WorkerReportsProgress = True
-        Me.BackgroundWorker.WorkerSupportsCancellation = True
-        '
         'WL_Download
         '
         Me.WL_Download.AutoEllipsis = False
@@ -169,6 +153,17 @@ Partial Class WL_Pack
         Me.WL_Download.Size = New System.Drawing.Size(660, 88)
         Me.WL_Download.TabIndex = 14
         '
+        'CheckBox_ShowTestBuild
+        '
+        Me.CheckBox_ShowTestBuild.AutoSize = True
+        Me.CheckBox_ShowTestBuild.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.CheckBox_ShowTestBuild.Location = New System.Drawing.Point(223, 3)
+        Me.CheckBox_ShowTestBuild.Name = "CheckBox_ShowTestBuild"
+        Me.CheckBox_ShowTestBuild.Size = New System.Drawing.Size(214, 24)
+        Me.CheckBox_ShowTestBuild.TabIndex = 15
+        Me.CheckBox_ShowTestBuild.Text = "Отображать тестовые сборки"
+        Me.CheckBox_ShowTestBuild.UseVisualStyleBackColor = True
+        '
         'WL_PackUpdateCheck
         '
         Me.WL_PackUpdateCheck.Dock = System.Windows.Forms.DockStyle.Fill
@@ -179,6 +174,7 @@ Partial Class WL_Pack
         Me.WL_PackUpdateCheck.Property_GitListAutoUpdate = True
         Me.WL_PackUpdateCheck.Property_GitListInterval = 90000
         Me.WL_PackUpdateCheck.Property_Name = Nothing
+        Me.WL_PackUpdateCheck.Property_PreRelease = True
         Me.WL_PackUpdateCheck.Property_SetupFileName = Nothing
         Me.WL_PackUpdateCheck.Property_Text_Group_Actual = "Актуальная версия"
         Me.WL_PackUpdateCheck.Property_Text_Group_Installed = "Установлена версия"
@@ -198,6 +194,11 @@ Partial Class WL_Pack
         Me.WL_PackUpdateCheck.Size = New System.Drawing.Size(216, 24)
         Me.WL_PackUpdateCheck.TabIndex = 16
         Me.WL_PackUpdateCheck.Visible = False
+        '
+        'BackgroundWorker
+        '
+        Me.BackgroundWorker.WorkerReportsProgress = True
+        Me.BackgroundWorker.WorkerSupportsCancellation = True
         '
         'WL_Pack
         '

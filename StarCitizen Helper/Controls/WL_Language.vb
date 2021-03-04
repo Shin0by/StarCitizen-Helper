@@ -186,7 +186,7 @@ Public Class WL_Language
             Me.ComboBox_LanguageList.Items.Add(Me.aLanguageList(i).sName)
         Next
 
-        Me.Property_LanguageList_SelString = _INI._GET_VALUE("LANGUAGE", "LANGUAGE", "_current_.txt").Value
+        Me.Property_LanguageList_SelString = _JSETTINGS._GetValue("configuration.main.language.language", "_current_.txt")
         'Me.Property_GitList_SelString = Me.List_Git.Items(0)
 
         Return result
@@ -227,7 +227,7 @@ Public Class WL_Language
         For Each aElem In aLanguageList
             If LCase(aElem.sName) = LCase(Me.ComboBox_LanguageList.Text) Then
                 If _FSO._CopyFile(_FSO._CombinePath(aElem.sPath, aElem.sFile), _FSO._CombinePath(sPath_Folder_Language, sFile_Name_Current), True) = True Then
-                    _INI._Write("LANGUAGE", "LANGUAGE", Me.ComboBox_LanguageList.Text)
+                    _JSETTINGS._SetValue("configuration.main.language", "language", Me.ComboBox_LanguageList.Text, True)
                     'Application.Exit()
                     'Application.Restart()
                     RaiseEvent _Event_SetLanguage_Button_Click_After()

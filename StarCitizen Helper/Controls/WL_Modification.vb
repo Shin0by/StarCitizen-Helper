@@ -29,9 +29,15 @@ Public Class WL_Modification
     Private sGameModFolderName As String = Nothing
     Private sGameModFolderPath As String = Nothing
 
+    Private bLoadComplete As Boolean = False
+
     '<----------------------------------- Basic control
     Public Sub New()
         InitializeComponent()
+    End Sub
+
+    Private Sub WL_Modification_Load(sender As Object, e As EventArgs) Handles Me.Load
+        Me.bLoadComplete = True
     End Sub
     '-----------------------------------> Basic control
 
@@ -115,8 +121,8 @@ Public Class WL_Modification
             RaiseEvent _Event_GameExeFile_Update_Before(Value)
             If _VARS.ConfigFileIsOK = False Then Exit Property
             If Len(Value) < _VARS.FileNameMinLen + _VARS.FilePathMinLen Then GoTo Finalize
-            _INI._Write("EXTERNAL", "EXE_PATH", Value)
-            If _INI._GET_VALUE("EXTERNAL", "EXE_PATH", Nothing).Value Is Nothing Then GoTo Finalize
+            _JSETTINGS._SetValue("configuration.main", "exe_path", Value, True)
+            If _JSETTINGS._GetValue("configuration.main.exe_path", Nothing) Is Nothing Then GoTo Finalize
             Me.sGameExeFilePath = Value
 
             If _FSO._FileExits(Me.sGameExeFilePath) = False Then GoTo Finalize
@@ -216,10 +222,13 @@ Finalize:   If Me.sGameExeFileName IsNot Nothing Then
             Return Me.sModInPackFileVersion
         End Get
         Set(Value As String)
+            If bLoadComplete = False And Value Is Nothing Then Exit Property
             If Me.Property_PatchSrcFilePath Is Nothing Then Value = Nothing
             If _FSO._FileExits(Me.Property_PatchSrcFilePath) = False Then Value = Nothing
             Me.sModInPackFileVersion = Value
-            If _VARS.ConfigFileIsOK = True Then _INI._Write("EXTERNAL", "MOD_PACK_VERSION", Me.sModInPackFileVersion)
+            If _VARS.ConfigFileIsOK = True Then
+                _JSETTINGS._SetValue("configuration.external", "mod_pack_version", Me.sModInPackFileVersion, True)
+            End If
         End Set
     End Property
 
@@ -228,8 +237,11 @@ Finalize:   If Me.sGameExeFileName IsNot Nothing Then
             Return Me.sModInGameFileVersion
         End Get
         Set(Value As String)
+            If bLoadComplete = False And Value Is Nothing Then Exit Property
             Me.sModInGameFileVersion = Value
-            If _VARS.ConfigFileIsOK = True Then _INI._Write("EXTERNAL", "MOD_GAME_VERSION", Me.sModInGameFileVersion)
+            If _VARS.ConfigFileIsOK = True Then
+                _JSETTINGS._SetValue("configuration.external", "mod_game_version", Me.sModInGameFileVersion, True)
+            End If
         End Set
     End Property
 
@@ -254,6 +266,7 @@ Finalize:   If Me.sGameExeFileName IsNot Nothing Then
             Me.Property_GameExeFilePath = MAIN_THREAD.OpenFileDialog1.FileName
         End If
         _Enabled(True)
+        _Update()
     End Sub
 
     Public Sub Button_Enable_Click(sender As Object, e As EventArgs) Handles Button_Enable.Click

@@ -45,6 +45,7 @@ PackUpdateNameT = 언어 팩
 UpdateComplete = {0} 다운로드 완료
 FileGameExec = 게임 실행 파일
 FileGameExecT = 게임 실행 파일
+Additional = Additional
 
 #GLOBAL LONG
 l_Error = 오류: {0}
@@ -92,6 +93,7 @@ Window_Tab_Log = 로그
 Window_Tab_SysUpdate = 업데이트
 Window_Tab_SysSettings = 시스템
 Window_Tab_About = 소개
+Window_Tab_Repository = Repository
 
 #Window Menu
 Menu_Main_HideApp = 프로그램 숨기기
@@ -116,6 +118,11 @@ Profiles_ButtonsInfo_RenameGameFolder = LIVE, PTU, EPTU 로 게임 폴더 이름
 Profiles_CheckName_FinishInAdvance = 강제 종료
 Profiles_CheckInfo_FinishInAdvance = 폴더 이름을 바꾸기 전 게임 및 런처 프로그램을 종료하여 주십시오.
 Profiles_Bottom_Info = 게임 폴더 이름을 빠르게 LIVE, PTU, EPTU 중 하나로 바꿀 수 있습니다.\n\n[강제 종료] 기능은 [LIVE, PTU, EPTU] 중 하나로 이름을 변경하기 전에 게임 런처 및 프로세스를 종료합니다. 이 기능은 [강제 종료]탭에 설정된 프로세서가 아닌 게임과 게임 런처 프로세스만 종료합니다. \n\n*LIVE - 공개 버전\n*PTU - 공개 테스트 버전\n*EPTU - 에보카티를 위한 비공개 테스트 버전
+
+#Tab SystemSettings
+CheckBox_UpdateAlert = Notify when new localization updates are available
+CheckBox_StartUp = Automatic boot at Windows startup
+CheckBox_HideWhenClose = Hide when close
 
 #Module PATCH
 Patch_MSG_Blocks = HEX_BLOCK1: [{0}]\nHEX_BLOCK2: [{1}]

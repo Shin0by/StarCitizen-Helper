@@ -8,7 +8,8 @@ Module Module_MAIN
     Public MAIN_THREAD As MainForm
     Public _KEYS As Class_KEYS
     Public _FSO As New Class_FSO
-    Public _INI As New Class_INI
+    'Public _INI As New Class_INI
+    Public _JSETTINGS As Class_JSON_CONFIG
     Public _LOG As New Class_LOG(True)
     Public _APP As New Class_APP
     Public _PATCH As New Class_PATCH
@@ -21,7 +22,6 @@ Module Module_MAIN
 
     Public Sub InitializeStart()
         _KEYS = New Class_KEYS(MAIN_THREAD)
-        _INI._FSO = _APP.configFullPath
 
         _VARS.FilePathMinLen = 2
         _VARS.FileNameMinLen = 5
@@ -45,11 +45,13 @@ Module Module_MAIN
         _VARS.LangFolder_Name = "lang"
         _VARS.LangFile_Name = "_current_.txt"
         _LANG._LOAD(_FSO._CombinePath(_APP.exePath, _VARS.LangFolder_Name, _VARS.LangFile_Name))
+
         Module_HELPER.CheckConfigFile()
     End Sub
 
     Public Sub InitializeEnd()
         SetLanguageLink()
+
         MAIN_THREAD.WL_SysLang.Property_File_Name_Current = _VARS.LangFile_Name
         MAIN_THREAD.WL_SysLang.Property_Path_Folder_Language = _FSO._CombinePath(_APP.exePath, _VARS.LangFolder_Name)
 
@@ -70,11 +72,12 @@ Module Module_MAIN
         MAIN_THREAD.WL_Pack.Property_UpdateTargetName = _LANG._Get("PackUpdateNameT")
 
         Module_HELPER.LoadConfigFile()
-        If StringToBool(_INI._GET_VALUE("CONFIGURATION", "PRERELEASE", "0").Value) = True Then
+
+        If StringToBool(_JSETTINGS._GetValue("configuration.main.prerelease", "0")) = True Then
             MAIN_THREAD.WL_SysUpdateCheck.Property_PreRelease = True
         Else
             MAIN_THREAD.WL_SysUpdateCheck.Property_PreRelease = _VARS.PreRelease_SysUpdate
-            _INI._Write("CONFIGURATION", "PRERELEASE", "0")
+            _JSETTINGS._SetValue("configuration.main", "prerelease", "0", True)
         End If
         CheckUpdateStatus()
 
@@ -89,8 +92,13 @@ Module Module_MAIN
         MAIN_THREAD.UpdateInterface()
         MAIN_THREAD.WL_Mod._Update(2)
 
+        If _VARS.StartUp = True Then
+            MAIN_THREAD.Hide()
+            MAIN_THREAD.ShowWinToolStripMenuItem.Text = _LANG._Get("Menu_Main_ShowApp")
+        End If
+
         'Show additional language window
-        If _INI._GET_VALUE("LANGUAGE", "LANGUAGE", _VARS.LangFile_Name).Value = _VARS.LangFile_Name Then
+        If _JSETTINGS._GetValue("configuration.main.language.language", _VARS.LangFile_Name) = _VARS.LangFile_Name Then
             MAIN_THREAD.Hide()
             MAIN_THREAD.ShowWinToolStripMenuItem.Text = _LANG._Get("Menu_Main_ShowApp")
             SysLangForm.WL_SysLangModal.Property_File_Name_Current = _VARS.LangFile_Name
@@ -200,6 +208,9 @@ Module Module_MAIN
         Public AppLatestDate As DateTime = Nothing
         Public ResetConfig As Boolean = False
         Public PreRelease_SysUpdate As Boolean = False
+        Public AlertWindows As Boolean = True
+        Public StartUp As Boolean = False
+        Public HideWhenClose As Boolean = False
 
         'Config
         Public ConfigFileIsOK As Boolean = False
@@ -242,7 +253,7 @@ Module Module_MAIN
             Set(ByVal Value As String)
                 If Value <> Me.sUpdateStatus Then
                     Me.sUpdateStatus = UCase(Value)
-                    _INI._Write("UPDATE", "STATUS", Me.sUpdateStatus)
+                    _JSETTINGS._SetValue("configuration.main.update", "status", Me.sUpdateStatus, True)
                 End If
             End Set
         End Property

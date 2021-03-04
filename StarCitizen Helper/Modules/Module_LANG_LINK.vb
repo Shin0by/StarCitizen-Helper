@@ -4,10 +4,15 @@
         _LANG._Link(MAIN_THREAD.WL_SysLang, "Property_Text_Group_SystemLanguage", "SysLanguage_Group_Language")
         _LANG._Link(MAIN_THREAD.WL_SysLang, "Property_Text_Label_SetLanguage", "SysLanguage_ButtonInfo_SetLanguage")
         _LANG._Link(MAIN_THREAD.WL_SysLang, "Text_Button_SetLanguage", "SysLanguage_ButtonName_SetLanguage")
+        _LANG._Link(MAIN_THREAD.GroupBox_SystemSettingsAdditional, "Text", "Additional")
+        _LANG._Link(MAIN_THREAD.CheckBox_UpdateAlert, "Text", "CheckBox_UpdateAlert")
+        _LANG._Link(MAIN_THREAD.CheckBox_StartUp, "Text", "CheckBox_StartUp")
+        _LANG._Link(MAIN_THREAD.CheckBox_HideWhenClose, "Text", "CheckBox_HideWhenClose")
 
         'Main Window Tab
         _LANG._Link(MAIN_THREAD.TabPage_Patch, "Text", "Window_Tab_Modification")
         _LANG._Link(MAIN_THREAD.TabPage_Packages, "Text", "Window_Tab_Localization")
+        _LANG._Link(MAIN_THREAD.TabPage_Repository, "Text", "Window_Tab_Repository")
         _LANG._Link(MAIN_THREAD.TabPage_Killer, "Text", "Window_Tab_ProcessKiller")
         _LANG._Link(MAIN_THREAD.TabPage_GameProfiles, "Text", "Window_Tab_Profiles")
         _LANG._Link(MAIN_THREAD.TabPage_SysUpdate, "Text", "Window_Tab_SysUpdate")

@@ -3,21 +3,28 @@ Imports System.Net
 Imports Defter.CertificateVerifier.Security
 
 Module Module_HELPER
-
     Public Function CheckConfigFile() As Boolean
-        If _FSO._FileExits(_APP.configFullPath) = False Then
-            _FSO._WriteTextFile("", _APP.configFullPath, System.Text.Encoding.UTF32, False)
-            If _INI._Write("CONFIGURATION", "DT_START", Date.Now) = False Then
-                _VARS.ConfigFileIsOK = False
-                _LOG._sAdd("CONFIG_FILE", _LANG._Get("File_MSG_CannotWriteCheckPermission", _APP.configFullPath),, 1)
-                Return False
+        _JSETTINGS = New Class_JSON_CONFIG(_APP.configFullPath, Text.Encoding.UTF8)
+        Dim Result As Boolean = True
+        If _JSETTINGS._Load() = False Then
+            If _JSETTINGS._ErrLast._Flag = True Then
+                Result = False
             Else
-                InitConfigFile()
+                If _JSETTINGS._SetValue("configuration.main", "dt_start", Date.Now.ToString, True) = True Then
+                    InitConfigFile()
+                Else
+                    Result = False
+                End If
             End If
         Else
-            Return False
+            If _JSETTINGS._SetValue("configuration.main", "dt_start", Date.Now.ToString, True) = False Then Result = False
         End If
-        Return True
+
+        _VARS.ConfigFileIsOK = Result
+        If Result = False Then _LOG._sAdd("CONFIG_FILE", _LANG._Get("File_MSG_CannotWriteCheckPermission", _APP.configFullPath),, 1)
+        'InitConfigFile()
+
+        Return Result
     End Function
 
     Private Sub InitConfigFile()
@@ -25,47 +32,53 @@ Module Module_HELPER
         _VARS.ConfigFileIsOK = True
 
         'Configuration
-        _INI._Write("CONFIGURATION", "DT_CREATE", DateTime.Now.ToString)
-        _INI._Write("CONFIGURATION", "SHOW_TEST_BUILDS", 0)
-        _INI._Write("CONFIGURATION", "PRERELEASE", 0)
+        _JSETTINGS._SetValue("configuration.main", "dt_create", DateTime.Now.ToString)
+        _JSETTINGS._SetValue("configuration.main", "show_test_builds", 0)
+        _JSETTINGS._SetValue("configuration.main", "prerelease", 0)
+        _JSETTINGS._SetValue("configuration.main", "alert_update", 1)
+        _JSETTINGS._SetValue("configuration.main", "startup", 0)
+        _JSETTINGS._SetValue("configuration.main", "hide_when_close", 0)
 
         'SystemLanguage
-        _INI._Write("LANGUAGE", "LANGUAGE", _VARS.LangFile_Name)
+        _JSETTINGS._SetValue("configuration.main.language", "language", _VARS.LangFile_Name)
 
         'Updater
-        _INI._Write("UPDATE", "APP_DATE", "")
-        _INI._Write("UPDATE", "STATUS", "NEW")
-        _INI._Write("UPDATE", "PACK_DATE", "")
-        _INI._Write("UPDATE", "PACK_GIT_PAGE", _VARS.URL_App)
-        _INI._Write("UPDATE", "PACK_GIT_API", _VARS.URL_App_Api)
-        _INI._Write("UPDATE", "SETUP_PARAMETERS", _VARS.SetupParameters)
+        _JSETTINGS._SetValue("configuration.main.update", "date", "")
+        _JSETTINGS._SetValue("configuration.main.update", "status", "NEW")
+        _JSETTINGS._SetValue("configuration.main.update.git", "page", _VARS.URL_App)
+        _JSETTINGS._SetValue("configuration.main.update.git", "api", _VARS.URL_App_Api)
+        _JSETTINGS._SetValue("configuration.main.update", "setup_parameters", _VARS.SetupParameters)
 
         'PKiller
-        _INI._Write("CONFIGURATION", "PKILLER_ENABLED", 0)
-        _INI._Write("CONFIGURATION", "PKILLER_KEY", 0)
-        _INI._Write("CONFIGURATION", "PKILLER_MOD", 0)
-        _INI._Write("CONFIGURATION", "PKILLER_LIST", "")
+        _JSETTINGS._SetValue("configuration.main.pkiller", "enabled", 0)
+        _JSETTINGS._SetValue("configuration.main.pkiller", "key", 0)
+        _JSETTINGS._SetValue("configuration.main.pkiller", "mod", 0)
+        _JSETTINGS._SetValue("configuration.main.pkiller", "list", "")
 
         'Profiles
-        _INI._Write("EXTERNAL", "PROFILES_PROCESS_KILL_ENABLED", 1)
-        _INI._Write("EXTERNAL", "PROFILES_PROCESS_NAME_GAME", "starcitizen")
-        _INI._Write("EXTERNAL", "PROFILES_PROCESS_NAME_LAUNCHER", "RSI Launcher")
+        _JSETTINGS._SetValue("configuration.main.profiles", "enabled", 1)
+        _JSETTINGS._SetValue("configuration.main.profiles", "game", "starcitizen")
+        _JSETTINGS._SetValue("configuration.main.profiles", "launcher", "RSI Launcher")
 
         'GIT
-        _INI._Write("EXTERNAL", "PACK_GIT_MASTER", _VARS.PackageGitURL_Master)
-        _INI._Write("EXTERNAL", "PACK_GIT_PAGE", _VARS.PackageGitURL_Page)
-        _INI._Write("EXTERNAL", "PACK_GIT_API", _VARS.PackageGitURL_Api)
-        _INI._Write("EXTERNAL", "PACK_GIT_SELECTED", "Master")
+        _JSETTINGS._SetValue("configuration.external.git.pack", "master", _VARS.PackageGitURL_Master)
+        _JSETTINGS._SetValue("configuration.external.git.pack", "page", _VARS.PackageGitURL_Page)
+        _JSETTINGS._SetValue("configuration.external.git.pack", "api", _VARS.PackageGitURL_Api)
+        _JSETTINGS._SetValue("configuration.external.git.pack", "selected", "Master")
 
-        _INI._Write("EXTERNAL", "GIT_APP", _VARS.URL_App)
-        _INI._Write("EXTERNAL", "GIT_LOCALIZATION", _VARS.URL_Localization)
-        _INI._Write("EXTERNAL", "GIT_CORE", _VARS.URL_Core)
+        _JSETTINGS._SetValue("configuration.external.git.app", "page", _VARS.URL_App)
+        _JSETTINGS._SetValue("configuration.external.git.local", "page", _VARS.URL_Localization)
+        _JSETTINGS._SetValue("configuration.external.git.core", "page", _VARS.URL_Core)
 
-        _INI._Write("EXTERNAL", "PACK_PACK_VERSION", "")
-        _INI._Write("EXTERNAL", "PACK_GAME_VERSION", "")
+        _JSETTINGS._SetValue("configuration.external", "pack_pack_version", "")
+        _JSETTINGS._SetValue("configuration.external", "pack_game_version", "")
 
-        _INI._Write("EXTERNAL", "MOD_PACK_VERSION", "")
-        _INI._Write("EXTERNAL", "MOD_GAME_VERSION", "")
+        _JSETTINGS._SetValue("configuration.external", "mod_pack_version", "")
+        _JSETTINGS._SetValue("configuration.external", "mod_game_version", "")
+
+        _JSETTINGS._SetValue("configuration.external", "alert_date", "")
+
+        _JSETTINGS._Save()
     End Sub
 
     Public Sub LoadConfigFile()
@@ -73,46 +86,51 @@ Module Module_HELPER
         _VARS.ConfigFileIsOK = True
 
         'Update latest DateTime start and check Write function
-        If _INI._Write("CONFIGURATION", "DT_START", Date.Now) = False Then
+        If _JSETTINGS._SetValue("configuration.main", "dt_start", Date.Now.ToString, True) = False Then
             _VARS.ConfigFileIsOK = False
         Else
             _LOG._sAdd("CONFIG_FILE", _LANG._Get("Helper_MSG_ConfigFileLoadFrom", _APP.configFullPath),, 2)
         End If
 
-        _VARS.FileWatcher = StringToBool(_INI._GET_VALUE("CONFIGURATION", "FILES_WATCHER", False, {"0", "1"}).Value)
+        MAIN_THREAD.CheckBox_UpdateAlert.Checked = StringToBool(_JSETTINGS._GetValue("configuration.main.alert_update", True, {0, 1}))
+        MAIN_THREAD.CheckBox_StartUp.Checked = StringToBool(_JSETTINGS._GetValue("configuration.main.startup", False, {0, 1}))
+        MAIN_THREAD.CheckBox_HideWhenClose.Checked = StringToBool(_JSETTINGS._GetValue("configuration.main.hide_when_close", False, {0, 1}))
+        _VARS.AlertWindows = MAIN_THREAD.CheckBox_UpdateAlert.Checked
+        _VARS.StartUp = MAIN_THREAD.CheckBox_StartUp.Checked
+        _VARS.HideWhenClose = MAIN_THREAD.CheckBox_HideWhenClose.Checked
 
         'Updater
-        MAIN_THREAD.WL_SysUpdateCheck.Property_URL = _INI._GET_VALUE("UPDATE", "PACK_GIT_PAGE", _VARS.URL_App).Value
-        MAIN_THREAD.WL_SysUpdateCheck.Property_URLApi = _INI._GET_VALUE("UPDATE", "PACK_GIT_API", _VARS.URL_App_Api).Value
-        _VARS.SetupParameters = _INI._GET_VALUE("UPDATE", "SETUP_PARAMETERS", _VARS.SetupParameters).Value
-        _VARS.AppLatestDate = Convert.ToDateTime(_INI._GET_VALUE("UPDATE", "APP_DATE", Nothing).Value)
-        _VARS.PackageLatestDate = Convert.ToDateTime(_INI._GET_VALUE("UPDATE", "PACK_DATE", Nothing).Value)
-        _VARS.UpdateStatus = _INI._GET_VALUE("UPDATE", "STATUS", Nothing).Value
+        MAIN_THREAD.WL_SysUpdateCheck.Property_URL = _JSETTINGS._GetValue("configuration.main.update.git.page", _VARS.URL_App)
+        MAIN_THREAD.WL_SysUpdateCheck.Property_URLApi = _JSETTINGS._GetValue("configuration.main.update.git.api", _VARS.URL_App_Api)
+        _VARS.SetupParameters = _JSETTINGS._GetValue("configuration.main.update.setup_parameters", _VARS.SetupParameters)
+        _VARS.AppLatestDate = Convert.ToDateTime(_JSETTINGS._GetValue("configuration.main.update.date", Nothing))
+        _VARS.PackageLatestDate = Convert.ToDateTime(_JSETTINGS._GetValue("configuration.external.alert_date", Nothing))
+        _VARS.UpdateStatus = _JSETTINGS._GetValue("configuration.main.update.status", Nothing)
 
         'Pack
-        MAIN_THREAD.WL_Mod.Property_GameExeFilePath = _INI._GET_VALUE("EXTERNAL", "EXE_PATH", Nothing).Value
-        MAIN_THREAD.WL_Mod.Property_ModInGameFileVersion = _INI._GET_VALUE("EXTERNAL", "MOD_GAME_VERSION", Nothing).Value
-        MAIN_THREAD.WL_Mod.Property_ModInPackFileVersion = _INI._GET_VALUE("EXTERNAL", "MOD_PACK_VERSION", Nothing).Value
-        MAIN_THREAD.WL_Pack.Property_PackInGameVersion = _INI._GET_VALUE("EXTERNAL", "PACK_GAME_VERSION", Nothing).Value
-        MAIN_THREAD.WL_Pack.Property_ShowTestBuild = StringToBool(_INI._GET_VALUE("CONFIGURATION", "SHOW_TEST_BUILDS", False, {"0", "1"}).Value)
+        MAIN_THREAD.WL_Mod.Property_GameExeFilePath = _JSETTINGS._GetValue("configuration.main.exe_path", Nothing)
+        MAIN_THREAD.WL_Mod.Property_ModInGameFileVersion = _JSETTINGS._GetValue("configuration.external.mod_game_version", Nothing)
+        MAIN_THREAD.WL_Mod.Property_ModInPackFileVersion = _JSETTINGS._GetValue("configuration.external.mod_pack_version", Nothing)
+        MAIN_THREAD.WL_Pack.Property_PackInGameVersion = _JSETTINGS._GetValue("configuration.external.pack_game_version", Nothing)
+        MAIN_THREAD.WL_Pack.Property_ShowTestBuild = StringToBool(_JSETTINGS._GetValue("configuration.main.show_test_builds", False, {0, 1}))
 
         'GIT
-        MAIN_THREAD.WL_Pack.Property_PackageGitURL_Api = _INI._GET_VALUE("EXTERNAL", "PACK_GIT_API", _VARS.PackageGitURL_Api).Value
-        MAIN_THREAD.WL_Pack.Property_PackageGitURL_Page = _INI._GET_VALUE("EXTERNAL", "PACK_GIT_PAGE", _VARS.PackageGitURL_Page).Value
-        MAIN_THREAD.WL_Pack.Property_PackageGitURL_Master = _INI._GET_VALUE("EXTERNAL", "PACK_GIT_MASTER", _VARS.PackageGitURL_Master).Value
-        MAIN_THREAD.WL_About.URL_SendIssueApp = _INI._GET_VALUE("EXTERNAL", "GIT_ISSUE_APP", _VARS.URL_App).Value & _VARS.IssueGit_Prefix
-        MAIN_THREAD.WL_About.URL_SendIssueLocalization = _INI._GET_VALUE("EXTERNAL", "GIT_ISSUE_LOCALIZATION", _VARS.URL_Localization).Value & _VARS.IssueGit_Prefix
-        MAIN_THREAD.WL_About.URL_SendIssueCore = _INI._GET_VALUE("EXTERNAL", "GIT_ISSUE_CORE", _VARS.URL_Core).Value & _VARS.IssueGit_Prefix
+        MAIN_THREAD.WL_Pack.Property_PackageGitURL_Api = _JSETTINGS._GetValue("configuration.external.git.pack.api", _VARS.PackageGitURL_Api)
+        MAIN_THREAD.WL_Pack.Property_PackageGitURL_Page = _JSETTINGS._GetValue("configuration.external.git.pack.page", _VARS.PackageGitURL_Page)
+        MAIN_THREAD.WL_Pack.Property_PackageGitURL_Master = _JSETTINGS._GetValue("configuration.external.git.pack.master", _VARS.PackageGitURL_Master)
+        MAIN_THREAD.WL_About.URL_SendIssueApp = _JSETTINGS._GetValue("configuration.external.git.app.issue", _VARS.URL_App) & _VARS.IssueGit_Prefix
+        MAIN_THREAD.WL_About.URL_SendIssueLocalization = _JSETTINGS._GetValue("configuration.external.git.local.issue", _VARS.URL_Localization) & _VARS.IssueGit_Prefix
+        MAIN_THREAD.WL_About.URL_SendIssueCore = _JSETTINGS._GetValue("configuration.external.git.core.issue", _VARS.URL_Core) & _VARS.IssueGit_Prefix
 
         'PKiller
-        _VARS.PKillerEnabled = StringToBool(_INI._GET_VALUE("CONFIGURATION", "PKILLER_ENABLED", False, {"0", "1"}).Value)
-        _VARS.PKillerKeyID = _INI._GET_VALUE("CONFIGURATION", "PKILLER_KEY", 0).Value
-        _VARS.PKillerKeyMod = _INI._GET_VALUE("CONFIGURATION", "PKILLER_MOD", 0, {"0", "1", "2", "3", "4", "5", "6", "7"}).Value
+        _VARS.PKillerEnabled = StringToBool(_JSETTINGS._GetValue("configuration.main.pkiller.enabled", False, {0, 1}))
+        _VARS.PKillerKeyID = _JSETTINGS._GetValue("configuration.main.pkiller.key", 0)
+        _VARS.PKillerKeyMod = _JSETTINGS._GetValue("configuration.main.pkiller.mod", 0, {0, 1, 2, 3, 4, 5, 6, 7})
 
         'Profiles
-        _VARS.GameProcessKillerEnabled = StringToBool(_INI._GET_VALUE("EXTERNAL", "PROFILES_PROCESS_KILL_ENABLED", True, {"0", "1"}).Value)
-        _VARS.GameProcessMain = _INI._GET_VALUE("EXTERNAL", "PROFILES_PROCESS_NAME_GAME", Nothing).Value
-        _VARS.GameProcessLauncher = _INI._GET_VALUE("EXTERNAL", "PROFILES_PROCESS_NAME_LAUNCHER", Nothing).Value
+        _VARS.GameProcessKillerEnabled = StringToBool(_JSETTINGS._GetValue("configuration.main.profiles.enabled", True, {0, 1}))
+        _VARS.GameProcessMain = _JSETTINGS._GetValue("configuration.main.profiles.game", Nothing)
+        _VARS.GameProcessLauncher = _JSETTINGS._GetValue("configuration.main.profiles.launcher", Nothing)
     End Sub
 
     Public Function StringToBool(Value As String) As Boolean
@@ -247,7 +265,7 @@ Fin:    Return result
         Dim temp As String = Nothing
         If LoadTrue_SaveFalse = True Then
             CheckedListBox.Items.Clear()
-            temp = _INI._GET_VALUE("CONFIGURATION", "PKILLER_LIST", Nothing).Value
+            temp = _JSETTINGS._GetValue("configuration.main.pkiller.list", Nothing)
             If temp IsNot Nothing Then
                 Dim subElem As String()
                 For Each elem In Split(temp, ",")
@@ -275,7 +293,7 @@ Fin:    Return result
                         temp += "," & State & ":" & elem.ToString
                     End If
                 Next
-                _INI._Write("CONFIGURATION", "PKILLER_LIST", temp)
+                _JSETTINGS._SetValue("configuration.main.pkiller", "list", temp, True)
             End If
         End If
         Return CheckedListBox.Items.Count

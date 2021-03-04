@@ -172,6 +172,12 @@
     <Compile Include="Controls\WL_Pack.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Controls\WL_Repository.Designer.vb">
+      <DependentUpon>WL_Repository.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\WL_Repository.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Forms\ConvertForm.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -197,6 +203,7 @@
     <Compile Include="Forms\SysUpdate_Form.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Modules\Module_JSON.vb" />
     <Compile Include="Modules\Module_LANG.vb" />
     <Compile Include="Modules\Module_APP.vb" />
     <Compile Include="Modules\Module_CRYPTO.vb" />
@@ -253,6 +260,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\WL_Pack.resx">
       <DependentUpon>WL_Pack.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\WL_Repository.resx">
+      <DependentUpon>WL_Repository.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ConvertForm.resx">
       <DependentUpon>ConvertForm.vb</DependentUpon>

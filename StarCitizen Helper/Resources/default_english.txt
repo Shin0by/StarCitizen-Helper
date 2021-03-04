@@ -45,6 +45,7 @@ PackUpdateNameT = localization pack
 UpdateComplete = Download {0} successfully complete
 FileGameExec = game executive file
 FileGameExecT = game executive file
+Additional = Additional
 
 #GLOBAL LONG
 l_Error = Error: {0}
@@ -92,6 +93,7 @@ Window_Tab_Log = Log
 Window_Tab_SysUpdate = Update
 Window_Tab_SysSettings = System
 Window_Tab_About = About
+Window_Tab_Repository = Repository
 
 #Window Menu
 Menu_Main_HideApp = Hide App
@@ -116,6 +118,11 @@ Profiles_ButtonsInfo_RenameGameFolder = Rename game folder to LIVE, PTU, EPTU
 Profiles_CheckName_FinishInAdvance = Force Close
 Profiles_CheckInfo_FinishInAdvance = Ends game and launcher processes before renaming folder
 Profiles_Bottom_Info = Allows you to quickly rename between LIVE, PTU, EPTU.\n\n[Force Close] function ends launcher and game processes (if any of then launched) before renaming to [LIVE, PTU, EPTU]. This function does not affect [Force Close] and closes only game and launcher processes.\n\n*LIVE - Public version\n*PTU - Public test version\n*EPTU - Closed to Evocati test version
+
+#Tab SystemSettings
+CheckBox_UpdateAlert = Notify when new localization updates are available
+CheckBox_StartUp = Automatic boot at Windows startup
+CheckBox_HideWhenClose = Hide when close
 
 #Module PATCH
 Patch_MSG_Blocks = HEX_BLOCK1: [{0}]\nHEX_BLOCK2: [{1}]

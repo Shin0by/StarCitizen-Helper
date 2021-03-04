@@ -1,10 +1,12 @@
-﻿Public Class MainForm
+﻿Imports System.ComponentModel
 
+Public Class MainForm
+    Dim FirstRun As Boolean = True
     '<----------------------------------- Form
     Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-
-
+        Me.CheckBox_StartUp_CheckedChanged(Me, e)
     End Sub
+
 
 
     'Private Sub CheckBox_FSOWatcher_CheckedChanged(sender As Object, e As EventArgs)
@@ -14,12 +16,20 @@
     '_INI._Write("CONFIGURATION", "FILES_WATCHER", BoolToString(_VARS.FileWatcher))
     ' End Sub
 
+    Private Sub MainForm_Shown(sender As Object, e As EventArgs) Handles Me.Shown
+        If _VARS.StartUp = True And FirstRun = True And _VARS.HideWhenClose = True Then ShowWinToolStripMenuItem_Click(sender, e)
+        FirstRun = False
+    End Sub
+
     Private Sub MainForm_VisibleChanged(sender As Object, e As EventArgs) Handles Me.VisibleChanged
+
+
         If Me.Visible = True Then
             Me.Timer_LOG.Enabled = True
         Else
             Me.Timer_LOG.Enabled = False
         End If
+
     End Sub
     '-----------------------------------> 'Form
 
@@ -40,7 +50,7 @@
 
         _VARS.PKillerEnabled = Me.CheckBox_KillerThread.Checked
         KillerThread_ToolStripMenuItem.Checked = _VARS.PKillerEnabled
-        _INI._Write("CONFIGURATION", "PKILLER_ENABLED", BoolToString(_VARS.PKillerEnabled))
+        _JSETTINGS._SetValue("configuration.main.pkiller", "enabled", BoolToString(_VARS.PKillerEnabled), True)
     End Sub
 
     Private Sub SetKeyKill_Button_Click(sender As Object, e As EventArgs) Handles Button_SetKeyKill.Click
@@ -51,7 +61,7 @@
         _KEYS._Clear()
         _KEYS._Add(_VARS.PKillerKeyID, KeyModifierListToKeys(Me.ComboBox_ProcessKillerModKey.SelectedIndex), "KillProcess", _VARS.PKillerKeyID)
 
-        _INI._Write("CONFIGURATION", "PKILLER_KEY", _VARS.PKillerKeyID)
+        _JSETTINGS._SetValue("configuration.main.pkiller", "key", _VARS.PKillerKeyID, True)
         My.Computer.Audio.Play(My.Resources.process_kill, AudioPlayMode.Background)
         If _VARS.PKillerEnabled = False Then _KEYS.ThreadStop()
         Me.Button_SetKeyKill.Enabled = True
@@ -64,7 +74,7 @@
         Me.Label_ProcessKillerModKey.Text = _LANG._Get("ProcessKiller_MSG_KeyInfo", _KEYS._GetKeyNameByID(KeyModifierListToKeys(Me.ComboBox_ProcessKillerModKey.SelectedIndex)), KeyModifierListToKeys(Me.ComboBox_ProcessKillerModKey.SelectedIndex))
         _KEYS._Clear()
         _KEYS._Add(_VARS.PKillerKeyID, KeyModifierListToKeys(Me.ComboBox_ProcessKillerModKey.SelectedIndex), "KillProcess", _VARS.PKillerKeyID)
-        _INI._Write("CONFIGURATION", "PKILLER_MOD", _VARS.PKillerKeyMod)
+        _JSETTINGS._SetValue("configuration.main.pkiller", "mod", _VARS.PKillerKeyMod, True)
     End Sub
 
     Private Sub AddProccessKill_Button_Click(sender As Object, e As EventArgs) Handles Button_AddProccessKill.Click
@@ -143,7 +153,7 @@
     Private Sub CheckBox_BeforeKillProcess_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox_BeforeKillProcess.CheckedChanged
         _VARS.GameProcessKillerEnabled = Me.CheckBox_BeforeKillProcess.Checked
         BeforeKillProcess_ToolStripMenuItem.Checked = _VARS.PKillerEnabled
-        _INI._Write("EXTERNAL", "PROFILES_PROCESS_KILL_ENABLED", BoolToString(_VARS.GameProcessKillerEnabled))
+        _JSETTINGS._SetValue("configuration.main.profiles", "enabled", BoolToString(_VARS.GameProcessKillerEnabled), True)
     End Sub
     '-----------------------------------> 'Profiles
 
@@ -350,6 +360,8 @@
     Sub UpdateAlert_NewVersion(JSON As Object, LatestElement As Object, SenderName As WL_Check) Handles WL_Pack._Event_NewVersion_Alert
         Dim SubLine As New LOG_SubLine
         Dim ListSubLine As New List(Of LOG_SubLine)
+        Dim AlertType As Byte = 0
+        If _VARS.AlertWindows = False Then AlertType = 2
 
         SubLine.Value = "Версия: " & LatestElement._tag_name
         SubLine.List.Add("Дата: " & LatestElement._published)
@@ -359,7 +371,7 @@
             If _VARS.PackageLatestDate <> LatestElement._published Or _APP.Version <> LatestElement._tag_name Then
                 If _APP.Version = LatestElement._tag_name Then
                     _VARS.PackageLatestDate = LatestElement._published
-                    _INI._Write("UPDATE", "APP_DATE", _VARS.PackageLatestDate.ToString)
+                    _JSETTINGS._SetValue("configuration.main.update", "date", _VARS.PackageLatestDate.ToString, True)
                 Else
                     Me.Invoke(Sub()
                                   Me.WL_AppUpdate.Property_PatchDstFileName = MAIN_THREAD.WL_SysUpdateCheck.Property_SetupFileName
@@ -374,13 +386,15 @@
                 End If
 
                 ListSubLine.Add(SubLine)
-                _LOG._Add(Me.GetType().Name, _LANG._Get("l_NewVersionAvailable", SenderName.Property_Name), ListSubLine, 0, 0)
+
+
+                _LOG._Add(Me.GetType().Name, _LANG._Get("l_NewVersionAvailable", SenderName.Property_Name), ListSubLine, AlertType, 0)
             End If
         End If
         If SenderName.Name = "WL_PackUpdateCheck" Then
             SubLine.List.Add(_LANG._Get("Pack_MSG_ChangesInfo", Me.WL_Pack.Property_PackageGitURL_Page))
             ListSubLine.Add(SubLine)
-            _LOG._Add(Me.GetType().Name, _LANG._Get("l_NewVersionAvailable", SenderName.Property_Name), ListSubLine, 0, 0)
+            _LOG._Add(Me.GetType().Name, _LANG._Get("l_NewVersionAvailable", SenderName.Property_Name), ListSubLine, AlertType, 0)
         End If
     End Sub
 
@@ -406,5 +420,39 @@
         Application.Restart()
         End
     End Sub
+
+    Private Sub CheckBox_UpdateAlert_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox_UpdateAlert.CheckedChanged
+        _VARS.AlertWindows = CheckBox_UpdateAlert.Checked
+        _JSETTINGS._SetValue("configuration.main", "alert_update", BoolToString(_VARS.AlertWindows))
+    End Sub
+
+    Private Sub CheckBox_StartUp_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox_StartUp.CheckedChanged
+        _VARS.StartUp = CheckBox_StartUp.Checked
+        _JSETTINGS._SetValue("configuration.main", "startup", BoolToString(_VARS.StartUp))
+
+        If _VARS.StartUp = True Then
+            My.Computer.Registry.CurrentUser.OpenSubKey("SOFTWARE\Microsoft\Windows\CurrentVersion\Run", True).SetValue(_APP.appName, _APP.exeFullPath)
+        Else
+            Dim RegKey As Object = My.Computer.Registry.CurrentUser.OpenSubKey("SOFTWARE\Microsoft\Windows\CurrentVersion\Run\").GetValue(_APP.appName)
+            If RegKey IsNot Nothing Then My.Computer.Registry.CurrentUser.OpenSubKey("SOFTWARE\Microsoft\Windows\CurrentVersion\Run", True).DeleteValue(_APP.appName)
+        End If
+
+    End Sub
+
+    Private Sub CheckBox_HideWhenClose_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox_HideWhenClose.CheckedChanged
+        _VARS.HideWhenClose = CheckBox_HideWhenClose.Checked
+        _JSETTINGS._SetValue("configuration.main", "hide_when_close", BoolToString(_VARS.HideWhenClose))
+    End Sub
+
+    Private Sub MainForm_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
+        If _VARS.HideWhenClose = True Then
+            ShowWinToolStripMenuItem_Click(sender, e)
+            e.Cancel = True
+        End If
+
+    End Sub
+
+
+
     '-----------------------------------> 'Callback
 End Class

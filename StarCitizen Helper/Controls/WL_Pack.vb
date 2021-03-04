@@ -331,7 +331,7 @@ Public Class WL_Pack
             If Me.Property_Path_File_Meta Is Nothing Then Exit Property
             If _FSO._ReadTextFile(MAIN_THREAD.WL_Pack.Property_Path_File_Meta, System.Text.Encoding.UTF8) IsNot Nothing Then
                 Me.sPackInGameVersion = _FSO._ReadTextFile(MAIN_THREAD.WL_Pack.Property_Path_File_Meta, System.Text.Encoding.UTF8)
-                _INI._Write("EXTERNAL", "PACK_GAME_VERSION", Me.sPackInGameVersion)
+                _JSETTINGS._SetValue("configuration.external", "pack_game_version", Me.sPackInGameVersion, True)
                 If Me.sPackInGameVersion IsNot Nothing Then Me.Text_Label_InstallFull = _LANG._Get("Pack_MSG_InstalledVersion", Me.sPackInGameVersion)
             End If
         End Set
@@ -343,12 +343,12 @@ Public Class WL_Pack
             Dim File As FileInfo = CType(_FSO._GetInfo(Me.Property_Path_File_Download).ValueObject, FileInfo)
             If File Is Nothing Then
                 Me.Property_Name_File_Download = Nothing
-                _INI._Write("EXTERNAL", "PACK_PACK_VERSION", "")
+                _JSETTINGS._SetValue("configuration.external", "pack_pack_version", "", True)
                 Return Nothing
             End If
             Me.sPackInPackVersion = Strings.Left(File.Name, Len(File.Name) - Len(File.Extension))
             Me.Property_Name_File_Download = File.Name
-            _INI._Write("EXTERNAL", "PACK_PACK_VERSION", Me.sPackInPackVersion)
+            _JSETTINGS._SetValue("configuration.external", "pack_pack_version", Me.sPackInPackVersion, True)
             Return Me.sPackInPackVersion
         End Get
     End Property
@@ -395,13 +395,13 @@ Finalize: sender.Enabled = True
         On Error Resume Next
         RaiseEvent _Event_ListGit_Selection_Change_Before()
         Me.Property_GitList_SelString = Me.List_Git.Text
-        _INI._Write("EXTERNAL", "PACK_GIT_SELECTED", Me.Property_GitList_SelString)
+        _JSETTINGS._SetValue("configuration.external.git.pack", "selected", Me.Property_GitList_SelString, True)
         RaiseEvent _Event_ListGit_Selection_Change_After()
     End Sub
 
     Private Sub CheckBox_ShowTestBuild_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox_ShowTestBuild.CheckedChanged
         RaiseEvent _Event_ShowTestBuild_Click_Before()
-        _INI._Write("CONFIGURATION", "SHOW_TEST_BUILDS", BoolToString(sender.checked))
+        _JSETTINGS._SetValue("configuration.main", "show_test_builds", BoolToString(sender.checked), True)
         Me.WL_Updater_NewVersion_Available(Me.WL_PackUpdateCheck.Property_JSON, GIT_PACK_LATEST, Me.WL_PackUpdateCheck)
         RaiseEvent _Event_ShowTestBuild_Click_After()
     End Sub
@@ -542,7 +542,7 @@ Finalize: sender.Enabled = True
 
         If _VARS.PackageLatestDate <> Me.GIT_PACK_LATEST._published Then
             _VARS.PackageLatestDate = Me.GIT_PACK_LATEST._published
-            _INI._Write("UPDATE", "PACK_DATE", _VARS.PackageLatestDate.ToString)
+            _JSETTINGS._SetValue("configuration.external", "alert_date", _VARS.PackageLatestDate.ToString, True)
         End If
 
         UpdateListGit()

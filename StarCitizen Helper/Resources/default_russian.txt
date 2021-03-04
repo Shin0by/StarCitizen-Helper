@@ -45,6 +45,7 @@ PackUpdateNameT = пакета локализации
 UpdateComplete = Загрузка {0} успешно завершена
 FileGameExec = исполняемый файл игры
 FileGameExecT = исполняемому файлу игры
+Additional = Дополнительно
 
 #GLOBAL LONG
 l_Error = Ошибка: {0}
@@ -92,6 +93,7 @@ Window_Tab_Log = Лог
 Window_Tab_SysUpdate = Обновление
 Window_Tab_SysSettings = Система
 Window_Tab_About = О программе
+Window_Tab_Repository = Репозиторий
 
 #Window Menu
 Menu_Main_HideApp = Скрыть программу
@@ -116,6 +118,11 @@ Profiles_ButtonsInfo_RenameGameFolder = Переименовать папку игры в LIVE, PTU, EP
 Profiles_CheckName_FinishInAdvance = Предварительное завершение
 Profiles_CheckInfo_FinishInAdvance = Завершит процессы игры и лаунчера перед переименованием папки
 Profiles_Bottom_Info = Позволяет быстро переименовать папку LIVE, PTU, EPTU.\n\nОпция [Предварительное завершение] предварительно завершит процесс игры и лаунчера (если они были запущены), после чего выполнит переименование папки [LIVE, PTU, EPTU]. Данная опция не связана со списком указанных процессов в [Завершение процессов] и завершает только конкретные процессы игры и лаунчера.\n\n*LIVE - Публичная версия\n*PTU - Публичная тестовая версия\n*EPTU - Закрытая тестовая версия для эвокати
+
+#Tab SystemSettings
+CheckBox_UpdateAlert = Оповещать о наличии новых обновлений локализации
+CheckBox_StartUp = Автоматическая загрузка при старте системы
+CheckBox_HideWhenClose = Скрывать при закрытии окна
 
 #Module PATCH
 Patch_MSG_Blocks = HEX_BLOCK1: [{0}]\nHEX_BLOCK2: [{1}]
