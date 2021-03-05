@@ -46,6 +46,13 @@ UpdateComplete = {0} 다운로드 완료
 FileGameExec = 게임 실행 파일
 FileGameExecT = 게임 실행 파일
 Additional = Additional
+Yes = Yes
+No = No
+Ok = OK
+Cancel = Cancel
+Retry = Retry
+Ignore = Ignore
+Abort = Abort
 
 #GLOBAL LONG
 l_Error = 오류: {0}

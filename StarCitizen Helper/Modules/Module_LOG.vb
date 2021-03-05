@@ -207,9 +207,11 @@ Module Module_LOG
                 Next
             End If
 
-            If line.Type = 0 Then MsgBox(temp, MessageBoxButtons.OK + MessageBoxIcon.Information + vbApplicationModal, _APP.appName)
-            If line.Type = 1 Then MsgBox(temp, MessageBoxButtons.OK + MessageBoxIcon.Error + vbApplicationModal, _APP.appName)
+            If line.Type = 0 Then WLMsg.ShowDialog(temp, MessageBoxIcon.Information, MessageBoxButtons.OK)
+            If line.Type = 1 Then WLMsg.ShowDialog(temp, MessageBoxIcon.Error, MessageBoxButtons.OK)
 
+            'If line.Type = 0 Then MsgBox(temp, MessageBoxButtons.OK + MessageBoxIcon.Information + vbApplicationModal, _APP.appName)
+            'If line.Type = 1 Then MsgBox(temp, MessageBoxButtons.OK + MessageBoxIcon.Error + vbApplicationModal, _APP.appName)
         End Sub
 
     End Class

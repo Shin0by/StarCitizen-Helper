@@ -191,6 +191,12 @@
     <Compile Include="Forms\MainForm.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Forms\MsgForm.Designer.vb">
+      <DependentUpon>MsgForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\MsgForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\SysLangForm.Designer.vb">
       <DependentUpon>SysLangForm.vb</DependentUpon>
     </Compile>
@@ -271,6 +277,9 @@
       <DependentUpon>MainForm.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MsgForm.resx">
+      <DependentUpon>MsgForm.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\SysLangForm.resx">
       <DependentUpon>SysLangForm.vb</DependentUpon>
     </EmbeddedResource>
@@ -334,7 +343,9 @@
       <Name>CertificateVerifier</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Resources\icons\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

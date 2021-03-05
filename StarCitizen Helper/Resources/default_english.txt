@@ -46,6 +46,13 @@ UpdateComplete = Download {0} successfully complete
 FileGameExec = game executive file
 FileGameExecT = game executive file
 Additional = Additional
+Yes = Yes
+No = No
+Ok = OK
+Cancel = Cancel
+Retry = Retry
+Ignore = Ignore
+Abort = Abort
 
 #GLOBAL LONG
 l_Error = Error: {0}

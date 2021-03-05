@@ -19,6 +19,7 @@ Module Module_MAIN
     Public _PROCESS As New Class_PROCESSES
     Public _GIT As New Class_GIT
     Public _DEFTER As New Class_Defter
+    Public WLMsg As New MsgForm
 
     Public Sub InitializeStart()
         _KEYS = New Class_KEYS(MAIN_THREAD)
