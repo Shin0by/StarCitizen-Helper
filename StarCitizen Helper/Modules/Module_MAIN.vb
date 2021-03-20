@@ -53,6 +53,8 @@ Module Module_MAIN
     Public Sub InitializeEnd()
         SetLanguageLink()
 
+        MAIN_THREAD.WL_Repo._LoadList()
+
         MAIN_THREAD.WL_SysLang.Property_File_Name_Current = _VARS.LangFile_Name
         MAIN_THREAD.WL_SysLang.Property_Path_Folder_Language = _FSO._CombinePath(_APP.exePath, _VARS.LangFolder_Name)
 

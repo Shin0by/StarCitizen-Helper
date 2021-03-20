@@ -201,14 +201,15 @@ Partial Class WL_Check
         '
         'BackgroundWorker
         '
+        Me.BackgroundWorker.WorkerReportsProgress = True
         Me.BackgroundWorker.WorkerSupportsCancellation = True
         '
-        'WL_Updater
+        'WL_Check
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.Controls.Add(Me.TableLayoutPanel1)
-        Me.Name = "WL_Updater"
+        Me.Name = "WL_Check"
         Me.Size = New System.Drawing.Size(694, 306)
         Me.TableLayoutPanel1.ResumeLayout(False)
         Me.GroupBox1.ResumeLayout(False)

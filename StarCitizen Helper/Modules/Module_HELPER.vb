@@ -78,6 +78,14 @@ Module Module_HELPER
 
         _JSETTINGS._SetValue("configuration.external", "alert_date", "")
 
+
+        _JSETTINGS._SetValue("configuration.external.repository.Chinese", "Default", "https://github.com/Terrencetodd/SC_CN_zh")
+        _JSETTINGS._SetValue("configuration.external.repository.Korean", "Default", "https://github.com/Xhatagon/SC_ko")
+        _JSETTINGS._SetValue("configuration.external.repository.Polish", "Default", "https://github.com/Frosty-el-Banana/SC_PL")
+        _JSETTINGS._SetValue("configuration.external.repository.Russian", "Default", "https://github.com/n1ghter/SC_ru")
+        _JSETTINGS._SetValue("configuration.external.repository.Russian", "English naming", "https://github.com/budukratok/SC_not_so_ru")
+        _JSETTINGS._SetValue("configuration.external.repository.Ukrainian", "Default", "https://github.com/SlyF0X-UA/SC_uk")
+
         _JSETTINGS._Save()
     End Sub
 
@@ -121,6 +129,9 @@ Module Module_HELPER
         MAIN_THREAD.WL_About.URL_SendIssueApp = _JSETTINGS._GetValue("configuration.external.git.app.issue", _VARS.URL_App) & _VARS.IssueGit_Prefix
         MAIN_THREAD.WL_About.URL_SendIssueLocalization = _JSETTINGS._GetValue("configuration.external.git.local.issue", _VARS.URL_Localization) & _VARS.IssueGit_Prefix
         MAIN_THREAD.WL_About.URL_SendIssueCore = _JSETTINGS._GetValue("configuration.external.git.core.issue", _VARS.URL_Core) & _VARS.IssueGit_Prefix
+
+        MAIN_THREAD.WL_Repo._SelectRepository_ByPageURL(MAIN_THREAD.WL_Pack.Property_PackageGitURL_Page)
+        MAIN_THREAD.WL_Repo._SetRepository()
 
         'PKiller
         _VARS.PKillerEnabled = StringToBool(_JSETTINGS._GetValue("configuration.main.pkiller.enabled", False, {0, 1}))

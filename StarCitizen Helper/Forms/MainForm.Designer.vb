@@ -52,6 +52,7 @@ Partial Class MainForm
         Me.TabPage_Packages = New System.Windows.Forms.TabPage()
         Me.WL_Pack = New SC.WL_Pack()
         Me.TabPage_Repository = New System.Windows.Forms.TabPage()
+        Me.WL_Repo = New SC.WL_Repository()
         Me.TabPage_Killer = New System.Windows.Forms.TabPage()
         Me.TableLayoutPanel4 = New System.Windows.Forms.TableLayoutPanel()
         Me.Label_ProcessKillerBottomInfo = New System.Windows.Forms.Label()
@@ -99,6 +100,7 @@ Partial Class MainForm
         Me.TabControl.SuspendLayout()
         Me.TabPage_Patch.SuspendLayout()
         Me.TabPage_Packages.SuspendLayout()
+        Me.TabPage_Repository.SuspendLayout()
         Me.TabPage_Killer.SuspendLayout()
         Me.TableLayoutPanel4.SuspendLayout()
         Me.TabPage_GameProfiles.SuspendLayout()
@@ -345,6 +347,7 @@ Partial Class MainForm
         '
         'TabPage_Repository
         '
+        Me.TabPage_Repository.Controls.Add(Me.WL_Repo)
         Me.TabPage_Repository.Location = New System.Drawing.Point(4, 22)
         Me.TabPage_Repository.Name = "TabPage_Repository"
         Me.TabPage_Repository.Padding = New System.Windows.Forms.Padding(3)
@@ -352,6 +355,17 @@ Partial Class MainForm
         Me.TabPage_Repository.TabIndex = 9
         Me.TabPage_Repository.Text = "Репозитории"
         Me.TabPage_Repository.UseVisualStyleBackColor = True
+        '
+        'WL_Repo
+        '
+        Me.WL_Repo.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.WL_Repo.Location = New System.Drawing.Point(3, 3)
+        Me.WL_Repo.Name = "WL_Repo"
+        Me.WL_Repo.Property_GitApi = Nothing
+        Me.WL_Repo.Property_GitMaster = Nothing
+        Me.WL_Repo.Property_GitPage = Nothing
+        Me.WL_Repo.Size = New System.Drawing.Size(770, 279)
+        Me.WL_Repo.TabIndex = 0
         '
         'TabPage_Killer
         '
@@ -941,6 +955,7 @@ Partial Class MainForm
         Me.TabControl.ResumeLayout(False)
         Me.TabPage_Patch.ResumeLayout(False)
         Me.TabPage_Packages.ResumeLayout(False)
+        Me.TabPage_Repository.ResumeLayout(False)
         Me.TabPage_Killer.ResumeLayout(False)
         Me.TableLayoutPanel4.ResumeLayout(False)
         Me.TableLayoutPanel4.PerformLayout()
@@ -1033,4 +1048,5 @@ Partial Class MainForm
     Friend WithEvents TableLayoutPanel3 As TableLayoutPanel
     Friend WithEvents CheckBox_StartUp As CheckBox
     Friend WithEvents CheckBox_HideWhenClose As CheckBox
+    Friend WithEvents WL_Repo As WL_Repository
 End Class

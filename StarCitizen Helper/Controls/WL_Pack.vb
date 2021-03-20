@@ -264,7 +264,6 @@ Public Class WL_Pack
         End Set
     End Property
 
-
     Public Property Property_PackageGitURL_Api() As String
         Get
             Return Me.sPackageGitURL_Api
@@ -272,7 +271,17 @@ Public Class WL_Pack
         Set(ByVal Value As String)
             Me.sPackageGitURL_Api = Value
             On Error Resume Next
-            Me.WL_PackUpdateCheck.Property_URLApi = Property_PackageGitURL_Api
+
+            If Me.WL_PackUpdateCheck.Property_URLApi <> Property_PackageGitURL_Api Then
+                If InvokeRequired Then
+                    Me.Invoke(Sub() Me.List_Git.Items.Clear())
+                Else
+                    Me.List_Git.Items.Clear()
+                End If
+                Me.WL_PackUpdateCheck.Property_URLApi = Property_PackageGitURL_Api
+                Me.WL_PackUpdateCheck.Property_GitListAutoUpdate = False
+                Me.WL_PackUpdateCheck.Property_GitListAutoUpdate = Property_GitList_AutoUpdate
+            End If
         End Set
     End Property
 

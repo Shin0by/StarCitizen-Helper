@@ -131,6 +131,12 @@ CheckBox_UpdateAlert = Notify when new localization updates are available
 CheckBox_StartUp = Automatic boot at Windows startup
 CheckBox_HideWhenClose = Hide when close
 
+#Tab repository
+Repository_ButtonName_ButtonSetRep = Set repository
+Repository_ButtonInfo_ButtonSetRep = Assigns the selected repository for subsequent work with it
+Repository_Label_SelectedRep = Used repository: {0}
+Repository_MSG_SelectCorrectRepository = To change the used repository, you need to select a specific repository
+
 #Module PATCH
 Patch_MSG_Blocks = HEX_BLOCK1: [{0}]\nHEX_BLOCK2: [{1}]
 

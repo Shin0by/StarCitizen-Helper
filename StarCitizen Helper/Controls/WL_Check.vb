@@ -268,6 +268,7 @@ Public Class WL_Check
 
     '<----------------------------------- 'Thread
     Private Sub BackgroundWorker_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles BackgroundWorker.DoWork
+        Dim Temp_Property_URLApi As String = Nothing
         Thread.Sleep(1300)
         Do
 
@@ -295,7 +296,14 @@ Public Class WL_Check
                 If _GIT_Request._LatestElement IsNot Nothing Then Property_DateOnline = _GIT_Request._LatestElement._published
             End If
 
-            Thread.Sleep(iUpdateGitListInterval)
+            For i = 1 To 1000
+                Thread.Sleep(iUpdateGitListInterval \ 1000)
+                If Temp_Property_URLApi <> Me.Property_URLApi Then
+                    Temp_Property_URLApi = Me.Property_URLApi
+                    Exit For
+                End If
+            Next
+
         Loop
     End Sub
     '-----------------------------------> Thread

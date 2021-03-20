@@ -76,5 +76,9 @@
         _LANG._Link(MAIN_THREAD.WL_About, "Text_Label_SendIssueCore", "About_ButtonInfo_Core")
         _LANG._Link(MAIN_THREAD.WL_About, "Text_Button_SendIssueLocalization", "About_ButtonName_Localization")
         _LANG._Link(MAIN_THREAD.WL_About, "Text_Label_SendIssueLocalization", "About_ButtonInfo_Localization")
+
+        'TabPage_Repository - UserControl WL_Repo
+        _LANG._Link(MAIN_THREAD.WL_Repo, "Text_Button_SetRep", "Repository_ButtonName_ButtonSetRep")
+        _LANG._Link(MAIN_THREAD.WL_Repo, "Text_Label_SelectedRep", "Repository_Label_SelectedRep", "")
     End Sub
 End Module

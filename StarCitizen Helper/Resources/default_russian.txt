@@ -131,6 +131,12 @@ CheckBox_UpdateAlert = ќповещать о наличии новых обновлений локализации
 CheckBox_StartUp = јвтоматическа€ загрузка при старте системы
 CheckBox_HideWhenClose = —крывать при закрытии окна
 
+#Tab repository
+Repository_ButtonName_ButtonSetRep = Ќазначить репозиторий
+Repository_ButtonInfo_ButtonSetRep = Ќазначает выбранный репозиторий дл€ последующей работы с ним
+Repository_Label_SelectedRep = »спользуемый репозиторий: {0}
+Repository_MSG_SelectCorrectRepository = ƒл€ смены используемого репозитори€ требуетс€ выбрать конкретный репозиторий
+
 #Module PATCH
 Patch_MSG_Blocks = HEX_BLOCK1: [{0}]\nHEX_BLOCK2: [{1}]
 
