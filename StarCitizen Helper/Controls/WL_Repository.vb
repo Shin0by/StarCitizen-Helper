@@ -151,7 +151,7 @@ Public Class WL_Repository
         Next
     End Sub
 
-    Public Sub _SetRepository()
+    Public Sub _SetRepository(Optional SaveChanges As Boolean = False)
         Dim Node As TreeNode = Tree.SelectedNode
         If Node Is Nothing Then : _LOG._sAdd(Me.GetType().Name, _LANG._Get("Repository_MSG_SelectCorrectRepository"), Nothing, 1) : Exit Sub : End If
         If Node.Parent Is Nothing Then : _LOG._sAdd(Me.GetType().Name, _LANG._Get("Repository_MSG_SelectCorrectRepository"), Nothing, 1) : Exit Sub : End If
@@ -159,25 +159,23 @@ Public Class WL_Repository
         Me.Property_RepositoryName = Node.Text
         Me.Property_GitPage = Node.Tag
 
-        _JSETTINGS._SetValue("configuration.external.git.pack", "page", Me.Property_GitPage)
-        _JSETTINGS._SetValue("configuration.external.git.pack", "api", Me.Property_GitApi)
-        _JSETTINGS._SetValue("configuration.external.git.pack", "master", Me.Property_GitMaster)
-        _JSETTINGS._SetValue("configuration.external", "alert_date", "01.01.2000 00:00:00")
-        _JSETTINGS._Save()
+        If SaveChanges = True Then
+            _JSETTINGS._SetValue("configuration.external.git.pack", "page", Me.Property_GitPage)
+            _JSETTINGS._SetValue("configuration.external.git.pack", "api", Me.Property_GitApi)
+            _JSETTINGS._SetValue("configuration.external.git.pack", "master", Me.Property_GitMaster)
+            _JSETTINGS._SetValue("configuration.external", "alert_date", "01.01.2000 00:00:00")
+            _JSETTINGS._Save()
 
-        _VARS.PackageLatestDate = Convert.ToDateTime("01.01.2000 00:00:00")
+            _VARS.PackageLatestDate = Convert.ToDateTime("01.01.2000 00:00:00")
+            MAIN_THREAD.WL_About.URL_SendIssueLocalization = Me.Property_GitPage & "/" & _VARS.IssueGit_Prefix
+        End If
+
         MAIN_THREAD.WL_Pack.Property_PackageGitURL_Master = Me.Property_GitMaster
         MAIN_THREAD.WL_Pack.Property_PackageGitURL_Page = Me.Property_GitPage
         MAIN_THREAD.WL_Pack.Property_PackageGitURL_Api = Me.Property_GitApi
-
-        'MAIN_THREAD.WL_Pack.Property_GitList_List.i
-        'MAIN_THREAD.WL_Pack.Property_GitList_AutoUpdate = False
-        'MAIN_THREAD.WL_Pack.Property_GitList_AutoUpdate = True
-
-
     End Sub
 
     Private Sub Button_SetRepo_Click(sender As Object, e As EventArgs) Handles Button_SetRepo.Click
-        _SetRepository()
+        _SetRepository(True)
     End Sub
 End Class

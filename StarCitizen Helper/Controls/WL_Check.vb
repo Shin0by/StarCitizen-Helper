@@ -30,6 +30,7 @@ Public Class WL_Check
     Private JSON As Object = Nothing
 
 
+
     '<----------------------------------- Basic control
     Public Sub New()
         InitializeComponent()
@@ -268,8 +269,8 @@ Public Class WL_Check
 
     '<----------------------------------- 'Thread
     Private Sub BackgroundWorker_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles BackgroundWorker.DoWork
-        Dim Temp_Property_URLApi As String = Nothing
         Thread.Sleep(1300)
+        Dim Temp_Property_URLApi As String = Me.Property_URLApi
         Do
 
             Do
@@ -298,7 +299,10 @@ Public Class WL_Check
 
             For i = 1 To 1000
                 Thread.Sleep(iUpdateGitListInterval \ 1000)
+
                 If Temp_Property_URLApi <> Me.Property_URLApi Then
+                    'Property_DateOnline = Convert.ToDateTime("01.01.2000 00:00:00")
+
                     Temp_Property_URLApi = Me.Property_URLApi
                     Exit For
                 End If

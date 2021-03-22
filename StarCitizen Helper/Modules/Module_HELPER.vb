@@ -131,7 +131,7 @@ Module Module_HELPER
         MAIN_THREAD.WL_About.URL_SendIssueCore = _JSETTINGS._GetValue("configuration.external.git.core.issue", _VARS.URL_Core) & _VARS.IssueGit_Prefix
 
         MAIN_THREAD.WL_Repo._SelectRepository_ByPageURL(MAIN_THREAD.WL_Pack.Property_PackageGitURL_Page)
-        MAIN_THREAD.WL_Repo._SetRepository()
+        MAIN_THREAD.WL_Repo._SetRepository(False)
 
         'PKiller
         _VARS.PKillerEnabled = StringToBool(_JSETTINGS._GetValue("configuration.main.pkiller.enabled", False, {0, 1}))
