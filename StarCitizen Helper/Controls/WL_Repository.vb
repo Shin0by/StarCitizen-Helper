@@ -1,7 +1,6 @@
 ﻿Imports Newtonsoft.Json.Linq
 
 Public Class WL_Repository
-
     Private cBackColor As Color = Me.BackColor
     Private cForeColor As Color = Me.ForeColor
 
@@ -15,6 +14,18 @@ Public Class WL_Repository
     '<----------------------------------- Basic control
     Public Sub New()
         InitializeComponent()
+    End Sub
+
+    Private Sub WL_Repository_Load(sender As Object, e As EventArgs) Handles Me.Load
+        ToolTip.SetToolTip(Me.Button_AddLangGroup, _LANG._Get("Repository_ButtonInfo_AddGroup"))
+        ToolTip.SetToolTip(Me.Button_RemoveLangGroup, _LANG._Get("Repository_ButtonInfo_RemoveGroup"))
+        ToolTip.SetToolTip(Me.Button_EditLangGroup, _LANG._Get("Repository_ButtonInfo_EditGroup"))
+
+        Me.Label_LangGroupName.Text = _LANG._Get("Repository_Label_LanguageGroupName") & ":"
+        Me.Button_SaveGroup.Text = _LANG._Get("Save")
+        Me.Button_CancelGroup.Text = _LANG._Get("Cancel")
+
+        ShowPanel(Me.TableLayoutPanel_Main)
     End Sub
     '-----------------------------------> Basic control
 
@@ -89,8 +100,6 @@ Public Class WL_Repository
             Me.sPackGitPage = uri.AbsoluteUri
             Me.Property_GitApi = "https://api." & uri.Host & "/repos" & uri.LocalPath & "/releases"
             Me.Property_GitMaster = "https://codeload." & uri.Host & uri.LocalPath & "/zip/master"
-
-            Me.Text_Label_SelectedRep = _LANG._Get("Repository_Label_SelectedRep", Value)
         End Set
     End Property
 
@@ -115,27 +124,38 @@ Public Class WL_Repository
     '-----------------------------------> Properties
 
     Public Sub _LoadList()
-        Dim Nodes As JObject = _JSETTINGS._GetNode("configuration.external.repository")
+        Dim jNodes As JObject = _JSETTINGS._GetNode("configuration.external.repository")
         Dim NewNode As TreeNode = Nothing
-        If Nodes Is Nothing Then Exit Sub
-        If Nodes.Count = 0 Then Exit Sub
+        Dim NewRepoNode As TreeNode = Nothing
+        If jNodes Is Nothing Then Exit Sub
+        If jNodes.Count = 0 Then Exit Sub
 
         Me.Tree.Nodes.Clear()
 
-        For Each JsonNode In Nodes
-            If Tree.Nodes.ContainsKey(JsonNode.Key) = False Then Tree.Nodes.Add(JsonNode.Key)
-        Next
+        For Each JsonNode In jNodes
+            If Tree.Nodes.ContainsKey(JsonNode.Key) = False Then
+                NewNode = New TreeNode
+                NewNode.Name = JsonNode.Key
+                NewNode.Text = JsonNode.Key
+                If JsonNode.Value("IsDefault") = "1" Then NewNode.Tag = "@"
+                'Tree.Nodes.Add(NewNode)
 
-        For Each TreeNode As TreeNode In Tree.Nodes
-            If Nodes.ContainsKey(TreeNode.Text) Then
-                For Each JsonNode As JProperty In Nodes(TreeNode.Text)
-                    NewNode = New TreeNode
-                    NewNode.Name = JsonNode.Name
-                    NewNode.Text = JsonNode.Name
-                    NewNode.Tag = JsonNode.Value
-                    NewNode.ToolTipText = JsonNode.Value
-                    TreeNode.Nodes.Add(NewNode)
-                Next
+                If CType(JsonNode.Value, JObject).ContainsKey("list") = True Then
+                    For Each RepoNode In CType(JsonNode.Value("list"), JObject)
+                        NewRepoNode = New TreeNode
+                        NewRepoNode.Name = Strings.Replace(RepoNode.Key, "_", " ")
+                        NewRepoNode.Text = Strings.Replace(RepoNode.Key, "_", " ")
+                        If RepoNode.Value("IsDefault") = "1" Then
+                            NewRepoNode.Tag = "1"
+                        Else
+                            NewRepoNode.Tag = "0"
+                        End If
+                        NewRepoNode.ToolTipText = RepoNode.Value("description").ToString & ":" & vbNewLine & RepoNode.Value("link").ToString
+                        NewNode.Nodes.Add(NewRepoNode)
+                    Next
+                End If
+
+                Tree.Nodes.Add(NewNode)
             End If
         Next
     End Sub
@@ -143,7 +163,16 @@ Public Class WL_Repository
     Public Sub _SelectRepository_ByPageURL(PageURL As String)
         For Each lang As TreeNode In Tree.Nodes
             For Each repo As TreeNode In lang.Nodes
-                If Strings.LCase(repo.Tag.ToString) = Strings.LCase(PageURL) Then
+                Dim lines = Split(repo.ToolTipText, vbNewLine, 2)
+                Dim link As String = Nothing
+
+                If lines.Count = 1 Then
+                    link = Strings.LCase(lines(0))
+                Else
+                    link = Strings.LCase(lines(1))
+                End If
+
+                If link = Strings.LCase(PageURL) Then
                     Tree.SelectedNode = repo
                     Exit Sub
                 End If
@@ -157,7 +186,14 @@ Public Class WL_Repository
         If Node.Parent Is Nothing Then : _LOG._sAdd(Me.GetType().Name, _LANG._Get("Repository_MSG_SelectCorrectRepository"), Nothing, 1) : Exit Sub : End If
         Me.Property_RepositoryLanguage = Node.Parent.Text
         Me.Property_RepositoryName = Node.Text
-        Me.Property_GitPage = Node.Tag
+        Dim lines = Split(Node.ToolTipText, vbNewLine, 2)
+        Dim Description As String = Nothing
+        If lines.Count = 1 Then
+            Me.Property_GitPage = lines(0)
+        Else
+            Me.Property_GitPage = lines(1)
+            Description = Strings.Left(lines(0), Len(lines(0)) - 1)
+        End If
 
         If SaveChanges = True Then
             _JSETTINGS._SetValue("configuration.external.git.pack", "page", Me.Property_GitPage)
@@ -170,6 +206,11 @@ Public Class WL_Repository
             MAIN_THREAD.WL_About.URL_SendIssueLocalization = Me.Property_GitPage & "/" & _VARS.IssueGit_Prefix
         End If
 
+        Me.Text_Label_SelectedRep = _LANG._Get("Repository_Label_SelectedRep", Me.Property_RepositoryLanguage & "/" & Me.Property_RepositoryName & vbNewLine & Description & vbNewLine & Me.Property_GitPage)
+        Me.Label_SelectedRepo.Tag = Me.Property_GitPage
+        Me.Label_SelectedRepo.Cursor = Cursors.Default
+        If Me.Property_GitPage.Length > 0 Then Me.Label_SelectedRepo.Cursor = Cursors.Hand
+
         MAIN_THREAD.WL_Pack.Property_PackageGitURL_Master = Me.Property_GitMaster
         MAIN_THREAD.WL_Pack.Property_PackageGitURL_Page = Me.Property_GitPage
         MAIN_THREAD.WL_Pack.Property_PackageGitURL_Api = Me.Property_GitApi
@@ -177,5 +218,50 @@ Public Class WL_Repository
 
     Private Sub Button_SetRepo_Click(sender As Object, e As EventArgs) Handles Button_SetRepo.Click
         _SetRepository(True)
+    End Sub
+
+    Private Sub Label_SelectedRepo_Click(sender As Object, e As EventArgs) Handles Label_SelectedRepo.Click
+        If sender.tag.length > 0 Then Process.Start(sender.tag)
+    End Sub
+
+    Private Sub Tree_AfterSelect(sender As Object, e As TreeViewEventArgs) Handles Tree.AfterSelect
+        Dim Node As TreeNode = e.Node
+
+        Me.Button_AddLangGroup.Enabled = True
+        Me.Button_RemoveLangGroup.Enabled = False
+        Me.Button_EditLangGroup.Enabled = False
+
+
+        If Node.Parent Is Nothing Then
+            If Node.Tag = "0" Then
+                Me.Button_RemoveLangGroup.Enabled = True
+                Me.Button_EditLangGroup.Enabled = True
+            End If
+        End If
+    End Sub
+
+    Private Sub ShowPanel(Panel As TableLayoutPanel)
+
+        Me.TableLayoutPanel_NewGroup.Visible = False
+        Me.TableLayoutPanel_Main.Visible = False
+
+        Me.TableLayoutPanel_NewGroup.Dock = DockStyle.None
+        Me.TableLayoutPanel_Main.Dock = DockStyle.None
+
+        Panel.Visible = True
+        Panel.Dock = DockStyle.Fill
+    End Sub
+
+
+    Private Sub Button_AddLangGroup_Click(sender As Object, e As EventArgs) Handles Button_AddLangGroup.Click
+        ShowPanel(Me.TableLayoutPanel_NewGroup)
+    End Sub
+
+    Private Sub Button_CancelGroup_Click(sender As Object, e As EventArgs) Handles Button_CancelGroup.Click
+        ShowPanel(Me.TableLayoutPanel_Main)
+    End Sub
+
+    Private Sub Button_SaveGroup_Click(sender As Object, e As EventArgs) Handles Button_SaveGroup.Click
+        ShowPanel(Me.TableLayoutPanel_Main)
     End Sub
 End Class

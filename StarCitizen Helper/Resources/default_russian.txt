@@ -53,6 +53,7 @@ Cancel = Отмена
 Retry = Повторить
 Ignore = Игнорировать
 Abort = Прервать
+Save = Сохранить
 
 #GLOBAL LONG
 l_Error = Ошибка: {0}
@@ -136,6 +137,10 @@ Repository_ButtonName_ButtonSetRep = Назначить репозиторий
 Repository_ButtonInfo_ButtonSetRep = Назначает выбранный репозиторий для последующей работы с ним
 Repository_Label_SelectedRep = Используемый репозиторий: {0}
 Repository_MSG_SelectCorrectRepository = Для смены используемого репозитория требуется выбрать конкретный репозиторий
+Repository_ButtonInfo_AddGroup = Добавить новую языковую группу
+Repository_ButtonInfo_RemoveGroup = Удалить выбранную языковую группу
+Repository_ButtonInfo_EditGroup = Изменить выбранную языковую группу
+Repository_Label_LanguageGroupName = Имя языковой группы
 
 #Module PATCH
 Patch_MSG_Blocks = HEX_BLOCK1: [{0}]\nHEX_BLOCK2: [{1}]

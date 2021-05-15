@@ -78,13 +78,13 @@ Module Module_HELPER
 
         _JSETTINGS._SetValue("configuration.external", "alert_date", "")
 
-
-        _JSETTINGS._SetValue("configuration.external.repository.Chinese", "Default", "https://github.com/Terrencetodd/SC_CN_zh")
-        _JSETTINGS._SetValue("configuration.external.repository.Korean", "Default", "https://github.com/Xhatagon/SC_ko")
-        _JSETTINGS._SetValue("configuration.external.repository.Polish", "Default", "https://github.com/Frosty-el-Banana/SC_PL")
-        _JSETTINGS._SetValue("configuration.external.repository.Russian", "Default", "https://github.com/n1ghter/SC_ru")
-        _JSETTINGS._SetValue("configuration.external.repository.Russian", "English naming", "https://github.com/budukratok/SC_not_so_ru")
-        _JSETTINGS._SetValue("configuration.external.repository.Ukrainian", "Default", "https://github.com/SlyF0X-UA/SC_uk")
+        'Repository
+        RepositoryDefaultHelper("Chinese", "Default", "https://github.com/Terrencetodd/SC_CN_zh", "Default chinese repository")
+        RepositoryDefaultHelper("Korean", "Default", "https://github.com/Xhatagon/SC_ko", "Default korean repository")
+        RepositoryDefaultHelper("Polish", "Default", "https://github.com/Frosty-el-Banana/SC_PL", "Default polish repository")
+        RepositoryDefaultHelper("Russian", "Полный", "https://github.com/n1ghter/SC_ru", "Полный перевод от инициаторов проекта локализации")
+        RepositoryDefaultHelper("Russian", "Без названий", "https://github.com/budukratok/SC_not_so_ru", "Перевод с сохранением исходных имён и названий")
+        RepositoryDefaultHelper("Ukrainian", "Default", "https://github.com/SlyF0X-UA/SC_uk", "Default ukrainian repository")
 
         _JSETTINGS._Save()
     End Sub
@@ -336,4 +336,12 @@ Fin:    Return result
         Return result
     End Function
 
+    Private Sub RepositoryDefaultHelper(GroupName As String, RepositoryName As String, Link As String, Description As String)
+        GroupName = Strings.Replace(GroupName, " ", "_")
+        RepositoryName = Strings.Replace(RepositoryName, " ", "_")
+        _JSETTINGS._SetValue("configuration.external.repository." & GroupName, "IsDefault", 1)
+        _JSETTINGS._SetValue("configuration.external.repository." & GroupName & ".list." & RepositoryName, "IsDefault", 1)
+        _JSETTINGS._SetValue("configuration.external.repository." & GroupName & ".list." & RepositoryName, "link", Link)
+        _JSETTINGS._SetValue("configuration.external.repository." & GroupName & ".list." & RepositoryName, "description", Description, True)
+    End Sub
 End Module

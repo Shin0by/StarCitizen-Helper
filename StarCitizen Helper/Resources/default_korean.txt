@@ -53,6 +53,7 @@ Cancel = Cancel
 Retry = Retry
 Ignore = Ignore
 Abort = Abort
+Save = Save
 
 #GLOBAL LONG
 l_Error = 오류: {0}
@@ -136,6 +137,10 @@ Repository_ButtonName_ButtonSetRep = Set repository
 Repository_ButtonInfo_ButtonSetRep = Assigns the selected repository for subsequent work with it
 Repository_Label_SelectedRep = Used repository: {0}
 Repository_MSG_SelectCorrectRepository = To change the used repository, you need to select a specific repository
+Repository_ButtonInfo_AddGroup = Add new language group
+Repository_ButtonInfo_RemoveGroup = Remove selected language group
+Repository_ButtonInfo_EditGroup = Edit selected language group
+Repository_Label_LanguageGroupName = Language group name
 
 #Module PATCH
 Patch_MSG_Blocks = HEX_BLOCK1: [{0}]\nHEX_BLOCK2: [{1}]
