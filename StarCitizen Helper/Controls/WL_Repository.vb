@@ -1,6 +1,8 @@
 ﻿Imports Newtonsoft.Json.Linq
 
 Public Class WL_Repository
+    Dim _STRING_HELPER As New Class_STRING_HELPER
+
     Private cBackColor As Color = Me.BackColor
     Private cForeColor As Color = Me.ForeColor
 
@@ -10,6 +12,8 @@ Public Class WL_Repository
 
     Private sRepositoryLanguage As String = Nothing
     Private sRepositoryName As String = Nothing
+
+    Private CurrentNode As TreeNode = Nothing
 
     '<----------------------------------- Basic control
     Public Sub New()
@@ -21,9 +25,23 @@ Public Class WL_Repository
         ToolTip.SetToolTip(Me.Button_RemoveLangGroup, _LANG._Get("Repository_ButtonInfo_RemoveGroup"))
         ToolTip.SetToolTip(Me.Button_EditLangGroup, _LANG._Get("Repository_ButtonInfo_EditGroup"))
 
-        Me.Label_LangGroupName.Text = _LANG._Get("Repository_Label_LanguageGroupName") & ":"
+        ToolTip.SetToolTip(Me.Button_AddRepository, _LANG._Get("Repository_ButtonInfo_AddRepository"))
+        ToolTip.SetToolTip(Me.Button_RemoveRepository, _LANG._Get("Repository_ButtonInfo_RemoveRepository"))
+        ToolTip.SetToolTip(Me.Button_EditRepository, _LANG._Get("Repository_ButtonInfo_EditRepository"))
+
+        Me.Label_LangGroupName.Text = _LANG._Get("Repository_Label_LanguageGroupName")
         Me.Button_SaveGroup.Text = _LANG._Get("Save")
         Me.Button_CancelGroup.Text = _LANG._Get("Cancel")
+        Me.Button_SaveRepository.Text = _LANG._Get("Save")
+        Me.Button_CancelRepository.Text = _LANG._Get("Cancel")
+
+        Me.Label_LanguageGroup.Text = _LANG._Get("Repository_Label_LanguageGroup") & ":"
+        Me.Label_Repository.Text = _LANG._Get("Repository_Label_Repository") & ":"
+
+        Me.Label_LangGroupList.Text = _LANG._Get("Repository_Label_RepositoryLangGroup")
+        Me.Label_RepositoryName.Text = _LANG._Get("Repository_Label_RepositoryName")
+        Me.Label_RepositoryLink.Text = _LANG._Get("Repository_Label_RepositoryURL")
+        Me.Label_RepositoryDescription.Text = _LANG._Get("Repository_Label_RepositoryDescription")
 
         ShowPanel(Me.TableLayoutPanel_Main)
     End Sub
@@ -131,33 +149,77 @@ Public Class WL_Repository
         If jNodes.Count = 0 Then Exit Sub
 
         Me.Tree.Nodes.Clear()
-
+        Dim CntR1 As Integer = 1
         For Each JsonNode In jNodes
             If Tree.Nodes.ContainsKey(JsonNode.Key) = False Then
                 NewNode = New TreeNode
-                NewNode.Name = JsonNode.Key
+                NewNode.Name = "grp"
                 NewNode.Text = JsonNode.Key
-                If JsonNode.Value("IsDefault") = "1" Then NewNode.Tag = "@"
-                'Tree.Nodes.Add(NewNode)
+                If JsonNode.Value("protected").ToString = "1" Then
+                    NewNode.Tag = "1"
+                Else
+                    NewNode.Tag = "0"
+                End If
 
+                CntR1 += 1
+
+                Dim CntR2 As Integer = 1
                 If CType(JsonNode.Value, JObject).ContainsKey("list") = True Then
-                    For Each RepoNode In CType(JsonNode.Value("list"), JObject)
+                    For Each RepoNode As JToken In CType(JsonNode.Value("list"), JArray)
                         NewRepoNode = New TreeNode
-                        NewRepoNode.Name = Strings.Replace(RepoNode.Key, "_", " ")
-                        NewRepoNode.Text = Strings.Replace(RepoNode.Key, "_", " ")
-                        If RepoNode.Value("IsDefault") = "1" Then
+                        NewRepoNode.Name = "rep"
+                        NewRepoNode.Text = RepoNode("name").ToString
+                        If RepoNode("protected").ToString = "1" Then
                             NewRepoNode.Tag = "1"
                         Else
                             NewRepoNode.Tag = "0"
                         End If
-                        NewRepoNode.ToolTipText = RepoNode.Value("description").ToString & ":" & vbNewLine & RepoNode.Value("link").ToString
+                        NewRepoNode.ToolTipText = RepoNode("description").ToString & vbNewLine & RepoNode("link").ToString
                         NewNode.Nodes.Add(NewRepoNode)
+                        CntR2 += 1
                     Next
                 End If
 
                 Tree.Nodes.Add(NewNode)
             End If
         Next
+    End Sub
+
+    Public Sub _SaveList()
+        _JSETTINGS._SetValue("configuration.external", "repository", New JObject)
+
+        Dim ProtectedFlag As Integer = 0
+        For Each GrpNode As TreeNode In Tree.Nodes
+            ProtectedFlag = 0
+            If GrpNode.Tag = "1" Then ProtectedFlag = 1
+
+            _JSETTINGS._SetValue("configuration.external.repository." & GrpNode.Text, "protected", ProtectedFlag)
+            _JSETTINGS._SetValue("configuration.external.repository." & GrpNode.Text, "list", New JArray)
+
+            Dim list As JArray = CType(_JSETTINGS._GetNode("configuration.external.repository." & GrpNode.Text & ".list"), JArray)
+            For Each RepNode As TreeNode In GrpNode.Nodes
+                Dim lines = Split(RepNode.ToolTipText, vbNewLine, 2)
+                Dim Description As String = Nothing
+                Dim Link As String = Nothing
+                If lines.Count = 1 Then
+                    Link = lines(0)
+                Else
+                    Link = lines(1)
+                    Description = lines(0)
+                End If
+                Dim elem As New JObject
+
+                ProtectedFlag = 0
+                If RepNode.Tag = "1" Then ProtectedFlag = 1
+
+                elem.Add(New JProperty("name", RepNode.Text))
+                elem.Add(New JProperty("protected", ProtectedFlag))
+                elem.Add(New JProperty("link", Link))
+                elem.Add(New JProperty("description", Description))
+                list.Add(elem)
+            Next
+        Next
+        _JSETTINGS._Save()
     End Sub
 
     Public Sub _SelectRepository_ByPageURL(PageURL As String)
@@ -192,7 +254,7 @@ Public Class WL_Repository
             Me.Property_GitPage = lines(0)
         Else
             Me.Property_GitPage = lines(1)
-            Description = Strings.Left(lines(0), Len(lines(0)) - 1)
+            Description = lines(0)
         End If
 
         If SaveChanges = True Then
@@ -206,7 +268,7 @@ Public Class WL_Repository
             MAIN_THREAD.WL_About.URL_SendIssueLocalization = Me.Property_GitPage & "/" & _VARS.IssueGit_Prefix
         End If
 
-        Me.Text_Label_SelectedRep = _LANG._Get("Repository_Label_SelectedRep", Me.Property_RepositoryLanguage & "/" & Me.Property_RepositoryName & vbNewLine & Description & vbNewLine & Me.Property_GitPage)
+        Me.Text_Label_SelectedRep = _LANG._Get("Repository_Label_SelectedRep", Me.Property_RepositoryLanguage & "/" & Me.Property_RepositoryName & vbNewLine & vbNewLine & _LANG._Get("Description") & ": " & Description & vbNewLine & _LANG._Get("Link") & ": " & Me.Property_GitPage)
         Me.Label_SelectedRepo.Tag = Me.Property_GitPage
         Me.Label_SelectedRepo.Cursor = Cursors.Default
         If Me.Property_GitPage.Length > 0 Then Me.Label_SelectedRepo.Cursor = Cursors.Hand
@@ -231,37 +293,249 @@ Public Class WL_Repository
         Me.Button_RemoveLangGroup.Enabled = False
         Me.Button_EditLangGroup.Enabled = False
 
+        Me.Button_AddRepository.Enabled = False
+        Me.Button_RemoveRepository.Enabled = False
+        Me.Button_EditRepository.Enabled = False
 
         If Node.Parent Is Nothing Then
+            Me.Button_AddRepository.Enabled = True
             If Node.Tag = "0" Then
                 Me.Button_RemoveLangGroup.Enabled = True
                 Me.Button_EditLangGroup.Enabled = True
+            End If
+        Else
+            If Node.Tag = "0" Then
+                Me.Button_RemoveRepository.Enabled = True
+                Me.Button_EditRepository.Enabled = True
             End If
         End If
     End Sub
 
     Private Sub ShowPanel(Panel As TableLayoutPanel)
 
-        Me.TableLayoutPanel_NewGroup.Visible = False
+        Me.TableLayoutPanel_Repository.Visible = False
+        Me.TableLayoutPanel_Group.Visible = False
         Me.TableLayoutPanel_Main.Visible = False
 
-        Me.TableLayoutPanel_NewGroup.Dock = DockStyle.None
+        Me.TableLayoutPanel_Repository.Dock = DockStyle.None
+        Me.TableLayoutPanel_Group.Dock = DockStyle.None
         Me.TableLayoutPanel_Main.Dock = DockStyle.None
 
         Panel.Visible = True
         Panel.Dock = DockStyle.Fill
     End Sub
 
+    Public Function _NewLanguageGroup(Name As String) As Boolean
+        For Each Node As TreeNode In Tree.Nodes
+            If Node.Parent IsNot Nothing Then Continue For
+            If LCase(Node.Text) = LCase(Name) Then
+                _LOG._sAdd(Me.GetType().Name, _LANG._Get("l_Err_ElementAlreadyExist", Name), Nothing, 1)
+                Return False
+            End If
+        Next
+
+        Dim NewNode As TreeNode = New TreeNode
+        NewNode.Name = "grp"
+        NewNode.Text = Name
+        NewNode.Tag = "0"
+        Tree.Nodes.Add(NewNode)
+        Return True
+    End Function
+
+    Public Function _EditLanguageGroup(Name As String, SelectedNode As TreeNode) As Boolean
+        For Each Node As TreeNode In Tree.Nodes
+            If Node.Parent IsNot Nothing Then Continue For
+            If LCase(Node.Name) = LCase(Name) Then
+                _LOG._sAdd(Me.GetType().Name, _LANG._Get("l_Err_ElementAlreadyExist", Name), Nothing, 1)
+                Return False
+            End If
+        Next
+
+        SelectedNode.Name = "grp"
+        SelectedNode.Text = Name
+        SelectedNode.Tag = "0"
+        Return True
+    End Function
+
+    Public Function _NewRepository(Group As String, Name As String, Link As String, Descr As String)
+        For Each Node As TreeNode In Tree.Nodes
+            If Node.Parent IsNot Nothing Then Continue For
+            If LCase(Node.Text) = LCase(Group) Then Me.CurrentNode = Node
+        Next
+
+        For Each Node As TreeNode In Me.CurrentNode.Nodes
+            If LCase(Node.Text) = LCase(Text) Then
+                _LOG._sAdd(Me.GetType().Name, _LANG._Get("l_Err_ElementAlreadyExistInGrp", Name), Nothing, 1)
+                Return False
+            End If
+        Next
+
+        If InStr(LCase(Link), "https://github.com") > 1 Then _LOG._sAdd(Me.GetType().Name, _LANG._Get("l_Err_IncorrectLink", Link), Nothing, 1) : Return False
+        If InStr(LCase(Link), "github.com") <> 1 Then
+            _LOG._sAdd(Me.GetType().Name, _LANG._Get("l_Err_IncorrectLink", Link), Nothing, 1)
+            Return False
+        Else
+            Link = "https://" & Link
+        End If
+
+        Dim NewNode As TreeNode = New TreeNode
+        NewNode.Name = "rep"
+        NewNode.Text = Name
+        NewNode.ToolTipText = Descr & vbNewLine & Link
+        NewNode.Tag = "0"
+        Me.CurrentNode.Nodes.Add(NewNode)
+        Return True
+    End Function
+
+    Public Function _EditRepository(Group As String, Name As String, Link As String, Descr As String)
+        For Each Node As TreeNode In Me.CurrentNode.Parent.Nodes
+            If LCase(Node.Text) = LCase(Text) Then
+                _LOG._sAdd(Me.GetType().Name, _LANG._Get("l_Err_ElementAlreadyExistInGrp", Name), Nothing, 1)
+                Return False
+            End If
+        Next
+
+        If InStr(LCase(Link), "https://github.com") > 1 Then _LOG._sAdd(Me.GetType().Name, _LANG._Get("l_Err_IncorrectLink", Link), Nothing, 1) : Return False
+        If InStr(LCase(Link), "github.com") <> 1 Then
+            _LOG._sAdd(Me.GetType().Name, _LANG._Get("l_Err_IncorrectLink", Link), Nothing, 1)
+            Return False
+        Else
+            Link = "https://" & Link
+        End If
+
+        Me.CurrentNode.Name = "rep"
+        Me.CurrentNode.Text = Name
+        Me.CurrentNode.ToolTipText = Descr & vbNewLine & Link
+        Me.CurrentNode.Tag = "0"
+        Return True
+    End Function
+
+    Public Function _RemoveLanguageGroup(SelectedNode As TreeNode) As Boolean
+        SelectedNode.Remove()
+        Return True
+    End Function
+
+    Public Function _RemoveRepository(SelectedNode As TreeNode) As Boolean
+        SelectedNode.Remove()
+        Return True
+    End Function
 
     Private Sub Button_AddLangGroup_Click(sender As Object, e As EventArgs) Handles Button_AddLangGroup.Click
-        ShowPanel(Me.TableLayoutPanel_NewGroup)
+        CurrentNode = Tree.SelectedNode
+        Me.Button_SaveGroup.Enabled = False
+        Me.TextBox_LangGroupName.Text = Nothing
+        Me.TableLayoutPanel_Group.Tag = 0
+        ShowPanel(Me.TableLayoutPanel_Group)
     End Sub
 
-    Private Sub Button_CancelGroup_Click(sender As Object, e As EventArgs) Handles Button_CancelGroup.Click
+    Private Sub Button_EditLangGroup_Click(sender As Object, e As EventArgs) Handles Button_EditLangGroup.Click
+        CurrentNode = Tree.SelectedNode
+        Me.Button_SaveGroup.Enabled = True
+        Me.TextBox_LangGroupName.Text = CurrentNode.Text
+        Me.TableLayoutPanel_Group.Tag = 1
+        ShowPanel(Me.TableLayoutPanel_Group)
+    End Sub
+
+    Private Sub Button_AddRepository_Click(sender As Object, e As EventArgs) Handles Button_AddRepository.Click
+        CurrentNode = Tree.SelectedNode
+        Me.Button_SaveRepository.Enabled = False
+
+        Me.ComboBox_LangGroupList.Items.Clear()
+        For Each Node As TreeNode In Tree.Nodes
+            If Node.Parent IsNot Nothing Then Continue For
+            Me.ComboBox_LangGroupList.Items.Add(Node.Text)
+        Next
+        Me.ComboBox_LangGroupList.Enabled = True
+
+        Me.ComboBox_LangGroupList.SelectedIndex = Me.ComboBox_LangGroupList.FindStringExact(Tree.SelectedNode.Text)
+        Me.TextBox_RepositoryName.Text = Nothing
+        Me.TextBox_RepositoryLink.Text = Nothing
+        Me.TextBox_RepositoryDescription.Text = Nothing
+        Me.TableLayoutPanel_Repository.Tag = 0
+        ShowPanel(Me.TableLayoutPanel_Repository)
+    End Sub
+
+    Private Sub Button_EditRepository_Click(sender As Object, e As EventArgs) Handles Button_EditRepository.Click
+        CurrentNode = Tree.SelectedNode
+        Me.Button_SaveRepository.Enabled = True
+
+        Me.ComboBox_LangGroupList.Items.Clear()
+        For Each Node As TreeNode In Tree.Nodes
+            If Node.Parent IsNot Nothing Then Continue For
+            Me.ComboBox_LangGroupList.Items.Add(Node.Text)
+        Next
+
+        Me.ComboBox_LangGroupList.SelectedIndex = Me.ComboBox_LangGroupList.FindStringExact(Tree.SelectedNode.Parent.Text)
+        Me.ComboBox_LangGroupList.Enabled = False
+        Me.TextBox_RepositoryName.Text = Tree.SelectedNode.Text
+
+        Dim lines = Split(Tree.SelectedNode.ToolTipText, vbNewLine, 2)
+        Dim Description As String = Nothing
+        If lines.Count = 1 Then
+            Me.TextBox_RepositoryLink.Text = lines(0)
+        Else
+            Me.TextBox_RepositoryLink.Text = lines(1)
+            Me.TextBox_RepositoryDescription.Text = lines(0)
+        End If
+        Me.TableLayoutPanel_Repository.Tag = 1
+        ShowPanel(Me.TableLayoutPanel_Repository)
+    End Sub
+
+    Private Sub Button_CancelGroup_Click(sender As Object, e As EventArgs) Handles Button_CancelGroup.Click, Button_CancelRepository.Click
         ShowPanel(Me.TableLayoutPanel_Main)
     End Sub
 
     Private Sub Button_SaveGroup_Click(sender As Object, e As EventArgs) Handles Button_SaveGroup.Click
+        If Me.TableLayoutPanel_Group.Tag = 0 Then
+            If _NewLanguageGroup(TextBox_LangGroupName.Text) = False Then Exit Sub
+        Else
+            If _EditLanguageGroup(TextBox_LangGroupName.Text, Tree.SelectedNode) = False Then Exit Sub
+        End If
+        _SaveList()
         ShowPanel(Me.TableLayoutPanel_Main)
     End Sub
+
+    Private Sub Button_SaveRepository_Click(sender As Object, e As EventArgs) Handles Button_SaveRepository.Click
+        If Me.TableLayoutPanel_Repository.Tag = 0 Then
+            If _NewRepository(ComboBox_LangGroupList.SelectedText, TextBox_RepositoryName.Text, TextBox_RepositoryLink.Text, TextBox_RepositoryDescription.Text) = False Then Exit Sub
+        Else
+            If _EditRepository(ComboBox_LangGroupList.SelectedText, TextBox_RepositoryName.Text, TextBox_RepositoryLink.Text, TextBox_RepositoryDescription.Text) = False Then Exit Sub
+        End If
+        _SaveList()
+        ShowPanel(Me.TableLayoutPanel_Main)
+    End Sub
+
+    Private Sub Button_RemoveLangGroup_Click(sender As Object, e As EventArgs) Handles Button_RemoveLangGroup.Click
+        If MsgBox(_LANG._Get("Repository_MSG_RemoveGroup"), vbQuestion + vbOKCancel, _APP.appName) = MsgBoxResult.Ok Then
+            _RemoveLanguageGroup(Tree.SelectedNode)
+            _SaveList()
+        End If
+    End Sub
+
+    Private Sub Button_RemoveRepository_Click(sender As Object, e As EventArgs) Handles Button_RemoveRepository.Click
+        If MsgBox(_LANG._Get("Repository_MSG_RemoveRepository"), vbQuestion + vbOKCancel, _APP.appName) = MsgBoxResult.Ok Then
+            _RemoveRepository(Tree.SelectedNode)
+            _SaveList()
+        End If
+    End Sub
+
+    Private Sub TextBox_LangGroupName_TextChanged(sender As Object, e As EventArgs) Handles TextBox_LangGroupName.TextChanged
+        Button_SaveGroup.Enabled = _STRING_HELPER._Check(TextBox_LangGroupName.Text, _STRING_HELPER._ENG._ALL & _STRING_HELPER._NUM._NUM, _STRING_HELPER._ENG._ALL & _STRING_HELPER._NUM._NUM, _STRING_HELPER._ENG._ALL & _STRING_HELPER._NUM._NUM, False)
+    End Sub
+
+    Private Sub TextBox_RepositoryName_TextChanged(sender As Object, e As EventArgs) Handles TextBox_RepositoryName.TextChanged, TextBox_RepositoryLink.TextChanged, TextBox_RepositoryDescription.TextChanged
+        Dim Validate As Boolean = True
+        If TextBox_RepositoryName.Text.Length = 0 Then Validate = False
+        If InStr(LCase(TextBox_RepositoryLink.Text), LCase("github.com")) = 0 Then
+            Validate = False
+        Else
+            If InStr(LCase(TextBox_RepositoryLink.Text), LCase("https://github.com")) <> 1 Then
+                If InStr(LCase(TextBox_RepositoryLink.Text), LCase("github.com")) <> 1 Then
+                    Validate = False
+                End If
+            End If
+        End If
+        Button_SaveRepository.Enabled = Validate
+    End Sub
+
 End Class

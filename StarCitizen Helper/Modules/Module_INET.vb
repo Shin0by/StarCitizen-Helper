@@ -94,7 +94,7 @@ Module Module_INET
                     result.Err._Description_Sys = ex.Message
                 Catch ex2 As Exception
                     result.Err._Flag = True
-                    result.Err._Number = DirectCast(DirectCast(ex, System.Net.WebException).Response, System.Net.HttpWebResponse).StatusCode
+                    If DirectCast(ex, System.Net.WebException).Response IsNot Nothing Then result.Err._Number = DirectCast(DirectCast(ex, System.Net.WebException).Response, System.Net.HttpWebResponse).StatusCode
                     result.Err._Description_Sys = ex.Message
                 End Try
             End Try

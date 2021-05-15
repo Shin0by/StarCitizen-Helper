@@ -264,7 +264,7 @@ Partial Class MainForm
         Me.TabControl.Location = New System.Drawing.Point(0, 0)
         Me.TabControl.Name = "TabControl"
         Me.TabControl.SelectedIndex = 0
-        Me.TabControl.Size = New System.Drawing.Size(784, 311)
+        Me.TabControl.Size = New System.Drawing.Size(884, 381)
         Me.TabControl.TabIndex = 2
         '
         'TabPage_Patch
@@ -273,7 +273,7 @@ Partial Class MainForm
         Me.TabPage_Patch.Location = New System.Drawing.Point(4, 22)
         Me.TabPage_Patch.Name = "TabPage_Patch"
         Me.TabPage_Patch.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage_Patch.Size = New System.Drawing.Size(776, 285)
+        Me.TabPage_Patch.Size = New System.Drawing.Size(876, 355)
         Me.TabPage_Patch.TabIndex = 0
         Me.TabPage_Patch.Text = "Модификация"
         Me.TabPage_Patch.UseVisualStyleBackColor = True
@@ -294,7 +294,7 @@ Partial Class MainForm
         Me.WL_Mod.Property_PatchDstFilePath = Nothing
         Me.WL_Mod.Property_PatchSrcFileName = Nothing
         Me.WL_Mod.Property_PatchSrcFilePath = Nothing
-        Me.WL_Mod.Size = New System.Drawing.Size(770, 279)
+        Me.WL_Mod.Size = New System.Drawing.Size(870, 349)
         Me.WL_Mod.TabIndex = 0
         Me.WL_Mod.Text_Button_Disable = "Выкл. модификацию"
         Me.WL_Mod.Text_Button_Enable = "Вкл. модификацию"
@@ -309,7 +309,7 @@ Partial Class MainForm
         Me.TabPage_Packages.Location = New System.Drawing.Point(4, 22)
         Me.TabPage_Packages.Name = "TabPage_Packages"
         Me.TabPage_Packages.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage_Packages.Size = New System.Drawing.Size(776, 285)
+        Me.TabPage_Packages.Size = New System.Drawing.Size(776, 355)
         Me.TabPage_Packages.TabIndex = 2
         Me.TabPage_Packages.Text = "Локализация"
         Me.TabPage_Packages.UseVisualStyleBackColor = True
@@ -336,7 +336,7 @@ Partial Class MainForm
         Me.WL_Pack.Property_Path_Folder_Meta = Nothing
         Me.WL_Pack.Property_ShowTestBuild = False
         Me.WL_Pack.Property_UpdateTargetName = Nothing
-        Me.WL_Pack.Size = New System.Drawing.Size(770, 279)
+        Me.WL_Pack.Size = New System.Drawing.Size(770, 349)
         Me.WL_Pack.TabIndex = 0
         Me.WL_Pack.Text_Button_Download = "Загрузить пакет обновлений"
         Me.WL_Pack.Text_Button_InstallFull = "Полная установка"
@@ -351,7 +351,7 @@ Partial Class MainForm
         Me.TabPage_Repository.Location = New System.Drawing.Point(4, 22)
         Me.TabPage_Repository.Name = "TabPage_Repository"
         Me.TabPage_Repository.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage_Repository.Size = New System.Drawing.Size(776, 285)
+        Me.TabPage_Repository.Size = New System.Drawing.Size(776, 355)
         Me.TabPage_Repository.TabIndex = 9
         Me.TabPage_Repository.Text = "Репозитории"
         Me.TabPage_Repository.UseVisualStyleBackColor = True
@@ -364,15 +364,19 @@ Partial Class MainForm
         Me.WL_Repo.Property_GitApi = Nothing
         Me.WL_Repo.Property_GitMaster = Nothing
         Me.WL_Repo.Property_GitPage = Nothing
-        Me.WL_Repo.Size = New System.Drawing.Size(770, 279)
+        Me.WL_Repo.Property_RepositoryLanguage = Nothing
+        Me.WL_Repo.Property_RepositoryName = Nothing
+        Me.WL_Repo.Size = New System.Drawing.Size(770, 349)
         Me.WL_Repo.TabIndex = 0
+        Me.WL_Repo.Text_Button_SetRep = "Button_SetRepo"
+        Me.WL_Repo.Text_Label_SelectedRep = "Label_SelectedRepo"
         '
         'TabPage_Killer
         '
         Me.TabPage_Killer.Controls.Add(Me.TableLayoutPanel4)
         Me.TabPage_Killer.Location = New System.Drawing.Point(4, 22)
         Me.TabPage_Killer.Name = "TabPage_Killer"
-        Me.TabPage_Killer.Size = New System.Drawing.Size(776, 285)
+        Me.TabPage_Killer.Size = New System.Drawing.Size(776, 355)
         Me.TabPage_Killer.TabIndex = 3
         Me.TabPage_Killer.Text = "Завершение процессов"
         Me.TabPage_Killer.UseVisualStyleBackColor = True
@@ -408,7 +412,7 @@ Partial Class MainForm
         Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
         Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40.0!))
         Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel4.Size = New System.Drawing.Size(776, 285)
+        Me.TableLayoutPanel4.Size = New System.Drawing.Size(776, 355)
         Me.TableLayoutPanel4.TabIndex = 3
         '
         'Label_ProcessKillerBottomInfo
@@ -419,7 +423,7 @@ Partial Class MainForm
         Me.Label_ProcessKillerBottomInfo.Location = New System.Drawing.Point(3, 193)
         Me.Label_ProcessKillerBottomInfo.Margin = New System.Windows.Forms.Padding(3)
         Me.Label_ProcessKillerBottomInfo.Name = "Label_ProcessKillerBottomInfo"
-        Me.Label_ProcessKillerBottomInfo.Size = New System.Drawing.Size(770, 89)
+        Me.Label_ProcessKillerBottomInfo.Size = New System.Drawing.Size(770, 159)
         Me.Label_ProcessKillerBottomInfo.TabIndex = 13
         Me.Label_ProcessKillerBottomInfo.Text = resources.GetString("Label_ProcessKillerBottomInfo.Text")
         Me.Label_ProcessKillerBottomInfo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -563,7 +567,7 @@ Partial Class MainForm
         Me.TabPage_GameProfiles.Location = New System.Drawing.Point(4, 22)
         Me.TabPage_GameProfiles.Name = "TabPage_GameProfiles"
         Me.TabPage_GameProfiles.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage_GameProfiles.Size = New System.Drawing.Size(776, 285)
+        Me.TabPage_GameProfiles.Size = New System.Drawing.Size(776, 355)
         Me.TabPage_GameProfiles.TabIndex = 4
         Me.TabPage_GameProfiles.Text = "Профили"
         Me.TabPage_GameProfiles.UseVisualStyleBackColor = True
@@ -593,7 +597,7 @@ Partial Class MainForm
         Me.TableLayoutPanel5.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
         Me.TableLayoutPanel5.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
         Me.TableLayoutPanel5.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel5.Size = New System.Drawing.Size(770, 279)
+        Me.TableLayoutPanel5.Size = New System.Drawing.Size(770, 349)
         Me.TableLayoutPanel5.TabIndex = 3
         '
         'Button_ToEPTU
@@ -636,7 +640,7 @@ Partial Class MainForm
         Me.Label_ProfilesBottomInfo.Location = New System.Drawing.Point(3, 153)
         Me.Label_ProfilesBottomInfo.Margin = New System.Windows.Forms.Padding(3)
         Me.Label_ProfilesBottomInfo.Name = "Label_ProfilesBottomInfo"
-        Me.Label_ProfilesBottomInfo.Size = New System.Drawing.Size(764, 123)
+        Me.Label_ProfilesBottomInfo.Size = New System.Drawing.Size(764, 193)
         Me.Label_ProfilesBottomInfo.TabIndex = 11
         Me.Label_ProfilesBottomInfo.Text = resources.GetString("Label_ProfilesBottomInfo.Text")
         Me.Label_ProfilesBottomInfo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -683,7 +687,7 @@ Partial Class MainForm
         Me.TabPage_SysUpdate.Location = New System.Drawing.Point(4, 22)
         Me.TabPage_SysUpdate.Name = "TabPage_SysUpdate"
         Me.TabPage_SysUpdate.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage_SysUpdate.Size = New System.Drawing.Size(776, 285)
+        Me.TabPage_SysUpdate.Size = New System.Drawing.Size(776, 355)
         Me.TabPage_SysUpdate.TabIndex = 5
         Me.TabPage_SysUpdate.Text = "Обновление программы"
         Me.TabPage_SysUpdate.UseVisualStyleBackColor = True
@@ -701,7 +705,7 @@ Partial Class MainForm
         Me.TableLayoutPanel_SysUpdate.RowCount = 2
         Me.TableLayoutPanel_SysUpdate.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.TableLayoutPanel_SysUpdate.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35.0!))
-        Me.TableLayoutPanel_SysUpdate.Size = New System.Drawing.Size(770, 279)
+        Me.TableLayoutPanel_SysUpdate.Size = New System.Drawing.Size(770, 349)
         Me.TableLayoutPanel_SysUpdate.TabIndex = 1
         '
         'WL_SysUpdateCheck
@@ -731,14 +735,14 @@ Partial Class MainForm
         Me.WL_SysUpdateCheck.Property_URLDownload = Nothing
         Me.WL_SysUpdateCheck.Property_VersionLocal = Nothing
         Me.WL_SysUpdateCheck.Property_VersionOnline = Nothing
-        Me.WL_SysUpdateCheck.Size = New System.Drawing.Size(764, 238)
+        Me.WL_SysUpdateCheck.Size = New System.Drawing.Size(764, 308)
         Me.WL_SysUpdateCheck.TabIndex = 0
         '
         'WL_AppUpdate
         '
         Me.WL_AppUpdate.Dock = System.Windows.Forms.DockStyle.Fill
         Me.WL_AppUpdate.Enabled = False
-        Me.WL_AppUpdate.Location = New System.Drawing.Point(3, 247)
+        Me.WL_AppUpdate.Location = New System.Drawing.Point(3, 317)
         Me.WL_AppUpdate.Name = "WL_AppUpdate"
         Me.WL_AppUpdate.Padding = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.WL_AppUpdate.Property_Name = Nothing
@@ -757,7 +761,7 @@ Partial Class MainForm
         Me.TabPage_SysSettings.Location = New System.Drawing.Point(4, 22)
         Me.TabPage_SysSettings.Name = "TabPage_SysSettings"
         Me.TabPage_SysSettings.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage_SysSettings.Size = New System.Drawing.Size(776, 285)
+        Me.TabPage_SysSettings.Size = New System.Drawing.Size(776, 355)
         Me.TabPage_SysSettings.TabIndex = 8
         Me.TabPage_SysSettings.Text = "Системные настройки"
         Me.TabPage_SysSettings.UseVisualStyleBackColor = True
@@ -775,7 +779,7 @@ Partial Class MainForm
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60.0!))
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 101.0!))
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel1.Size = New System.Drawing.Size(770, 279)
+        Me.TableLayoutPanel1.Size = New System.Drawing.Size(770, 349)
         Me.TableLayoutPanel1.TabIndex = 2
         '
         'WL_SysLang
@@ -860,7 +864,7 @@ Partial Class MainForm
         Me.TabPage_Debug.Location = New System.Drawing.Point(4, 22)
         Me.TabPage_Debug.Name = "TabPage_Debug"
         Me.TabPage_Debug.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage_Debug.Size = New System.Drawing.Size(776, 285)
+        Me.TabPage_Debug.Size = New System.Drawing.Size(776, 355)
         Me.TabPage_Debug.TabIndex = 1
         Me.TabPage_Debug.Text = "Лог"
         Me.TabPage_Debug.UseVisualStyleBackColor = True
@@ -878,14 +882,14 @@ Partial Class MainForm
         Me.TableLayoutPanel2.RowCount = 2
         Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
-        Me.TableLayoutPanel2.Size = New System.Drawing.Size(770, 279)
+        Me.TableLayoutPanel2.Size = New System.Drawing.Size(770, 349)
         Me.TableLayoutPanel2.TabIndex = 0
         '
         'ClearLog_Button
         '
         Me.TableLayoutPanel2.SetColumnSpan(Me.ClearLog_Button, 2)
         Me.ClearLog_Button.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.ClearLog_Button.Location = New System.Drawing.Point(3, 252)
+        Me.ClearLog_Button.Location = New System.Drawing.Point(3, 322)
         Me.ClearLog_Button.Name = "ClearLog_Button"
         Me.ClearLog_Button.Size = New System.Drawing.Size(764, 24)
         Me.ClearLog_Button.TabIndex = 2
@@ -902,7 +906,7 @@ Partial Class MainForm
         Me.TextBox_Debug.Multiline = True
         Me.TextBox_Debug.Name = "TextBox_Debug"
         Me.TextBox_Debug.ScrollBars = System.Windows.Forms.ScrollBars.Both
-        Me.TextBox_Debug.Size = New System.Drawing.Size(764, 243)
+        Me.TextBox_Debug.Size = New System.Drawing.Size(764, 313)
         Me.TextBox_Debug.TabIndex = 0
         '
         'TabPage_About
@@ -910,7 +914,7 @@ Partial Class MainForm
         Me.TabPage_About.Controls.Add(Me.WL_About)
         Me.TabPage_About.Location = New System.Drawing.Point(4, 22)
         Me.TabPage_About.Name = "TabPage_About"
-        Me.TabPage_About.Size = New System.Drawing.Size(776, 285)
+        Me.TabPage_About.Size = New System.Drawing.Size(776, 355)
         Me.TabPage_About.TabIndex = 7
         Me.TabPage_About.Text = "О программе"
         Me.TabPage_About.UseVisualStyleBackColor = True
@@ -921,7 +925,7 @@ Partial Class MainForm
         Me.WL_About.Location = New System.Drawing.Point(0, 0)
         Me.WL_About.Name = "WL_About"
         Me.WL_About.Property_Name = Nothing
-        Me.WL_About.Size = New System.Drawing.Size(776, 285)
+        Me.WL_About.Size = New System.Drawing.Size(776, 355)
         Me.WL_About.TabIndex = 0
         Me.WL_About.Text_Button_SendIssueApp = "Отзыв о программе"
         Me.WL_About.Text_Button_SendIssueCore = "Отзыв о ядре"
@@ -942,7 +946,7 @@ Partial Class MainForm
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.ControlLightLight
-        Me.ClientSize = New System.Drawing.Size(784, 311)
+        Me.ClientSize = New System.Drawing.Size(884, 381)
         Me.Controls.Add(Me.TabControl)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)

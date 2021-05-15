@@ -1,6 +1,7 @@
 ﻿Imports System.IO
 Imports System.Net
 Imports Defter.CertificateVerifier.Security
+Imports Newtonsoft.Json.Linq
 
 Module Module_HELPER
     Public Function CheckConfigFile() As Boolean
@@ -79,13 +80,12 @@ Module Module_HELPER
         _JSETTINGS._SetValue("configuration.external", "alert_date", "")
 
         'Repository
-        RepositoryDefaultHelper("Chinese", "Default", "https://github.com/Terrencetodd/SC_CN_zh", "Default chinese repository")
-        RepositoryDefaultHelper("Korean", "Default", "https://github.com/Xhatagon/SC_ko", "Default korean repository")
-        RepositoryDefaultHelper("Polish", "Default", "https://github.com/Frosty-el-Banana/SC_PL", "Default polish repository")
-        RepositoryDefaultHelper("Russian", "Полный", "https://github.com/n1ghter/SC_ru", "Полный перевод от инициаторов проекта локализации")
-        RepositoryDefaultHelper("Russian", "Без названий", "https://github.com/budukratok/SC_not_so_ru", "Перевод с сохранением исходных имён и названий")
-        RepositoryDefaultHelper("Ukrainian", "Default", "https://github.com/SlyF0X-UA/SC_uk", "Default ukrainian repository")
-
+        _RepositoryWriteHelper("Chinese", "Default", "https://github.com/Terrencetodd/SC_CN_zh", "Default chinese repository", True, True)
+        _RepositoryWriteHelper("Korean", "Default", "https://github.com/Xhatagon/SC_ko", "Default korean repository", True, True)
+        _RepositoryWriteHelper("Polish", "Default", "https://github.com/Frosty-el-Banana/SC_PL", "Default polish repository", True, True)
+        _RepositoryWriteHelper("Russian", "Полный", "https://github.com/n1ghter/SC_ru", "Полный перевод от инициаторов проекта локализации", True, True)
+        _RepositoryWriteHelper("Russian", "Без названий", "https://github.com/budukratok/SC_not_so_ru", "Перевод с сохранением исходных имён и названий", True, True)
+        _RepositoryWriteHelper("Ukrainian", "Основний", "https://github.com/SlyF0X-UA/SC_uk", "Основний український переклад без змін у власних назвах", True, True)
         _JSETTINGS._Save()
     End Sub
 
@@ -158,6 +158,11 @@ Module Module_HELPER
     Public Function BoolToString(Value As Boolean) As String
         If Value = True Then Return "1"
         Return "0"
+    End Function
+
+    Public Function BoolToInt(Value As Boolean) As Integer
+        If Value = True Then Return 1
+        Return 0
     End Function
 
     Public Sub CheckUpdateStatus()
@@ -336,12 +341,37 @@ Fin:    Return result
         Return result
     End Function
 
-    Private Sub RepositoryDefaultHelper(GroupName As String, RepositoryName As String, Link As String, Description As String)
+    Private Sub _RepositoryWriteHelper(GroupName As String, RepositoryName As String, Link As String, Description As String, DefaultGroup As Boolean, Defaultrepository As Boolean, Optional Save As Boolean = False)
         GroupName = Strings.Replace(GroupName, " ", "_")
-        RepositoryName = Strings.Replace(RepositoryName, " ", "_")
-        _JSETTINGS._SetValue("configuration.external.repository." & GroupName, "IsDefault", 1)
-        _JSETTINGS._SetValue("configuration.external.repository." & GroupName & ".list." & RepositoryName, "IsDefault", 1)
-        _JSETTINGS._SetValue("configuration.external.repository." & GroupName & ".list." & RepositoryName, "link", Link)
-        _JSETTINGS._SetValue("configuration.external.repository." & GroupName & ".list." & RepositoryName, "description", Description, True)
+        _JSETTINGS._SetValue("configuration.external.repository." & GroupName, "protected", BoolToInt(DefaultGroup))
+
+        If _JSETTINGS._GetNode("configuration.external.repository." & GroupName & ".list") Is Nothing Then
+            _JSETTINGS._SetValue("configuration.external.repository." & GroupName, "list", New JArray)
+        End If
+
+        Dim list As JArray = CType(_JSETTINGS._GetNode("configuration.external.repository." & GroupName & ".list"), JArray)
+
+        Dim Flag As Boolean = False
+        For Each repo As JToken In list
+            If LCase(repo("name").ToString) = LCase(RepositoryName) Then
+                Flag = True
+                repo("name") = RepositoryName
+                repo("protected") = BoolToInt(Defaultrepository)
+                repo("link") = Link
+                repo("description") = Description
+                Exit For
+            End If
+        Next
+
+        If Flag = False Then
+            Dim elem As New JObject
+            elem.Add(New JProperty("name", RepositoryName))
+            elem.Add(New JProperty("protected", BoolToInt(Defaultrepository)))
+            elem.Add(New JProperty("link", Link))
+            elem.Add(New JProperty("description", Description))
+            list.Add(elem)
+        End If
+
+        If Save = True Then _JSETTINGS._Save()
     End Sub
 End Module

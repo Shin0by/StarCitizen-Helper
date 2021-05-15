@@ -164,7 +164,9 @@ Module Module_JSON
             If Node(Key) IsNot Nothing Then
                 Select Case UCase(Value.GetType.Name)
                     Case "JARRAY" : Node(Key) = Value
-                    Case Else : Node(Key) = New JValue(Value)
+                    Case "JOBJECT" : Node(Key) = Value
+                    Case Else
+                        Node(Key) = New JValue(Value)
                 End Select
             Else
                 Select Case UCase(Value.GetType.Name)

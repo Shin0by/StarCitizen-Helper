@@ -226,6 +226,7 @@
     <Compile Include="Modules\Module_PARSE.vb" />
     <Compile Include="Modules\Module_PATCH.vb" />
     <Compile Include="Modules\Module_PROCESSES.vb" />
+    <Compile Include="Modules\Module_STRING_HELPER.vb" />
     <Compile Include="Modules\Module_THREAD.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">

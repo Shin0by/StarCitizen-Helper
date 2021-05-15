@@ -54,6 +54,7 @@ Retry = Повторить
 Ignore = Игнорировать
 Abort = Прервать
 Save = Сохранить
+Link = Ссылка
 
 #GLOBAL LONG
 l_Error = Ошибка: {0}
@@ -79,6 +80,9 @@ l_DisabledT = Выключена {0}
 l_NewVersionAvailable = Доступна новая версия "{0}"
 l_Name = Название: {}
 l_UpdateComplete = Загрузка {0} успешно завершена:
+l_Err_ElementAlreadyExist = Элемент "{0}" уже существует, задайте новое уникальное значение
+l_Err_ElementAlreadyExistInGrp = Элемент "{1}" уже существует в группе "{0}", задайте уникальное значение
+l_Err_IncorrectLink = Не корректно указана ссылка: {0}
 
 #FileSystem
 File_MSG_CheckFile = Проверка файла [{0}]
@@ -141,6 +145,17 @@ Repository_ButtonInfo_AddGroup = Добавить новую языковую группу
 Repository_ButtonInfo_RemoveGroup = Удалить выбранную языковую группу
 Repository_ButtonInfo_EditGroup = Изменить выбранную языковую группу
 Repository_Label_LanguageGroupName = Имя языковой группы
+Repository_MSG_RemoveGroup = Желаете удалить выбранную языковую группу?
+Repository_Label_LanguageGroup = Добавление, удаление, изменение языковых групп
+Repository_Label_Repository = Добавление, удаление, изменение репозиториев
+Repository_ButtonInfo_AddRepository = Добавить новый репозиторий
+Repository_ButtonInfo_RemoveRepository = Удалить выбранный репозиторий
+Repository_ButtonInfo_EditRepository = Изменить выбранный репозиторий
+Repository_MSG_RemoveRepository = Желаете удалить выбранный репозиторий?
+Repository_Label_RepositoryLangGroup = Языковая группа
+Repository_Label_RepositoryName = Название репозитория
+Repository_Label_RepositoryURL = Ссылка на GIT проект репозитория
+Repository_Label_RepositoryDescription = Описание репозитория
 
 #Module PATCH
 Patch_MSG_Blocks = HEX_BLOCK1: [{0}]\nHEX_BLOCK2: [{1}]

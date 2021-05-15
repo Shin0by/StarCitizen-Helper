@@ -54,6 +54,7 @@ Retry = Retry
 Ignore = Ignore
 Abort = Abort
 Save = Save
+Link = Link
 
 #GLOBAL LONG
 l_Error = 오류: {0}
@@ -78,7 +79,10 @@ l_EnabledT = {0} 활성화
 l_DisabledT = {0} 비활성화
 l_NewVersionAvailable = 새로운 버전의 "{0}" 사용 가능
 l_Name = 이름: {0}
-l_UpdateComplete = {0} 다운로드 완료 :
+l_UpdateComplete = {0} 다운로드 완료:
+l_Err_ElementAlreadyExist = Element "{0}" already exists, please set a new unique value
+l_Err_ElementAlreadyExistInGrp = Element "{1}" already exists in group "{0}", required a unique value
+l_Err_IncorrectLink = Incorrect link: {0}
 
 #FileSystem
 File_MSG_CheckFile = [{0}] 파일 확인 중
@@ -141,6 +145,17 @@ Repository_ButtonInfo_AddGroup = Add new language group
 Repository_ButtonInfo_RemoveGroup = Remove selected language group
 Repository_ButtonInfo_EditGroup = Edit selected language group
 Repository_Label_LanguageGroupName = Language group name
+Repository_MSG_RemoveGroup = Do you want to remove the selected language group?
+Repository_Label_LanguageGroup = Add, remove, change language groups
+Repository_Label_Repository = Add, remove, change repositories
+Repository_ButtonInfo_AddRepository = Add new Repository
+Repository_ButtonInfo_RemoveRepository = Remove selected repository
+Repository_ButtonInfo_EditRepository = Edit selected Repository
+Repository_MSG_RemoveRepository = Would you like to delete the selected repository?
+Repository_Label_RepositoryLangGroup = Language group
+Repository_Label_RepositoryName = Repository name
+Repository_Label_RepositoryURL = Link to GIT repository project
+Repository_Label_RepositoryDescription = Repository description
 
 #Module PATCH
 Patch_MSG_Blocks = HEX_BLOCK1: [{0}]\nHEX_BLOCK2: [{1}]
