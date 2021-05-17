@@ -162,14 +162,16 @@ Module Module_HELPER
     End Function
 
     Public Sub CheckUpdateStatus()
+        Dim IgnoreErrIfVersion = "1.8.15.107"
+
         If _APP._ARGS._Get.ContainsKey("update") = False Then
             If _VARS.UpdateStatus = "BEGIN" Then
-                _LOG._sAdd("CheckUpdateStatus", _LANG._Get("Helper_MSG_UpdateErrorTitle"), _LANG._Get("Helper_MSG_UpdateErrorBody", _LANG._Get("Helper_MSG_UpdateErrorBodyLong", MAIN_THREAD.TabPage_SysUpdate.Text)), 1)
+                If _APP.Version <> IgnoreErrIfVersion Then _LOG._sAdd("CheckUpdateStatus", _LANG._Get("Helper_MSG_UpdateErrorTitle"), _LANG._Get("Helper_MSG_UpdateErrorBody", _LANG._Get("Helper_MSG_AfterUpdateErrorBody", MAIN_THREAD.TabPage_SysUpdate.Text)), 1)
             End If
         Else
             If _VARS.UpdateStatus = "BEGIN" Then
                 If _APP.Version <> _APP._ARGS._Get.Item("update") Then
-                    _LOG._sAdd("CheckUpdateStatus", _LANG._Get("Helper_MSG_AfterUpdateErrorTitle"), _LANG._Get("Helper_MSG_UpdateErrorBodyLong", MAIN_THREAD.TabPage_SysUpdate.Text), 1)
+                    If _APP.Version <> IgnoreErrIfVersion Then _LOG._sAdd("CheckUpdateStatus", _LANG._Get("Helper_MSG_AfterUpdateErrorTitle"), _LANG._Get("Helper_MSG_AfterUpdateErrorBody", MAIN_THREAD.TabPage_SysUpdate.Text), 1)
                 Else
                     _LOG._sAdd("CheckUpdateStatus", _LANG._Get("Helper_MSG_UpdateOK"), Nothing, 0)
                 End If
@@ -177,7 +179,7 @@ Module Module_HELPER
 
             If _VARS.UpdateStatus = "NEW" Then
                 If _APP.Version <> _APP._ARGS._Get.Item("update") Then
-                    _LOG._sAdd("CheckUpdateStatus", _LANG._Get("Helper_MSG_AfterUpdateErrorTitle"), _LANG._Get("Helper_MSG_UpdateErrorBodyLong", MAIN_THREAD.TabPage_SysUpdate.Text), 1)
+                    If _APP.Version <> IgnoreErrIfVersion Then _LOG._sAdd("CheckUpdateStatus", _LANG._Get("Helper_MSG_AfterUpdateErrorTitle"), _LANG._Get("Helper_MSG_AfterUpdateErrorBody", MAIN_THREAD.TabPage_SysUpdate.Text), 1)
                 Else
                     _LOG._sAdd("CheckUpdateStatus", _LANG._Get("Helper_MSG_UpdateOK"), Nothing, 0)
                 End If
