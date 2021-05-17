@@ -1,6 +1,6 @@
 
 [Setup]
-AppVersion=1.7.14.92
+AppVersion=1.8.15.105
 AppName=StarCitizen Helper
 DefaultDirName={userappdata}\StarCitizen Helper
 DefaultGroupName=StarCitizen Helper
@@ -25,7 +25,7 @@ Source: "lang\_current_.txt"; DestDir: "{app}\lang"; Components: main
 Source: "lang\default_english.txt"; DestDir: "{app}\lang"; Components: main
 Source: "lang\default_russian.txt"; DestDir: "{app}\lang"; Components: main
 Source: "lang\default_korean.txt"; DestDir: "{app}\lang"; Components: main
-Source: "INIFileParser.dll"; DestDir: "{app}"; Components: main
+//Source: "INIFileParser.dll"; DestDir: "{app}"; Components: main
 Source: "Newtonsoft.Json.dll"; DestDir: "{app}"; Components: main
 Source: "CertificateVerifier.dll"; DestDir: "{app}"; Components: main
 Source: "required\NDP472-KB4054531-Web.exe"; DestDir: "{tmp}"; Components: framework; AfterInstall: AfterInstallProcedure

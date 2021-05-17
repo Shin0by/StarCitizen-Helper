@@ -80,9 +80,6 @@ Module Module_HELPER
         _JSETTINGS._SetValue("configuration.external", "alert_date", "")
 
         'Repository
-        _RepositoryWriteHelper("Chinese", "Default", "https://github.com/Terrencetodd/SC_CN_zh", "Default chinese repository", True, True)
-        _RepositoryWriteHelper("Korean", "Default", "https://github.com/Xhatagon/SC_ko", "Default korean repository", True, True)
-        _RepositoryWriteHelper("Polish", "Default", "https://github.com/Frosty-el-Banana/SC_PL", "Default polish repository", True, True)
         _RepositoryWriteHelper("Russian", "Полный", "https://github.com/n1ghter/SC_ru", "Полный перевод от инициаторов проекта локализации", True, True)
         _RepositoryWriteHelper("Russian", "Без названий", "https://github.com/budukratok/SC_not_so_ru", "Перевод с сохранением исходных имён и названий", True, True)
         _RepositoryWriteHelper("Ukrainian", "Основний", "https://github.com/SlyF0X-UA/SC_uk", "Основний український переклад без змін у власних назвах", True, True)
@@ -126,12 +123,11 @@ Module Module_HELPER
         MAIN_THREAD.WL_Pack.Property_PackageGitURL_Api = _JSETTINGS._GetValue("configuration.external.git.pack.api", _VARS.PackageGitURL_Api)
         MAIN_THREAD.WL_Pack.Property_PackageGitURL_Page = _JSETTINGS._GetValue("configuration.external.git.pack.page", _VARS.PackageGitURL_Page)
         MAIN_THREAD.WL_Pack.Property_PackageGitURL_Master = _JSETTINGS._GetValue("configuration.external.git.pack.master", _VARS.PackageGitURL_Master)
-        MAIN_THREAD.WL_About.URL_SendIssueApp = _JSETTINGS._GetValue("configuration.external.git.app.issue", _VARS.URL_App) & _VARS.IssueGit_Prefix
-        MAIN_THREAD.WL_About.URL_SendIssueLocalization = _JSETTINGS._GetValue("configuration.external.git.local.issue", _VARS.URL_Localization) & _VARS.IssueGit_Prefix
-        MAIN_THREAD.WL_About.URL_SendIssueCore = _JSETTINGS._GetValue("configuration.external.git.core.issue", _VARS.URL_Core) & _VARS.IssueGit_Prefix
+        MAIN_THREAD.WL_About.URL_SendIssueApp = _JSETTINGS._GetValue("configuration.external.git.app.page", _VARS.URL_App) & _VARS.IssueGit_Prefix
+        MAIN_THREAD.WL_About.URL_SendIssueLocalization = _JSETTINGS._GetValue("configuration.external.git.local.page", _VARS.URL_Localization) & _VARS.IssueGit_Prefix
+        MAIN_THREAD.WL_About.URL_SendIssueCore = _JSETTINGS._GetValue("configuration.external.git.core.page", _VARS.URL_Core) & _VARS.IssueGit_Prefix
 
-        MAIN_THREAD.WL_Repo._SelectRepository_ByPageURL(MAIN_THREAD.WL_Pack.Property_PackageGitURL_Page)
-        MAIN_THREAD.WL_Repo._SetRepository(False)
+        MAIN_THREAD.WL_Repo._SetRepository(MAIN_THREAD.WL_Repo._SelectRepository_ByPageURL(MAIN_THREAD.WL_Pack.Property_PackageGitURL_Page), False)
 
         'PKiller
         _VARS.PKillerEnabled = StringToBool(_JSETTINGS._GetValue("configuration.main.pkiller.enabled", False, {0, 1}))

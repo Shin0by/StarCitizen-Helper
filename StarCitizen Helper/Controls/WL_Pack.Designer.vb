@@ -32,6 +32,7 @@ Partial Class WL_Pack
         Me.WL_Download = New SC.WL_Download()
         Me.CheckBox_ShowTestBuild = New System.Windows.Forms.CheckBox()
         Me.WL_PackUpdateCheck = New SC.WL_Check()
+        Me.Label_RepozitoryName = New System.Windows.Forms.Label()
         Me.BackgroundWorker = New System.ComponentModel.BackgroundWorker()
         Me.TableLayoutPanel.SuspendLayout()
         Me.SuspendLayout()
@@ -42,20 +43,22 @@ Partial Class WL_Pack
         Me.TableLayoutPanel.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33332!))
         Me.TableLayoutPanel.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334!))
         Me.TableLayoutPanel.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334!))
-        Me.TableLayoutPanel.Controls.Add(Me.Label_TextBottom, 0, 7)
-        Me.TableLayoutPanel.Controls.Add(Me.List_Git, 0, 0)
-        Me.TableLayoutPanel.Controls.Add(Me.Button_InstallFull, 0, 2)
-        Me.TableLayoutPanel.Controls.Add(Me.Button_Download, 0, 1)
-        Me.TableLayoutPanel.Controls.Add(Me.Label_Download, 1, 1)
-        Me.TableLayoutPanel.Controls.Add(Me.Label_InstallFull, 1, 2)
-        Me.TableLayoutPanel.Controls.Add(Me.WL_Download, 0, 3)
-        Me.TableLayoutPanel.Controls.Add(Me.CheckBox_ShowTestBuild, 1, 0)
-        Me.TableLayoutPanel.Controls.Add(Me.WL_PackUpdateCheck, 2, 0)
+        Me.TableLayoutPanel.Controls.Add(Me.Label_TextBottom, 0, 8)
+        Me.TableLayoutPanel.Controls.Add(Me.List_Git, 0, 1)
+        Me.TableLayoutPanel.Controls.Add(Me.Button_InstallFull, 0, 3)
+        Me.TableLayoutPanel.Controls.Add(Me.Button_Download, 0, 2)
+        Me.TableLayoutPanel.Controls.Add(Me.Label_Download, 1, 2)
+        Me.TableLayoutPanel.Controls.Add(Me.Label_InstallFull, 1, 3)
+        Me.TableLayoutPanel.Controls.Add(Me.WL_Download, 0, 4)
+        Me.TableLayoutPanel.Controls.Add(Me.CheckBox_ShowTestBuild, 1, 1)
+        Me.TableLayoutPanel.Controls.Add(Me.WL_PackUpdateCheck, 2, 1)
+        Me.TableLayoutPanel.Controls.Add(Me.Label_RepozitoryName, 0, 0)
         Me.TableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TableLayoutPanel.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
         Me.TableLayoutPanel.Location = New System.Drawing.Point(0, 0)
         Me.TableLayoutPanel.Name = "TableLayoutPanel"
-        Me.TableLayoutPanel.RowCount = 8
+        Me.TableLayoutPanel.RowCount = 9
+        Me.TableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
         Me.TableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
         Me.TableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
         Me.TableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
@@ -63,7 +66,6 @@ Partial Class WL_Pack
         Me.TableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
         Me.TableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
         Me.TableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
         Me.TableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
         Me.TableLayoutPanel.Size = New System.Drawing.Size(662, 301)
         Me.TableLayoutPanel.TabIndex = 4
@@ -73,10 +75,10 @@ Partial Class WL_Pack
         Me.Label_TextBottom.AutoSize = True
         Me.TableLayoutPanel.SetColumnSpan(Me.Label_TextBottom, 3)
         Me.Label_TextBottom.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Label_TextBottom.Location = New System.Drawing.Point(3, 183)
+        Me.Label_TextBottom.Location = New System.Drawing.Point(3, 213)
         Me.Label_TextBottom.Margin = New System.Windows.Forms.Padding(3)
         Me.Label_TextBottom.Name = "Label_TextBottom"
-        Me.Label_TextBottom.Size = New System.Drawing.Size(656, 115)
+        Me.Label_TextBottom.Size = New System.Drawing.Size(656, 85)
         Me.Label_TextBottom.TabIndex = 13
         Me.Label_TextBottom.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
@@ -86,15 +88,16 @@ Partial Class WL_Pack
         Me.List_Git.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.List_Git.FormattingEnabled = True
         Me.List_Git.IntegralHeight = False
-        Me.List_Git.Location = New System.Drawing.Point(3, 3)
+        Me.List_Git.Location = New System.Drawing.Point(4, 33)
+        Me.List_Git.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.List_Git.Name = "List_Git"
-        Me.List_Git.Size = New System.Drawing.Size(214, 21)
+        Me.List_Git.Size = New System.Drawing.Size(212, 21)
         Me.List_Git.TabIndex = 12
         '
         'Button_InstallFull
         '
         Me.Button_InstallFull.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Button_InstallFull.Location = New System.Drawing.Point(3, 63)
+        Me.Button_InstallFull.Location = New System.Drawing.Point(3, 93)
         Me.Button_InstallFull.Name = "Button_InstallFull"
         Me.Button_InstallFull.Size = New System.Drawing.Size(214, 24)
         Me.Button_InstallFull.TabIndex = 5
@@ -104,7 +107,7 @@ Partial Class WL_Pack
         'Button_Download
         '
         Me.Button_Download.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Button_Download.Location = New System.Drawing.Point(3, 33)
+        Me.Button_Download.Location = New System.Drawing.Point(3, 63)
         Me.Button_Download.Name = "Button_Download"
         Me.Button_Download.Size = New System.Drawing.Size(214, 24)
         Me.Button_Download.TabIndex = 1
@@ -116,7 +119,7 @@ Partial Class WL_Pack
         Me.Label_Download.AutoSize = True
         Me.TableLayoutPanel.SetColumnSpan(Me.Label_Download, 2)
         Me.Label_Download.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Label_Download.Location = New System.Drawing.Point(223, 33)
+        Me.Label_Download.Location = New System.Drawing.Point(223, 63)
         Me.Label_Download.Margin = New System.Windows.Forms.Padding(3)
         Me.Label_Download.Name = "Label_Download"
         Me.Label_Download.Size = New System.Drawing.Size(436, 24)
@@ -129,7 +132,7 @@ Partial Class WL_Pack
         Me.Label_InstallFull.AutoSize = True
         Me.TableLayoutPanel.SetColumnSpan(Me.Label_InstallFull, 2)
         Me.Label_InstallFull.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Label_InstallFull.Location = New System.Drawing.Point(223, 63)
+        Me.Label_InstallFull.Location = New System.Drawing.Point(223, 93)
         Me.Label_InstallFull.Margin = New System.Windows.Forms.Padding(3)
         Me.Label_InstallFull.Name = "Label_InstallFull"
         Me.Label_InstallFull.Size = New System.Drawing.Size(436, 24)
@@ -146,7 +149,7 @@ Partial Class WL_Pack
         Me.WL_Download.Dock = System.Windows.Forms.DockStyle.Fill
         Me.WL_Download.DownloadFrom = Nothing
         Me.WL_Download.DownloadTo = Nothing
-        Me.WL_Download.Location = New System.Drawing.Point(1, 91)
+        Me.WL_Download.Location = New System.Drawing.Point(1, 121)
         Me.WL_Download.Margin = New System.Windows.Forms.Padding(1)
         Me.WL_Download.Name = "WL_Download"
         Me.TableLayoutPanel.SetRowSpan(Me.WL_Download, 3)
@@ -157,7 +160,7 @@ Partial Class WL_Pack
         '
         Me.CheckBox_ShowTestBuild.AutoSize = True
         Me.CheckBox_ShowTestBuild.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.CheckBox_ShowTestBuild.Location = New System.Drawing.Point(223, 3)
+        Me.CheckBox_ShowTestBuild.Location = New System.Drawing.Point(223, 33)
         Me.CheckBox_ShowTestBuild.Name = "CheckBox_ShowTestBuild"
         Me.CheckBox_ShowTestBuild.Size = New System.Drawing.Size(214, 24)
         Me.CheckBox_ShowTestBuild.TabIndex = 15
@@ -167,7 +170,7 @@ Partial Class WL_Pack
         'WL_PackUpdateCheck
         '
         Me.WL_PackUpdateCheck.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.WL_PackUpdateCheck.Location = New System.Drawing.Point(443, 3)
+        Me.WL_PackUpdateCheck.Location = New System.Drawing.Point(443, 33)
         Me.WL_PackUpdateCheck.Name = "WL_PackUpdateCheck"
         Me.WL_PackUpdateCheck.Property_AlertUpdate = True
         Me.WL_PackUpdateCheck.Property_DateOnline = New Date(CType(0, Long))
@@ -194,6 +197,19 @@ Partial Class WL_Pack
         Me.WL_PackUpdateCheck.Size = New System.Drawing.Size(216, 24)
         Me.WL_PackUpdateCheck.TabIndex = 16
         Me.WL_PackUpdateCheck.Visible = False
+        '
+        'Label_RepozitoryName
+        '
+        Me.Label_RepozitoryName.AutoSize = True
+        Me.TableLayoutPanel.SetColumnSpan(Me.Label_RepozitoryName, 3)
+        Me.Label_RepozitoryName.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Label_RepozitoryName.Location = New System.Drawing.Point(1, 0)
+        Me.Label_RepozitoryName.Margin = New System.Windows.Forms.Padding(1, 0, 3, 0)
+        Me.Label_RepozitoryName.Name = "Label_RepozitoryName"
+        Me.Label_RepozitoryName.Size = New System.Drawing.Size(658, 30)
+        Me.Label_RepozitoryName.TabIndex = 17
+        Me.Label_RepozitoryName.Text = "Label_RepozitoryName"
+        Me.Label_RepozitoryName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'BackgroundWorker
         '
@@ -224,4 +240,5 @@ Partial Class WL_Pack
     Friend WithEvents WL_Download As WL_Download
     Friend WithEvents CheckBox_ShowTestBuild As CheckBox
     Friend WithEvents WL_PackUpdateCheck As WL_Check
+    Friend WithEvents Label_RepozitoryName As Label
 End Class

@@ -133,6 +133,16 @@ Public Class WL_Pack
         End Set
     End Property
 
+    Public Property Property_RepositoryName() As String
+        Get
+            Return Me.Label_RepozitoryName.Tag
+        End Get
+        Set(ByVal Value As String)
+            Me.Label_RepozitoryName.Text = _LANG._Get("Pack_Label_RepositoryName", Value)
+            Me.Label_RepozitoryName.Tag = Value
+        End Set
+    End Property
+
     Public Property Text_Button_Download() As String
         Get
             Return Me.Button_Download.Text

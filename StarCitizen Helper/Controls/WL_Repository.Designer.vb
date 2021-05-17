@@ -23,6 +23,7 @@ Partial Class WL_Repository
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(WL_Repository))
         Me.TableLayoutPanel_Main = New System.Windows.Forms.TableLayoutPanel()
         Me.Label_Repository = New System.Windows.Forms.Label()
         Me.Label_LanguageGroup = New System.Windows.Forms.Label()
@@ -35,6 +36,7 @@ Partial Class WL_Repository
         Me.Label_SelectedRepo = New System.Windows.Forms.Label()
         Me.Button_SetRepo = New System.Windows.Forms.Button()
         Me.Tree = New System.Windows.Forms.TreeView()
+        Me.ImageList = New System.Windows.Forms.ImageList(Me.components)
         Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
         Me.TableLayoutPanel_Group = New System.Windows.Forms.TableLayoutPanel()
         Me.Button_CancelGroup = New System.Windows.Forms.Button()
@@ -207,12 +209,23 @@ Partial Class WL_Repository
         Me.Tree.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Tree.FullRowSelect = True
         Me.Tree.HideSelection = False
+        Me.Tree.ImageKey = "default"
         Me.Tree.Location = New System.Drawing.Point(3, 3)
         Me.Tree.Name = "Tree"
         Me.Tree.PathSeparator = "."
+        Me.Tree.SelectedImageKey = "default"
         Me.Tree.ShowNodeToolTips = True
         Me.Tree.Size = New System.Drawing.Size(334, 130)
         Me.Tree.TabIndex = 10
+        '
+        'ImageList
+        '
+        Me.ImageList.ImageStream = CType(resources.GetObject("ImageList.ImageStream"), System.Windows.Forms.ImageListStreamer)
+        Me.ImageList.TransparentColor = System.Drawing.Color.Transparent
+        Me.ImageList.Images.SetKeyName(0, "check")
+        Me.ImageList.Images.SetKeyName(1, "default")
+        Me.ImageList.Images.SetKeyName(2, "lock")
+        Me.ImageList.Images.SetKeyName(3, "unlock")
         '
         'TableLayoutPanel_Group
         '
@@ -463,4 +476,5 @@ Partial Class WL_Repository
     Friend WithEvents Button_EditRepository As Button
     Friend WithEvents Button_RemoveRepository As Button
     Friend WithEvents Button_AddRepository As Button
+    Friend WithEvents ImageList As ImageList
 End Class

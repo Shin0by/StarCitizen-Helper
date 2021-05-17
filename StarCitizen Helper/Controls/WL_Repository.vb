@@ -14,6 +14,7 @@ Public Class WL_Repository
     Private sRepositoryName As String = Nothing
 
     Private CurrentNode As TreeNode = Nothing
+    Private SrcNode As TreeNode = Nothing
 
     '<----------------------------------- Basic control
     Public Sub New()
@@ -100,6 +101,15 @@ Public Class WL_Repository
         End Set
     End Property
 
+    Public Property Node() As TreeNode
+        Get
+            Return Me.CurrentNode
+        End Get
+        Set(ByVal Node As TreeNode)
+            Me.CurrentNode = Node
+        End Set
+    End Property
+
     Public Property Property_GitPage() As String
         Get
             Return Me.sPackGitPage
@@ -140,6 +150,26 @@ Public Class WL_Repository
     End Property
 
     '-----------------------------------> Properties
+
+    Private Function CompareNode(Node As TreeNode) As Boolean
+        If Node Is Nothing And Me.CurrentNode Is Nothing Then Return True
+        If Node Is Nothing Then Return False
+        If Me.CurrentNode Is Nothing Then Return False
+
+        If ParseToolTip(Node, True) <> ParseToolTip(Me.CurrentNode, True) Then Return False
+        If ParseToolTip(Node, False) <> ParseToolTip(Me.CurrentNode, False) Then Return False
+        If Node.Text <> Me.CurrentNode.Text Then Return False
+        If Node.Tag <> Me.CurrentNode.Tag Then Return False
+        Return True
+    End Function
+
+    Private Function CompareRepository(Node As TreeNode) As Boolean
+        If Node Is Nothing Then Return False
+        If Me.CurrentNode Is Nothing Then Return False
+
+        If ParseToolTip(Node, True) <> ParseToolTip(Me.CurrentNode, True) Then Return False
+        Return True
+    End Function
 
     Public Sub _LoadList()
         Dim jNodes As JObject = _JSETTINGS._GetNode("configuration.external.repository")
@@ -198,88 +228,92 @@ Public Class WL_Repository
 
             Dim list As JArray = CType(_JSETTINGS._GetNode("configuration.external.repository." & GrpNode.Text & ".list"), JArray)
             For Each RepNode As TreeNode In GrpNode.Nodes
-                Dim lines = Split(RepNode.ToolTipText, vbNewLine, 2)
-                Dim Description As String = Nothing
-                Dim Link As String = Nothing
-                If lines.Count = 1 Then
-                    Link = lines(0)
-                Else
-                    Link = lines(1)
-                    Description = lines(0)
-                End If
                 Dim elem As New JObject
-
                 ProtectedFlag = 0
                 If RepNode.Tag = "1" Then ProtectedFlag = 1
-
                 elem.Add(New JProperty("name", RepNode.Text))
                 elem.Add(New JProperty("protected", ProtectedFlag))
-                elem.Add(New JProperty("link", Link))
-                elem.Add(New JProperty("description", Description))
+                elem.Add(New JProperty("link", ParseToolTip(RepNode, True)))
+                elem.Add(New JProperty("description", ParseToolTip(RepNode, False)))
                 list.Add(elem)
             Next
         Next
         _JSETTINGS._Save()
     End Sub
 
-    Public Sub _SelectRepository_ByPageURL(PageURL As String)
+    Public Function _SelectRepository_ByPageURL(PageURL As String) As TreeNode
         For Each lang As TreeNode In Tree.Nodes
             For Each repo As TreeNode In lang.Nodes
-                Dim lines = Split(repo.ToolTipText, vbNewLine, 2)
-                Dim link As String = Nothing
-
-                If lines.Count = 1 Then
-                    link = Strings.LCase(lines(0))
-                Else
-                    link = Strings.LCase(lines(1))
-                End If
-
-                If link = Strings.LCase(PageURL) Then
+                If LCase(ParseToolTip(repo, True)) = LCase(PageURL) Then
                     Tree.SelectedNode = repo
-                    Exit Sub
+                    Tree.SelectedNode.ImageKey = "check"
+                    Tree.Refresh()
+                    Return Tree.SelectedNode
                 End If
             Next
         Next
-    End Sub
+        Return Nothing
+    End Function
 
-    Public Sub _SetRepository(Optional SaveChanges As Boolean = False)
-        Dim Node As TreeNode = Tree.SelectedNode
-        If Node Is Nothing Then : _LOG._sAdd(Me.GetType().Name, _LANG._Get("Repository_MSG_SelectCorrectRepository"), Nothing, 1) : Exit Sub : End If
-        If Node.Parent Is Nothing Then : _LOG._sAdd(Me.GetType().Name, _LANG._Get("Repository_MSG_SelectCorrectRepository"), Nothing, 1) : Exit Sub : End If
+    Public Sub _SetRepository(Node As TreeNode, Optional SaveChanges As Boolean = False)
+        If Node Is Nothing Then Exit Sub
+
         Me.Property_RepositoryLanguage = Node.Parent.Text
         Me.Property_RepositoryName = Node.Text
-        Dim lines = Split(Node.ToolTipText, vbNewLine, 2)
-        Dim Description As String = Nothing
-        If lines.Count = 1 Then
-            Me.Property_GitPage = lines(0)
-        Else
-            Me.Property_GitPage = lines(1)
-            Description = lines(0)
-        End If
+        Me.Property_GitPage = ParseToolTip(Node, True)
 
         If SaveChanges = True Then
             _JSETTINGS._SetValue("configuration.external.git.pack", "page", Me.Property_GitPage)
             _JSETTINGS._SetValue("configuration.external.git.pack", "api", Me.Property_GitApi)
             _JSETTINGS._SetValue("configuration.external.git.pack", "master", Me.Property_GitMaster)
             _JSETTINGS._SetValue("configuration.external", "alert_date", "01.01.2000 00:00:00")
+            _JSETTINGS._SetValue("configuration.external.git.local", "page", Me.Property_GitPage)
             _JSETTINGS._Save()
 
             _VARS.PackageLatestDate = Convert.ToDateTime("01.01.2000 00:00:00")
             MAIN_THREAD.WL_About.URL_SendIssueLocalization = Me.Property_GitPage & "/" & _VARS.IssueGit_Prefix
         End If
 
-        Me.Text_Label_SelectedRep = _LANG._Get("Repository_Label_SelectedRep", Me.Property_RepositoryLanguage & "/" & Me.Property_RepositoryName & vbNewLine & vbNewLine & _LANG._Get("Description") & ": " & Description & vbNewLine & _LANG._Get("Link") & ": " & Me.Property_GitPage)
+        Me.Text_Label_SelectedRep = _LANG._Get("Repository_Label_SelectedRep", Me.Property_RepositoryLanguage & "/" & Me.Property_RepositoryName & vbNewLine & vbNewLine & _LANG._Get("Description") & ": " & ParseToolTip(Node, False) & vbNewLine & _LANG._Get("Link") & ": " & Me.Property_GitPage)
         Me.Label_SelectedRepo.Tag = Me.Property_GitPage
         Me.Label_SelectedRepo.Cursor = Cursors.Default
         If Me.Property_GitPage.Length > 0 Then Me.Label_SelectedRepo.Cursor = Cursors.Hand
 
+        Me.CurrentNode = New TreeNode
+        Me.CurrentNode.Name = Node.Name
+        Me.CurrentNode.Text = Node.Text
+        Me.CurrentNode.Tag = Node.Tag
+        Me.CurrentNode.ToolTipText = Node.ToolTipText
+
         MAIN_THREAD.WL_Pack.Property_PackageGitURL_Master = Me.Property_GitMaster
         MAIN_THREAD.WL_Pack.Property_PackageGitURL_Page = Me.Property_GitPage
         MAIN_THREAD.WL_Pack.Property_PackageGitURL_Api = Me.Property_GitApi
+        MAIN_THREAD.WL_Pack.Property_RepositoryName = Node.Parent.Text & "/" & Node.Text
+
+        UpdateState()
     End Sub
 
+    Function ParseToolTip(Node As TreeNode, GetLink As Boolean) As String
+        Dim lines = Split(Node.ToolTipText, vbNewLine, 2)
+        Dim Link As String = Nothing
+        Dim Description As String = Nothing
+
+        If lines.Count = 1 Then
+            Link = lines(0)
+        Else
+            Link = lines(1)
+            Description = lines(0)
+        End If
+
+        If GetLink = False Then Return Description
+        Return Link
+    End Function
+
     Private Sub Button_SetRepo_Click(sender As Object, e As EventArgs) Handles Button_SetRepo.Click
-        _SetRepository(True)
+        If Me.Tree.SelectedNode Is Nothing Then : _LOG._sAdd(Me.GetType().Name, _LANG._Get("Repository_MSG_SelectCorrectRepository"), Nothing, 1) : Exit Sub : End If
+        If Me.Tree.SelectedNode.Parent Is Nothing Then : _LOG._sAdd(Me.GetType().Name, _LANG._Get("Repository_MSG_SelectCorrectRepository"), Nothing, 1) : Exit Sub : End If
+
+        _SetRepository(Me.Tree.SelectedNode, True)
     End Sub
 
     Private Sub Label_SelectedRepo_Click(sender As Object, e As EventArgs) Handles Label_SelectedRepo.Click
@@ -309,6 +343,16 @@ Public Class WL_Repository
                 Me.Button_EditRepository.Enabled = True
             End If
         End If
+
+        UpdateState()
+    End Sub
+
+    Private Sub Tree_AfterExpand(sender As Object, e As TreeViewEventArgs) Handles Tree.AfterExpand
+        UpdateState()
+    End Sub
+
+    Private Sub Tree_AfterCollapse(sender As Object, e As TreeViewEventArgs) Handles Tree.AfterCollapse
+        UpdateState()
     End Sub
 
     Private Sub ShowPanel(Panel As TableLayoutPanel)
@@ -339,6 +383,7 @@ Public Class WL_Repository
         NewNode.Text = Name
         NewNode.Tag = "0"
         Tree.Nodes.Add(NewNode)
+        UpdateState()
         Return True
     End Function
 
@@ -360,22 +405,31 @@ Public Class WL_Repository
     Public Function _NewRepository(Group As String, Name As String, Link As String, Descr As String)
         For Each Node As TreeNode In Tree.Nodes
             If Node.Parent IsNot Nothing Then Continue For
-            If LCase(Node.Text) = LCase(Group) Then Me.CurrentNode = Node
+            If LCase(Node.Text) = LCase(Group) Then Me.SrcNode = Node
         Next
 
-        For Each Node As TreeNode In Me.CurrentNode.Nodes
-            If LCase(Node.Text) = LCase(Text) Then
+        For Each GrpNode As TreeNode In Me.SrcNode.Nodes
+            If LCase(GrpNode.Text) = LCase(Text) Then
                 _LOG._sAdd(Me.GetType().Name, _LANG._Get("l_Err_ElementAlreadyExistInGrp", Name), Nothing, 1)
                 Return False
             End If
         Next
 
+        For Each GrpNode As TreeNode In Me.Tree.Nodes
+            For Each RepNode As TreeNode In GrpNode.Nodes
+                If LCase(ParseToolTip(RepNode, True)) = LCase(Link) Then
+                    _LOG._sAdd(Me.GetType().Name, _LANG._Get("Repository_MSG_RepositoryLinkAlreadyExist", Link, GrpNode.Text & "/" & RepNode.Text), Nothing, 1)
+                    Return False
+                End If
+            Next
+        Next
+
         If InStr(LCase(Link), "https://github.com") > 1 Then _LOG._sAdd(Me.GetType().Name, _LANG._Get("l_Err_IncorrectLink", Link), Nothing, 1) : Return False
-        If InStr(LCase(Link), "github.com") <> 1 Then
+        If InStr(LCase(Link), "github.com") <> 1 And InStr(LCase(Link), "https://github.com") <> 1 Then
             _LOG._sAdd(Me.GetType().Name, _LANG._Get("l_Err_IncorrectLink", Link), Nothing, 1)
             Return False
         Else
-            Link = "https://" & Link
+            If Strings.Left(LCase(Link), 8) <> "https://" Then Link = "https://" & Link
         End If
 
         Dim NewNode As TreeNode = New TreeNode
@@ -383,30 +437,40 @@ Public Class WL_Repository
         NewNode.Text = Name
         NewNode.ToolTipText = Descr & vbNewLine & Link
         NewNode.Tag = "0"
-        Me.CurrentNode.Nodes.Add(NewNode)
+        Me.SrcNode.Nodes.Add(NewNode)
+        UpdateState()
         Return True
     End Function
 
     Public Function _EditRepository(Group As String, Name As String, Link As String, Descr As String)
-        For Each Node As TreeNode In Me.CurrentNode.Parent.Nodes
-            If LCase(Node.Text) = LCase(Text) Then
+        For Each GrpNode As TreeNode In Me.SrcNode.Parent.Nodes
+            If LCase(GrpNode.Text) = LCase(Text) Then
                 _LOG._sAdd(Me.GetType().Name, _LANG._Get("l_Err_ElementAlreadyExistInGrp", Name), Nothing, 1)
                 Return False
             End If
         Next
 
+        For Each GrpNode As TreeNode In Me.Tree.Nodes
+            For Each RepNode As TreeNode In GrpNode.Nodes
+                If LCase(ParseToolTip(RepNode, True)) = LCase(Link) Then
+                    _LOG._sAdd(Me.GetType().Name, _LANG._Get("Repository_MSG_RepositoryLinkAlreadyExist", Link, GrpNode.Text & "/" & RepNode.Text), Nothing, 1)
+                    Return False
+                End If
+            Next
+        Next
+
         If InStr(LCase(Link), "https://github.com") > 1 Then _LOG._sAdd(Me.GetType().Name, _LANG._Get("l_Err_IncorrectLink", Link), Nothing, 1) : Return False
-        If InStr(LCase(Link), "github.com") <> 1 Then
+        If InStr(LCase(Link), "github.com") <> 1 And InStr(LCase(Link), "https://github.com") <> 1 Then
             _LOG._sAdd(Me.GetType().Name, _LANG._Get("l_Err_IncorrectLink", Link), Nothing, 1)
             Return False
         Else
-            Link = "https://" & Link
+            If Strings.Left(LCase(Link), 8) <> "https://" Then Link = "https://" & Link
         End If
 
-        Me.CurrentNode.Name = "rep"
-        Me.CurrentNode.Text = Name
-        Me.CurrentNode.ToolTipText = Descr & vbNewLine & Link
-        Me.CurrentNode.Tag = "0"
+        Me.SrcNode.Name = "rep"
+        Me.SrcNode.Text = Name
+        Me.SrcNode.ToolTipText = Descr & vbNewLine & Link
+        Me.SrcNode.Tag = "0"
         Return True
     End Function
 
@@ -421,7 +485,7 @@ Public Class WL_Repository
     End Function
 
     Private Sub Button_AddLangGroup_Click(sender As Object, e As EventArgs) Handles Button_AddLangGroup.Click
-        CurrentNode = Tree.SelectedNode
+        SrcNode = Tree.SelectedNode
         Me.Button_SaveGroup.Enabled = False
         Me.TextBox_LangGroupName.Text = Nothing
         Me.TableLayoutPanel_Group.Tag = 0
@@ -429,15 +493,15 @@ Public Class WL_Repository
     End Sub
 
     Private Sub Button_EditLangGroup_Click(sender As Object, e As EventArgs) Handles Button_EditLangGroup.Click
-        CurrentNode = Tree.SelectedNode
+        SrcNode = Tree.SelectedNode
         Me.Button_SaveGroup.Enabled = True
-        Me.TextBox_LangGroupName.Text = CurrentNode.Text
+        Me.TextBox_LangGroupName.Text = SrcNode.Text
         Me.TableLayoutPanel_Group.Tag = 1
         ShowPanel(Me.TableLayoutPanel_Group)
     End Sub
 
     Private Sub Button_AddRepository_Click(sender As Object, e As EventArgs) Handles Button_AddRepository.Click
-        CurrentNode = Tree.SelectedNode
+        SrcNode = Tree.SelectedNode
         Me.Button_SaveRepository.Enabled = False
 
         Me.ComboBox_LangGroupList.Items.Clear()
@@ -456,7 +520,7 @@ Public Class WL_Repository
     End Sub
 
     Private Sub Button_EditRepository_Click(sender As Object, e As EventArgs) Handles Button_EditRepository.Click
-        CurrentNode = Tree.SelectedNode
+        SrcNode = Tree.SelectedNode
         Me.Button_SaveRepository.Enabled = True
 
         Me.ComboBox_LangGroupList.Items.Clear()
@@ -469,14 +533,9 @@ Public Class WL_Repository
         Me.ComboBox_LangGroupList.Enabled = False
         Me.TextBox_RepositoryName.Text = Tree.SelectedNode.Text
 
-        Dim lines = Split(Tree.SelectedNode.ToolTipText, vbNewLine, 2)
-        Dim Description As String = Nothing
-        If lines.Count = 1 Then
-            Me.TextBox_RepositoryLink.Text = lines(0)
-        Else
-            Me.TextBox_RepositoryLink.Text = lines(1)
-            Me.TextBox_RepositoryDescription.Text = lines(0)
-        End If
+        Me.TextBox_RepositoryLink.Text = ParseToolTip(SrcNode, True)
+        Me.TextBox_RepositoryDescription.Text = ParseToolTip(SrcNode, False)
+
         Me.TableLayoutPanel_Repository.Tag = 1
         ShowPanel(Me.TableLayoutPanel_Repository)
     End Sub
@@ -506,6 +565,10 @@ Public Class WL_Repository
     End Sub
 
     Private Sub Button_RemoveLangGroup_Click(sender As Object, e As EventArgs) Handles Button_RemoveLangGroup.Click
+        For Each RepNode As TreeNode In Tree.SelectedNode.Nodes
+            If CompareRepository(RepNode) = True Then _LOG._sAdd(Me.GetType().Name, _LANG._Get("Repository_MSG_YouCanNotRemoveActiveRepositoryGroup"), Nothing, 1) : Exit Sub
+        Next
+
         If MsgBox(_LANG._Get("Repository_MSG_RemoveGroup"), vbQuestion + vbOKCancel, _APP.appName) = MsgBoxResult.Ok Then
             _RemoveLanguageGroup(Tree.SelectedNode)
             _SaveList()
@@ -513,6 +576,7 @@ Public Class WL_Repository
     End Sub
 
     Private Sub Button_RemoveRepository_Click(sender As Object, e As EventArgs) Handles Button_RemoveRepository.Click
+        If CompareRepository(Tree.SelectedNode) = True Then _LOG._sAdd(Me.GetType().Name, _LANG._Get("Repository_MSG_YouCanNotRemoveActiveRepository"), Nothing, 1) : Exit Sub
         If MsgBox(_LANG._Get("Repository_MSG_RemoveRepository"), vbQuestion + vbOKCancel, _APP.appName) = MsgBoxResult.Ok Then
             _RemoveRepository(Tree.SelectedNode)
             _SaveList()
@@ -537,5 +601,34 @@ Public Class WL_Repository
         End If
         Button_SaveRepository.Enabled = Validate
     End Sub
+
+    Private Sub UpdateState()
+        For Each GrpNode As TreeNode In Tree.Nodes
+            GrpNode.BackColor = Color.White
+
+            If GrpNode.Tag = "1" Then
+                GrpNode.ForeColor = Color.Black
+            Else
+                GrpNode.ForeColor = Color.Blue
+            End If
+
+            For Each RepNode As TreeNode In GrpNode.Nodes
+                RepNode.NodeFont = New Font(Tree.Font, Nothing)
+
+                If RepNode.Tag = "1" Then
+                    RepNode.ForeColor = Color.Black
+                Else
+                    RepNode.ForeColor = Color.Blue
+                End If
+
+                If CompareRepository(RepNode) = True Then
+                    RepNode.NodeFont = New Font(Tree.Font, FontStyle.Bold)
+                    RepNode.Text = RepNode.Text
+                End If
+            Next
+
+        Next
+    End Sub
+
 
 End Class

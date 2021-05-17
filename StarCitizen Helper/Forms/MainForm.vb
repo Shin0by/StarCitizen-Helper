@@ -367,7 +367,8 @@ Public Class MainForm
         SubLine.List.Add("Дата: " & LatestElement._published)
         SubLine.List.Add("")
         If SenderName.Name = Me.WL_SysUpdateCheck.Name Then
-            SubLine.List.Add(_LANG._Get("SysUpdate_MSG_ChangesInfo", Me.TabPage_SysUpdate.Text))
+            SubLine.List.Add(_LANG._Get("SysUpdate_MSG_ChangesInfo", Me.TabPage_SysUpdate.Text) & ": " & _VARS.URL_App & vbNewLine)
+            SubLine.List.Add(_LANG._Get("SysUpdate_MSG_Downloadmanual", _VARS.URL_App_Release))
             If _VARS.PackageLatestDate <> LatestElement._published Or _APP.Version <> LatestElement._tag_name Then
                 If _APP.Version = LatestElement._tag_name Then
                     _VARS.PackageLatestDate = LatestElement._published

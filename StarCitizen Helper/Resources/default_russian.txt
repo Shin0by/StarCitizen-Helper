@@ -55,6 +55,7 @@ Ignore = Игнорировать
 Abort = Прервать
 Save = Сохранить
 Link = Ссылка
+NotAssigned = Не задан
 
 #GLOBAL LONG
 l_Error = Ошибка: {0}
@@ -82,7 +83,7 @@ l_Name = Название: {}
 l_UpdateComplete = Загрузка {0} успешно завершена:
 l_Err_ElementAlreadyExist = Элемент "{0}" уже существует, задайте новое уникальное значение
 l_Err_ElementAlreadyExistInGrp = Элемент "{1}" уже существует в группе "{0}", задайте уникальное значение
-l_Err_IncorrectLink = Не корректно указана ссылка: {0}
+l_Err_IncorrectLink = Некорректно указана ссылка: {0}
 
 #FileSystem
 File_MSG_CheckFile = Проверка файла [{0}]
@@ -139,7 +140,7 @@ CheckBox_HideWhenClose = Скрывать при закрытии окна
 #Tab repository
 Repository_ButtonName_ButtonSetRep = Назначить репозиторий
 Repository_ButtonInfo_ButtonSetRep = Назначает выбранный репозиторий для последующей работы с ним
-Repository_Label_SelectedRep = Используемый репозиторий: {0}
+Repository_Label_SelectedRep = Активный репозиторий: {0}
 Repository_MSG_SelectCorrectRepository = Для смены используемого репозитория требуется выбрать конкретный репозиторий
 Repository_ButtonInfo_AddGroup = Добавить новую языковую группу
 Repository_ButtonInfo_RemoveGroup = Удалить выбранную языковую группу
@@ -156,6 +157,9 @@ Repository_Label_RepositoryLangGroup = Языковая группа
 Repository_Label_RepositoryName = Название репозитория
 Repository_Label_RepositoryURL = Ссылка на GIT проект репозитория
 Repository_Label_RepositoryDescription = Описание репозитория
+Repository_MSG_RepositoryLinkAlreadyExist = Репозиторий по такой ссылке уже существует:\n{0}\n\nРепозиторий использующий данную ссылку:\n{1}
+Repository_MSG_YouCanNotRemoveActiveRepository = Вы не можете удалить активный репозиторий\nУкажите иной репозиторий как активный и повторите удаление текущего
+Repository_MSG_YouCanNotRemoveActiveRepositoryGroup = Вы не можете удалить языковую группу содержащую активный репозиторий\nУкажите иной репозиторий как активный и повторите удаление
 
 #Module PATCH
 Patch_MSG_Blocks = HEX_BLOCK1: [{0}]\nHEX_BLOCK2: [{1}]
@@ -201,6 +205,7 @@ SysUpdateCheck_Name_OnlineVersion = Версия:
 SysUpdate_Bottom_Info = Внимание!\nПри успешном завершении загрузки будет выполнено автоматическое обновление.\nОт пользователя может потребоваться разрешение на запуск файла [{0}]\n\nПуть к файлу: {1}
 SysUpdate_MSG_SysUpdateTitle = Название: Системное обновление
 SysUpdate_MSG_ChangesInfo = Описание изменений доступно во вкладке [{0}] или на Git странице проекта
+SysUpdate_MSG_DownloadManual = Вы можете загрузить последнюю версию программы вручную, перейдя по ссылке: {0}
 
 #ProcessKiller
 ProcessKiller_CheckName_Enable = Включить принудительное завершение процессов
@@ -225,6 +230,7 @@ Pack_ButtonName_DownloadPack = Загрузить пакет обновлений
 Pack_ButtonInfo_DownloadPack = Загрузка выбранного пакета обновлений (включая ядро)
 Pack_ButtonName_PackInstallAll = Полная установка
 Pack_ButtonInfo_PackInstallAll = Локализация и шрифты
+Pack_Label_RepositoryName = Репозиторий: {0}
 Pack_Bottom_Info = Для загрузки {0} выберите в выпадающем списке актуальный {1} и нажмите [{2}]. По завершении загрузки нажмите [{3}] - это установит необходимые файлы локализации в папку игры.\nДля активации локализации требуется включить {4}, для этого перейдите во вкладку [{5}] и нажмите [{6}].\n\nПримечание:  {1} [Master] - это последняя версия сборки, еще не прошедшей проверку (не рекомендуется к установке).
 Pack_MSG_ChangesInfo = Описание изменений доступно на Git странице проекта\nпо адресу: {0}
 Pack_MSG_CreateTempFolder = Создана папка для загрузки пакетов локализации:\n\t{0}

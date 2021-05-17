@@ -55,6 +55,7 @@ Ignore = Ignore
 Abort = Abort
 Save = Save
 Link = Link
+NotAssigned = Not set
 
 #GLOBAL LONG
 l_Error = 오류: {0}
@@ -139,7 +140,7 @@ CheckBox_HideWhenClose = Hide when close
 #Tab repository
 Repository_ButtonName_ButtonSetRep = Set repository
 Repository_ButtonInfo_ButtonSetRep = Assigns the selected repository for subsequent work with it
-Repository_Label_SelectedRep = Used repository: {0}
+Repository_Label_SelectedRep = Active repository: {0}
 Repository_MSG_SelectCorrectRepository = To change the used repository, you need to select a specific repository
 Repository_ButtonInfo_AddGroup = Add new language group
 Repository_ButtonInfo_RemoveGroup = Remove selected language group
@@ -156,6 +157,9 @@ Repository_Label_RepositoryLangGroup = Language group
 Repository_Label_RepositoryName = Repository name
 Repository_Label_RepositoryURL = Link to GIT repository project
 Repository_Label_RepositoryDescription = Repository description
+Repository_MSG_RepositoryLinkAlreadyExist = A repository using this link already exists:\n{0}\n\nThe repository using the given link:\n{1}
+Repository_MSG_YouCanNotRemoveActiveRepository = You cannot delete the active repository\nSet another repository as active and try deleting the current one
+Repository_MSG_YouCanNotRemoveActiveRepositoryGroup = You cannot delete the language group containing the active repository\Set another repository as active and repeat the deletion
 
 #Module PATCH
 Patch_MSG_Blocks = HEX_BLOCK1: [{0}]\nHEX_BLOCK2: [{1}]
@@ -201,6 +205,7 @@ SysUpdateCheck_Name_OnlineVersion = 버전:
 SysUpdate_Bottom_Info = 경고! 성공적으로 다운로드 되면 프로그램아 자동으로 업데이트 됩니다. \n[{0}]에 대한 액세스가 필요할 수 있습니다. \n\n폴더 경로: {1}
 SysUpdate_MSG_SysUpdateTitle = 이름: 업데이트
 SysUpdate_MSG_ChangesInfo = 변경 내역은 [{0}] 탭 또는 깃허브 페이지에서 읽을 수 있습니다.
+SysUpdate_MSG_Downloadmanual = You can download the latest version of the program manually by following the link: {0}
 
 #ProcessKiller
 ProcessKiller_CheckName_Enable = 강제 프로세스 종료 활성화
@@ -225,6 +230,7 @@ Pack_ButtonName_DownloadPack = 팩 다운로드
 Pack_ButtonInfo_DownloadPack = 선택한 팩 다운로드 (코어 포함)
 Pack_ButtonName_PackInstallAll = 전체 설치
 Pack_ButtonInfo_PackInstallAll = 현지화와 글꼴
+Pack_Label_RepositoryName = Repository: {0}
 Pack_Bottom_Info = {0}을 다운로드하려면 드롭다운 메뉴에서 {1}을 선택하고 [{2}]를 클릭합니다. 다운로드 후 [{3}]을 클릭하여 필요한 파일을 게임 폴더로 옮깁니다. \n언어팩을 적용하려면 {4}을 활성화해야합니다. [{5}]탭으로 이동하여 [{6}]을 클릭합니다.\n\n참고: [Master]버전 언어팩은 개발 중인 최신 버전이며 문제를 일으킬 수 있습니다. (사용을 추천하지 않습니다.)
 Pack_MSG_ChangesInfo = 변경된 점: {0}
 Pack_MSG_CreateTempFolder = 다운로드된 언어팩을 위한 폴더 생성:\n\t{0}

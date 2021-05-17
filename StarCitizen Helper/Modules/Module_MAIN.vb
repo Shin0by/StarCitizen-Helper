@@ -38,6 +38,7 @@ Module Module_MAIN
         _VARS.URL_Core = "https://github.com/defterai/StarCitizenModding/"
         'TODO:   Update localization root url
         _VARS.URL_Localization = "https://github.com/n1ghter/SC_ru/"
+        _VARS.URL_App_Release = "https://github.com/Shin0by/StarCitizen-Helper/releases"
 
         _VARS.PackageGitURL_Master = "https://codeload.github.com/n1ghter/SC_ru/zip/master"
         _VARS.PackageGitURL_Page = "https://github.com/n1ghter/SC_ru"
@@ -248,6 +249,7 @@ Module Module_MAIN
         Public URL_Core As String = Nothing
         Public URL_App As String = Nothing
         Public URL_App_Api As String = Nothing
+        Public URL_App_Release As String = Nothing
 
         Public Property UpdateStatus() As String
             Get
