@@ -405,7 +405,7 @@ Public Class MainForm
         Me.Invoke(Sub()
                       Me.WL_SysUpdateCheck.Property_Text_Label_Value_OnlineVersion = LatestElement._tag_name
                       Me.WL_SysUpdateCheck.Property_Text_Label_Value_OnlineDate = LatestElement._published
-                      Me.WL_SysUpdateCheck.Property_Text_TextBox_Value_OnlineInformation = LatestElement._body
+                      Me.WL_SysUpdateCheck.Property_Text_TextBox_Value_OnlineInformation = _GIT._ParseInformationBody(LatestElement._body)
                   End Sub)
 
         If _APP.Version <> LatestElement._tag_name Then

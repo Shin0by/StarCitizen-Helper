@@ -288,13 +288,17 @@ Public Class WL_Check
                         Me.Invoke(Sub()
                                       Me.Property_Text_Label_Value_OnlineVersion = _GIT_Request._LatestElement._tag_name
                                       Me.Property_Text_Label_Value_OnlineDate = _GIT_Request._LatestElement._published
-                                      Me.Property_Text_TextBox_Value_OnlineInformation = _GIT_Request._LatestElement._body
+                                      Me.Property_Text_TextBox_Value_OnlineInformation = _GIT_Request._ParseInformationBody(_GIT_Request._LatestElement._body)
                                   End Sub)
                         RaiseEvent _Event_NewVersion_Available_After(_GIT_Request._JSON, _GIT_Request._LatestElement, Me)
                     End If
                 End If
                 RaiseEvent _Event_Update_Complete_After(_GIT_Request._JSON, _GIT_Request._LatestElement, Me)
-                If _GIT_Request._LatestElement IsNot Nothing Then Property_DateOnline = _GIT_Request._LatestElement._published
+                If _GIT_Request._LatestElement IsNot Nothing Then
+                    Property_DateOnline = _GIT_Request._LatestElement._published
+                Else
+                    Property_DateOnline = Convert.ToDateTime("01.01.2000 00:00:00")
+                End If
             End If
 
             For i = 1 To 1000
@@ -302,7 +306,6 @@ Public Class WL_Check
 
                 If Temp_Property_URLApi <> Me.Property_URLApi Then
                     'Property_DateOnline = Convert.ToDateTime("01.01.2000 00:00:00")
-
                     Temp_Property_URLApi = Me.Property_URLApi
                     Exit For
                 End If
@@ -311,4 +314,5 @@ Public Class WL_Check
         Loop
     End Sub
     '-----------------------------------> Thread
+
 End Class

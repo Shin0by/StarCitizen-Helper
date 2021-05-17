@@ -8,6 +8,9 @@ Module Module_GIT
         Public _JSON As Object
         Public _LatestElement As Class_GitUpdateElement = Nothing
 
+        Private URL_Preview As String = Nothing
+        Private URL_Current As String = Nothing
+
         Public Function _GetGitList(URL As String, PreRelease As Boolean) As List(Of Class_GitUpdateElement)
             _LIST._Clear()
             Dim Header As New Net.WebHeaderCollection
@@ -16,6 +19,7 @@ Module Module_GIT
             Dim result As ResultClass
             result = _INET._GetHTTP(URL, Net.SecurityProtocolType.Tls12, Header)
             If result.Err._Flag = True Then
+                Me._LatestElement = Nothing
                 If result.Err._Number = 403 Then
                     result.Err._Description_Sys = _LANG._Get("GIT_MSG_AccessDeniedLimit", result.Err._Description_Sys)
                 End If
@@ -25,6 +29,7 @@ Module Module_GIT
             End If
             If Len(temp) < 10 Then _LOG._sAdd("GIT_NET", _LANG._Get("GIT_MSG_CannotLoadBuildList", result.Err._Description_Sys), Nothing, 2) : Return _LIST._GetAll
 
+            Me.URL_Current = URL
             temp = "{" & Chr(34) & "data" & Chr(34) & ":" & temp & "}"
             Me._JSON = JsonConvert.DeserializeObject(temp)
             Dim Assets As Object = Nothing
@@ -37,12 +42,18 @@ Module Module_GIT
             Next
 
             Me._LatestElement = Me._GetLatestElement(_LIST._GetAll)
+            Me.URL_Preview = URL
             Return _LIST._GetAll
         End Function
 
         Public Function _GetLatestElement(GitList As List(Of Class_GitUpdateElement)) As Class_GitUpdateElement
             Dim result As Class_GitUpdateElement = Nothing
             Dim LastDate As DateTime = Nothing
+
+            'If Me.URL_Preview = Me.URL_Current Then
+            If GitList.Count = 0 Then Return result
+            'End If
+
             For Each elem In GitList
                 If DateTime.Compare(elem._published, LastDate) > 0 Then
                     LastDate = elem._published
@@ -68,6 +79,13 @@ Module Module_GIT
                 End If
             Next
             Return Nothing
+        End Function
+
+        Public Function _ParseInformationBody(Value As String) As String
+            Value = Strings.Replace(Value, " * ", "- ")
+            Value = Strings.Replace(Value, "   ", vbTab)
+            Value = Strings.Replace(Value, "###", vbNewLine)
+            Return Value
         End Function
 
         Class Class_GitUpdateList
