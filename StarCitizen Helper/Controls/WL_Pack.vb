@@ -284,9 +284,13 @@ Public Class WL_Pack
 
             If Me.WL_PackUpdateCheck.Property_URLApi <> Property_PackageGitURL_Api Then
                 If InvokeRequired Then
-                    Me.Invoke(Sub() Me.List_Git.Items.Clear())
+                    Me.Invoke(Sub()
+                                  Me.List_Git.Items.Clear()
+                                  Me.Enabled = False
+                              End Sub)
                 Else
                     Me.List_Git.Items.Clear()
+                    Me.Enabled = False
                 End If
                 Me.WL_PackUpdateCheck.Property_URLApi = Property_PackageGitURL_Api
                 Me.WL_PackUpdateCheck.Property_GitListAutoUpdate = False
@@ -312,7 +316,6 @@ Public Class WL_Pack
             Me.sPackageGitURL_Master = Value
         End Set
     End Property
-
 
     Public Property Property_GitList_SelString() As String
         Get
@@ -519,6 +522,7 @@ Finalize: sender.Enabled = True
 
     Private Sub UpdateListGit()
         RaiseEvent _Event_ListGit_List_Change_Before()
+
         Me.Invoke(Sub() Me.List_Git.Items.Clear())
         For i = 0 To Me.GIT_PACK_DATA._GetAll.Count - 1
             Me.Invoke(Sub() Me.List_Git.Items.Add(Me.GIT_PACK_DATA._GetAll.Item(i)._name))
@@ -564,6 +568,7 @@ Finalize: sender.Enabled = True
             _JSETTINGS._SetValue("configuration.external", "alert_date", _VARS.PackageLatestDate.ToString, True)
         End If
 
+        Me.Invoke(Sub() Me.Enabled = True)
         UpdateListGit()
     End Sub
 

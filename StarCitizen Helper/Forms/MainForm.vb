@@ -2,6 +2,7 @@
 
 Public Class MainForm
     Dim FirstRun As Boolean = True
+    Dim LatestSysUpdateVersion As String = Nothing
     '<----------------------------------- Form
     Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.CheckBox_StartUp_CheckedChanged(Me, e)
@@ -363,6 +364,7 @@ Public Class MainForm
         Dim AlertType As Byte = 0
         If _VARS.AlertWindows = False Then AlertType = 2
 
+        Dim CurrentSysUpdateVersion = LatestElement._tag_name
         SubLine.Value = "Версия: " & LatestElement._tag_name
         SubLine.List.Add("Дата: " & LatestElement._published)
         SubLine.List.Add("")
@@ -382,14 +384,17 @@ Public Class MainForm
                                   Me.WL_AppUpdate.Property_PatchDstParameters = _VARS.SetupParameters
 
                                   Me.WL_AppUpdate.Enabled = True
-                                  If WL_AppUpdate.Enabled = True Then Me.TabControl.SelectedTab = Me.TabPage_SysUpdate
+                                  If Me.LatestSysUpdateVersion <> CurrentSysUpdateVersion Then
+                                      If WL_AppUpdate.Enabled = True Then Me.TabControl.SelectedTab = Me.TabPage_SysUpdate
+                                  End If
                               End Sub)
                 End If
 
                 ListSubLine.Add(SubLine)
 
 
-                _LOG._Add(Me.GetType().Name, _LANG._Get("l_NewVersionAvailable", SenderName.Property_Name), ListSubLine, AlertType, 0)
+                If Me.LatestSysUpdateVersion <> CurrentSysUpdateVersion Then _LOG._Add(Me.GetType().Name, _LANG._Get("l_NewVersionAvailable", SenderName.Property_Name), ListSubLine, AlertType, 0)
+                Me.LatestSysUpdateVersion = CurrentSysUpdateVersion
             End If
         End If
         If SenderName.Name = "WL_PackUpdateCheck" Then

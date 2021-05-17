@@ -119,15 +119,19 @@ Public Class MsgForm
             Dim Size As Size = TextRenderer.MeasureText(RichTextBox.Text, RichTextBox.Font)
 
             RichTextBox.Width = Size.Width
-            RichTextBox.Height = Size.Height
+            RichTextBox.Height = Size.Height + 20
 
             If RichTextBox.Width < Me.MinimumSize.Width - RichTextBox.Left - 32 Then RichTextBox.Width = Me.MinimumSize.Width - RichTextBox.Left
             'If RichTextBox.Height < Me.MinimumSize.Height - RichTextBox.Top - Footer.Height Then RichTextBox.Height = Me.MinimumSize.Height - RichTextBox.Top - Footer.Height
-            If RichTextBox.Height > 500 - RichTextBox.Top - Footer.Height Then RichTextBox.Height = 500 - RichTextBox.Top - Footer.Height
-                If RichTextBox.Width > 800 - RichTextBox.Left Then
+
+            If RichTextBox.Height > 500 - RichTextBox.Top - Footer.Height Then
+                RichTextBox.Height = 500 - RichTextBox.Top - Footer.Height
+            End If
+
+            If RichTextBox.Width > 800 - RichTextBox.Left Then
                     RichTextBox.Width = 800 - RichTextBox.Left
-                    RichTextBox.Height = 500 - RichTextBox.Top - Footer.Height
-                End If
+                'RichTextBox.Height = 500 - RichTextBox.Top - Footer.Height
+            End If
             End If
 
             Dim FormSize As Size
