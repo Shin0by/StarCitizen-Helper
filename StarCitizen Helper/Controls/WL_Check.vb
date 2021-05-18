@@ -297,7 +297,11 @@ Public Class WL_Check
                 If _GIT_Request._LatestElement IsNot Nothing Then
                     Property_DateOnline = _GIT_Request._LatestElement._published
                 Else
-                    Property_DateOnline = Convert.ToDateTime("01.01.2000 00:00:00")
+                    If _GIT_Request._Result.Err._Flag = True Then
+                        If _GIT_Request._Result.Err._Number <> 403 Then
+                            Property_DateOnline = Convert.ToDateTime("01.01.2000 00:00:00")
+                        End If
+                    End If
                 End If
             End If
 

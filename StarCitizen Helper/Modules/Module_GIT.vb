@@ -7,6 +7,7 @@ Module Module_GIT
         Public _LIST As New Class_GitUpdateList
         Public _JSON As Object
         Public _LatestElement As Class_GitUpdateElement = Nothing
+        Public _Result As ResultClass
 
         Private URL_Preview As String = Nothing
         Private URL_Current As String = Nothing
@@ -18,10 +19,12 @@ Module Module_GIT
             Dim temp As String = Nothing
             Dim result As ResultClass
             result = _INET._GetHTTP(URL, Net.SecurityProtocolType.Tls12, Header)
+            Me._Result = result
             If result.Err._Flag = True Then
-                Me._LatestElement = Nothing
                 If result.Err._Number = 403 Then
                     result.Err._Description_Sys = _LANG._Get("GIT_MSG_AccessDeniedLimit", result.Err._Description_Sys)
+                Else
+                    Me._LatestElement = Nothing
                 End If
                 _LOG._sAdd("GIT_NET", _LANG._Get("GIT_MSG_CannotLoadBuildList", result.Err._Description_Sys), URL, 2) : Return _LIST._GetAll
             Else
