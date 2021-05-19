@@ -96,7 +96,6 @@ Partial Class MainForm
         Me.TabPage_About = New System.Windows.Forms.TabPage()
         Me.WL_About = New SC.WL_About()
         Me.Timer_LOG = New System.Windows.Forms.Timer(Me.components)
-        Me.Button1 = New System.Windows.Forms.Button()
         Me.ContextMenuStrip1.SuspendLayout()
         Me.TabControl.SuspendLayout()
         Me.TabPage_Patch.SuspendLayout()
@@ -336,6 +335,7 @@ Partial Class MainForm
         Me.WL_Pack.Property_Path_File_Meta = Nothing
         Me.WL_Pack.Property_Path_Folder_Download = Nothing
         Me.WL_Pack.Property_Path_Folder_Meta = Nothing
+        Me.WL_Pack.Property_RepositoryDate = Nothing
         Me.WL_Pack.Property_RepositoryName = Nothing
         Me.WL_Pack.Property_ShowTestBuild = False
         Me.WL_Pack.Property_UpdateTargetName = Nothing
@@ -881,7 +881,6 @@ Partial Class MainForm
         Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel2.Controls.Add(Me.ClearLog_Button, 0, 0)
         Me.TableLayoutPanel2.Controls.Add(Me.TextBox_Debug, 0, 0)
-        Me.TableLayoutPanel2.Controls.Add(Me.Button1, 1, 1)
         Me.TableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TableLayoutPanel2.Location = New System.Drawing.Point(3, 3)
         Me.TableLayoutPanel2.Name = "TableLayoutPanel2"
@@ -893,10 +892,11 @@ Partial Class MainForm
         '
         'ClearLog_Button
         '
+        Me.TableLayoutPanel2.SetColumnSpan(Me.ClearLog_Button, 2)
         Me.ClearLog_Button.Dock = System.Windows.Forms.DockStyle.Fill
         Me.ClearLog_Button.Location = New System.Drawing.Point(3, 322)
         Me.ClearLog_Button.Name = "ClearLog_Button"
-        Me.ClearLog_Button.Size = New System.Drawing.Size(429, 24)
+        Me.ClearLog_Button.Size = New System.Drawing.Size(864, 24)
         Me.ClearLog_Button.TabIndex = 2
         Me.ClearLog_Button.Text = "Очистить лог"
         Me.ClearLog_Button.UseVisualStyleBackColor = True
@@ -945,15 +945,6 @@ Partial Class MainForm
         'Timer_LOG
         '
         Me.Timer_LOG.Interval = 1000
-        '
-        'Button1
-        '
-        Me.Button1.Location = New System.Drawing.Point(438, 322)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(89, 24)
-        Me.Button1.TabIndex = 3
-        Me.Button1.Text = "Button1"
-        Me.Button1.UseVisualStyleBackColor = True
         '
         'MainForm
         '
@@ -1067,5 +1058,4 @@ Partial Class MainForm
     Friend WithEvents CheckBox_StartUp As CheckBox
     Friend WithEvents CheckBox_HideWhenClose As CheckBox
     Friend WithEvents WL_Repo As WL_Repository
-    Friend WithEvents Button1 As Button
 End Class

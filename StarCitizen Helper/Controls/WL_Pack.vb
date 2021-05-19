@@ -152,6 +152,24 @@ Public Class WL_Pack
         End Set
     End Property
 
+
+
+    Public Property Property_RepositoryDate() As String
+        Get
+            Return Me.Label_RepositoryDate.Tag
+        End Get
+        Set(ByVal Value As String)
+            If Value IsNot Nothing Then
+                Me.Label_RepositoryDate.Text = _LANG._Get("SysUpdateCheck_Name_OnlineDate") & Value
+                Me.Label_RepositoryDate.Tag = Value
+            Else
+                Me.Label_RepositoryDate.Text = Nothing
+                Me.Label_RepositoryDate.Tag = Nothing
+            End If
+        End Set
+    End Property
+
+
     Public Property Text_Button_Download() As String
         Get
             Return Me.Button_Download.Text
@@ -340,6 +358,12 @@ Public Class WL_Pack
                     Me.Invoke(Sub() Me.List_Git.SelectedIndex = 0)
                 End If
             End If
+
+            If Me.List_Git.Items.Count > 0 Then
+
+                Me.Invoke(Sub() Me.Property_RepositoryDate = Me.GIT_PACK_DATA._GetByName(Me.List_Git.SelectedItem.ToString, _VARS.PackageGitMaster_Name)._published.ToString)
+            End If
+
         End Set
     End Property
 
@@ -576,6 +600,11 @@ Finalize: sender.Enabled = True
             _VARS.PackageLatestDate = Me.GIT_PACK_LATEST._published
             _JSETTINGS._SetValue("configuration.external", "alert_date", _VARS.PackageLatestDate.ToString, True)
         End If
+
+
+        'Me.GIT_PACK_DATA._GetByName()
+        'Me.Invoke(Sub() Me.Property_RepositoryDate = GIT_PACK_LATEST._published.ToString)
+
 
         Me.Invoke(Sub() Me.Enabled = True)
         UpdateListGit()

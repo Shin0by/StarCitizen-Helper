@@ -160,15 +160,6 @@ Public Class MainForm
 
     '<----------------------------------- Log
     Private Sub ClearLog_Button_Click(sender As Object, e As EventArgs) Handles ClearLog_Button.Click
-        If _APP.debug = True Then 'AAAAAAAAAA
-            If temp_var_debug = True Then
-                temp_var_debug = False
-                MAIN_THREAD.Text = "False"
-            Else
-                temp_var_debug = True
-                MAIN_THREAD.Text = "True"
-            End If
-        End If 'AAAAAAAAAA
         Me.TextBox_Debug.Text = Nothing
     End Sub
     '-----------------------------------> 'Log
@@ -466,21 +457,5 @@ Public Class MainForm
         End If
 
     End Sub
-
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click 'AAAAAAAAAA
-        If Button1.Tag <> 1 Then
-            Button1.Tag = 1
-            MAIN_THREAD.WL_Pack.Property_GitList_Interval = 5000
-        Else
-            Button1.Tag = 2
-
-            MAIN_THREAD.WL_Pack.Property_GitList_Interval = 12000
-        End If
-
-        Button1.Text = MAIN_THREAD.WL_Pack.Property_GitList_Interval
-    End Sub
-
-
-
     '-----------------------------------> 'Callback
 End Class

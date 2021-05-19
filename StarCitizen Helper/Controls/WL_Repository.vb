@@ -289,6 +289,7 @@ Public Class WL_Repository
         MAIN_THREAD.WL_Pack.Property_PackageGitURL_Page = Me.Property_GitPage
         MAIN_THREAD.WL_Pack.Property_PackageGitURL_Api = Me.Property_GitApi
         MAIN_THREAD.WL_Pack.Property_RepositoryName = Node.Parent.Text & "/" & Node.Text
+        MAIN_THREAD.WL_Pack.Property_RepositoryDate = Nothing
 
         UpdateState()
 

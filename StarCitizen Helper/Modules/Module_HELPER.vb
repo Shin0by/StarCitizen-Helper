@@ -124,7 +124,7 @@ Module Module_HELPER
         MAIN_THREAD.WL_Pack.Property_PackageGitURL_Page = _JSETTINGS._GetValue("configuration.external.git.pack.page", _VARS.PackageGitURL_Page)
         MAIN_THREAD.WL_Pack.Property_PackageGitURL_Master = _JSETTINGS._GetValue("configuration.external.git.pack.master", _VARS.PackageGitURL_Master)
         MAIN_THREAD.WL_About.URL_SendIssueApp = _JSETTINGS._GetValue("configuration.external.git.app.page", _VARS.URL_App) & _VARS.IssueGit_Prefix
-        MAIN_THREAD.WL_About.URL_SendIssueLocalization = _JSETTINGS._GetValue("configuration.external.git.local.page", _VARS.URL_Localization) & _VARS.IssueGit_Prefix
+        MAIN_THREAD.WL_About.URL_SendIssueLocalization = _JSETTINGS._GetValue("configuration.external.git.local.page", _VARS.URL_Localization) & "/" & _VARS.IssueGit_Prefix
         MAIN_THREAD.WL_About.URL_SendIssueCore = _JSETTINGS._GetValue("configuration.external.git.core.page", _VARS.URL_Core) & _VARS.IssueGit_Prefix
 
         MAIN_THREAD.WL_Repo._SetRepository(MAIN_THREAD.WL_Repo._SelectRepository_ByPageURL(MAIN_THREAD.WL_Pack.Property_PackageGitURL_Page), False)

@@ -20,14 +20,6 @@ Module Module_GIT
             Dim result As ResultClass
             result = _INET._GetHTTP(URL, Net.SecurityProtocolType.Tls12, Header)
 
-            'AAAAAAAAAA
-            If temp_var_debug = True Then
-                result.Err._Flag = True
-                result.Err._Number = 403
-                result.ValueString = Nothing
-            End If
-            'AAAAAAAAAA
-
             Me._Result = result
             If result.Err._Flag = True Then
                 If result.Err._Number = 403 Then result.Err._Description_Sys = _LANG._Get("GIT_MSG_AccessDeniedLimit", result.Err._Description_Sys)

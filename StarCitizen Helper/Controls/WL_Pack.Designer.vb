@@ -32,9 +32,12 @@ Partial Class WL_Pack
         Me.WL_Download = New SC.WL_Download()
         Me.CheckBox_ShowTestBuild = New System.Windows.Forms.CheckBox()
         Me.WL_PackUpdateCheck = New SC.WL_Check()
+        Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.Label_RepositoryDate = New System.Windows.Forms.Label()
         Me.Label_RepozitoryName = New System.Windows.Forms.Label()
         Me.BackgroundWorker = New System.ComponentModel.BackgroundWorker()
         Me.TableLayoutPanel.SuspendLayout()
+        Me.Panel1.SuspendLayout()
         Me.SuspendLayout()
         '
         'TableLayoutPanel
@@ -52,7 +55,7 @@ Partial Class WL_Pack
         Me.TableLayoutPanel.Controls.Add(Me.WL_Download, 0, 4)
         Me.TableLayoutPanel.Controls.Add(Me.CheckBox_ShowTestBuild, 1, 1)
         Me.TableLayoutPanel.Controls.Add(Me.WL_PackUpdateCheck, 2, 1)
-        Me.TableLayoutPanel.Controls.Add(Me.Label_RepozitoryName, 0, 0)
+        Me.TableLayoutPanel.Controls.Add(Me.Panel1, 0, 0)
         Me.TableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TableLayoutPanel.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
         Me.TableLayoutPanel.Location = New System.Drawing.Point(0, 0)
@@ -173,6 +176,7 @@ Partial Class WL_Pack
         Me.WL_PackUpdateCheck.Location = New System.Drawing.Point(443, 33)
         Me.WL_PackUpdateCheck.Name = "WL_PackUpdateCheck"
         Me.WL_PackUpdateCheck.Property_AlertUpdate = True
+        Me.WL_PackUpdateCheck.Property_ChangeRepository = False
         Me.WL_PackUpdateCheck.Property_DateOnline = New Date(CType(0, Long))
         Me.WL_PackUpdateCheck.Property_GitListAutoUpdate = True
         Me.WL_PackUpdateCheck.Property_GitListInterval = 90000
@@ -198,15 +202,43 @@ Partial Class WL_Pack
         Me.WL_PackUpdateCheck.TabIndex = 16
         Me.WL_PackUpdateCheck.Visible = False
         '
+        'Panel1
+        '
+        Me.Panel1.BackColor = System.Drawing.Color.LightSteelBlue
+        Me.TableLayoutPanel.SetColumnSpan(Me.Panel1, 3)
+        Me.Panel1.Controls.Add(Me.Label_RepositoryDate)
+        Me.Panel1.Controls.Add(Me.Label_RepozitoryName)
+        Me.Panel1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Panel1.Location = New System.Drawing.Point(4, 5)
+        Me.Panel1.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
+        Me.Panel1.Name = "Panel1"
+        Me.Panel1.Size = New System.Drawing.Size(654, 20)
+        Me.Panel1.TabIndex = 18
+        '
+        'Label_RepositoryDate
+        '
+        Me.Label_RepositoryDate.BackColor = System.Drawing.Color.Transparent
+        Me.Label_RepositoryDate.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Label_RepositoryDate.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
+        Me.Label_RepositoryDate.Location = New System.Drawing.Point(121, 0)
+        Me.Label_RepositoryDate.Margin = New System.Windows.Forms.Padding(1, 5, 3, 5)
+        Me.Label_RepositoryDate.Name = "Label_RepositoryDate"
+        Me.Label_RepositoryDate.Padding = New System.Windows.Forms.Padding(3, 1, 3, 0)
+        Me.Label_RepositoryDate.Size = New System.Drawing.Size(533, 20)
+        Me.Label_RepositoryDate.TabIndex = 18
+        Me.Label_RepositoryDate.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
         'Label_RepozitoryName
         '
         Me.Label_RepozitoryName.AutoSize = True
-        Me.TableLayoutPanel.SetColumnSpan(Me.Label_RepozitoryName, 3)
-        Me.Label_RepozitoryName.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Label_RepozitoryName.Location = New System.Drawing.Point(1, 0)
-        Me.Label_RepozitoryName.Margin = New System.Windows.Forms.Padding(1, 0, 3, 0)
+        Me.Label_RepozitoryName.BackColor = System.Drawing.Color.Transparent
+        Me.Label_RepozitoryName.Dock = System.Windows.Forms.DockStyle.Left
+        Me.Label_RepozitoryName.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
+        Me.Label_RepozitoryName.Location = New System.Drawing.Point(0, 0)
+        Me.Label_RepozitoryName.Margin = New System.Windows.Forms.Padding(1, 5, 3, 5)
         Me.Label_RepozitoryName.Name = "Label_RepozitoryName"
-        Me.Label_RepozitoryName.Size = New System.Drawing.Size(658, 30)
+        Me.Label_RepozitoryName.Padding = New System.Windows.Forms.Padding(1, 4, 3, 0)
+        Me.Label_RepozitoryName.Size = New System.Drawing.Size(121, 17)
         Me.Label_RepozitoryName.TabIndex = 17
         Me.Label_RepozitoryName.Text = "Label_RepozitoryName"
         Me.Label_RepozitoryName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -225,6 +257,8 @@ Partial Class WL_Pack
         Me.Size = New System.Drawing.Size(662, 301)
         Me.TableLayoutPanel.ResumeLayout(False)
         Me.TableLayoutPanel.PerformLayout()
+        Me.Panel1.ResumeLayout(False)
+        Me.Panel1.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -241,4 +275,6 @@ Partial Class WL_Pack
     Friend WithEvents CheckBox_ShowTestBuild As CheckBox
     Friend WithEvents WL_PackUpdateCheck As WL_Check
     Friend WithEvents Label_RepozitoryName As Label
+    Friend WithEvents Panel1 As Panel
+    Friend WithEvents Label_RepositoryDate As Label
 End Class
