@@ -96,6 +96,7 @@ Partial Class MainForm
         Me.TabPage_About = New System.Windows.Forms.TabPage()
         Me.WL_About = New SC.WL_About()
         Me.Timer_LOG = New System.Windows.Forms.Timer(Me.components)
+        Me.Button1 = New System.Windows.Forms.Button()
         Me.ContextMenuStrip1.SuspendLayout()
         Me.TabControl.SuspendLayout()
         Me.TabPage_Patch.SuspendLayout()
@@ -309,7 +310,7 @@ Partial Class MainForm
         Me.TabPage_Packages.Location = New System.Drawing.Point(4, 22)
         Me.TabPage_Packages.Name = "TabPage_Packages"
         Me.TabPage_Packages.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage_Packages.Size = New System.Drawing.Size(776, 355)
+        Me.TabPage_Packages.Size = New System.Drawing.Size(876, 355)
         Me.TabPage_Packages.TabIndex = 2
         Me.TabPage_Packages.Text = "Локализация"
         Me.TabPage_Packages.UseVisualStyleBackColor = True
@@ -320,6 +321,7 @@ Partial Class MainForm
         Me.WL_Pack.Dock = System.Windows.Forms.DockStyle.Fill
         Me.WL_Pack.Location = New System.Drawing.Point(3, 3)
         Me.WL_Pack.Name = "WL_Pack"
+        Me.WL_Pack.Property_ChangeRepository = False
         Me.WL_Pack.Property_DateOnline = New Date(CType(0, Long))
         Me.WL_Pack.Property_GitList_AutoUpdate = True
         Me.WL_Pack.Property_GitList_Interval = 120000
@@ -334,9 +336,10 @@ Partial Class MainForm
         Me.WL_Pack.Property_Path_File_Meta = Nothing
         Me.WL_Pack.Property_Path_Folder_Download = Nothing
         Me.WL_Pack.Property_Path_Folder_Meta = Nothing
+        Me.WL_Pack.Property_RepositoryName = Nothing
         Me.WL_Pack.Property_ShowTestBuild = False
         Me.WL_Pack.Property_UpdateTargetName = Nothing
-        Me.WL_Pack.Size = New System.Drawing.Size(770, 349)
+        Me.WL_Pack.Size = New System.Drawing.Size(870, 349)
         Me.WL_Pack.TabIndex = 0
         Me.WL_Pack.Text_Button_Download = "Загрузить пакет обновлений"
         Me.WL_Pack.Text_Button_InstallFull = "Полная установка"
@@ -351,7 +354,7 @@ Partial Class MainForm
         Me.TabPage_Repository.Location = New System.Drawing.Point(4, 22)
         Me.TabPage_Repository.Name = "TabPage_Repository"
         Me.TabPage_Repository.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage_Repository.Size = New System.Drawing.Size(776, 355)
+        Me.TabPage_Repository.Size = New System.Drawing.Size(876, 355)
         Me.TabPage_Repository.TabIndex = 9
         Me.TabPage_Repository.Text = "Репозитории"
         Me.TabPage_Repository.UseVisualStyleBackColor = True
@@ -361,12 +364,13 @@ Partial Class MainForm
         Me.WL_Repo.Dock = System.Windows.Forms.DockStyle.Fill
         Me.WL_Repo.Location = New System.Drawing.Point(3, 3)
         Me.WL_Repo.Name = "WL_Repo"
+        Me.WL_Repo.Node = Nothing
         Me.WL_Repo.Property_GitApi = Nothing
         Me.WL_Repo.Property_GitMaster = Nothing
         Me.WL_Repo.Property_GitPage = Nothing
         Me.WL_Repo.Property_RepositoryLanguage = Nothing
         Me.WL_Repo.Property_RepositoryName = Nothing
-        Me.WL_Repo.Size = New System.Drawing.Size(770, 349)
+        Me.WL_Repo.Size = New System.Drawing.Size(870, 349)
         Me.WL_Repo.TabIndex = 0
         Me.WL_Repo.Text_Button_SetRep = "Button_SetRepo"
         Me.WL_Repo.Text_Label_SelectedRep = "Label_SelectedRepo"
@@ -376,7 +380,7 @@ Partial Class MainForm
         Me.TabPage_Killer.Controls.Add(Me.TableLayoutPanel4)
         Me.TabPage_Killer.Location = New System.Drawing.Point(4, 22)
         Me.TabPage_Killer.Name = "TabPage_Killer"
-        Me.TabPage_Killer.Size = New System.Drawing.Size(776, 355)
+        Me.TabPage_Killer.Size = New System.Drawing.Size(876, 355)
         Me.TabPage_Killer.TabIndex = 3
         Me.TabPage_Killer.Text = "Завершение процессов"
         Me.TabPage_Killer.UseVisualStyleBackColor = True
@@ -412,7 +416,7 @@ Partial Class MainForm
         Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
         Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40.0!))
         Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel4.Size = New System.Drawing.Size(776, 355)
+        Me.TableLayoutPanel4.Size = New System.Drawing.Size(876, 355)
         Me.TableLayoutPanel4.TabIndex = 3
         '
         'Label_ProcessKillerBottomInfo
@@ -423,7 +427,7 @@ Partial Class MainForm
         Me.Label_ProcessKillerBottomInfo.Location = New System.Drawing.Point(3, 193)
         Me.Label_ProcessKillerBottomInfo.Margin = New System.Windows.Forms.Padding(3)
         Me.Label_ProcessKillerBottomInfo.Name = "Label_ProcessKillerBottomInfo"
-        Me.Label_ProcessKillerBottomInfo.Size = New System.Drawing.Size(770, 159)
+        Me.Label_ProcessKillerBottomInfo.Size = New System.Drawing.Size(870, 159)
         Me.Label_ProcessKillerBottomInfo.TabIndex = 13
         Me.Label_ProcessKillerBottomInfo.Text = resources.GetString("Label_ProcessKillerBottomInfo.Text")
         Me.Label_ProcessKillerBottomInfo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -432,10 +436,10 @@ Partial Class MainForm
         '
         Me.Label_SetKeyKill.AutoSize = True
         Me.Label_SetKeyKill.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Label_SetKeyKill.Location = New System.Drawing.Point(254, 33)
+        Me.Label_SetKeyKill.Location = New System.Drawing.Point(288, 33)
         Me.Label_SetKeyKill.Margin = New System.Windows.Forms.Padding(3)
         Me.Label_SetKeyKill.Name = "Label_SetKeyKill"
-        Me.Label_SetKeyKill.Size = New System.Drawing.Size(246, 24)
+        Me.Label_SetKeyKill.Size = New System.Drawing.Size(279, 24)
         Me.Label_SetKeyKill.TabIndex = 7
         Me.Label_SetKeyKill.Text = "Горячая клавиша не задана"
         Me.Label_SetKeyKill.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -445,7 +449,7 @@ Partial Class MainForm
         Me.Button_AddProccessKill.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button_AddProccessKill.Location = New System.Drawing.Point(3, 93)
         Me.Button_AddProccessKill.Name = "Button_AddProccessKill"
-        Me.Button_AddProccessKill.Size = New System.Drawing.Size(245, 24)
+        Me.Button_AddProccessKill.Size = New System.Drawing.Size(279, 24)
         Me.Button_AddProccessKill.TabIndex = 4
         Me.Button_AddProccessKill.Text = "Добавить процесс"
         Me.Button_AddProccessKill.UseVisualStyleBackColor = True
@@ -456,7 +460,7 @@ Partial Class MainForm
         Me.CheckBox_KillerThread.Dock = System.Windows.Forms.DockStyle.Fill
         Me.CheckBox_KillerThread.Location = New System.Drawing.Point(3, 3)
         Me.CheckBox_KillerThread.Name = "CheckBox_KillerThread"
-        Me.CheckBox_KillerThread.Size = New System.Drawing.Size(245, 24)
+        Me.CheckBox_KillerThread.Size = New System.Drawing.Size(279, 24)
         Me.CheckBox_KillerThread.TabIndex = 3
         Me.CheckBox_KillerThread.Text = "Включить Завершение процессов"
         Me.CheckBox_KillerThread.UseVisualStyleBackColor = True
@@ -466,7 +470,7 @@ Partial Class MainForm
         Me.Button_SetKeyKill.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button_SetKeyKill.Location = New System.Drawing.Point(3, 33)
         Me.Button_SetKeyKill.Name = "Button_SetKeyKill"
-        Me.Button_SetKeyKill.Size = New System.Drawing.Size(245, 24)
+        Me.Button_SetKeyKill.Size = New System.Drawing.Size(279, 24)
         Me.Button_SetKeyKill.TabIndex = 1
         Me.Button_SetKeyKill.Text = "Назначить горячую клавишу"
         Me.Button_SetKeyKill.UseVisualStyleBackColor = True
@@ -475,10 +479,10 @@ Partial Class MainForm
         '
         Me.Label_KillerThread.AutoSize = True
         Me.Label_KillerThread.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Label_KillerThread.Location = New System.Drawing.Point(254, 3)
+        Me.Label_KillerThread.Location = New System.Drawing.Point(288, 3)
         Me.Label_KillerThread.Margin = New System.Windows.Forms.Padding(3)
         Me.Label_KillerThread.Name = "Label_KillerThread"
-        Me.Label_KillerThread.Size = New System.Drawing.Size(246, 24)
+        Me.Label_KillerThread.Size = New System.Drawing.Size(279, 24)
         Me.Label_KillerThread.TabIndex = 2
         Me.Label_KillerThread.Text = "Функция выключена"
         Me.Label_KillerThread.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -492,7 +496,7 @@ Partial Class MainForm
         Me.ComboBox_ProcessKillerModKey.Location = New System.Drawing.Point(4, 64)
         Me.ComboBox_ProcessKillerModKey.Margin = New System.Windows.Forms.Padding(4, 4, 4, 3)
         Me.ComboBox_ProcessKillerModKey.Name = "ComboBox_ProcessKillerModKey"
-        Me.ComboBox_ProcessKillerModKey.Size = New System.Drawing.Size(243, 21)
+        Me.ComboBox_ProcessKillerModKey.Size = New System.Drawing.Size(277, 21)
         Me.ComboBox_ProcessKillerModKey.TabIndex = 6
         '
         'Button_RemoveProccessKill
@@ -509,10 +513,10 @@ Partial Class MainForm
         '
         Me.TextBox_AddProccessKill.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TextBox_AddProccessKill.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.TextBox_AddProccessKill.Location = New System.Drawing.Point(254, 94)
+        Me.TextBox_AddProccessKill.Location = New System.Drawing.Point(288, 94)
         Me.TextBox_AddProccessKill.Margin = New System.Windows.Forms.Padding(3, 4, 3, 1)
         Me.TextBox_AddProccessKill.Name = "TextBox_AddProccessKill"
-        Me.TextBox_AddProccessKill.Size = New System.Drawing.Size(246, 21)
+        Me.TextBox_AddProccessKill.Size = New System.Drawing.Size(279, 21)
         Me.TextBox_AddProccessKill.TabIndex = 12
         '
         'ListBox_ProccessList
@@ -520,20 +524,20 @@ Partial Class MainForm
         Me.ListBox_ProccessList.Dock = System.Windows.Forms.DockStyle.Fill
         Me.ListBox_ProccessList.FormattingEnabled = True
         Me.ListBox_ProccessList.IntegralHeight = False
-        Me.ListBox_ProccessList.Location = New System.Drawing.Point(526, 3)
+        Me.ListBox_ProccessList.Location = New System.Drawing.Point(593, 3)
         Me.ListBox_ProccessList.Name = "ListBox_ProccessList"
         Me.TableLayoutPanel4.SetRowSpan(Me.ListBox_ProccessList, 6)
-        Me.ListBox_ProccessList.Size = New System.Drawing.Size(247, 184)
+        Me.ListBox_ProccessList.Size = New System.Drawing.Size(280, 184)
         Me.ListBox_ProccessList.TabIndex = 14
         '
         'Label_ProcessKillerModKey
         '
         Me.Label_ProcessKillerModKey.AutoSize = True
         Me.Label_ProcessKillerModKey.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Label_ProcessKillerModKey.Location = New System.Drawing.Point(254, 63)
+        Me.Label_ProcessKillerModKey.Location = New System.Drawing.Point(288, 63)
         Me.Label_ProcessKillerModKey.Margin = New System.Windows.Forms.Padding(3)
         Me.Label_ProcessKillerModKey.Name = "Label_ProcessKillerModKey"
-        Me.Label_ProcessKillerModKey.Size = New System.Drawing.Size(246, 24)
+        Me.Label_ProcessKillerModKey.Size = New System.Drawing.Size(279, 24)
         Me.Label_ProcessKillerModKey.TabIndex = 8
         Me.Label_ProcessKillerModKey.Text = "Клавиша модификатор не выбрана"
         Me.Label_ProcessKillerModKey.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -542,7 +546,7 @@ Partial Class MainForm
         '
         Me.Label4.AutoSize = True
         Me.Label4.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Label4.Location = New System.Drawing.Point(506, 93)
+        Me.Label4.Location = New System.Drawing.Point(573, 93)
         Me.Label4.Margin = New System.Windows.Forms.Padding(3)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(14, 24)
@@ -555,10 +559,10 @@ Partial Class MainForm
         Me.CheckedListBox_ProccessKill.Dock = System.Windows.Forms.DockStyle.Fill
         Me.CheckedListBox_ProccessKill.FormattingEnabled = True
         Me.CheckedListBox_ProccessKill.IntegralHeight = False
-        Me.CheckedListBox_ProccessKill.Location = New System.Drawing.Point(254, 123)
+        Me.CheckedListBox_ProccessKill.Location = New System.Drawing.Point(288, 123)
         Me.CheckedListBox_ProccessKill.Name = "CheckedListBox_ProccessKill"
         Me.TableLayoutPanel4.SetRowSpan(Me.CheckedListBox_ProccessKill, 2)
-        Me.CheckedListBox_ProccessKill.Size = New System.Drawing.Size(246, 64)
+        Me.CheckedListBox_ProccessKill.Size = New System.Drawing.Size(279, 64)
         Me.CheckedListBox_ProccessKill.TabIndex = 16
         '
         'TabPage_GameProfiles
@@ -567,7 +571,7 @@ Partial Class MainForm
         Me.TabPage_GameProfiles.Location = New System.Drawing.Point(4, 22)
         Me.TabPage_GameProfiles.Name = "TabPage_GameProfiles"
         Me.TabPage_GameProfiles.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage_GameProfiles.Size = New System.Drawing.Size(776, 355)
+        Me.TabPage_GameProfiles.Size = New System.Drawing.Size(876, 355)
         Me.TabPage_GameProfiles.TabIndex = 4
         Me.TabPage_GameProfiles.Text = "Профили"
         Me.TabPage_GameProfiles.UseVisualStyleBackColor = True
@@ -597,15 +601,15 @@ Partial Class MainForm
         Me.TableLayoutPanel5.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
         Me.TableLayoutPanel5.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
         Me.TableLayoutPanel5.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel5.Size = New System.Drawing.Size(770, 349)
+        Me.TableLayoutPanel5.Size = New System.Drawing.Size(870, 349)
         Me.TableLayoutPanel5.TabIndex = 3
         '
         'Button_ToEPTU
         '
         Me.Button_ToEPTU.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Button_ToEPTU.Location = New System.Drawing.Point(173, 3)
+        Me.Button_ToEPTU.Location = New System.Drawing.Point(195, 3)
         Me.Button_ToEPTU.Name = "Button_ToEPTU"
-        Me.Button_ToEPTU.Size = New System.Drawing.Size(79, 24)
+        Me.Button_ToEPTU.Size = New System.Drawing.Size(90, 24)
         Me.Button_ToEPTU.TabIndex = 14
         Me.Button_ToEPTU.Text = "EPTU"
         Me.Button_ToEPTU.UseVisualStyleBackColor = True
@@ -617,7 +621,7 @@ Partial Class MainForm
         Me.CheckBox_BeforeKillProcess.Dock = System.Windows.Forms.DockStyle.Fill
         Me.CheckBox_BeforeKillProcess.Location = New System.Drawing.Point(3, 33)
         Me.CheckBox_BeforeKillProcess.Name = "CheckBox_BeforeKillProcess"
-        Me.CheckBox_BeforeKillProcess.Size = New System.Drawing.Size(249, 24)
+        Me.CheckBox_BeforeKillProcess.Size = New System.Drawing.Size(282, 24)
         Me.CheckBox_BeforeKillProcess.TabIndex = 13
         Me.CheckBox_BeforeKillProcess.Text = "Предварительное завершение"
         Me.CheckBox_BeforeKillProcess.UseVisualStyleBackColor = True
@@ -625,9 +629,9 @@ Partial Class MainForm
         'Button_ToPTU
         '
         Me.Button_ToPTU.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Button_ToPTU.Location = New System.Drawing.Point(88, 3)
+        Me.Button_ToPTU.Location = New System.Drawing.Point(99, 3)
         Me.Button_ToPTU.Name = "Button_ToPTU"
-        Me.Button_ToPTU.Size = New System.Drawing.Size(79, 24)
+        Me.Button_ToPTU.Size = New System.Drawing.Size(90, 24)
         Me.Button_ToPTU.TabIndex = 12
         Me.Button_ToPTU.Text = "PTU"
         Me.Button_ToPTU.UseVisualStyleBackColor = True
@@ -640,7 +644,7 @@ Partial Class MainForm
         Me.Label_ProfilesBottomInfo.Location = New System.Drawing.Point(3, 153)
         Me.Label_ProfilesBottomInfo.Margin = New System.Windows.Forms.Padding(3)
         Me.Label_ProfilesBottomInfo.Name = "Label_ProfilesBottomInfo"
-        Me.Label_ProfilesBottomInfo.Size = New System.Drawing.Size(764, 193)
+        Me.Label_ProfilesBottomInfo.Size = New System.Drawing.Size(864, 193)
         Me.Label_ProfilesBottomInfo.TabIndex = 11
         Me.Label_ProfilesBottomInfo.Text = resources.GetString("Label_ProfilesBottomInfo.Text")
         Me.Label_ProfilesBottomInfo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -650,10 +654,10 @@ Partial Class MainForm
         Me.Label_BeforeKillProcess.AutoSize = True
         Me.TableLayoutPanel5.SetColumnSpan(Me.Label_BeforeKillProcess, 2)
         Me.Label_BeforeKillProcess.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Label_BeforeKillProcess.Location = New System.Drawing.Point(258, 33)
+        Me.Label_BeforeKillProcess.Location = New System.Drawing.Point(291, 33)
         Me.Label_BeforeKillProcess.Margin = New System.Windows.Forms.Padding(3)
         Me.Label_BeforeKillProcess.Name = "Label_BeforeKillProcess"
-        Me.Label_BeforeKillProcess.Size = New System.Drawing.Size(509, 24)
+        Me.Label_BeforeKillProcess.Size = New System.Drawing.Size(576, 24)
         Me.Label_BeforeKillProcess.TabIndex = 4
         Me.Label_BeforeKillProcess.Text = "Завершит процессы игры и лаунчера перед переименованием папки"
         Me.Label_BeforeKillProcess.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -663,7 +667,7 @@ Partial Class MainForm
         Me.Button_ToLIVE.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button_ToLIVE.Location = New System.Drawing.Point(3, 3)
         Me.Button_ToLIVE.Name = "Button_ToLIVE"
-        Me.Button_ToLIVE.Size = New System.Drawing.Size(79, 24)
+        Me.Button_ToLIVE.Size = New System.Drawing.Size(90, 24)
         Me.Button_ToLIVE.TabIndex = 1
         Me.Button_ToLIVE.Text = "LIVE"
         Me.Button_ToLIVE.UseVisualStyleBackColor = True
@@ -673,10 +677,10 @@ Partial Class MainForm
         Me.Label_ToLivePtu.AutoSize = True
         Me.TableLayoutPanel5.SetColumnSpan(Me.Label_ToLivePtu, 2)
         Me.Label_ToLivePtu.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Label_ToLivePtu.Location = New System.Drawing.Point(258, 3)
+        Me.Label_ToLivePtu.Location = New System.Drawing.Point(291, 3)
         Me.Label_ToLivePtu.Margin = New System.Windows.Forms.Padding(3)
         Me.Label_ToLivePtu.Name = "Label_ToLivePtu"
-        Me.Label_ToLivePtu.Size = New System.Drawing.Size(509, 24)
+        Me.Label_ToLivePtu.Size = New System.Drawing.Size(576, 24)
         Me.Label_ToLivePtu.TabIndex = 2
         Me.Label_ToLivePtu.Text = "Переименовать папку игры в LIVE, PTU, EPTU"
         Me.Label_ToLivePtu.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -687,7 +691,7 @@ Partial Class MainForm
         Me.TabPage_SysUpdate.Location = New System.Drawing.Point(4, 22)
         Me.TabPage_SysUpdate.Name = "TabPage_SysUpdate"
         Me.TabPage_SysUpdate.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage_SysUpdate.Size = New System.Drawing.Size(776, 355)
+        Me.TabPage_SysUpdate.Size = New System.Drawing.Size(876, 355)
         Me.TabPage_SysUpdate.TabIndex = 5
         Me.TabPage_SysUpdate.Text = "Обновление программы"
         Me.TabPage_SysUpdate.UseVisualStyleBackColor = True
@@ -705,7 +709,7 @@ Partial Class MainForm
         Me.TableLayoutPanel_SysUpdate.RowCount = 2
         Me.TableLayoutPanel_SysUpdate.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.TableLayoutPanel_SysUpdate.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35.0!))
-        Me.TableLayoutPanel_SysUpdate.Size = New System.Drawing.Size(770, 349)
+        Me.TableLayoutPanel_SysUpdate.Size = New System.Drawing.Size(870, 349)
         Me.TableLayoutPanel_SysUpdate.TabIndex = 1
         '
         'WL_SysUpdateCheck
@@ -714,6 +718,7 @@ Partial Class MainForm
         Me.WL_SysUpdateCheck.Location = New System.Drawing.Point(3, 3)
         Me.WL_SysUpdateCheck.Name = "WL_SysUpdateCheck"
         Me.WL_SysUpdateCheck.Property_AlertUpdate = True
+        Me.WL_SysUpdateCheck.Property_ChangeRepository = False
         Me.WL_SysUpdateCheck.Property_DateOnline = New Date(CType(0, Long))
         Me.WL_SysUpdateCheck.Property_GitListAutoUpdate = True
         Me.WL_SysUpdateCheck.Property_GitListInterval = 120000
@@ -735,7 +740,7 @@ Partial Class MainForm
         Me.WL_SysUpdateCheck.Property_URLDownload = Nothing
         Me.WL_SysUpdateCheck.Property_VersionLocal = Nothing
         Me.WL_SysUpdateCheck.Property_VersionOnline = Nothing
-        Me.WL_SysUpdateCheck.Size = New System.Drawing.Size(764, 308)
+        Me.WL_SysUpdateCheck.Size = New System.Drawing.Size(864, 308)
         Me.WL_SysUpdateCheck.TabIndex = 0
         '
         'WL_AppUpdate
@@ -752,7 +757,7 @@ Partial Class MainForm
         Me.WL_AppUpdate.Property_PatchSrcFileName = Nothing
         Me.WL_AppUpdate.Property_PatchSrcFilePath = Nothing
         Me.WL_AppUpdate.Property_Text_Button_UpdateNow = "Обновить программу"
-        Me.WL_AppUpdate.Size = New System.Drawing.Size(764, 29)
+        Me.WL_AppUpdate.Size = New System.Drawing.Size(864, 29)
         Me.WL_AppUpdate.TabIndex = 1
         '
         'TabPage_SysSettings
@@ -761,7 +766,7 @@ Partial Class MainForm
         Me.TabPage_SysSettings.Location = New System.Drawing.Point(4, 22)
         Me.TabPage_SysSettings.Name = "TabPage_SysSettings"
         Me.TabPage_SysSettings.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage_SysSettings.Size = New System.Drawing.Size(776, 355)
+        Me.TabPage_SysSettings.Size = New System.Drawing.Size(876, 355)
         Me.TabPage_SysSettings.TabIndex = 8
         Me.TabPage_SysSettings.Text = "Системные настройки"
         Me.TabPage_SysSettings.UseVisualStyleBackColor = True
@@ -779,7 +784,7 @@ Partial Class MainForm
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60.0!))
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 101.0!))
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel1.Size = New System.Drawing.Size(770, 349)
+        Me.TableLayoutPanel1.Size = New System.Drawing.Size(870, 349)
         Me.TableLayoutPanel1.TabIndex = 2
         '
         'WL_SysLang
@@ -802,7 +807,7 @@ Partial Class MainForm
         Me.GroupBox_SystemSettingsAdditional.Dock = System.Windows.Forms.DockStyle.Fill
         Me.GroupBox_SystemSettingsAdditional.Location = New System.Drawing.Point(3, 63)
         Me.GroupBox_SystemSettingsAdditional.Name = "GroupBox_SystemSettingsAdditional"
-        Me.GroupBox_SystemSettingsAdditional.Size = New System.Drawing.Size(764, 95)
+        Me.GroupBox_SystemSettingsAdditional.Size = New System.Drawing.Size(864, 95)
         Me.GroupBox_SystemSettingsAdditional.TabIndex = 2
         Me.GroupBox_SystemSettingsAdditional.TabStop = False
         Me.GroupBox_SystemSettingsAdditional.Text = "Дополнительно:"
@@ -822,7 +827,7 @@ Partial Class MainForm
         Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
         Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
         Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
-        Me.TableLayoutPanel3.Size = New System.Drawing.Size(758, 76)
+        Me.TableLayoutPanel3.Size = New System.Drawing.Size(858, 76)
         Me.TableLayoutPanel3.TabIndex = 2
         '
         'CheckBox_HideWhenClose
@@ -831,7 +836,7 @@ Partial Class MainForm
         Me.CheckBox_HideWhenClose.Dock = System.Windows.Forms.DockStyle.Fill
         Me.CheckBox_HideWhenClose.Location = New System.Drawing.Point(3, 53)
         Me.CheckBox_HideWhenClose.Name = "CheckBox_HideWhenClose"
-        Me.CheckBox_HideWhenClose.Size = New System.Drawing.Size(373, 20)
+        Me.CheckBox_HideWhenClose.Size = New System.Drawing.Size(423, 20)
         Me.CheckBox_HideWhenClose.TabIndex = 2
         Me.CheckBox_HideWhenClose.Text = "Скрывать при закрытии окна"
         Me.CheckBox_HideWhenClose.UseVisualStyleBackColor = True
@@ -842,7 +847,7 @@ Partial Class MainForm
         Me.CheckBox_UpdateAlert.Dock = System.Windows.Forms.DockStyle.Fill
         Me.CheckBox_UpdateAlert.Location = New System.Drawing.Point(3, 3)
         Me.CheckBox_UpdateAlert.Name = "CheckBox_UpdateAlert"
-        Me.CheckBox_UpdateAlert.Size = New System.Drawing.Size(373, 19)
+        Me.CheckBox_UpdateAlert.Size = New System.Drawing.Size(423, 19)
         Me.CheckBox_UpdateAlert.TabIndex = 0
         Me.CheckBox_UpdateAlert.Text = "Оповещать о наличии обновлений локализации"
         Me.CheckBox_UpdateAlert.UseVisualStyleBackColor = True
@@ -853,7 +858,7 @@ Partial Class MainForm
         Me.CheckBox_StartUp.Dock = System.Windows.Forms.DockStyle.Fill
         Me.CheckBox_StartUp.Location = New System.Drawing.Point(3, 28)
         Me.CheckBox_StartUp.Name = "CheckBox_StartUp"
-        Me.CheckBox_StartUp.Size = New System.Drawing.Size(373, 19)
+        Me.CheckBox_StartUp.Size = New System.Drawing.Size(423, 19)
         Me.CheckBox_StartUp.TabIndex = 1
         Me.CheckBox_StartUp.Text = "Автоматическая загрузка при старте системы"
         Me.CheckBox_StartUp.UseVisualStyleBackColor = True
@@ -864,7 +869,7 @@ Partial Class MainForm
         Me.TabPage_Debug.Location = New System.Drawing.Point(4, 22)
         Me.TabPage_Debug.Name = "TabPage_Debug"
         Me.TabPage_Debug.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage_Debug.Size = New System.Drawing.Size(776, 355)
+        Me.TabPage_Debug.Size = New System.Drawing.Size(876, 355)
         Me.TabPage_Debug.TabIndex = 1
         Me.TabPage_Debug.Text = "Лог"
         Me.TabPage_Debug.UseVisualStyleBackColor = True
@@ -876,22 +881,22 @@ Partial Class MainForm
         Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel2.Controls.Add(Me.ClearLog_Button, 0, 0)
         Me.TableLayoutPanel2.Controls.Add(Me.TextBox_Debug, 0, 0)
+        Me.TableLayoutPanel2.Controls.Add(Me.Button1, 1, 1)
         Me.TableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TableLayoutPanel2.Location = New System.Drawing.Point(3, 3)
         Me.TableLayoutPanel2.Name = "TableLayoutPanel2"
         Me.TableLayoutPanel2.RowCount = 2
         Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
-        Me.TableLayoutPanel2.Size = New System.Drawing.Size(770, 349)
+        Me.TableLayoutPanel2.Size = New System.Drawing.Size(870, 349)
         Me.TableLayoutPanel2.TabIndex = 0
         '
         'ClearLog_Button
         '
-        Me.TableLayoutPanel2.SetColumnSpan(Me.ClearLog_Button, 2)
         Me.ClearLog_Button.Dock = System.Windows.Forms.DockStyle.Fill
         Me.ClearLog_Button.Location = New System.Drawing.Point(3, 322)
         Me.ClearLog_Button.Name = "ClearLog_Button"
-        Me.ClearLog_Button.Size = New System.Drawing.Size(764, 24)
+        Me.ClearLog_Button.Size = New System.Drawing.Size(429, 24)
         Me.ClearLog_Button.TabIndex = 2
         Me.ClearLog_Button.Text = "Очистить лог"
         Me.ClearLog_Button.UseVisualStyleBackColor = True
@@ -906,7 +911,7 @@ Partial Class MainForm
         Me.TextBox_Debug.Multiline = True
         Me.TextBox_Debug.Name = "TextBox_Debug"
         Me.TextBox_Debug.ScrollBars = System.Windows.Forms.ScrollBars.Both
-        Me.TextBox_Debug.Size = New System.Drawing.Size(764, 313)
+        Me.TextBox_Debug.Size = New System.Drawing.Size(864, 313)
         Me.TextBox_Debug.TabIndex = 0
         '
         'TabPage_About
@@ -914,7 +919,7 @@ Partial Class MainForm
         Me.TabPage_About.Controls.Add(Me.WL_About)
         Me.TabPage_About.Location = New System.Drawing.Point(4, 22)
         Me.TabPage_About.Name = "TabPage_About"
-        Me.TabPage_About.Size = New System.Drawing.Size(776, 355)
+        Me.TabPage_About.Size = New System.Drawing.Size(876, 355)
         Me.TabPage_About.TabIndex = 7
         Me.TabPage_About.Text = "О программе"
         Me.TabPage_About.UseVisualStyleBackColor = True
@@ -925,7 +930,7 @@ Partial Class MainForm
         Me.WL_About.Location = New System.Drawing.Point(0, 0)
         Me.WL_About.Name = "WL_About"
         Me.WL_About.Property_Name = Nothing
-        Me.WL_About.Size = New System.Drawing.Size(776, 355)
+        Me.WL_About.Size = New System.Drawing.Size(876, 355)
         Me.WL_About.TabIndex = 0
         Me.WL_About.Text_Button_SendIssueApp = "Отзыв о программе"
         Me.WL_About.Text_Button_SendIssueCore = "Отзыв о ядре"
@@ -940,6 +945,15 @@ Partial Class MainForm
         'Timer_LOG
         '
         Me.Timer_LOG.Interval = 1000
+        '
+        'Button1
+        '
+        Me.Button1.Location = New System.Drawing.Point(438, 322)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(89, 24)
+        Me.Button1.TabIndex = 3
+        Me.Button1.Text = "Button1"
+        Me.Button1.UseVisualStyleBackColor = True
         '
         'MainForm
         '
@@ -1053,4 +1067,5 @@ Partial Class MainForm
     Friend WithEvents CheckBox_StartUp As CheckBox
     Friend WithEvents CheckBox_HideWhenClose As CheckBox
     Friend WithEvents WL_Repo As WL_Repository
+    Friend WithEvents Button1 As Button
 End Class

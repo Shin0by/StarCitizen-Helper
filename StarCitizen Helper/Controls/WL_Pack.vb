@@ -88,6 +88,15 @@ Public Class WL_Pack
         End Set
     End Property
 
+    Public Property Property_ChangeRepository() As Boolean
+        Get
+            Return Me.WL_PackUpdateCheck.Property_ChangeRepository
+        End Get
+        Set(ByVal Value As Boolean)
+            Me.WL_PackUpdateCheck.Property_ChangeRepository = Value
+        End Set
+    End Property
+
     Public Property Property_UpdateTargetName() As String
         Get
             Return Me.WL_PackUpdateCheck.Property_Name
@@ -563,7 +572,7 @@ Finalize: sender.Enabled = True
         Me.GIT_PACK_LATEST = _GIT._GetLatestElement(Me.GIT_PACK_DATA._GetAll)
         If Property_ShowTestBuild = True Then GIT_PACK_DATA._Add(("Master"), "Master", Me.Property_PackageGitURL_Master, DateTime.Now, Nothing, Nothing, True)
 
-        If _VARS.PackageLatestDate <> Me.GIT_PACK_LATEST._published Then
+        If _VARS.PackageLatestDate <> Me.GIT_PACK_LATEST._published And Convert.ToDateTime("01.01.2000 00:00:00") <> Me.GIT_PACK_LATEST._published Then
             _VARS.PackageLatestDate = Me.GIT_PACK_LATEST._published
             _JSETTINGS._SetValue("configuration.external", "alert_date", _VARS.PackageLatestDate.ToString, True)
         End If

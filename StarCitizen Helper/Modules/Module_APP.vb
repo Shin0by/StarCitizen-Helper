@@ -15,6 +15,7 @@ Module Module_APP
         Public configPath As String
         Public configFullPath As String
         Public _ARGS As Class_Arguments
+        Public debug As Boolean
 
 
         Public Function _UPTIME() As TimeSpan
@@ -38,13 +39,14 @@ Module Module_APP
         End Property
 
         Sub New()
-            exePath = Application.StartupPath()
+            Me.exePath = Application.StartupPath()
             If Right(exePath, 1) <> "\" Then exePath = exePath & "\"
-            exeFullPath = Application.ExecutablePath
-            exeName = Process.GetCurrentProcess.ProcessName.ToString
-            configName = "config.json"
-            configPath = exePath
-            configFullPath = configPath & configName
+            Me.exeFullPath = Application.ExecutablePath
+            Me.exeName = Process.GetCurrentProcess.ProcessName.ToString
+            Me.configName = "config.json"
+            Me.configPath = exePath
+            Me.configFullPath = configPath & configName
+            Me.debug = Debugger.IsAttached
         End Sub
 
 

@@ -20,6 +20,7 @@ Module Module_MAIN
     Public _GIT As New Class_GIT
     Public _DEFTER As New Class_Defter
     Public WLMsg As New MsgForm
+    Public temp_var_debug As Boolean = False 'AAAAAAAAAA
 
     Public Sub InitializeStart()
         _KEYS = New Class_KEYS(MAIN_THREAD)

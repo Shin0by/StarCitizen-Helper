@@ -29,6 +29,8 @@ Public Class WL_Check
 
     Private JSON As Object = Nothing
 
+    Private bChangedRepository As Boolean = False
+
 
 
     '<----------------------------------- Basic control
@@ -76,6 +78,15 @@ Public Class WL_Check
         End Get
         Set(ByVal Value As Boolean)
             Me.bPreRelease = Value
+        End Set
+    End Property
+
+    Public Property Property_ChangeRepository() As Boolean
+        Get
+            Return Me.bChangedRepository
+        End Get
+        Set(ByVal Value As Boolean)
+            Me.bChangedRepository = Value
         End Set
     End Property
 
@@ -278,13 +289,18 @@ Public Class WL_Check
                 Thread.Sleep(1000)
             Loop
 
+            If Property_ChangeRepository = True Then
+                Property_DateOnline = Convert.ToDateTime("01.01.2000 00:00:00")
+                _GIT_Request._LatestElement = Nothing
+            End If
+
             If Me.Property_URLApi IsNot Nothing Then
                 Dim NewGitList As List(Of Module_GIT.Class_GIT.Class_GitUpdateList.Class_GitUpdateElement) = _GIT_Request._GetGitList(Me.Property_URLApi, Property_PreRelease)
                 If NewGitList.Count > 0 Then
                     Me.JSON = _GIT_Request._JSON
                     If Property_DateOnline <> _GIT_Request._LatestElement._published Then
                         If Me.Property_SetupFileName IsNot Nothing Then Me.Property_URLDownload = _GIT_Request._GetAssetByFileName(Me.Property_SetupFileName)
-                        If Property_AlertUpdate = True Then RaiseEvent _Event_NewVersion_Alert(_GIT_Request._JSON, _GIT_Request._LatestElement, Me)
+                        If Property_AlertUpdate = True And Property_ChangeRepository = False Then RaiseEvent _Event_NewVersion_Alert(_GIT_Request._JSON, _GIT_Request._LatestElement, Me)
                         Me.Invoke(Sub()
                                       Me.Property_Text_Label_Value_OnlineVersion = _GIT_Request._LatestElement._tag_name
                                       Me.Property_Text_Label_Value_OnlineDate = _GIT_Request._LatestElement._published
@@ -294,15 +310,11 @@ Public Class WL_Check
                     End If
                 End If
                 RaiseEvent _Event_Update_Complete_After(_GIT_Request._JSON, _GIT_Request._LatestElement, Me)
-                If _GIT_Request._LatestElement IsNot Nothing Then
-                    Property_DateOnline = _GIT_Request._LatestElement._published
-                Else
-                    If _GIT_Request._Result.Err._Flag = False Then
-                        'If _GIT_Request._Result.Err._Number <> 403 Then
-                        Property_DateOnline = Convert.ToDateTime("01.01.2000 00:00:00")
-                        'End If
-                    End If
-                End If
+                If _GIT_Request._LatestElement IsNot Nothing Then Property_DateOnline = _GIT_Request._LatestElement._published
+            End If
+
+            If Property_ChangeRepository = True Then
+                Property_ChangeRepository = False
             End If
 
             For i = 1 To 1000

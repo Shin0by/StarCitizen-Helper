@@ -291,6 +291,8 @@ Public Class WL_Repository
         MAIN_THREAD.WL_Pack.Property_RepositoryName = Node.Parent.Text & "/" & Node.Text
 
         UpdateState()
+
+        If Initialization = False Then MAIN_THREAD.WL_Pack.Property_ChangeRepository = True
     End Sub
 
     Function ParseToolTip(Node As TreeNode, GetLink As Boolean) As String
