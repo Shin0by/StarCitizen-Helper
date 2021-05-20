@@ -55,6 +55,7 @@ Finalize:   Exit Sub
 
         Private Sub MyApplication_StartupNextInstance(sender As Object, e As StartupNextInstanceEventArgs) Handles Me.StartupNextInstance
             _APP._ARGS = New Class_Arguments(Nothing, e)
+            _APP._NextInstanceRequest()
         End Sub
     End Class
 End Namespace

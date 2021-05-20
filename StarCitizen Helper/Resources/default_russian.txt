@@ -109,8 +109,20 @@ Window_Tab_About = О программе
 Window_Tab_Repository = Репозиторий
 
 #Window Menu
+Menu_Main_Modification = Скрыть программу
+Menu_Main_Modification_Enable = Скрыть программу
+Menu_Main_Modification_Disable = Скрыть программу
+Menu_Main_Update = Отобразить программу
+Menu_Main_Update_FullInstall = Отобразить программу
+Menu_Main_ProcessKiller = Отобразить программу
+Menu_Main_ProcessKiller_Enabled = Отобразить программу
+Menu_Main_ProcessKiller_Disabled = Отобразить программу
+Menu_Main_ProcessKiller_KillProcess = Отобразить программу
+Menu_Main_MoveProfiles = Перемещение профилей
+Menu_Main_MoveProfiles_ForceClose = Предварительное завершение
 Menu_Main_HideApp = Скрыть программу
 Menu_Main_ShowApp = Отобразить программу
+Menu_Main_Exit = Выход
 
 #Window other
 Core_MSG_BeginVerification = Начата верификация ядра

@@ -49,6 +49,17 @@ Module Module_APP
             Me.debug = Debugger.IsAttached
         End Sub
 
+        Public Sub _NextInstanceRequest()
+            If MAIN_THREAD IsNot Nothing Then
+                If Initialization = False Then
+                    If MAIN_THREAD.Visible = False Then
+                        MAIN_THREAD.Show()
+                        If MAIN_THREAD.WindowState = FormWindowState.Minimized Then MAIN_THREAD.WindowState = FormWindowState.Normal
+                        MAIN_THREAD.ShowWinToolStripMenuItem.Text = _LANG._Get("Menu_Main_HideApp")
+                    End If
+                End If
+            End If
+        End Sub
 
         Class Class_Arguments
             Private data As New Dictionary(Of String, String)

@@ -226,6 +226,7 @@ Public Class MainForm
         'Hide menu
         If Me.Visible = False Then
             Me.Show()
+            If Me.WindowState = FormWindowState.Minimized Then Me.WindowState = FormWindowState.Normal
             Me.ShowWinToolStripMenuItem.Text = _LANG._Get("Menu_Main_HideApp")
         Else
             Me.Hide()

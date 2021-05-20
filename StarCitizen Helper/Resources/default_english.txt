@@ -109,8 +109,20 @@ Window_Tab_About = About
 Window_Tab_Repository = Repository
 
 #Window Menu
-Menu_Main_HideApp = Hide App
-Menu_Main_ShowApp = Show App
+Menu_Main_Modification = Modification
+Menu_Main_Modification_Enable = Enable (patch)
+Menu_Main_Modification_Disable = Disable (original)
+Menu_Main_Update = Localization
+Menu_Main_Update_FullInstall = Full install
+Menu_Main_ProcessKiller = Force ñlose
+Menu_Main_ProcessKiller_Enabled = Enabled
+Menu_Main_ProcessKiller_Disabled = Disabled
+Menu_Main_ProcessKiller_KillProcess = Force close
+Menu_Main_MoveProfiles = Profiles
+Menu_Main_MoveProfiles_ForceClose = Force close
+Menu_Main_HideApp = Hide app.
+Menu_Main_ShowApp = Show app.
+Menu_Main_Exit = Exit
 
 #Window other
 Core_MSG_BeginVerification = Core verification started

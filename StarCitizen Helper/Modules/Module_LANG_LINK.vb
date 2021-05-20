@@ -1,5 +1,21 @@
 ﻿Module Module_LANG_LINK
     Public Sub SetLanguageLink()
+        'MainMenu
+        _LANG._Link(MAIN_THREAD.Patch_ToolStripMenuItem, "Text", "Menu_Main_Modification")
+        _LANG._Link(MAIN_THREAD.ModOn_ToolStripMenuItem, "Text", "Menu_Main_Modification_Enable")
+        _LANG._Link(MAIN_THREAD.ModOff_ToolStripMenuItem, "Text", "Menu_Main_Modification_Disable")
+        _LANG._Link(MAIN_THREAD.Update_ToolStripMenuItem, "Text", "Menu_Main_Update")
+        _LANG._Link(MAIN_THREAD.InstallAll_ToolStripMenuItem, "Text", "Menu_Main_Update_FullInstall")
+        _LANG._Link(MAIN_THREAD.PKill_ToolStripMenuItem, "Text", "Menu_Main_ProcessKiller")
+        _LANG._Link(MAIN_THREAD.KillerThread_ToolStripMenuItem, "Text", "Menu_Main_ProcessKiller_Enabled")
+        '_LANG._Link(MAIN_THREAD.KillerThread_ToolStripMenuItem, "Text", "Menu_Main_ProcessKiller_Disabled")
+        _LANG._Link(MAIN_THREAD.KillProcesses_ToolStripMenuItem, "Text", "Menu_Main_ProcessKiller_KillProcess")
+        _LANG._Link(MAIN_THREAD.BeforeKillProcess_ToolStripMenuItem, "Text", "Menu_Main_MoveProfiles")
+        _LANG._Link(MAIN_THREAD.Profiles_ToolStripMenuItem, "Text", "Menu_Main_MoveProfiles")
+        _LANG._Link(MAIN_THREAD.BeforeKillProcess_ToolStripMenuItem, "Text", "Menu_Main_MoveProfiles_ForceClose")
+        _LANG._Link(MAIN_THREAD.ShowWinToolStripMenuItem, "Text", "Menu_Main_HideApp")
+        _LANG._Link(MAIN_THREAD.ExitToolStripMenuItem, "Text", "Menu_Main_Exit")
+
         'TabPage SysSettings
         _LANG._Link(MAIN_THREAD.WL_SysLang, "Property_Text_Group_SystemLanguage", "SysLanguage_Group_Language")
         _LANG._Link(MAIN_THREAD.WL_SysLang, "Property_Text_Label_SetLanguage", "SysLanguage_ButtonInfo_SetLanguage")
