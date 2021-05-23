@@ -192,7 +192,7 @@ Helper_MSG_RenameGameFolder = Folder successfully renamed
 Helper_MSG_CoreVerificationOK = Core successfully verified
 Helper_MSG_CoreVerificationError = Core not verified
 Helper_MSG_CoreNotEnabled = Core not enabled\n
-Helper_MSG_CoreErrorRecomendation = Core modified! It may contain malicious content. Are you sure you want use this localization package?\n\nStrongly recommended to download localization packages only from trusted sources.\n\nPlease, navigate to [{0}] tab and send review with link where you download this one by clicking [{1}] button.\n\n
+Helper_MSG_CoreErrorRecomendation = This error often occurs in the absence of the latest Windows updates related to methods for verifying the digital signature of the product. It is recommended to install updates and try again.\n\nCore modified! It may contain malicious content. Are you sure you want use this localization package?\n\nStrongly recommended to download localization packages only from trusted sources.\n\nPlease, navigate to [{0}] tab and send review with link where you download this one by clicking [{1}] button.\n\n
 
 Module GIT
 GIT_MSG_AccessDeniedLimit = Access denied, exceeded limit of requests\n{0}
