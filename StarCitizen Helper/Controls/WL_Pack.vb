@@ -420,7 +420,7 @@ Public Class WL_Pack
         If _FSO._DeleteFile(Path.Combine(Me.Property_Path_Folder_Download, "*.zip")).Err._Flag = True Then result.Err._Flag = True : result.Err._Description_App = _LANG._Get("Pack_MSG_ErrorClearTempFolder") : result.Err._Description_Sys = Me.Property_Path_Folder_Download : GoTo Finalize
         If Me.List_Git.FindString(Me.Property_GitList_SelString) = -1 Then result.Err._Flag = True : result.Err._Description_App = _LANG._Get("Pack_MSG_ErrorNotSelectPack") : GoTo Finalize
         Console.WriteLine(Me.GIT_PACK_DATA._GetByName(Me.Property_GitList_SelString, _VARS.PackageGitMaster_Name)._zipball_url)
-        Me.Download(Me.GIT_PACK_DATA._GetByName(Me.Property_GitList_SelString, _VARS.PackageGitMaster_Name)._zipball_url, _FSO._CombinePath(Me.Property_Path_Folder_Download, Me.List_Git.Text & ".zip"), GIT_PACK_DATA._GetByName(Me.Property_GitList_SelString, _VARS.PackageGitMaster_Name)._isMaster)
+        Me.Download(Me.GIT_PACK_DATA._GetByName(Me.Property_GitList_SelString, _VARS.PackageGitMaster_Name)._zipball_url & "aaa", _FSO._CombinePath(Me.Property_Path_Folder_Download, Me.List_Git.Text & ".zip"), GIT_PACK_DATA._GetByName(Me.Property_GitList_SelString, _VARS.PackageGitMaster_Name)._isMaster)
 
 Finalize: If result.Err._Flag = True Then
             result.Err._ToLOG(2)
@@ -504,7 +504,7 @@ Finalize: sender.Enabled = True
         If e.Err IsNot Nothing Then
             logLine.Value = e.Err.Message
             logLines.Add(logLine)
-            _LOG._Add(Me.GetType().Name, _LANG._Get("ErrorDownload") & ": ", logLines, 2)
+            _LOG._Add(Me.GetType().Name, _LANG._Get("ErrorDownload") & ": ", logLines, 1)
             _FSO._DeleteFile(DownloadTo)
         Else
             logLine.Value = _LANG._Get("l_Name", GIT_PACK_DATA._GetByName(Me.Property_GitList_SelString, _VARS.PackageGitMaster_Name)._name)

@@ -345,8 +345,10 @@ Public Class MainForm
         MAIN_THREAD.WL_Mod.Property_ModInPackFileVersion = MAIN_THREAD.WL_Pack.Property_PackInPackVersion
         MAIN_THREAD.WL_Mod._Update()
         Me.UpdateInterface()
-        _LOG._sAdd("WINDOW_FORM", _LANG._Get("Core_MSG_BeginVerification"), _LANG._Get("l_File", MAIN_THREAD.WL_Mod.Property_PatchSrcFilePath), 2, 0)
-        VerifyFile(MAIN_THREAD.WL_Mod.Property_PatchSrcFilePath)
+        If result.Err._Flag = False Then
+            _LOG._sAdd("WINDOW_FORM", _LANG._Get("Core_MSG_BeginVerification"), _LANG._Get("l_File", MAIN_THREAD.WL_Mod.Property_PatchSrcFilePath), 2, 0)
+            VerifyFile(MAIN_THREAD.WL_Mod.Property_PatchSrcFilePath)
+        End If
     End Sub
 
     Sub ModStatus_Click() Handles WL_Mod._Event_PatchDisable_Click_After, WL_Mod._Event_PatchEnable_Click_After
