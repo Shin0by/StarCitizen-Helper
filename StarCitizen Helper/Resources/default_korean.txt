@@ -84,6 +84,9 @@ l_UpdateComplete = {0} 다운로드 완료:
 l_Err_ElementAlreadyExist = Element "{0}" already exists, please set a new unique value
 l_Err_ElementAlreadyExistInGrp = Element "{1}" already exists in group "{0}", required a unique value
 l_Err_IncorrectLink = Incorrect link: {0}
+l_Version = Version: {0}
+l_Date = Date: {0}
+l_Repository = Repository: {0}
 
 #FileSystem
 File_MSG_CheckFile = [{0}] 파일 확인 중
@@ -197,6 +200,8 @@ Helper_MSG_CoreErrorRecomendation = This error often occurs in the absence of th
 #Module GIT
 GIT_MSG_AccessDeniedLimit = 액세스가 거부되었습니다. 요청 회수 제한 초과\n{0}
 GIT_MSG_CannotLoadBuildList = 깃허브에서 실제 데이터를 로드 할 수 없습니다.\n{0}
+GIT_MSG_CannotSendStatRequest = Cannot send stat request\n{0}
+GIT_MSG_SendStatRequest = Stat request:
 
 #Watcher
 Watcher_MSG_FileChangedDisable = 트래킹된 파일이 삭제됨 트래킹이 비활성화됨.
@@ -266,6 +271,7 @@ Modification_Bottom_Info = 경고! [{0}] 탭에 나열된 모든 기능에 대�
 Modification_OpenFileDialog_GameFile = 게임 실행파일
 Modification_MSG_CoreNotFound = {0} 을/를 찾을 수 없습니다. 창 하단의 지침을 확인하십시오.
 Modification_MSG_VersionUnspecified = 알 수 없는 버전
+Modification_ListName_LocalizationType = Localization variations
 
 #SysLanguage
 Pack_MSG_CreateLangFolder = 애플리케이션 언어팩을 위한 폴더 생성됨:\n\t{0}

@@ -282,6 +282,7 @@ Partial Class MainForm
         '
         Me.WL_Mod.BackColor = System.Drawing.SystemColors.ControlLightLight
         Me.WL_Mod.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.WL_Mod.Localization = ""
         Me.WL_Mod.Location = New System.Drawing.Point(3, 3)
         Me.WL_Mod.Name = "WL_Mod"
         Me.WL_Mod.Property_GameExeFileName = Nothing
@@ -300,6 +301,7 @@ Partial Class MainForm
         Me.WL_Mod.Text_Button_Enable = "Вкл. модификацию"
         Me.WL_Mod.Text_Button_Path = "Исполняемый файл"
         Me.WL_Mod.Text_Label_Bottom = ""
+        Me.WL_Mod.Text_Label_Localization = "Локализация"
         Me.WL_Mod.Text_Label_ModOff = "Выключить модификацию"
         Me.WL_Mod.Text_Label_ModOn = "Включить модификацию"
         '
@@ -322,9 +324,13 @@ Partial Class MainForm
         Me.WL_Pack.Name = "WL_Pack"
         Me.WL_Pack.Property_ChangeRepository = False
         Me.WL_Pack.Property_DateOnline = New Date(CType(0, Long))
+        Me.WL_Pack.Property_FilePath_Config = Nothing
+        Me.WL_Pack.Property_FilePath_User = Nothing
         Me.WL_Pack.Property_GitList_AutoUpdate = True
         Me.WL_Pack.Property_GitList_Interval = 120000
         Me.WL_Pack.Property_GitList_SelString = Nothing
+        Me.WL_Pack.Property_LocalizationDefault = Nothing
+        Me.WL_Pack.Property_LocalizationList = CType(resources.GetObject("WL_Pack.Property_LocalizationList"), System.Collections.Generic.List(Of String))
         Me.WL_Pack.Property_Name_File_Download = Nothing
         Me.WL_Pack.Property_Name_File_Meta = Nothing
         Me.WL_Pack.Property_PackageGitURL_Api = Nothing
@@ -368,6 +374,7 @@ Partial Class MainForm
         Me.WL_Repo.Property_GitApi = Nothing
         Me.WL_Repo.Property_GitMaster = Nothing
         Me.WL_Repo.Property_GitPage = Nothing
+        Me.WL_Repo.Property_GitStatPage = Nothing
         Me.WL_Repo.Property_RepositoryLanguage = Nothing
         Me.WL_Repo.Property_RepositoryName = Nothing
         Me.WL_Repo.Size = New System.Drawing.Size(870, 349)
@@ -501,10 +508,11 @@ Partial Class MainForm
         '
         'Button_RemoveProccessKill
         '
+        Me.Button_RemoveProccessKill.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button_RemoveProccessKill.Enabled = False
         Me.Button_RemoveProccessKill.Location = New System.Drawing.Point(3, 123)
         Me.Button_RemoveProccessKill.Name = "Button_RemoveProccessKill"
-        Me.Button_RemoveProccessKill.Size = New System.Drawing.Size(245, 24)
+        Me.Button_RemoveProccessKill.Size = New System.Drawing.Size(279, 24)
         Me.Button_RemoveProccessKill.TabIndex = 5
         Me.Button_RemoveProccessKill.Text = "Удалить процесс"
         Me.Button_RemoveProccessKill.UseVisualStyleBackColor = True

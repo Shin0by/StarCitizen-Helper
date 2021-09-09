@@ -9,6 +9,7 @@ Public Class WL_Repository
     Private sPackGitMaster As String = Nothing
     Private sPackGitPage As String = Nothing
     Private sPackGitApi As String = Nothing
+    Private sPackGitStat As String = Nothing
 
     Private sRepositoryLanguage As String = Nothing
     Private sRepositoryName As String = Nothing
@@ -128,6 +129,16 @@ Public Class WL_Repository
             Me.sPackGitPage = uri.AbsoluteUri
             Me.Property_GitApi = "https://api." & uri.Host & "/repos" & uri.LocalPath & "/releases"
             Me.Property_GitMaster = "https://codeload." & uri.Host & uri.LocalPath & "/zip/master"
+            Me.Property_GitStatPage = Me.sPackGitPage & "/releases/download/[TAG]/index.txt"
+        End Set
+    End Property
+
+    Public Property Property_GitStatPage() As String
+        Get
+            Return Me.sPackGitStat
+        End Get
+        Set(ByVal Value As String)
+            Me.sPackGitStat = Value
         End Set
     End Property
 

@@ -23,6 +23,8 @@ Partial Class WL_Modification
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.TableLayoutPanel = New System.Windows.Forms.TableLayoutPanel()
+        Me.Label_SubLocal = New System.Windows.Forms.Label()
+        Me.List_SubLocal = New System.Windows.Forms.ComboBox()
         Me.Label_TextBottom = New System.Windows.Forms.Label()
         Me.Button_Enable = New System.Windows.Forms.Button()
         Me.Label_FileWatcher = New System.Windows.Forms.Label()
@@ -41,6 +43,8 @@ Partial Class WL_Modification
         Me.TableLayoutPanel.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
         Me.TableLayoutPanel.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
         Me.TableLayoutPanel.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
+        Me.TableLayoutPanel.Controls.Add(Me.Label_SubLocal, 1, 4)
+        Me.TableLayoutPanel.Controls.Add(Me.List_SubLocal, 0, 4)
         Me.TableLayoutPanel.Controls.Add(Me.Label_TextBottom, 0, 5)
         Me.TableLayoutPanel.Controls.Add(Me.Button_Enable, 0, 2)
         Me.TableLayoutPanel.Controls.Add(Me.Label_FileWatcher, 1, 1)
@@ -60,8 +64,34 @@ Partial Class WL_Modification
         Me.TableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
         Me.TableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
         Me.TableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
         Me.TableLayoutPanel.Size = New System.Drawing.Size(566, 279)
         Me.TableLayoutPanel.TabIndex = 3
+        '
+        'Label_SubLocal
+        '
+        Me.Label_SubLocal.AutoSize = True
+        Me.TableLayoutPanel.SetColumnSpan(Me.Label_SubLocal, 2)
+        Me.Label_SubLocal.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Label_SubLocal.Location = New System.Drawing.Point(191, 123)
+        Me.Label_SubLocal.Margin = New System.Windows.Forms.Padding(3)
+        Me.Label_SubLocal.Name = "Label_SubLocal"
+        Me.Label_SubLocal.Size = New System.Drawing.Size(372, 24)
+        Me.Label_SubLocal.TabIndex = 14
+        Me.Label_SubLocal.Text = "Варианты локализации"
+        Me.Label_SubLocal.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'List_SubLocal
+        '
+        Me.List_SubLocal.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.List_SubLocal.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.List_SubLocal.FormattingEnabled = True
+        Me.List_SubLocal.IntegralHeight = False
+        Me.List_SubLocal.Location = New System.Drawing.Point(4, 124)
+        Me.List_SubLocal.Margin = New System.Windows.Forms.Padding(4, 4, 4, 2)
+        Me.List_SubLocal.Name = "List_SubLocal"
+        Me.List_SubLocal.Size = New System.Drawing.Size(180, 21)
+        Me.List_SubLocal.TabIndex = 13
         '
         'Label_TextBottom
         '
@@ -193,4 +223,6 @@ Partial Class WL_Modification
     Friend WithEvents Label_ModOn As Label
     Friend WithEvents Label_ModOff As Label
     Friend WithEvents CheckBox_FileWatcher As CheckBox
+    Friend WithEvents List_SubLocal As ComboBox
+    Friend WithEvents Label_SubLocal As Label
 End Class

@@ -11,10 +11,12 @@ Module Module_INI
         Public Section As String
         Public Key As String
         Public Value As String
+        Public SkipInvalidLines As Boolean
     End Class
     Class Class_INI
         Private Config = New FileIniDataParser()
         Private FilePath As String = Nothing
+        Public SkipInvalidLines As Boolean = False
 
         Public WriteOnly Property _FSO() As String
             Set(ByVal Value As String)
@@ -25,11 +27,20 @@ Module Module_INI
         Public Function _Write(Section As String, Key As String, Value As String) As Boolean
             Try
                 Dim Parser = New FileIniDataParser()
-                Dim data As Model.IniData = Parser.ReadFile(Me.FilePath)
-                data.Sections.AddSection(Section)
-                data(Section).RemoveKey(Key)
-                data(Section).AddKey(Key, Value)
-                Parser.WriteFile(Me.FilePath, data)
+                Parser.Parser.Configuration.SkipInvalidLines = Me.SkipInvalidLines
+                Dim Data As Model.IniData = Parser.ReadFile(Me.FilePath)
+                Data.Configuration.SkipInvalidLines = Me.SkipInvalidLines
+
+                If Section IsNot Nothing Then
+                    Data.Sections.AddSection(Section)
+                    Data(Section).RemoveKey(Key)
+                    Data(Section).AddKey(Key, Value)
+                    Parser.WriteFile(Me.FilePath, Data)
+                Else
+                    Data.Global.RemoveKey(Key)
+                    Data.Global.AddKey(Key, Value)
+                    Parser.WriteFile(Me.FilePath, Data)
+                End If
                 Return True
             Catch ex As Exception
                 Dim LogLine As New List(Of LOG_SubLine)
@@ -37,7 +48,7 @@ Module Module_INI
                 LogSubLine.List.Add(_LANG._Get("Information") & ":")
                 LogSubLine.List.Add(_LANG._Get("l_Operation", _LANG._Get("Write")))
                 LogSubLine.List.Add(Key & " = " & Value)
-                LogSubLine.List.Add(_LANG._Get("l_File", _APP.configName))
+                LogSubLine.List.Add(_LANG._Get("l_File", Me.FilePath))
                 LogSubLine.List.Add("")
                 LogSubLine.List.Add(_LANG._Get("l_Description", Err.Description))
                 LogLine.Add(LogSubLine)
@@ -51,26 +62,68 @@ Module Module_INI
             result.Section = Section
             result.Key = Key
             result.Value = DefaultValue
+            result.SkipInvalidLines = Me.SkipInvalidLines
             result.ErrDescription = _LANG._Get("File_MSG_SectionNotFound", Section, _APP.configFullPath)
 
+            Me.Config.parser.configuration.skipinvalidlines = Me.SkipInvalidLines
+            Dim Data As IniParser.Model.IniData = Me.Config.ReadFile(Me.FilePath)
+            Data = Me.Config.ReadFile(Me.FilePath)
+            Data.Configuration.SkipInvalidLines = Me.SkipInvalidLines
+
             Try
-                Dim Data As IniParser.Model.SectionDataCollection = Me.Config.ReadFile(Me.FilePath).sections
-                If Data.ContainsSection(Section) Then
-                    If Data(Section).ContainsKey(Key) Then
+                If Section IsNot Nothing Then
+                    If Data.Sections.Count > 0 Then
+                        Dim DataSection As IniParser.Model.SectionDataCollection = Data.Sections
+                        If DataSection.ContainsSection(Section) Then
+                            If DataSection(Section).ContainsKey(Key) Then
+                                result.ErrDescription = _LANG._Get("File_MSG_ParameterNotFound", Key, Section, _APP.configFullPath)
+                                If Len(DataSection(Section).GetKeyData(Key).Value) > 0 Then
+
+                                    If Variants Is Nothing Then
+                                        result.Value = DataSection(Section).GetKeyData(Key).Value
+                                        result.ErrDescription = Nothing
+                                        Return result
+                                    Else
+                                        If Variants.Count = 0 Then
+                                            result.Value = DataSection(Section).GetKeyData(Key).Value
+                                            result.ErrDescription = Nothing
+                                            Return result
+                                        Else
+                                            For Each elem In Variants
+                                                If DataSection(Section).GetKeyData(Key).Value.ToString = elem.ToString Then
+                                                    result.Value = DataSection(Section).GetKeyData(Key).Value
+                                                    result.ErrDescription = Nothing
+                                                    Return result
+                                                End If
+                                            Next
+                                        End If
+                                    End If
+                                End If
+
+                            End If
+                        End If
+                    End If
+                Else
+                    Dim DataKey As IniParser.Model.KeyDataCollection = Data.Global
+                    If DataKey.ContainsKey(Key) Then
+
                         result.ErrDescription = _LANG._Get("File_MSG_ParameterNotFound", Key, Section, _APP.configFullPath)
-                        If Len(Data(Section).GetKeyData(Key).Value) > 0 Then
+                        If Len(DataKey.GetKeyData(Key).Value) > 0 Then
 
                             If Variants Is Nothing Then
-                                result.Value = Data(Section).GetKeyData(Key).Value
+                                result.Value = DataKey.GetKeyData(Key).Value
+                                result.ErrDescription = Nothing
                                 Return result
                             Else
                                 If Variants.Count = 0 Then
-                                    result.Value = Data(Section).GetKeyData(Key).Value
+                                    result.Value = DataKey.GetKeyData(Key).Value
+                                    result.ErrDescription = Nothing
                                     Return result
                                 Else
                                     For Each elem In Variants
-                                        If Data(Section).GetKeyData(Key).Value.ToString = elem.ToString Then
-                                            result.Value = Data(Section).GetKeyData(Key).Value
+                                        If DataKey.GetKeyData(Key).Value.ToString = elem.ToString Then
+                                            result.Value = DataKey.GetKeyData(Key).Value
+                                            result.ErrDescription = Nothing
                                             Return result
                                         End If
                                     Next

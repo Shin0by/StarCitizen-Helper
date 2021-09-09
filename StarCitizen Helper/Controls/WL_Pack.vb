@@ -15,6 +15,8 @@ Public Class WL_Pack
     Public Event _Event_ShowTestBuild_Click_Before()
     Public Event _Event_ShowTestBuild_Click_After()
 
+    Public Event _Event_GetLocalsUpdate_After()
+
     Public Event _Event_NewVersion_Alert(JSON As Object, LatestElement As Object, Self As WL_Check)
 
     Public Event _Event_Controls_Enabled_Before(Enabled As Boolean)
@@ -22,6 +24,8 @@ Public Class WL_Pack
 
     Public Event _Event_Download_Before()
     Public Event _Event_Download_After(DownloadFrom As String, DownloadTo As String, e As WL_Download.DownloadProgressElement)
+
+    Public Event _Event_ChangeRepository_Before()
 
     Public Headers As New WebHeaderCollection
 
@@ -54,6 +58,11 @@ Public Class WL_Pack
     Private dDateOnline As DateTime = Nothing
     Private FirstUpdate As Boolean = True
 
+    Private lLocal_LangList As New List(Of String)
+    Private lLocal_LangDefault As String = Nothing
+    Private sFilePath_Config_System As String = Nothing
+    Private sFilePath_Config_User As String = Nothing
+
     '<----------------------------------- Basic control
     Public Sub New()
         InitializeComponent()
@@ -78,6 +87,47 @@ Public Class WL_Pack
         Next
     End Sub
 
+    Public Property Property_FilePath_Config() As String
+        Get
+            Return Me.sFilePath_Config_System
+        End Get
+        Set(ByVal Value As String)
+            If _FSO._FileExits(Value) = True Then
+                Me.sFilePath_Config_System = Value
+            Else
+                Me.sFilePath_Config_System = Nothing
+            End If
+        End Set
+    End Property
+
+    Public Property Property_FilePath_User() As String
+        Get
+            Return Me.sFilePath_Config_User
+        End Get
+        Set(ByVal Value As String)
+            Me.sFilePath_Config_User = Value
+        End Set
+    End Property
+
+    Public Property Property_LocalizationList() As List(Of String)
+        Get
+            Return Me.lLocal_LangList
+        End Get
+        Set(ByVal Value As List(Of String))
+            Me.lLocal_LangList = Value
+        End Set
+    End Property
+
+    Public Property Property_LocalizationDefault() As String
+        Get
+            Return Me.lLocal_LangDefault
+        End Get
+        Set(ByVal Value As String)
+            Me.lLocal_LangDefault = Value
+        End Set
+    End Property
+
+
     Public Property Property_DateOnline() As DateTime
         Get
             Return Me.dDateOnline
@@ -94,6 +144,7 @@ Public Class WL_Pack
         End Get
         Set(ByVal Value As Boolean)
             Me.WL_PackUpdateCheck.Property_ChangeRepository = Value
+            RaiseEvent _Event_ChangeRepository_Before()
         End Set
     End Property
 
@@ -420,7 +471,10 @@ Public Class WL_Pack
         If _FSO._DeleteFile(Path.Combine(Me.Property_Path_Folder_Download, "*.zip")).Err._Flag = True Then result.Err._Flag = True : result.Err._Description_App = _LANG._Get("Pack_MSG_ErrorClearTempFolder") : result.Err._Description_Sys = Me.Property_Path_Folder_Download : GoTo Finalize
         If Me.List_Git.FindString(Me.Property_GitList_SelString) = -1 Then result.Err._Flag = True : result.Err._Description_App = _LANG._Get("Pack_MSG_ErrorNotSelectPack") : GoTo Finalize
         Console.WriteLine(Me.GIT_PACK_DATA._GetByName(Me.Property_GitList_SelString, _VARS.PackageGitMaster_Name)._zipball_url)
-        Me.Download(Me.GIT_PACK_DATA._GetByName(Me.Property_GitList_SelString, _VARS.PackageGitMaster_Name)._zipball_url & "aaa", _FSO._CombinePath(Me.Property_Path_Folder_Download, Me.List_Git.Text & ".zip"), GIT_PACK_DATA._GetByName(Me.Property_GitList_SelString, _VARS.PackageGitMaster_Name)._isMaster)
+        Me.Download(Me.GIT_PACK_DATA._GetByName(Me.Property_GitList_SelString, _VARS.PackageGitMaster_Name)._zipball_url, _FSO._CombinePath(Me.Property_Path_Folder_Download, Me.List_Git.Text & ".zip"), GIT_PACK_DATA._GetByName(Me.Property_GitList_SelString, _VARS.PackageGitMaster_Name)._isMaster)
+
+        MAIN_THREAD.WL_Repo.Property_GitStatPage = Replace(MAIN_THREAD.WL_Repo.Property_GitStatPage, "[TAG]", Me.GIT_PACK_DATA._GetByName(Me.Property_GitList_SelString, _VARS.PackageGitMaster_Name)._tag_name)
+        Dim stat As Boolean = Me.WL_Download.UpdateStat(MAIN_THREAD.WL_Repo.Property_GitStatPage)
 
 Finalize: If result.Err._Flag = True Then
             result.Err._ToLOG(2)
@@ -441,6 +495,8 @@ Finalize: If result.Err._Flag = True Then
         _FSO._DeleteFile(Me.Property_Path_File_Meta).Err._Flag = False
         _FSO._WriteTextFile(Me.Property_PackInPackVersion, Me.Property_Path_File_Meta, System.Text.Encoding.UTF8)
         Me.Property_PackInGameVersion = Me.Property_PackInPackVersion
+
+        GetLocals()
 
 Finalize: sender.Enabled = True
         RaiseEvent _Event_InstallFull_Button_Click_After()
@@ -565,6 +621,27 @@ Finalize: sender.Enabled = True
         RaiseEvent _Event_ListGit_List_Change_After()
     End Sub
 
+
+    Public Sub GetLocals()
+        Me.Property_FilePath_Config = MAIN_THREAD.WL_Mod.Property_GameModFolderPath & "\" & _VARS.ConfigFile_Name_System
+        Me.Property_FilePath_User = MAIN_THREAD.WL_Mod.Property_GameRootFolderPath & "\" & _VARS.ConfigFile_Name_User
+        If Me.Property_FilePath_Config Is Nothing Then Exit Sub
+
+        Dim _SYSTEM As New Class_INI
+        _SYSTEM.SkipInvalidLines = True
+        _SYSTEM._FSO = Me.Property_FilePath_Config
+
+        Me.Property_LocalizationDefault = _SYSTEM._GET_VALUE(Nothing, "g_language", Nothing).Value.Trim
+        If Len(Me.Property_LocalizationDefault) > 0 Then
+            Dim LocalList As New List(Of String)
+            For Each elem As String In Split(_SYSTEM._GET_VALUE(Nothing, "sys_languages", Me.Property_LocalizationDefault).Value, ",")
+                LocalList.Add(Trim(elem))
+            Next
+            Me.Property_LocalizationList = LocalList
+        End If
+
+        RaiseEvent _Event_GetLocalsUpdate_After()
+    End Sub
     '-----------------------------------> Logic
 
     '<----------------------------------- 'Callback

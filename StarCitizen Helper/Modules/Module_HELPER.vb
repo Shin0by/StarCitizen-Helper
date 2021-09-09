@@ -140,6 +140,33 @@ Module Module_HELPER
         _VARS.GameProcessLauncher = _JSETTINGS._GetValue("configuration.main.profiles.launcher", Nothing)
     End Sub
 
+    Public Sub LoadUserCfgFile()
+        If MAIN_THREAD.WL_Pack.Property_LocalizationDefault Is Nothing Then Exit Sub
+        If MAIN_THREAD.WL_Pack.Property_FilePath_User Is Nothing Then Exit Sub
+
+        Dim _USER As New Class_INI
+        _USER.SkipInvalidLines = True
+        _USER._FSO = MAIN_THREAD.WL_Pack.Property_FilePath_User
+
+        Dim temp As String = Nothing
+
+        If MAIN_THREAD.WL_Pack.Property_LocalizationList.Count > 0 Then
+            Dim ValidList(MAIN_THREAD.WL_Pack.Property_LocalizationList.Count - 1) As String
+            For i = 0 To MAIN_THREAD.WL_Pack.Property_LocalizationList.Count - 1
+                ValidList(i) = MAIN_THREAD.WL_Pack.Property_LocalizationList(i)
+            Next i
+            temp = _USER._GET_VALUE(Nothing, "g_language", MAIN_THREAD.WL_Pack.Property_LocalizationDefault, ValidList).Value
+
+            If MAIN_THREAD.WL_Mod.Localization <> temp Then
+                MAIN_THREAD.WL_Mod.Localization = temp
+                _USER._Write(Nothing, "g_language", MAIN_THREAD.WL_Mod.Localization)
+            End If
+        Else
+            MAIN_THREAD.WL_Mod.Localization = Nothing
+            _USER._Write(Nothing, "g_language", MAIN_THREAD.WL_Mod.Localization)
+        End If
+    End Sub
+
     Public Function StringToBool(Value As String) As Boolean
         On Error Resume Next
         Dim result As Boolean = False

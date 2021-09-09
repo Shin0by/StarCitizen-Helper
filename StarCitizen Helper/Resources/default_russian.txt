@@ -84,6 +84,9 @@ l_UpdateComplete = Загрузка {0} успешно завершена:
 l_Err_ElementAlreadyExist = Элемент "{0}" уже существует, задайте новое уникальное значение
 l_Err_ElementAlreadyExistInGrp = Элемент "{1}" уже существует в группе "{0}", задайте уникальное значение
 l_Err_IncorrectLink = Некорректно указана ссылка: {0}
+l_Version = Версия: {0}
+l_Date = Дата: {0}
+l_Repository = Репозиторий: {0}
 
 #FileSystem
 File_MSG_CheckFile = Проверка файла [{0}]
@@ -197,6 +200,8 @@ Helper_MSG_CoreErrorRecomendation = Данная ошибка часто возникает при отсутствии
 Module GIT
 GIT_MSG_AccessDeniedLimit = Отказано в доступе, лимит числа запросов\n{0}
 GIT_MSG_CannotLoadBuildList = Не удалось загрузить данные о доступных сборках с Git репозитория\n{0}
+GIT_MSG_CannotSendStatRequest = Не удалось обновить статистику\n{0}
+GIT_MSG_SendStatRequest = Запрос обновления статистики:
 
 #Watcher
 Watcher_MSG_FileChangedDisable = Отслеживаемый файл был удален, слежение за файлом отключено
@@ -266,6 +271,7 @@ Modification_Bottom_Info = Внимание! Все действия во вкладке [{0}] Вы выполняете
 Modification_OpenFileDialog_GameFile = Файл игры
 Modification_MSG_CoreNotFound = Не удалось найти {0}, смотрите инструкцию в нижней части окна
 Modification_MSG_VersionUnspecified = не определенной версии
+Modification_ListName_LocalizationType = Вариант локализации
 
 #SysLanguage
 Pack_MSG_CreateLangFolder = Создана папка для языковых пакетов:\n\t{0}

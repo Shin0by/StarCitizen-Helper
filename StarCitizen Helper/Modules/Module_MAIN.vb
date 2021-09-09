@@ -48,6 +48,9 @@ Module Module_MAIN
         _VARS.LangFile_Name = "_current_.txt"
         _LANG._LOAD(_FSO._CombinePath(_APP.exePath, _VARS.LangFolder_Name, _VARS.LangFile_Name))
 
+        _VARS.ConfigFile_Name_System = "system.cfg"
+        _VARS.ConfigFile_Name_User = "user.cfg"
+
         Module_HELPER.CheckConfigFile()
     End Sub
 
@@ -95,6 +98,10 @@ Module Module_MAIN
         '_WATCHFILE_THREAD.StartThread()
         MAIN_THREAD.UpdateInterface()
         MAIN_THREAD.WL_Mod._Update(2)
+
+        'Build list and select localization in Mod Tab
+        MAIN_THREAD.WL_Pack.GetLocals()
+        LoadUserCfgFile()
 
         If _VARS.StartUp = True Then
             MAIN_THREAD.Hide()
@@ -224,6 +231,8 @@ Module Module_MAIN
         'Patcher
         Public GameName As String = Nothing
         Public FileWatcher As Boolean = False
+        Public ConfigFile_Name_System As String = Nothing
+        Public ConfigFile_Name_User As String = Nothing
 
         'Download
         Public PackageGitMaster_Name As String = Nothing

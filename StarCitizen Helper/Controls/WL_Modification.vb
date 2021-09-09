@@ -8,6 +8,7 @@ Public Class WL_Modification
     Public Event _Event_PatchDisable_Click_After()
     Public Event _Event_Controls_Enabled_Before(Enabled As Boolean)
     Public Event _Event_Controls_Enabled_After(Enabled As Boolean)
+    Public Event _Event_Localization_Changed_After(Value As String)
 
     Private cBackColor As Color = Me.BackColor
     Private cForeColor As Color = Me.ForeColor
@@ -112,6 +113,38 @@ Public Class WL_Modification
         End Set
     End Property
 
+    Public Property Text_Label_Localization() As String
+        Get
+            Return Me.Label_SubLocal.Text
+        End Get
+        Set(ByVal Value As String)
+            Me.Label_SubLocal.Text = Value
+        End Set
+    End Property
+
+    Public Property List_Localization() As List(Of String)
+        Get
+            Dim result As New List(Of String)
+            result = Me.List_SubLocal.Items.Cast(Of String)
+            Return result
+        End Get
+        Set(ByVal Value As List(Of String))
+            Me.List_SubLocal.Items.Clear()
+            For Each elem As String In Value
+                Me.List_SubLocal.Items.Add(elem)
+            Next
+        End Set
+    End Property
+
+    Public Property Localization() As String
+        Get
+            Return Me.List_SubLocal.Text
+        End Get
+        Set(ByVal Value As String)
+            If LCase(Value) <> LCase(Me.List_SubLocal.Text) Then Me.List_SubLocal.Text = Value
+        End Set
+    End Property
+
     Public Property Property_GameExeFilePath() As String
         Get
             Return Me.sGameExeFilePath
@@ -138,6 +171,7 @@ Finalize:   If Me.sGameExeFileName IsNot Nothing Then
                 Me.Label_Path.Text = _LANG._Get("File_MSG_PathNotAssign", _LANG._Get("FileGameExecT"))
                 Me.Button_Disable.Enabled = False
                 Me.Button_Enable.Enabled = False
+                Me.List_SubLocal.Enabled = False
             End If
             RaiseEvent _Event_GameExeFile_Update_After(Value)
         End Set
@@ -298,6 +332,22 @@ Finalize:   If Me.sGameExeFileName IsNot Nothing Then
         _Update(2)
         RaiseEvent _Event_PatchDisable_Click_After()
     End Sub
+
+    Private Sub List_SubLocal_SelectedIndexChanged(sender As Object, e As EventArgs) Handles List_SubLocal.SelectedIndexChanged
+        If Initialization = True Then Exit Sub
+
+        Me.Localization = List_SubLocal.Text
+        Dim _USER As New Class_INI
+
+        If _FSO._FileExits(MAIN_THREAD.WL_Pack.Property_FilePath_User) = False Then
+            _FSO._WriteTextFile(Nothing, MAIN_THREAD.WL_Pack.Property_FilePath_User, System.Text.Encoding.UTF8)
+        End If
+
+        _USER.SkipInvalidLines = True
+        _USER._FSO = MAIN_THREAD.WL_Pack.Property_FilePath_User
+        _USER._Write(Nothing, "g_language", Me.Localization)
+        RaiseEvent _Event_Localization_Changed_After(Me.Localization)
+    End Sub
     '-----------------------------------> Controls
 
     '<----------------------------------- Logic
@@ -318,6 +368,7 @@ Finalize:   If Me.sGameExeFileName IsNot Nothing Then
     Public Sub _Update(Optional LogType As Integer = 3)
         Me.Button_Disable.Enabled = False
         Me.Button_Enable.Enabled = False
+        Me.List_SubLocal.Enabled = True
 
         Dim srcCondition As Byte = CheckSourceModСonditions()
         Dim dstCondition As Byte = CheckDestinationModСonditions()

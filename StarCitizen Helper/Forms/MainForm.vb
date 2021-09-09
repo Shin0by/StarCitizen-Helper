@@ -34,6 +34,19 @@ Public Class MainForm
     End Sub
     '-----------------------------------> 'Form
 
+    '<----------------------------------- Localization in pack
+    Sub UpdateLocalizationList() Handles WL_Pack._Event_GetLocalsUpdate_After
+        Me.WL_Mod.List_Localization = Me.WL_Pack.Property_LocalizationList
+        LoadUserCfgFile()
+    End Sub
+
+    Sub UpdateLocalization() Handles WL_Pack._Event_ChangeRepository_Before
+        'If Initialization = True Then Exit Sub
+        'Me.WL_Mod.Localization = Nothing
+        'Me.WL_Mod.List_Localization = New List(Of String)
+    End Sub
+    '-----------------------------------> Localization in pack
+
     '<----------------------------------- Download and update
 
 
@@ -368,8 +381,9 @@ Public Class MainForm
         If _VARS.AlertWindows = False Then AlertType = 2
 
         Dim CurrentSysUpdateVersion = LatestElement._tag_name
-        SubLine.Value = "Версия: " & LatestElement._tag_name
-        SubLine.List.Add("Дата: " & LatestElement._published)
+        SubLine.Value = _LANG._Get("l_Repository", Me.WL_Pack.Property_RepositoryName)
+        SubLine.List.Add(_LANG._Get("l_Version", LatestElement._tag_name))
+        SubLine.List.Add(_LANG._Get("l_Date", LatestElement._published))
         SubLine.List.Add("")
         If SenderName.Name = Me.WL_SysUpdateCheck.Name Then
             SubLine.List.Add(_LANG._Get("SysUpdate_MSG_ChangesInfo", Me.TabPage_SysUpdate.Text) & ": " & _VARS.URL_App & vbNewLine)

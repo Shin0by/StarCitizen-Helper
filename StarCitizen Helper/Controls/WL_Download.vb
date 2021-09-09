@@ -168,6 +168,25 @@ Public Class WL_Download
         Me.Invoke(Sub() RaiseEvent _Event_Complete_Event(Me.DownloadFrom, Me.DownloadTo, Me.DownloadProgress))
     End Sub
 
+    Public Function UpdateStat(URL As String) As Boolean
+        Dim Header As New Net.WebHeaderCollection
+        Header.Add("Accept-Encoding:gzip,deflate")
+        Dim temp As String = Nothing
+        Dim result As ResultClass
+        result = _INET._GetHTTP(URL, Net.SecurityProtocolType.Tls12, Header)
+
+        If result.Err._Flag = True Then
+            If result.Err._Number = 403 Then result.Err._Description_Sys = _LANG._Get("GIT_MSG_AccessDeniedLimit", result.Err._Description_Sys)
+            _LOG._sAdd("UpdateStat", _LANG._Get("GIT_MSG_CannotSendStatRequest", result.Err._Description_Sys), URL, 2) : Return False
+        Else
+            temp = result.ValueString
+        End If
+        If Len(temp) < 10 Then _LOG._sAdd("UpdateStat", _LANG._Get("GIT_MSG_CannotSendStatRequest", result.Err._Description_Sys), URL, 2) : Return False
+
+        _LOG._sAdd("UpdateStat", _LANG._Get("GIT_MSG_SendStatRequest"), URL, 2)
+        Return True
+    End Function
+
 End Class
 
 

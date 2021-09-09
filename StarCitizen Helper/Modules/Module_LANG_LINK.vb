@@ -43,6 +43,8 @@
         _LANG._Link(MAIN_THREAD.WL_Mod, "Text_Button_Disable", "Modification_ButtonName_Disable", _LANG._Get("ModificationModule"))
         _LANG._Link(MAIN_THREAD.WL_Mod, "Text_Label_ModOff", "Modification_ButtonInfo_Disable", _LANG._Get("ModificationModule"))
         _LANG._Link(MAIN_THREAD.WL_Mod, "Text_Label_Bottom", "Modification_Bottom_Info", MAIN_THREAD.TabPage_Patch.Text, MAIN_THREAD.WL_Mod.Text_Button_Enable, _LANG._Get("ModificationModuleT"), _LANG._Get("PackUpdateName"), MAIN_THREAD.TabPage_Packages.Text, _LANG._Get("ModificationModule"))
+        _LANG._Link(MAIN_THREAD.WL_Mod, "Text_Label_Localization", "Modification_ListName_LocalizationType")
+
 
         'TabPage_Packages
         _LANG._Link(MAIN_THREAD.WL_Pack, "Text_Check_ShowTestBuild", "Pack_CheckName_ShowTestBuild")

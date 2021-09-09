@@ -84,6 +84,9 @@ l_UpdateComplete = Download {0} successfully complete:
 l_Err_ElementAlreadyExist = Element "{0}" already exists, please set a new unique value
 l_Err_ElementAlreadyExistInGrp = Element "{1}" already exists in group "{0}", required a unique value
 l_Err_IncorrectLink = Incorrect link: {0}
+l_Version = Version: {0}
+l_Date = Date: {0}
+l_Repository = Repository: {0}
 
 #FileSystem
 File_MSG_CheckFile = Checking file [{0}]
@@ -197,6 +200,8 @@ Helper_MSG_CoreErrorRecomendation = This error often occurs in the absence of th
 Module GIT
 GIT_MSG_AccessDeniedLimit = Access denied, exceeded limit of requests\n{0}
 GIT_MSG_CannotLoadBuildList = Cannot load actual data from Github\n{0}
+GIT_MSG_CannotSendStatRequest = Cannot send stat request\n{0}
+GIT_MSG_SendStatRequest = Stat request:
 
 #Watcher
 Watcher_MSG_FileChangedDisable = Tracked file deleted, tracking disabled
@@ -266,6 +271,7 @@ Modification_Bottom_Info = Warning! All listed in [{0}] tab things you performin
 Modification_OpenFileDialog_GameFile = Game exec file
 Modification_MSG_CoreNotFound = {0} not found, check instruction at the bottom of the window
 Modification_MSG_VersionUnspecified = unknown version
+Modification_ListName_LocalizationType = Localization variations
 
 #SysLanguage
 Pack_MSG_CreateLangFolder = Created folder for application language packs:\n\t{0}
