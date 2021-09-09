@@ -189,6 +189,7 @@ Finalize:   If Me.sGameExeFileName IsNot Nothing Then
     Public ReadOnly Property Property_GameModFolderPath() As String
         Get
             If Property_GameModFolderName Is Nothing Then Return Nothing
+            If Me.sGameRootFolderPath Is Nothing Then Return Nothing
             Return _FSO._CombinePath(Me.sGameRootFolderPath, Me.sGameModFolderName)
         End Get
     End Property
