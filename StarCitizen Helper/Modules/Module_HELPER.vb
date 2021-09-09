@@ -148,6 +148,10 @@ Module Module_HELPER
         _USER.SkipInvalidLines = True
         _USER._FSO = MAIN_THREAD.WL_Pack.Property_FilePath_User
 
+        If _FSO._FileExits(MAIN_THREAD.WL_Pack.Property_FilePath_User) = False Then
+            _FSO._WriteTextFile(Nothing, MAIN_THREAD.WL_Pack.Property_FilePath_User, System.Text.Encoding.UTF8)
+        End If
+
         Dim temp As String = Nothing
 
         If MAIN_THREAD.WL_Pack.Property_LocalizationList.Count > 0 Then
