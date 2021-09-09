@@ -125,7 +125,9 @@ Public Class WL_Modification
     Public Property List_Localization() As List(Of String)
         Get
             Dim result As New List(Of String)
-            result = Me.List_SubLocal.Items.Cast(Of String)
+            For Each elem As String In Me.List_SubLocal.Items
+                result.Add(elem)
+            Next
             Return result
         End Get
         Set(ByVal Value As List(Of String))
