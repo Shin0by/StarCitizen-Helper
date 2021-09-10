@@ -1,4 +1,3 @@
-![nohud_example](https://user-images.githubusercontent.com/27290887/132827954-c4c87b6e-d8a2-44b9-8d2b-2505970a1ee7.png)
 [![Latest Release Version](https://img.shields.io/github/release/Shin0by/StarCitizen-Helper?sort=date)](https://github.com/Shin0by/StarCitizen-Helper/releases/latest)
 [![Latest Release Downloads](https://img.shields.io/github/downloads/Shin0by/StarCitizen-Helper/latest/total)](https://github.com/Shin0by/StarCitizen-Helper/releases/latest)
 [![Total Downloads](https://img.shields.io/github/downloads/Shin0by/StarCitizen-Helper/total.svg)](https://github.com/Shin0by/StarCitizen-Helper/releases)
@@ -38,6 +37,8 @@
 #### Использование:
 * Перейти во вкладку [Загрузка и обновление] в выпадающем списке выбрать самую новую версию из списка. Нажать [Загрузить пакет обновлений], дождаться завершения загрузки, нажать [Полная установка];
 * Перейти во вкладку [Модификация] нажать [Вкл. модификацию] или [Выкл. модификацию] по необходимости.
-* Так же можно выбрать вариацию локализации в выпадающем списке [Вариант локализации] (см. прилагаемое изображение).
+* Так же можно выбрать вариацию локализации в выпадающем списке [Вариант локализации] (см. прилагаемое ниже изображение).
 #### Примечание:
 * После загрузки каждой новой версии локализации необходимо нажать [Полная установка] и [Выкл. модификацию]. При повторном включении модификации будет включена новая (соответствующая пакету локализации) модификация. Версия локализации и модификации отображаются напротив соответствующих кнопок. Версия модификации и установленной локализации должны соответствовать для нормальной работы локализации. Возможность использовать не соответствующие версии была оставлена для тестировщиков группы комьюнити локализаторов.
+
+![nohud_example](https://user-images.githubusercontent.com/27290887/132827954-c4c87b6e-d8a2-44b9-8d2b-2505970a1ee7.png)
