@@ -222,6 +222,7 @@ Module Module_MAIN
         Public AlertWindows As Boolean = True
         Public StartUp As Boolean = False
         Public HideWhenClose As Boolean = False
+        Public utf8NoBom As New System.Text.UTF8Encoding(False)
 
         'Config
         Public ConfigFileIsOK As Boolean = False

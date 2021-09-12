@@ -343,12 +343,12 @@ Finalize:   If Me.sGameExeFileName IsNot Nothing Then
         Dim _USER As New Class_INI
 
         If _FSO._FileExits(MAIN_THREAD.WL_Pack.Property_FilePath_User) = False Then
-            _FSO._WriteTextFile(Nothing, MAIN_THREAD.WL_Pack.Property_FilePath_User, System.Text.Encoding.UTF8)
+            _FSO._WriteTextFile(Nothing, MAIN_THREAD.WL_Pack.Property_FilePath_User, _VARS.utf8NoBom)
         End If
 
         _USER.SkipInvalidLines = True
         _USER._FSO = MAIN_THREAD.WL_Pack.Property_FilePath_User
-        _USER._Write(Nothing, "g_language", Me.Localization)
+        _USER._Write(Nothing, "g_language", Me.Localization, _VARS.utf8NoBom)
         RaiseEvent _Event_Localization_Changed_After(Me.Localization)
     End Sub
     '-----------------------------------> Controls

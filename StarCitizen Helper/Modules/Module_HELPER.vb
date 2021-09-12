@@ -149,7 +149,7 @@ Module Module_HELPER
         _USER._FSO = MAIN_THREAD.WL_Pack.Property_FilePath_User
 
         If _FSO._FileExits(MAIN_THREAD.WL_Pack.Property_FilePath_User) = False Then
-            _FSO._WriteTextFile(Nothing, MAIN_THREAD.WL_Pack.Property_FilePath_User, System.Text.Encoding.UTF8)
+            _FSO._WriteTextFile(Nothing, MAIN_THREAD.WL_Pack.Property_FilePath_User, _VARS.utf8NoBom)
         End If
 
         Dim temp As String = Nothing
@@ -163,11 +163,11 @@ Module Module_HELPER
 
             If MAIN_THREAD.WL_Mod.Localization <> temp Then
                 MAIN_THREAD.WL_Mod.Localization = temp
-                _USER._Write(Nothing, "g_language", MAIN_THREAD.WL_Mod.Localization)
+                _USER._Write(Nothing, "g_language", MAIN_THREAD.WL_Mod.Localization, _VARS.utf8NoBom)
             End If
         Else
             MAIN_THREAD.WL_Mod.Localization = Nothing
-            _USER._Write(Nothing, "g_language", MAIN_THREAD.WL_Mod.Localization)
+            _USER._Write(Nothing, "g_language", MAIN_THREAD.WL_Mod.Localization, _VARS.utf8NoBom)
         End If
     End Sub
 

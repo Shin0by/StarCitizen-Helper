@@ -24,22 +24,23 @@ Module Module_INI
             End Set
         End Property
 
-        Public Function _Write(Section As String, Key As String, Value As String) As Boolean
+        Public Function _Write(Section As String, Key As String, Value As String, Encoding As System.Text.Encoding) As Boolean
             Try
                 Dim Parser = New FileIniDataParser()
                 Parser.Parser.Configuration.SkipInvalidLines = Me.SkipInvalidLines
-                Dim Data As Model.IniData = Parser.ReadFile(Me.FilePath)
+                Dim Data As Model.IniData = Parser.ReadFile(Me.FilePath, Encoding)
                 Data.Configuration.SkipInvalidLines = Me.SkipInvalidLines
+
 
                 If Section IsNot Nothing Then
                     Data.Sections.AddSection(Section)
                     Data(Section).RemoveKey(Key)
                     Data(Section).AddKey(Key, Value)
-                    Parser.WriteFile(Me.FilePath, Data)
+                    Parser.WriteFile(Me.FilePath, Data, Encoding)
                 Else
                     Data.Global.RemoveKey(Key)
                     Data.Global.AddKey(Key, Value)
-                    Parser.WriteFile(Me.FilePath, Data)
+                    Parser.WriteFile(Me.FilePath, Data, Encoding)
                 End If
                 Return True
             Catch ex As Exception
