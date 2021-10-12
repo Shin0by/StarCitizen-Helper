@@ -165,6 +165,7 @@ Public Class MsgForm
     End Sub
 
     Private Sub RichTextBox_MouseDown(sender As Object, e As MouseEventArgs) Handles RichTextBox.MouseDown
+        On Error Resume Next
         If e.Button = MouseButtons.Right Then
             My.Computer.Clipboard.SetText(RichTextBox.Text)
         End If
