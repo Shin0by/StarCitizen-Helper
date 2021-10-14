@@ -826,7 +826,7 @@ Partial Class MainForm
         Me.WL_Pack.Property_FilePath_Config = Nothing
         Me.WL_Pack.Property_FilePath_User = Nothing
         Me.WL_Pack.Property_GitList_AutoUpdate = True
-        Me.WL_Pack.Property_GitList_Interval = 120000
+        Me.WL_Pack.Property_GitList_Interval = 600000
         Me.WL_Pack.Property_GitList_SelString = Nothing
         Me.WL_Pack.Property_LocalizationDefault = Nothing
         Me.WL_Pack.Property_LocalizationList = CType(resources.GetObject("WL_Pack.Property_LocalizationList"), System.Collections.Generic.List(Of String))
@@ -879,7 +879,7 @@ Partial Class MainForm
         Me.WL_SysUpdateCheck.Property_ChangeRepository = False
         Me.WL_SysUpdateCheck.Property_DateOnline = New Date(CType(0, Long))
         Me.WL_SysUpdateCheck.Property_GitListAutoUpdate = True
-        Me.WL_SysUpdateCheck.Property_GitListInterval = 120000
+        Me.WL_SysUpdateCheck.Property_GitListInterval = 600000
         Me.WL_SysUpdateCheck.Property_Name = Nothing
         Me.WL_SysUpdateCheck.Property_PreRelease = True
         Me.WL_SysUpdateCheck.Property_SetupFileName = Nothing
