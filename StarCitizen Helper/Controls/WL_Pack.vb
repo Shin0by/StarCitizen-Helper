@@ -12,8 +12,8 @@ Public Class WL_Pack
     Public Event _Event_InstallFull_Button_Click_After()
     Public Event _Event_Download_Click_Before()
     Public Event _Event_Download_Click_After()
-    Public Event _Event_ShowTestBuild_Click_Before()
-    Public Event _Event_ShowTestBuild_Click_After()
+    Public Event _Event_ShowAllBuild_Click_Before()
+    Public Event _Event_ShowAllBuild_Click_After()
 
     Public Event _Event_GetLocalsUpdate_After()
 
@@ -63,6 +63,15 @@ Public Class WL_Pack
     Private sFilePath_Config_System As String = Nothing
     Private sFilePath_Config_User As String = Nothing
 
+    Private iGameType As GameType = 0  'LIVE, PTU, EPTU
+
+    Public Enum GameType As Byte
+        UNKNOWN = 0
+        LIVE = 1
+        PTU = 2
+        EPTU = 3
+    End Enum
+
     '<----------------------------------- Basic control
     Public Sub New()
         InitializeComponent()
@@ -71,6 +80,15 @@ Public Class WL_Pack
     '-----------------------------------> Basic control
 
     '<----------------------------------- Properties
+    Public Property Game_Type() As GameType
+        Set(Value As GameType)
+            Me.iGameType = Value
+        End Set
+        Get
+            Return Me.iGameType
+        End Get
+    End Property
+
     Private Sub WL_Update_BackColorChanged(sender As Object, e As EventArgs) Handles Me.BackColorChanged
         On Error Resume Next
         Me.cBackColor = Me.BackColor
@@ -166,21 +184,21 @@ Public Class WL_Pack
         End Set
     End Property
 
-    Public Property Property_ShowTestBuild() As Boolean
+    Public Property Property_ShowAllBuild() As Boolean
         Get
-            Return Me.CheckBox_ShowTestBuild.Checked
+            Return Me.CheckBox_ShowAllBuild.Checked
         End Get
         Set(ByVal Value As Boolean)
-            Me.CheckBox_ShowTestBuild.Checked = Value
+            Me.CheckBox_ShowAllBuild.Checked = Value
         End Set
     End Property
 
-    Public Property Text_Check_ShowTestBuild() As String
+    Public Property Text_Check_ShowAllBuild() As String
         Get
-            Return Me.CheckBox_ShowTestBuild.Text
+            Return Me.CheckBox_ShowAllBuild.Text
         End Get
         Set(ByVal Value As String)
-            Me.CheckBox_ShowTestBuild.Text = Value
+            Me.CheckBox_ShowAllBuild.Text = Value
         End Set
     End Property
 
@@ -510,11 +528,11 @@ Finalize: sender.Enabled = True
         RaiseEvent _Event_ListGit_Selection_Change_After()
     End Sub
 
-    Private Sub CheckBox_ShowTestBuild_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox_ShowTestBuild.CheckedChanged
-        RaiseEvent _Event_ShowTestBuild_Click_Before()
-        _JSETTINGS._SetValue("configuration.main", "show_test_builds", BoolToString(sender.checked), True)
+    Private Sub CheckBox_ShowAllBuild_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox_ShowAllBuild.CheckedChanged
+        RaiseEvent _Event_ShowAllBuild_Click_Before()
+        _JSETTINGS._SetValue("configuration.main", "show_all_builds", BoolToString(sender.checked), True)
         Me.WL_Updater_NewVersion_Available(Me.WL_PackUpdateCheck.Property_JSON, GIT_PACK_LATEST, Me.WL_PackUpdateCheck)
-        RaiseEvent _Event_ShowTestBuild_Click_After()
+        RaiseEvent _Event_ShowAllBuild_Click_After()
     End Sub
     '-----------------------------------> Controls
 
@@ -609,16 +627,23 @@ Finalize: sender.Enabled = True
         Return Nothing
     End Function
 
-    Private Sub UpdateListGit()
+    Public Sub _UpdateListGit()
         RaiseEvent _Event_ListGit_List_Change_Before()
-
         Me.Invoke(Sub() Me.List_Git.Items.Clear())
-        For i = 0 To Me.GIT_PACK_DATA._GetAll.Count - 1
-            Me.Invoke(Sub() Me.List_Git.Items.Add(Me.GIT_PACK_DATA._GetAll.Item(i)._name))
+
+        Dim tagName As String = "UNKNOWN"
+        If Me.Property_ShowAllBuild = False Then tagName = Me.Game_Type.ToString()
+
+        Dim List As List(Of Class_GitUpdateElement) = Me.GIT_PACK_DATA._GetByTag(tagName)
+        If List.Count = 0 Then GoTo Fin
+
+        For i = 0 To List.Count - 1
+            Me.Invoke(Sub() Me.List_Git.Items.Add(List(i)._name))
         Next
+
         'Me.Property_GitList_SelString = _INI._GET_VALUE("EXTERNAL", "PACK_GIT_SELECTED", "").Value
         Me.Property_GitList_SelString = Me.List_Git.Items(0)
-        RaiseEvent _Event_ListGit_List_Change_After()
+Fin:    RaiseEvent _Event_ListGit_List_Change_After()
     End Sub
 
 
@@ -671,7 +696,7 @@ Finalize: sender.Enabled = True
             Me.GIT_PACK_DATA._Add(elem("name"), elem("tag_name"), elem("zipball_url"), elem("published_at"), elem("body"), Assets, False)
         Next
         Me.GIT_PACK_LATEST = _GIT._GetLatestElement(Me.GIT_PACK_DATA._GetAll)
-        If Property_ShowTestBuild = True Then GIT_PACK_DATA._Add(("Master"), "Master", Me.Property_PackageGitURL_Master, DateTime.Now, Nothing, Nothing, True)
+        If Me.Property_ShowAllBuild = True Then GIT_PACK_DATA._Add(("Master"), "Master", Me.Property_PackageGitURL_Master, DateTime.Now, Nothing, Nothing, True)
 
         If _VARS.PackageLatestDate <> Me.GIT_PACK_LATEST._published And Convert.ToDateTime("01.01.2000 00:00:00") <> Me.GIT_PACK_LATEST._published Then
             _VARS.PackageLatestDate = Me.GIT_PACK_LATEST._published
@@ -684,7 +709,7 @@ Finalize: sender.Enabled = True
 
 
         Me.Invoke(Sub() Me.Enabled = True)
-        UpdateListGit()
+        _UpdateListGit()
     End Sub
 
     '-----------------------------------> 'Callback

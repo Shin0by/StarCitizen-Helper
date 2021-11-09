@@ -242,7 +242,7 @@ ProcessKiller_MSG_ProcessAlreadyInList = Указанный процесс уже в списке
 ProcessKiller_MSG_ProcessSelectFromList = Требуется выбрать имя процесса
 
 #Localization
-Pack_CheckName_ShowTestBuild = Отображать тестовые сборки
+Pack_CheckName_ShowAllBuild = Отображать все сборки
 Pack_ButtonName_DownloadPack = Загрузить пакет обновлений
 Pack_ButtonInfo_DownloadPack = Загрузка выбранного пакета обновлений (включая ядро)
 Pack_ButtonName_PackInstallAll = Полная установка

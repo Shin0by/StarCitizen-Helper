@@ -242,7 +242,7 @@ ProcessKiller_MSG_ProcessAlreadyInList = Process already in list
 ProcessKiller_MSG_ProcessSelectFromList = Choose one process
 
 #Localization
-Pack_CheckName_ShowTestBuild = Show test packages
+Pack_CheckName_ShowAllBuild = Show all packages
 Pack_ButtonName_DownloadPack = Download package
 Pack_ButtonInfo_DownloadPack = Download chosen pack (includes core)
 Pack_ButtonName_PackInstallAll = Full install

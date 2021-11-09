@@ -96,8 +96,14 @@ Module Module_GIT
             End Sub
 
             Public Sub _Add(Name As String, TagName As String, ZIPBallURL As String, Published As String, Body As String, Assets As Object, PreRelease As Boolean, Optional isMaster As Boolean = False)
-                data.Add(New Class_GitUpdateElement(Name, TagName, ZIPBallURL, Published, Body, Assets, PreRelease, isMaster))
+                data.Add(New Class_GitUpdateElement(Name, TagName, ZIPBallURL, Published, Body, Assets, PreRelease, Me.Get_Type(TagName), isMaster))
             End Sub
+
+            Private Function Get_Type(TagName As String) As String
+                If InStr(UCase(TagName), "PTU") > 0 Then Return "PTU"
+                If InStr(UCase(TagName), "EPTU") > 0 Then Return "EPTU"
+                Return "LIVE"
+            End Function
 
             Public Function _GetAll() As List(Of Class_GitUpdateElement)
                 Return Me.data
@@ -115,6 +121,19 @@ Module Module_GIT
                 Next
                 Return temp
             End Function
+
+            Public Function _GetByTag(TagName As String) As List(Of Class_GitUpdateElement)
+                Dim result As New List(Of Class_GitUpdateElement)
+                If TagName = "UNKNOWN" Then Return Me.data
+
+                For Each elem In Me.data
+                    If TagName = elem._type Then
+                        result.Add(elem)
+                    End If
+                Next
+                Return result
+            End Function
+
             Class Class_GitUpdateElement
                 Public _isMaster As Boolean = False
                 Public _tag_name As String = Nothing
@@ -125,8 +144,9 @@ Module Module_GIT
                 Public _published As DateTime = Nothing
                 Public _assets As Object = Nothing
                 Public _prerelease As Boolean = False
+                Public _type As String = "UNKNOWN"
 
-                Sub New(Name As String, TagName As String, ZIPBallURL As String, Published As String, Body As String, Assets As Object, Prerelease As Boolean, Optional isMaster As Boolean = False)
+                Sub New(Name As String, TagName As String, ZIPBallURL As String, Published As String, Body As String, Assets As Object, Prerelease As Boolean, Type As String, Optional isMaster As Boolean = False)
                     Me._isMaster = isMaster
                     Me._tag_name = TagName
                     Me._name = Name
@@ -135,6 +155,7 @@ Module Module_GIT
                     Me._published = Convert.ToDateTime(Published)
                     Me._assets = Assets
                     Me._parsed_name = Replace(Me._name, Me._tag_name, "").Replace("(", "").Replace(")", "").Trim
+                    Me._type = Type
                     Me._prerelease = Prerelease
                     Dim temp As String() = Split(Me._parsed_name, " ")
                     For Each elem In temp

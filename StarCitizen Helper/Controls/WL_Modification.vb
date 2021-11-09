@@ -30,6 +30,8 @@ Public Class WL_Modification
     Private sGameModFolderName As String = Nothing
     Private sGameModFolderPath As String = Nothing
 
+    Private iGameType As GameType = 0  'LIVE, PTU, EPTU
+
     Private bLoadComplete As Boolean = False
 
     '<----------------------------------- Basic control
@@ -43,6 +45,13 @@ Public Class WL_Modification
     '-----------------------------------> Basic control
 
     '<----------------------------------- Properties
+    Public Enum GameType As Byte
+        UNKNOWN = 0
+        LIVE = 1
+        PTU = 2
+        EPTU = 3
+    End Enum
+
     Private Sub WL_Modification_BackColorChanged(sender As Object, e As EventArgs) Handles Me.BackColorChanged
         On Error Resume Next
         Me.cBackColor = Me.BackColor
@@ -58,6 +67,12 @@ Public Class WL_Modification
             Elem.ForeColor = Me.cForeColor
         Next
     End Sub
+
+    Public ReadOnly Property Game_Type() As GameType
+        Get
+            Return Me.iGameType
+        End Get
+    End Property
 
     Public Property Text_Label_Bottom() As String
         Get
@@ -168,6 +183,7 @@ Public Class WL_Modification
 
 Finalize:   If Me.sGameExeFileName IsNot Nothing Then
                 Me.Label_Path.Text = Me.sGameExeFilePath
+                Me.Set_GameType(Me.sGameExeFilePath)
                 _Update()
             Else
                 Me.Label_Path.Text = _LANG._Get("File_MSG_PathNotAssign", _LANG._Get("FileGameExecT"))
@@ -354,6 +370,26 @@ Finalize:   If Me.sGameExeFileName IsNot Nothing Then
     '-----------------------------------> Controls
 
     '<----------------------------------- Logic
+    Private Sub Set_GameType(Path As String)
+        If _FSO._FileExits(Path) = False Then Me.iGameType = GameType.UNKNOWN : Exit Sub
+
+        Dim result As ResultClass = _FSO._GetInfo(Path)
+        Dim File As IO.FileInfo
+        File = CType(result.ValueObject, IO.FileInfo)
+
+        Dim sProfile As String = UCase(File.Directory.Parent.Name)
+        Select Case sProfile
+            Case "LIVE"
+                Me.iGameType = GameType.LIVE
+            Case "PTU"
+                Me.iGameType = GameType.PTU
+            Case "EPTU"
+                Me.iGameType = GameType.EPTU
+            Case Else
+                Me.iGameType = GameType.UNKNOWN
+        End Select
+    End Sub
+
     Private Function CheckSourceModСonditions() As Byte
         If MAIN_THREAD.WL_Pack.Property_Path_Folder_Download Is Nothing Then Return 3
         If Me.Property_PatchSrcFileName Is Nothing Then Return 2

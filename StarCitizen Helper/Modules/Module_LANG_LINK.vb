@@ -47,7 +47,7 @@
 
 
         'TabPage_Packages
-        _LANG._Link(MAIN_THREAD.WL_Pack, "Text_Check_ShowTestBuild", "Pack_CheckName_ShowTestBuild")
+        _LANG._Link(MAIN_THREAD.WL_Pack, "Text_Check_ShowAllBuild", "Pack_CheckName_ShowAllBuild")
         _LANG._Link(MAIN_THREAD.WL_Pack, "Text_Button_Download", "Pack_ButtonName_DownloadPack")
         _LANG._Link(MAIN_THREAD.WL_Pack, "Text_Label_Download", "Pack_ButtonInfo_DownloadPack")
         _LANG._Link(MAIN_THREAD.WL_Pack, "Text_Button_InstallFull", "Pack_ButtonName_PackInstallAll")

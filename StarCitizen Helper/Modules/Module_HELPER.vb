@@ -34,7 +34,7 @@ Module Module_HELPER
 
         'Configuration
         _JSETTINGS._SetValue("configuration.main", "dt_create", DateTime.Now.ToString)
-        _JSETTINGS._SetValue("configuration.main", "show_test_builds", 0)
+        _JSETTINGS._SetValue("configuration.main", "show_all_builds", 0)
         _JSETTINGS._SetValue("configuration.main", "prerelease", 0)
         _JSETTINGS._SetValue("configuration.main", "alert_update", 1)
         _JSETTINGS._SetValue("configuration.main", "startup", 0)
@@ -117,7 +117,7 @@ Module Module_HELPER
         MAIN_THREAD.WL_Mod.Property_ModInGameFileVersion = _JSETTINGS._GetValue("configuration.external.mod_game_version", Nothing)
         MAIN_THREAD.WL_Mod.Property_ModInPackFileVersion = _JSETTINGS._GetValue("configuration.external.mod_pack_version", Nothing)
         MAIN_THREAD.WL_Pack.Property_PackInGameVersion = _JSETTINGS._GetValue("configuration.external.pack_game_version", Nothing)
-        MAIN_THREAD.WL_Pack.Property_ShowTestBuild = StringToBool(_JSETTINGS._GetValue("configuration.main.show_test_builds", False, {0, 1}))
+        MAIN_THREAD.WL_Pack.Property_ShowAllBuild = StringToBool(_JSETTINGS._GetValue("configuration.main.show_all_builds", False, {0, 1}))
 
         'GIT
         MAIN_THREAD.WL_Pack.Property_PackageGitURL_Api = _JSETTINGS._GetValue("configuration.external.git.pack.api", _VARS.PackageGitURL_Api)

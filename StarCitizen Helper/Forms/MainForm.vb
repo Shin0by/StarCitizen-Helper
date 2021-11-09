@@ -336,6 +336,12 @@ Public Class MainForm
 
         MAIN_THREAD.WL_Pack.Property_Path_Folder_Meta = MAIN_THREAD.WL_Mod.Property_GameRootFolderPath
         MAIN_THREAD.WL_Pack.Property_Path_File_Meta = _FSO._CombinePath(MAIN_THREAD.WL_Pack.Property_Path_Folder_Meta, MAIN_THREAD.WL_Pack.Property_Name_File_Meta)
+
+        MAIN_THREAD.WL_Pack.Game_Type = MAIN_THREAD.WL_Mod.Game_Type
+
+        MAIN_THREAD.WL_Pack._UpdateListGit()
+
+        RenameLIVEFolder(Path, True)
     End Sub
 
     Sub Upd_Controls_Enabled(Enabled As Boolean) Handles WL_Pack._Event_Controls_Enabled_Before, WL_Pack._Event_Controls_Enabled_After

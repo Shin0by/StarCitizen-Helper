@@ -242,7 +242,7 @@ ProcessKiller_MSG_ProcessAlreadyInList = 프로세스가 이미 리스트에 있
 ProcessKiller_MSG_ProcessSelectFromList = 프로세스 선택
 
 #Localization
-Pack_CheckName_ShowTestBuild = 테스트용 팩 보기
+Pack_CheckName_ShowAllBuild = Show all packages
 Pack_ButtonName_DownloadPack = 팩 다운로드
 Pack_ButtonInfo_DownloadPack = 선택한 팩 다운로드 (코어 포함)
 Pack_ButtonName_PackInstallAll = 전체 설치
