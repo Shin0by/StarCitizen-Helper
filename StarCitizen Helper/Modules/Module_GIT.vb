@@ -100,6 +100,7 @@ Module Module_GIT
             End Sub
 
             Private Function Get_Type(TagName As String) As String
+                If InStr(UCase(TagName), "LIVE") > 0 Then Return "LIVE"
                 If InStr(UCase(TagName), "PTU") > 0 Then Return "PTU"
                 If InStr(UCase(TagName), "EPTU") > 0 Then Return "EPTU"
                 Return "LIVE"
