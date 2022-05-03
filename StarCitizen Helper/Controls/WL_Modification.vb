@@ -335,6 +335,8 @@ Finalize:   If Me.sGameExeFileName IsNot Nothing Then
         End If
         _Update()
         _FSO._CopyFile(Me.Property_PatchSrcFilePath, Me.Property_PatchDstFilePath)
+        _FSO._DeleteFile(_FSO._CombinePath(MAIN_THREAD.WL_Mod.Property_GameExeFolderPath, _VARS.OldPatcher_File_Name)) 'Remove in next releases (fix old file name)
+
         Me.Property_ModInGameFileVersion = Me.Property_ModInPackFileVersion
         Me._Enabled(True)
         _Update(2)
@@ -347,6 +349,7 @@ Finalize:   If Me.sGameExeFileName IsNot Nothing Then
         Me._Enabled(False)
         _Update()
         _FSO._DeleteFile(Me.Property_PatchDstFilePath)
+        _FSO._DeleteFile(_FSO._CombinePath(MAIN_THREAD.WL_Mod.Property_GameExeFolderPath, _VARS.OldPatcher_File_Name)) 'Remove in next releases (fix old file name)
         Me._Enabled(True)
         _Update(2)
         RaiseEvent _Event_PatchDisable_Click_After()

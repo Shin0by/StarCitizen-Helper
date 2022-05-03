@@ -51,6 +51,8 @@ Module Module_MAIN
         _VARS.ConfigFile_Name_System = "system.cfg"
         _VARS.ConfigFile_Name_User = "user.cfg"
 
+        _VARS.OldPatcher_File_Name = "CIGDevelopmentTools.dll"
+
         Module_HELPER.CheckConfigFile()
     End Sub
 
@@ -70,7 +72,7 @@ Module Module_MAIN
         MAIN_THREAD.WL_Mod.Property_GameExeFileName = "StarCitizen.exe"
         MAIN_THREAD.WL_Mod.Property_PatchSrcFileName = "patcher.bin"
         MAIN_THREAD.WL_Mod.Property_PatchSrcFilePath = _FSO._CombinePath(MAIN_THREAD.WL_Pack.Property_Path_Folder_Download, MAIN_THREAD.WL_Mod.Property_PatchSrcFileName)
-        MAIN_THREAD.WL_Mod.Property_PatchDstFileName = "CIGDevelopmentTools.dll"
+        MAIN_THREAD.WL_Mod.Property_PatchDstFileName = "dbghelp.dll"
         MAIN_THREAD.WL_Mod.Property_GameModFolderName = "data"
 
         MAIN_THREAD.WL_SysUpdateCheck.Property_Text_Label_Value_CurentVersion = _APP.Version
@@ -234,6 +236,8 @@ Module Module_MAIN
         Public FileWatcher As Boolean = False
         Public ConfigFile_Name_System As String = Nothing
         Public ConfigFile_Name_User As String = Nothing
+        Public OldPatcher_File_Name As String = Nothing
+
 
         'Download
         Public PackageGitMaster_Name As String = Nothing
