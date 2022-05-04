@@ -399,18 +399,22 @@ Public Class MainForm
                     _VARS.PackageLatestDate = LatestElement._published
                     _JSETTINGS._SetValue("configuration.main.update", "date", _VARS.PackageLatestDate.ToString, True)
                 Else
-                    Me.Invoke(Sub()
-                                  Me.WL_AppUpdate.Property_PatchDstFileName = MAIN_THREAD.WL_SysUpdateCheck.Property_SetupFileName
-                                  Me.WL_AppUpdate.Property_PatchDstFilePath = Me.WL_Pack.Property_Path_Folder_Download
-                                  Me.WL_AppUpdate.Property_PatchSrcFileName = Me.WL_AppUpdate.Property_PatchDstFileName
-                                  Me.WL_AppUpdate.Property_PatchSrcFilePath = _GIT._GetAssetByFileName(Me.WL_AppUpdate.Property_PatchDstFileName, LatestElement)
-                                  Me.WL_AppUpdate.Property_PatchDstParameters = _VARS.SetupParameters
+                    If InvokeRequired Then
 
-                                  Me.WL_AppUpdate.Enabled = True
-                                  If Me.LatestSysUpdateVersion <> CurrentSysUpdateVersion Then
-                                      If WL_AppUpdate.Enabled = True Then Me.TabControl.SelectedTab = Me.TabPage_SysUpdate
-                                  End If
-                              End Sub)
+
+                        Me.Invoke(Sub()
+                                      Me.WL_AppUpdate.Property_PatchDstFileName = MAIN_THREAD.WL_SysUpdateCheck.Property_SetupFileName
+                                      Me.WL_AppUpdate.Property_PatchDstFilePath = Me.WL_Pack.Property_Path_Folder_Download
+                                      Me.WL_AppUpdate.Property_PatchSrcFileName = Me.WL_AppUpdate.Property_PatchDstFileName
+                                      Me.WL_AppUpdate.Property_PatchSrcFilePath = _GIT._GetAssetByFileName(Me.WL_AppUpdate.Property_PatchDstFileName, LatestElement)
+                                      Me.WL_AppUpdate.Property_PatchDstParameters = _VARS.SetupParameters
+
+                                      Me.WL_AppUpdate.Enabled = True
+                                      If Me.LatestSysUpdateVersion <> CurrentSysUpdateVersion Then
+                                          If WL_AppUpdate.Enabled = True Then Me.TabControl.SelectedTab = Me.TabPage_SysUpdate
+                                      End If
+                                  End Sub)
+                    End If
                 End If
 
                 ListSubLine.Add(SubLine)
