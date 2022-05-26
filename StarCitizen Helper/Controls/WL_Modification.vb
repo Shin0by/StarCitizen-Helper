@@ -45,6 +45,12 @@ Public Class WL_Modification
     '-----------------------------------> Basic control
 
     '<----------------------------------- Properties
+    Public ReadOnly Property Property_Launcher() As WL_Launcher
+        Get
+            Return Me.WL_Launcher1
+        End Get
+    End Property
+
     Public Enum GameType As Byte
         UNKNOWN = 0
         LIVE = 1
@@ -403,7 +409,9 @@ Finalize:   If Me.sGameExeFileName IsNot Nothing Then
     Private Function CheckDestinationModСonditions() As Byte
         If Property_GameExeFilePath Is Nothing Then Return 3
         If Me.Property_PatchDstFilePath Is Nothing Then Return 2
-        If _FSO._FileExits(Me.Property_PatchDstFilePath) = False Then Return 1
+        If _FSO._FileExits(Me.Property_PatchDstFilePath) = False Then
+            Return 1
+        End If
         Return 0
     End Function
 
@@ -421,6 +429,12 @@ Finalize:   If Me.sGameExeFileName IsNot Nothing Then
             If dstCondition <= 1 And srcCondition = 0 Then
                 Me.Button_Enable.Enabled = True : Me.Button_Enable.Focus()
             End If
+        End If
+
+        If dstCondition <= 1 Then
+            Me.WL_Launcher1.Property_SourceTokenFilePatch = _FSO._CombinePath(Property_GameRootFolderPath, _VARS.LoginDataToken_SoureFileName)
+            Me.WL_Launcher1.Property_DestTokenFilePatch = _FSO._CombinePath(MAIN_THREAD.WL_Pack.Property_Path_Folder_Download, _VARS.LoginDataToken_DestFileName)
+            Me.WL_Launcher1.Property_GameExeFilePath = Property_GameExeFilePath
         End If
 
         If Me.Button_Enable.Enabled = True Then
@@ -460,11 +474,13 @@ Finalize:   If Me.sGameExeFileName IsNot Nothing Then
         End If
 
         For Each elem In FirstRecurseControl.Controls
-            Me._Enabled(Enabled, elem)
-            If TypeOf elem Is Button Then elem.Enabled = Enabled
-            If TypeOf elem Is ComboBox Then elem.Enabled = Enabled
-        Next
+            If TypeOf elem IsNot WL_Launcher Then
+                Me._Enabled(Enabled, elem)
 
+                If TypeOf elem Is Button Then elem.Enabled = Enabled
+                If TypeOf elem Is ComboBox Then elem.Enabled = Enabled
+            End If
+        Next
         If FirstIteration = True Then
             RaiseEvent _Event_Controls_Enabled_After(Enabled)
         End If

@@ -53,6 +53,9 @@ Module Module_MAIN
 
         _VARS.OldPatcher_File_Name = "CIGDevelopmentTools.dll"
 
+        _VARS.LoginDataToken_SoureFileName = "loginData.json"
+        _VARS.LoginDataToken_DestFileName = "loginData.json"
+
         Module_HELPER.CheckConfigFile()
     End Sub
 
@@ -96,8 +99,6 @@ Module Module_MAIN
         If _VARS.PackageLatestDate = New DateTime Then _VARS.PackageLatestDate = DateTime.Now
         MAIN_THREAD.WL_Pack.Property_DateOnline = _VARS.PackageLatestDate
 
-        '_WATCHFILE_THREAD = New Class_THREAD_WATCHFILE(MAIN_THREAD)
-        '_WATCHFILE_THREAD.StartThread()
         MAIN_THREAD.UpdateInterface()
         MAIN_THREAD.WL_Mod._Update(2)
 
@@ -237,7 +238,8 @@ Module Module_MAIN
         Public ConfigFile_Name_System As String = Nothing
         Public ConfigFile_Name_User As String = Nothing
         Public OldPatcher_File_Name As String = Nothing
-
+        Public LoginDataToken_SoureFileName As String = Nothing
+        Public LoginDataToken_DestFileName As String = Nothing
 
         'Download
         Public PackageGitMaster_Name As String = Nothing

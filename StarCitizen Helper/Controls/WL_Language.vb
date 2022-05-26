@@ -143,17 +143,17 @@ Public Class WL_Language
     End Property
 
     '-----------------------------------> Properties
-    Private Sub GenerateDefaultlanguageFiles()
-        If _FSO._FileExits(_FSO._CombinePath(Property_Path_Folder_Language, "_current_.txt")) = False Then
+    Private Sub GenerateDefaultlanguageFiles(Optional ForceUpdateFiles As Boolean = False)
+        If _FSO._FileExits(_FSO._CombinePath(Property_Path_Folder_Language, "_current_.txt")) = False Or ForceUpdateFiles = True Then
             _FSO._WriteTextFile(My.Resources.default_english, _FSO._CombinePath(Property_Path_Folder_Language, "_current_.txt"), Encoding.Unicode, False)
         End If
-        If _FSO._FileExits(_FSO._CombinePath(Property_Path_Folder_Language, "default_english.txt")) = False Then
+        If _FSO._FileExits(_FSO._CombinePath(Property_Path_Folder_Language, "default_english.txt")) = False Or ForceUpdateFiles = True Then
             _FSO._WriteTextFile(My.Resources.default_english, _FSO._CombinePath(Property_Path_Folder_Language, "default_english.txt"), Encoding.Unicode, False)
         End If
-        If _FSO._FileExits(_FSO._CombinePath(Property_Path_Folder_Language, "default_russian.txt")) = False Then
+        If _FSO._FileExits(_FSO._CombinePath(Property_Path_Folder_Language, "default_russian.txt")) = False Or ForceUpdateFiles = True Then
             _FSO._WriteTextFile(My.Resources.default_russian, _FSO._CombinePath(Property_Path_Folder_Language, "default_russian.txt"), Encoding.Unicode, False)
         End If
-        If _FSO._FileExits(_FSO._CombinePath(Property_Path_Folder_Language, "default_korean.txt")) = False Then
+        If _FSO._FileExits(_FSO._CombinePath(Property_Path_Folder_Language, "default_korean.txt")) = False Or ForceUpdateFiles = True Then
             _FSO._WriteTextFile(My.Resources.default_korean, _FSO._CombinePath(Property_Path_Folder_Language, "default_korean.txt"), Encoding.Unicode, False)
         End If
     End Sub
@@ -226,6 +226,7 @@ Public Class WL_Language
         RaiseEvent _Event_SetLanguage_Button_Click_Before()
         For Each aElem In aLanguageList
             If LCase(aElem.sName) = LCase(Me.ComboBox_LanguageList.Text) Then
+                GenerateDefaultlanguageFiles(True)
                 If _FSO._CopyFile(_FSO._CombinePath(aElem.sPath, aElem.sFile), _FSO._CombinePath(sPath_Folder_Language, sFile_Name_Current), True) = True Then
                     _JSETTINGS._SetValue("configuration.main.language", "language", Me.ComboBox_LanguageList.Text, True)
                     'Application.Exit()

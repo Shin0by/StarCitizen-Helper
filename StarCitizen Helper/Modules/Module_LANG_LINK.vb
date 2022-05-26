@@ -45,6 +45,13 @@
         _LANG._Link(MAIN_THREAD.WL_Mod, "Text_Label_Bottom", "Modification_Bottom_Info", MAIN_THREAD.TabPage_Patch.Text, MAIN_THREAD.WL_Mod.Text_Button_Enable, _LANG._Get("ModificationModuleT"), _LANG._Get("PackUpdateName"), MAIN_THREAD.TabPage_Packages.Text, _LANG._Get("ModificationModule"))
         _LANG._Link(MAIN_THREAD.WL_Mod, "Text_Label_Localization", "Modification_ListName_LocalizationType")
 
+        _LANG._Link(MAIN_THREAD.WL_Mod.Property_Launcher, "Text_Button_LaunchGame", "Launcher_ButtonName_LaunchGame", "")
+        _LANG._Link(MAIN_THREAD.WL_Mod.Property_Launcher, "Text_Button_ExportToken", "Launcher_ButtonName_ExportKey", "")
+        _LANG._Link(MAIN_THREAD.WL_Mod.Property_Launcher, "Text_Label_LaunchGame", "Launcher_ButtonInfo_LaunchGame", "")
+
+        _LANG._Link(MAIN_THREAD.WL_Mod.Property_Launcher, "Text_ButtonToolTip_LaunchGame", "Launcher_ButtonToolTip_LaunchGame", "")
+        _LANG._Link(MAIN_THREAD.WL_Mod.Property_Launcher, "Text_ButtonToolTip_ExportToken", "Launcher_ButtonToolTip_ExportKey", "")
+
 
         'TabPage_Packages
         _LANG._Link(MAIN_THREAD.WL_Pack, "Text_Check_ShowAllBuild", "Pack_CheckName_ShowAllBuild")

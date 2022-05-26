@@ -273,6 +273,18 @@ Modification_MSG_CoreNotFound = {0} not found, check instruction at the bottom o
 Modification_MSG_VersionUnspecified = unknown version
 Modification_ListName_LocalizationType = Localization variations
 
+#Launcher
+Launcher_ButtonName_ExportKey = Token
+Launcher_ButtonToolTip_ExportKey = Save the token to start the game without game launcher
+Launcher_ButtonName_LaunchGame = Launch game
+Launcher_ButtonToolTip_LaunchGame = Launch game with saved token
+Launcher_MSG_LaunchGameProcessOK = Starting game:\n\tSuccess\n\tPath: {0}
+Launcher_MSG_LaunchGameProcessERR = Error when starting game:\n\tNumber: {0}\n\tDescription: {1}\n\tPath: {2}
+
+Launcher_Info_NoSourceToken =  To enable localization bypassing the EAC - run the game with the disabled localization [{0}].\nMinimize the game window and follow the instructions
+Launcher_Info_NoDestToken = The game token is available in the game folder, press [{0}], then finish the game
+Launcher_Info_Ready = Launch the game with localization support, without using the Launcher and bypassing the EAC.{nIf token expired and the game does not accept it, start the game again using the Launcher, then press [{0}]
+
 #SysLanguage
 Pack_MSG_CreateLangFolder = Created folder for application language packs:\n\t{0}
 Pack_MSG_AssignLangFolder = Setted folder for application language packs:\n\t{0}

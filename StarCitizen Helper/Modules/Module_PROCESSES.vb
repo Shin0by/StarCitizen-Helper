@@ -54,8 +54,28 @@
             For Each Process In pList
                 If Process.ProcessName = _APP.appProcess.ProcessName Then _LOG._sAdd("_PROCESSES._Kill()", _LANG._Get("ProcessKiller_MSG_KillIgnore"), Process.ProcessName, 2) : Continue For
                 Process.Kill()
-                _LOG._sAdd("_PROCESSES._Kill()", _LANG._Get("ProcessKiller_MSG_Kill"), Process.ProcessName, 2)
+                _LOG._sAdd("PROCESSES.Kill", _LANG._Get("ProcessKiller_MSG_Kill"), Process.ProcessName, 2)
             Next
         End Sub
+
+
+        Public Function _Start(FilePath As String) As ResultClass
+            Dim result As New ResultClass(Me)
+            Err.Clear()
+            Try
+                result.ValueBoolean = True
+                result.ValueString = FilePath
+                result.Err._Flag = False
+                result.ValueObject = Process.Start(FilePath)
+                _LOG._sAdd("PROCESSES.Start", _LANG._Get("Launcher_MSG_LaunchGameProcessOK", FilePath),, 2)
+            Catch
+                result.ValueBoolean = False
+                result.Err._Description_Sys = Err.Description
+                result.Err._Number = Err.Number
+                result.Err._Flag = True
+                _LOG._sAdd("PROCESSES.Start", _LANG._Get("Launcher_MSG_LaunchGameProcessERR", result.Err._Number, result.Err._Description_Sys, FilePath),, 1)
+            End Try
+            Return result
+        End Function
     End Class
 End Module
