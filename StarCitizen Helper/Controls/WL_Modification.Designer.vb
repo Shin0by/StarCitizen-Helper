@@ -56,7 +56,7 @@ Partial Class WL_Modification
         Me.TableLayoutPanel.Location = New System.Drawing.Point(0, 0)
         Me.TableLayoutPanel.Name = "TableLayoutPanel"
         Me.TableLayoutPanel.RowCount = 6
-        Me.TableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60.0!))
+        Me.TableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50.0!))
         Me.TableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
         Me.TableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
         Me.TableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
@@ -70,7 +70,7 @@ Partial Class WL_Modification
         Me.Label_SubLocal.AutoSize = True
         Me.TableLayoutPanel.SetColumnSpan(Me.Label_SubLocal, 2)
         Me.Label_SubLocal.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Label_SubLocal.Location = New System.Drawing.Point(191, 153)
+        Me.Label_SubLocal.Location = New System.Drawing.Point(191, 143)
         Me.Label_SubLocal.Margin = New System.Windows.Forms.Padding(3)
         Me.Label_SubLocal.Name = "Label_SubLocal"
         Me.Label_SubLocal.Size = New System.Drawing.Size(372, 24)
@@ -84,7 +84,7 @@ Partial Class WL_Modification
         Me.List_SubLocal.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.List_SubLocal.FormattingEnabled = True
         Me.List_SubLocal.IntegralHeight = False
-        Me.List_SubLocal.Location = New System.Drawing.Point(4, 154)
+        Me.List_SubLocal.Location = New System.Drawing.Point(4, 144)
         Me.List_SubLocal.Margin = New System.Windows.Forms.Padding(4, 4, 4, 2)
         Me.List_SubLocal.Name = "List_SubLocal"
         Me.List_SubLocal.Size = New System.Drawing.Size(180, 21)
@@ -95,17 +95,17 @@ Partial Class WL_Modification
         Me.Label_TextBottom.AutoSize = True
         Me.TableLayoutPanel.SetColumnSpan(Me.Label_TextBottom, 3)
         Me.Label_TextBottom.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Label_TextBottom.Location = New System.Drawing.Point(3, 183)
+        Me.Label_TextBottom.Location = New System.Drawing.Point(3, 173)
         Me.Label_TextBottom.Margin = New System.Windows.Forms.Padding(3)
         Me.Label_TextBottom.Name = "Label_TextBottom"
-        Me.Label_TextBottom.Size = New System.Drawing.Size(560, 93)
+        Me.Label_TextBottom.Size = New System.Drawing.Size(560, 103)
         Me.Label_TextBottom.TabIndex = 11
         Me.Label_TextBottom.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'Button_Enable
         '
         Me.Button_Enable.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Button_Enable.Location = New System.Drawing.Point(3, 93)
+        Me.Button_Enable.Location = New System.Drawing.Point(3, 83)
         Me.Button_Enable.Name = "Button_Enable"
         Me.Button_Enable.Size = New System.Drawing.Size(182, 24)
         Me.Button_Enable.TabIndex = 5
@@ -115,7 +115,7 @@ Partial Class WL_Modification
         'Button_Path
         '
         Me.Button_Path.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Button_Path.Location = New System.Drawing.Point(3, 63)
+        Me.Button_Path.Location = New System.Drawing.Point(3, 53)
         Me.Button_Path.Name = "Button_Path"
         Me.Button_Path.Size = New System.Drawing.Size(182, 24)
         Me.Button_Path.TabIndex = 1
@@ -128,7 +128,7 @@ Partial Class WL_Modification
         Me.Label_Path.AutoSize = True
         Me.TableLayoutPanel.SetColumnSpan(Me.Label_Path, 2)
         Me.Label_Path.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Label_Path.Location = New System.Drawing.Point(191, 63)
+        Me.Label_Path.Location = New System.Drawing.Point(191, 53)
         Me.Label_Path.Margin = New System.Windows.Forms.Padding(3)
         Me.Label_Path.Name = "Label_Path"
         Me.Label_Path.Size = New System.Drawing.Size(372, 24)
@@ -138,7 +138,7 @@ Partial Class WL_Modification
         'Button_Disable
         '
         Me.Button_Disable.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Button_Disable.Location = New System.Drawing.Point(3, 123)
+        Me.Button_Disable.Location = New System.Drawing.Point(3, 113)
         Me.Button_Disable.Name = "Button_Disable"
         Me.Button_Disable.Size = New System.Drawing.Size(182, 24)
         Me.Button_Disable.TabIndex = 6
@@ -150,7 +150,7 @@ Partial Class WL_Modification
         Me.Label_ModOn.AutoSize = True
         Me.TableLayoutPanel.SetColumnSpan(Me.Label_ModOn, 2)
         Me.Label_ModOn.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Label_ModOn.Location = New System.Drawing.Point(191, 93)
+        Me.Label_ModOn.Location = New System.Drawing.Point(191, 83)
         Me.Label_ModOn.Margin = New System.Windows.Forms.Padding(3)
         Me.Label_ModOn.Name = "Label_ModOn"
         Me.Label_ModOn.Size = New System.Drawing.Size(372, 24)
@@ -163,7 +163,7 @@ Partial Class WL_Modification
         Me.Label_ModOff.AutoSize = True
         Me.TableLayoutPanel.SetColumnSpan(Me.Label_ModOff, 2)
         Me.Label_ModOff.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Label_ModOff.Location = New System.Drawing.Point(191, 123)
+        Me.Label_ModOff.Location = New System.Drawing.Point(191, 113)
         Me.Label_ModOff.Margin = New System.Windows.Forms.Padding(3)
         Me.Label_ModOff.Name = "Label_ModOff"
         Me.Label_ModOff.Size = New System.Drawing.Size(372, 24)
@@ -181,7 +181,7 @@ Partial Class WL_Modification
         Me.WL_Launcher1.Property_DestTokenFilePatch = Nothing
         Me.WL_Launcher1.Property_GameExeFilePath = Nothing
         Me.WL_Launcher1.Property_SourceTokenFilePatch = Nothing
-        Me.WL_Launcher1.Size = New System.Drawing.Size(566, 60)
+        Me.WL_Launcher1.Size = New System.Drawing.Size(566, 50)
         Me.WL_Launcher1.TabIndex = 15
         Me.WL_Launcher1.Text_Button_ExportToken = "Ключ"
         Me.WL_Launcher1.Text_Button_LaunchGame = "Запустить игру"
