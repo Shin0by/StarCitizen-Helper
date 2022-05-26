@@ -178,9 +178,9 @@ Partial Class WL_Modification
         Me.WL_Launcher1.Location = New System.Drawing.Point(0, 0)
         Me.WL_Launcher1.Margin = New System.Windows.Forms.Padding(0)
         Me.WL_Launcher1.Name = "WL_Launcher1"
-        Me.WL_Launcher1.Property_DestTokenFilePatch = Nothing
-        Me.WL_Launcher1.Property_GameExeFilePath = Nothing
-        Me.WL_Launcher1.Property_SourceTokenFilePatch = Nothing
+        Me.WL_Launcher1.Property_DestTokenFilePatch = ""
+        Me.WL_Launcher1.Property_GameExeFilePath = ""
+        Me.WL_Launcher1.Property_SourceTokenFilePatch = ""
         Me.WL_Launcher1.Size = New System.Drawing.Size(566, 50)
         Me.WL_Launcher1.TabIndex = 15
         Me.WL_Launcher1.Text_Button_ExportToken = "Ключ"

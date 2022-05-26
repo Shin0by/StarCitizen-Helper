@@ -280,10 +280,11 @@ Launcher_ButtonName_LaunchGame = Launch game
 Launcher_ButtonToolTip_LaunchGame = Launch game with saved token
 Launcher_MSG_LaunchGameProcessOK = Starting game:\n\tSuccess\n\tPath: {0}
 Launcher_MSG_LaunchGameProcessERR = Error when starting game:\n\tNumber: {0}\n\tDescription: {1}\n\tPath: {2}
-
 Launcher_Info_NoSourceToken =  To enable localization bypassing the EAC - run the game with the disabled localization [{0}].\nMinimize the game window and follow the instructions
 Launcher_Info_NoDestToken = The game token is available in the game folder, press [{0}], then finish the game
-Launcher_Info_Ready = Launch the game with localization support, without using the Launcher and bypassing the EAC.{nIf token expired and the game does not accept it, start the game again using the Launcher, then press [{0}]
+Launcher_Info_Ready = Launch the game with localization, bypassing the Launcher and EAC.\nIf the key is outdated, then start the game using the Launcher, then press [{0}]
+Launcher_MSG_LaunchGameEnableCore = Enable {0}
+Launcher_MSG_LaunchGameEnableCoreDescription = To launch the game bypassing the Launcher and EAC, you need to enable {0}\nPress [{1}], previously downloading and installing {2}.
 
 #SysLanguage
 Pack_MSG_CreateLangFolder = 애플리케이션 언어팩을 위한 폴더 생성됨:\n\t{0}

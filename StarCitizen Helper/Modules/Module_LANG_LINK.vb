@@ -47,7 +47,7 @@
 
         _LANG._Link(MAIN_THREAD.WL_Mod.Property_Launcher, "Text_Button_LaunchGame", "Launcher_ButtonName_LaunchGame", "")
         _LANG._Link(MAIN_THREAD.WL_Mod.Property_Launcher, "Text_Button_ExportToken", "Launcher_ButtonName_ExportKey", "")
-        _LANG._Link(MAIN_THREAD.WL_Mod.Property_Launcher, "Text_Label_LaunchGame", "Launcher_ButtonInfo_LaunchGame", "")
+        _LANG._Link(MAIN_THREAD.WL_Mod.Property_Launcher, "Text_Label_LaunchGame", "Launcher_Info_NoSourceToken", "")
 
         _LANG._Link(MAIN_THREAD.WL_Mod.Property_Launcher, "Text_ButtonToolTip_LaunchGame", "Launcher_ButtonToolTip_LaunchGame", "")
         _LANG._Link(MAIN_THREAD.WL_Mod.Property_Launcher, "Text_ButtonToolTip_ExportToken", "Launcher_ButtonToolTip_ExportKey", "")
