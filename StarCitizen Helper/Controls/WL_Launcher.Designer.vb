@@ -26,21 +26,18 @@ Partial Class WL_Launcher
         Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
         Me.Label_LaunchGame = New System.Windows.Forms.Label()
         Me.Button_LaunchGame = New System.Windows.Forms.Button()
-        Me.Button_ExportToken = New System.Windows.Forms.Button()
-        Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.TableLayoutPanel2.SuspendLayout()
         Me.SuspendLayout()
         '
         'TableLayoutPanel2
         '
-        Me.TableLayoutPanel2.ColumnCount = 3
-        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10.00033!))
-        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 23.33078!))
-        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 66.66889!))
-        Me.TableLayoutPanel2.Controls.Add(Me.Label_LaunchGame, 2, 0)
-        Me.TableLayoutPanel2.Controls.Add(Me.Button_LaunchGame, 1, 0)
-        Me.TableLayoutPanel2.Controls.Add(Me.Button_ExportToken, 0, 0)
+        Me.TableLayoutPanel2.ColumnCount = 2
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33!))
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 66.67!))
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+        Me.TableLayoutPanel2.Controls.Add(Me.Label_LaunchGame, 1, 0)
+        Me.TableLayoutPanel2.Controls.Add(Me.Button_LaunchGame, 0, 0)
         Me.TableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TableLayoutPanel2.Location = New System.Drawing.Point(0, 0)
         Me.TableLayoutPanel2.Margin = New System.Windows.Forms.Padding(0)
@@ -55,11 +52,12 @@ Partial Class WL_Launcher
         '
         Me.Label_LaunchGame.AutoSize = True
         Me.Label_LaunchGame.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Label_LaunchGame.Location = New System.Drawing.Point(207, 3)
+        Me.Label_LaunchGame.ForeColor = System.Drawing.Color.DarkBlue
+        Me.Label_LaunchGame.Location = New System.Drawing.Point(208, 3)
         Me.Label_LaunchGame.Margin = New System.Windows.Forms.Padding(3)
         Me.Label_LaunchGame.Name = "Label_LaunchGame"
         Me.TableLayoutPanel2.SetRowSpan(Me.Label_LaunchGame, 2)
-        Me.Label_LaunchGame.Size = New System.Drawing.Size(406, 311)
+        Me.Label_LaunchGame.Size = New System.Drawing.Size(405, 311)
         Me.Label_LaunchGame.TabIndex = 11
         Me.Label_LaunchGame.Text = "Label_LaunchGame"
         '
@@ -67,25 +65,13 @@ Partial Class WL_Launcher
         '
         Me.Button_LaunchGame.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button_LaunchGame.Enabled = False
-        Me.Button_LaunchGame.Location = New System.Drawing.Point(64, 3)
+        Me.Button_LaunchGame.Location = New System.Drawing.Point(3, 3)
         Me.Button_LaunchGame.Margin = New System.Windows.Forms.Padding(3, 3, 2, 3)
         Me.Button_LaunchGame.Name = "Button_LaunchGame"
-        Me.Button_LaunchGame.Size = New System.Drawing.Size(138, 24)
+        Me.Button_LaunchGame.Size = New System.Drawing.Size(200, 24)
         Me.Button_LaunchGame.TabIndex = 1
         Me.Button_LaunchGame.Text = "Запустить игру"
         Me.Button_LaunchGame.UseVisualStyleBackColor = True
-        '
-        'Button_ExportToken
-        '
-        Me.Button_ExportToken.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Button_ExportToken.Enabled = False
-        Me.Button_ExportToken.Location = New System.Drawing.Point(3, 3)
-        Me.Button_ExportToken.Name = "Button_ExportToken"
-        Me.Button_ExportToken.Size = New System.Drawing.Size(55, 24)
-        Me.Button_ExportToken.TabIndex = 2
-        Me.Button_ExportToken.Text = "Ключ"
-        Me.ToolTip.SetToolTip(Me.Button_ExportToken, "Выгрузить ключ запуска")
-        Me.Button_ExportToken.UseVisualStyleBackColor = True
         '
         'Timer1
         '
@@ -107,8 +93,6 @@ Partial Class WL_Launcher
 
     Friend WithEvents TableLayoutPanel2 As TableLayoutPanel
     Friend WithEvents Button_LaunchGame As Button
-    Friend WithEvents Button_ExportToken As Button
-    Friend WithEvents ToolTip As ToolTip
     Friend WithEvents Label_LaunchGame As Label
     Friend WithEvents Timer1 As Timer
 End Class

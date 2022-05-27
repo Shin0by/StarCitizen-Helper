@@ -183,10 +183,7 @@ Partial Class WL_Modification
         Me.WL_Launcher1.Property_SourceTokenFilePatch = ""
         Me.WL_Launcher1.Size = New System.Drawing.Size(566, 50)
         Me.WL_Launcher1.TabIndex = 15
-        Me.WL_Launcher1.Text_Button_ExportToken = "Ключ"
         Me.WL_Launcher1.Text_Button_LaunchGame = "Запустить игру"
-        Me.WL_Launcher1.Text_ButtonToolTip_ExportToken = ""
-        Me.WL_Launcher1.Text_ButtonToolTip_LaunchGame = ""
         Me.WL_Launcher1.Text_Label_LaunchGame = ""
         '
         'WL_Modification

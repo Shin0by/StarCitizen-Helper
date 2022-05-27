@@ -1,10 +1,4 @@
 ﻿Public Class WL_Launcher
-    Public Event _Event_Token_Get_Before(Path As String)
-    Public Event _Event_Token_Get_After(Path As String)
-    Public Event _Event_Token_Set_Before(Path As String)
-    Public Event _Event_Token_Set_After(Path As String)
-
-
     Private cBackColor As Color = Me.BackColor
     Private cForeColor As Color = Me.ForeColor
 
@@ -49,33 +43,6 @@
         End Get
         Set(ByVal Value As String)
             Me.Button_LaunchGame.Text = Value
-        End Set
-    End Property
-
-    Public Property Text_Button_ExportToken() As String
-        Get
-            Return Me.Button_ExportToken.Text
-        End Get
-        Set(ByVal Value As String)
-            Me.Button_ExportToken.Text = Value
-        End Set
-    End Property
-
-    Public Property Text_ButtonToolTip_LaunchGame() As String
-        Get
-            Return Me.ToolTip.GetToolTip(Button_LaunchGame)
-        End Get
-        Set(ByVal Value As String)
-            Me.ToolTip.SetToolTip(Button_LaunchGame, Value)
-        End Set
-    End Property
-
-    Public Property Text_ButtonToolTip_ExportToken() As String
-        Get
-            Return Me.ToolTip.GetToolTip(Button_ExportToken)
-        End Get
-        Set(ByVal Value As String)
-            Me.ToolTip.SetToolTip(Button_ExportToken, Value)
         End Set
     End Property
 
@@ -138,15 +105,50 @@
         Return 0
     End Function
 
-    Private Sub _Update()
+    Public Sub _Update()
         Dim LaunchState As Boolean = False
         Dim TokenState As Boolean = False
 
         If Property_GameExeFilePath.Length > 0 Then
-            If CheckDestinationModСonditions(Me.Property_SourceTokenFilePatch) = 0 Then TokenState = True
-            If CheckDestinationModСonditions(Me.Property_DestTokenFilePatch) = 0 And CheckDestinationModСonditions(Me.Property_GameExeFilePath) = 0 Then LaunchState = True
+            Dim result_SourceToken As ResultClass = _FSO._GetInfo(Me.Property_SourceTokenFilePatch)
+            Dim result_DestToken As ResultClass = _FSO._GetInfo(Me.Property_DestTokenFilePatch)
+            If result_SourceToken.ValueBoolean = True Then
+                Dim SourceFile_Token As IO.FileInfo = CType(result_SourceToken.ValueObject, IO.FileInfo)
+                If result_DestToken.ValueBoolean = True Then
+                    Dim DestFile_Token As IO.FileInfo = CType(result_DestToken.ValueObject, IO.FileInfo)
+                    Dim Diff_FileCreate As TimeSpan = SourceFile_Token.LastWriteTime - DestFile_Token.LastWriteTime
+                    If Diff_FileCreate.TotalMinutes > 0 Then _FSO._CopyFile(Me.Property_SourceTokenFilePatch, Me.Property_DestTokenFilePatch, True)
+                Else
+                    _FSO._CopyFile(Me.Property_SourceTokenFilePatch, Me.Property_DestTokenFilePatch, True)
+                End If
+                TokenState = True
+            End If
 
-            Me.Button_ExportToken.Enabled = TokenState
+            If result_DestToken.ValueBoolean = True Then TokenState = True
+
+            'Launcher_Info_NoExeFile = Укажите расположение файла игры нажав [{0}]
+            'Launcher_Info_NeedDisableCore = Выключите {0} нажав [{1}]
+            'Launcher_Info_NoSourceToken = Запустите игру с помощью лаунчера, загрузитесь в главное меню, после этого завершите игру.\nПрим.: Штатный запуск игры генерирует ключ, он будет использован для запуска игры с локализацией.
+            'Launcher_Info_NeedEnableCore = Включите {0} нажав [{1}]
+            'Launcher_Info_Ready = Запуск игры с локализацией.\nНе забывайте изредка запускать игру через лаунчер, для её обновления и генерации нового ключа при запущенном {0}
+
+
+            If TokenState = False And MAIN_THREAD.WL_Mod.Property_ModStatus = True Then
+                Me.Text_Label_LaunchGame = _LANG._Get("Launcher_Info_NeedDisableCore", _LANG._Get("ModificationModule"), _LANG._Get("Modification_ButtonName_Disable", _LANG._Get("ModificationModule")))
+                Me.Label_LaunchGame.ForeColor = Color.DarkBlue
+            ElseIf TokenState = False Then
+                Me.Text_Label_LaunchGame = _LANG._Get("Launcher_Info_NoSourceToken")
+                Me.Label_LaunchGame.ForeColor = Color.DarkBlue
+            ElseIf TokenState = True And MAIN_THREAD.WL_Mod.Property_ModStatus = False Then
+                Me.Text_Label_LaunchGame = _LANG._Get("Launcher_Info_NeedEnableCore", _LANG._Get("ModificationModule"), _LANG._Get("Modification_ButtonName_Enable", _LANG._Get("ModificationModule")))
+                Me.Label_LaunchGame.ForeColor = Color.DarkBlue
+            ElseIf TokenState = True And MAIN_THREAD.WL_Mod.Property_ModStatus = True Then
+                Me.Text_Label_LaunchGame = _LANG._Get("Launcher_Info_Ready", _APP.appName)
+                Me.Label_LaunchGame.ForeColor = Me.ForeColor
+                LaunchState = True
+            End If
+
+            'Me.Button_ExportToken.Enabled = TokenState
             If LaunchState = True And Me.Button_LaunchGame.Enabled = False Then
                 Me.Button_LaunchGame.Enabled = LaunchState
                 Me.Button_LaunchGame.Focus()
@@ -154,34 +156,24 @@
                 Me.Button_LaunchGame.Enabled = LaunchState
             End If
 
-            If Me.Button_LaunchGame.Enabled = True And CheckDestinationModСonditions(Me.Property_DestTokenFilePatch) = 0 Then
-                Me.Text_Label_LaunchGame = _LANG._Get("Launcher_Info_Ready", _LANG._Get("Launcher_ButtonName_ExportKey"))
-            ElseIf Me.Button_ExportToken.Enabled = True Then
-                Me.Text_Label_LaunchGame = _LANG._Get("Launcher_Info_NoDestToken", _LANG._Get("Launcher_ButtonName_ExportKey"))
-            ElseIf Me.Button_ExportToken.Enabled = False Then
-                Me.Text_Label_LaunchGame = _LANG._Get("Launcher_Info_NoSourceToken", _LANG._Get("Modification_ButtonName_Disable", _LANG._Get("ModificationModule")), _LANG._Get("Launcher_ButtonName_ExportKey"))
-            End If
         End If
-    End Sub
-
-    Private Sub Button_ExportToken_Click(sender As Object, e As EventArgs) Handles Button_ExportToken.Click
-        RaiseEvent _Event_Token_Get_Before(Me.Property_SourceTokenFilePatch)
-        _FSO._CopyFile(Me.Property_SourceTokenFilePatch, Me.Property_DestTokenFilePatch, True)
-        _Update()
-        RaiseEvent _Event_Token_Get_After(Me.Property_SourceTokenFilePatch)
     End Sub
 
     Private Sub Button_LaunchGame_Click(sender As Object, e As EventArgs) Handles Button_LaunchGame.Click
-        RaiseEvent _Event_Token_Set_Before(Me.Property_DestTokenFilePatch)
-        If MAIN_THREAD.WL_Mod.Property_ModStatus = False Then
-            _LOG._sAdd("LAUNCHER", _LANG._Get("Launcher_MSG_LaunchGameEnableCore", _LANG._Get("ModificationModule")), _LANG._Get("Launcher_MSG_LaunchGameEnableCoreDescription", _LANG._Get("ModificationModule"), _LANG._Get("Modification_ButtonName_Enable", _LANG._Get("ModificationModule")), _LANG._Get("PackUpdateName")), 0)
+        Dim ProcessName As String = "wordpad" '_VARS.GameName
+        Dim ProcessResult As ResultClass
+
+        If _PROCESS._Get(ProcessName, True, True).Count > 0 Then
+            If MsgBox(_LANG._Get("Launcher_MSG_KillProcessQuestion", _VARS.GameName), vbYesNo + vbQuestion) = 6 Then
+                _PROCESS._Kill(ProcessName, False, True)
+                ProcessResult = _PROCESS._Start(Me.Property_GameExeFilePath)
+                _Update()
+            End If
         Else
-            Dim process As ResultClass
             _FSO._CopyFile(Me.Property_DestTokenFilePatch, Me.Property_SourceTokenFilePatch, True)
-            process = _PROCESS._Start(Me.Property_GameExeFilePath)
+            ProcessResult = _PROCESS._Start(Me.Property_GameExeFilePath)
             _Update()
         End If
-        RaiseEvent _Event_Token_Set_After(Me.Property_DestTokenFilePatch)
     End Sub
 
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick

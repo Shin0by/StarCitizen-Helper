@@ -463,6 +463,8 @@ Finalize:   If Me.sGameExeFileName IsNot Nothing Then
                 Me.Label_ModOff.Text = _LANG._Get("l_Disable", _LANG._Get("ModificationModule")) & " v." & Me.sModInGameFileVersion
             End If
         End If
+
+        Me.WL_Launcher1._Update()
     End Sub
 
     Private Sub _Enabled(Enabled As Boolean, Optional FirstRecurseControl As Object = Nothing)

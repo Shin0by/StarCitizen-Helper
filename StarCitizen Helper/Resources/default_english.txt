@@ -267,24 +267,25 @@ Modification_ButtonName_Enable = Enable {0}
 Modification_ButtonInfo_Enable = Enable {0}
 Modification_ButtonName_Disable = Disable {0}
 Modification_ButtonInfo_Disable = Disable {0}
-Modification_Bottom_Info = Warning! All listed in [{0}] tab things you performing at your own risk.\nBy pressing [{1}] button you will violate CIG EULA.\n\nTo enable or disable {2} you need to download it. Navigate to [{4}] tab and follow listed instructions.\n\nNote: When you downloading and installing new {3} you need to reenable {5}. It will enable appropriate {2} for appropriate localization. Program does not making changes in any game files, but modify memory at game launch which is much harder to detect.\n\nThe author of the program is strongly against any cheats and other methods not allowed by CIG, this program not carry such functional.
+Modification_Bottom_Info = Warning! All listed in [{0}] tab things you performing at your own risk.\nBy pressing [{1}] or [{6}] button you will violate CIG EULA.\n\nTo enable or disable {2} you need to download it. Navigate to [{4}] tab and follow listed instructions.\n\nNote: When you downloading and installing new {3} you need to reenable {5}. It will enable appropriate {2} for appropriate localization. Program does not making changes in any game files, but modify memory at game launch which is much harder to detect.\n\nThe author of the program is strongly against any cheats and other methods not allowed by CIG, this program not carry such functional.
 Modification_OpenFileDialog_GameFile = Game exec file
 Modification_MSG_CoreNotFound = {0} not found, check instruction at the bottom of the window
 Modification_MSG_VersionUnspecified = unknown version
 Modification_ListName_LocalizationType = Localization variations
 
 #Launcher
-Launcher_ButtonName_ExportKey = Token
-Launcher_ButtonToolTip_ExportKey = Save the token to start the game without game launcher
 Launcher_ButtonName_LaunchGame = Launch game
-Launcher_ButtonToolTip_LaunchGame = Launch game with saved token
-Launcher_MSG_LaunchGameProcessOK = Starting game:\n\tSuccess\n\tPath: {0}
-Launcher_MSG_LaunchGameProcessERR = Error when starting game:\n\tNumber: {0}\n\tDescription: {1}\n\tPath: {2}
-Launcher_Info_NoSourceToken =  To enable localization bypassing the EAC - run the game with the disabled localization [{0}].\nMinimize the game window and follow the instructions
-Launcher_Info_NoDestToken = The game token is available in the game folder, press [{0}], then finish the game
-Launcher_Info_Ready = Launch the game with localization, bypassing the Launcher and EAC.\nIf the key is outdated, then start the game using the Launcher, then press [{0}]
+Launcher_MSG_LaunchGameProcessOK = Starting process:\n\tSuccess\n\tPath: {0}
+Launcher_MSG_LaunchGameProcessERR = Error when starting process:\n\tNumber: {0}\n\tDescription: {1}\n\tPath: {2}
 Launcher_MSG_LaunchGameEnableCore = Enable {0}
-Launcher_MSG_LaunchGameEnableCoreDescription = To launch the game bypassing the Launcher and EAC, you need to enable {0}\nPress [{1}], previously downloading and installing {2}.
+
+Launcher_Info_NoExeFile = Specify the location of the game file by pressing [{0}
+Launcher_Info_NeedDisableCore = Disable {0} by pressing [{1}]
+Launcher_Info_NoSourceToken = Launch the game using the game launcher, boot to the main menu, then close the game.\nNote: The standard launch of the game generates a token, it will be used to start the game with the localization.
+Launcher_Info_NeedEnableCore = To start the game with localization - turn on {0} by pressing [{1}]
+Launcher_Info_Ready = Don't forget to run the game occasionally with the Launcher in order to update it\nand to generate a new token when {0} is running, if the game stops running
+
+Launcher_MSG_KillProcessQuestion = Game {0} is already running.\n\nDo you want to forcibly end the game process and restart it?
 
 #SysLanguage
 Pack_MSG_CreateLangFolder = Created folder for application language packs:\n\t{0}
