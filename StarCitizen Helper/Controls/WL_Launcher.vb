@@ -126,13 +126,6 @@
 
             If result_DestToken.ValueBoolean = True Then TokenState = True
 
-            'Launcher_Info_NoExeFile = Укажите расположение файла игры нажав [{0}]
-            'Launcher_Info_NeedDisableCore = Выключите {0} нажав [{1}]
-            'Launcher_Info_NoSourceToken = Запустите игру с помощью лаунчера, загрузитесь в главное меню, после этого завершите игру.\nПрим.: Штатный запуск игры генерирует ключ, он будет использован для запуска игры с локализацией.
-            'Launcher_Info_NeedEnableCore = Включите {0} нажав [{1}]
-            'Launcher_Info_Ready = Запуск игры с локализацией.\nНе забывайте изредка запускать игру через лаунчер, для её обновления и генерации нового ключа при запущенном {0}
-
-
             If TokenState = False And MAIN_THREAD.WL_Mod.Property_ModStatus = True Then
                 Me.Text_Label_LaunchGame = _LANG._Get("Launcher_Info_NeedDisableCore", _LANG._Get("ModificationModule"), _LANG._Get("Modification_ButtonName_Disable", _LANG._Get("ModificationModule")))
                 Me.Label_LaunchGame.ForeColor = Color.DarkBlue
@@ -148,7 +141,6 @@
                 LaunchState = True
             End If
 
-            'Me.Button_ExportToken.Enabled = TokenState
             If LaunchState = True And Me.Button_LaunchGame.Enabled = False Then
                 Me.Button_LaunchGame.Enabled = LaunchState
                 Me.Button_LaunchGame.Focus()
@@ -160,7 +152,7 @@
     End Sub
 
     Private Sub Button_LaunchGame_Click(sender As Object, e As EventArgs) Handles Button_LaunchGame.Click
-        Dim ProcessName As String = "wordpad" '_VARS.GameName
+        Dim ProcessName As String = _VARS.GameName
         Dim ProcessResult As ResultClass
 
         If _PROCESS._Get(ProcessName, True, True).Count > 0 Then
