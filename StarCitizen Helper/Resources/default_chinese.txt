@@ -1,0 +1,297 @@
+Language = Chinese
+
+########################### Info ###########################
+#                                                          #
+# LANGUAGE - USED IN APPLICATION LANGUAGE LIST             #
+# Name = Value - Basic                                     #
+# NameT - declension of a word, not used in many languages #
+# {0},{1}...{10} - Variable replaced programmatically      #
+# \n - New line                                            #
+# \t - Tab character                                       #
+#                                                          #
+############################################################
+
+#GLOBAL SHORT
+Error = 错误
+Number = 编号
+Description = 简介
+CallError = 调用错误
+File = 文件
+FileAllFiles = 所有文件
+Information = 信息
+Operation = 操作
+Read = 读取
+Write = 写入
+ErrorDownload = 下载失败
+SourceURL = 源URL
+Destination = 目标点
+FunctionEnabled = 启用操作
+FunctionDisabled = 禁用操作
+Modification = 修改
+ModificationModule = 修改模块
+ModificationModuleT = 修改模块
+Enable = 启用
+Disable = 禁用
+EnabledT = 已启用
+DisabledT = 已禁用
+EnabledS = 启用
+DisabledS = 禁用
+NewVersionAvailable = 新版本可用
+Name = 名称
+SystemUpdateName = 系统更新
+SystemUpdateNameT = 系统更新
+PackUpdateName = 本地化包
+PackUpdateNameT = 本地化包
+UpdateComplete = {0}下载成功
+FileGameExec = 游戏启动程序
+FileGameExecT = 游戏启动程序
+Additional = 附加
+Yes = 是
+No = 否
+Ok = 确定
+Cancel = 取消
+Retry = 重试
+Ignore = 忽略
+Abort = 停止
+Save = 保存
+Link = 链接
+NotAssigned = 未分配
+
+#GLOBAL LONG
+l_Error = 错误: {0}
+l_Number = 编号: {0}
+l_Description = 简介: {0}
+l_CallError = 调用错误: {0}
+l_File = 文件: {0}
+l_Information = 提示: {0}
+l_Operation = 操作: {0}
+l_Read = 读取: {0}
+l_Write = 写入: {0}
+l_ErrorDownload = 下载错误: {0}
+l_SourceURL = 源URL: {0}
+l_Destination = 目标点: {0}
+l_FunctionEnabled = 启用函数 [{0}]
+l_FunctionDisabled = 禁用函数 [{0}] 
+l_Modification = 修改: {0}
+l_ModificationModule = 模块模块: {0}
+l_Enable = 启用{0}
+l_Disable = 禁用{0}
+l_EnabledT = 启用{0}
+l_DisabledT = 禁用{0}
+l_NewVersionAvailable = 监测到新版本"{0}"可用
+l_Name = 名称:{0}
+l_UpdateComplete = {0}下载成功:
+l_Err_ElementAlreadyExist = 元素"{0}"已存在, 请设置其他名称
+l_Err_ElementAlreadyExistInGrp = 元素"{1}"已在组"{0}" 中存在, 请设置其他名称
+l_Err_IncorrectLink = 错误链接: {0}
+l_Version = 版本: {0}
+l_Date = 日期: {0}
+l_Repository = 仓库: {0}
+
+#FileSystem
+File_MSG_CheckFile = 正在检测文件[{0}]
+File_MSG_ChangeFile = 正在修改文件[{0}]
+File_MSG_ErrorAccessConfigFile = 无法访问配置文件
+File_MSG_SectionNotFound = 文件中缺失节 [{0}]\n\t{1}
+File_MSG_ParameterNotFound = 节 [{1}] 中缺少参数 [{0}]\n\t{2}
+File_MSG_CannotDelExsFile = 无法删除文件 \n\t{0}
+File_MSG_CannotWriteCheckPermission = 无法写入文件 {0}, 请检查权限 \n\t
+File_MSG_IncorrectDownloadedSize = 文件下载大小错误\n\t{0}
+File_MSG_PathNotAssign = 将路径指定为 {0}
+File_MSG_CannotCopyFile =拷贝文件错误\n\t源: {0}\n\t目标: {1}
+
+#Window Tabs
+Window_Tab_Modification = 修改
+Window_Tab_Localization = 本地化
+Window_Tab_ProcessKiller = 一键关闭
+Window_Tab_Profiles = 简介
+Window_Tab_Log = 日志
+Window_Tab_SysUpdate = 更新
+Window_Tab_SysSettings = 设置
+Window_Tab_About = 关于
+Window_Tab_Repository = 仓库
+
+#Window Menu
+Menu_Main_Modification = 修改
+Menu_Main_Modification_Enable = 启用 (本地化补丁)
+Menu_Main_Modification_Disable = 禁用 (初始状态)
+Menu_Main_Update = 本地化
+Menu_Main_Update_FullInstall = 完整安装
+Menu_Main_ProcessKiller = 一键关闭
+Menu_Main_ProcessKiller_Enabled = 启用
+Menu_Main_ProcessKiller_Disabled = 禁用
+Menu_Main_ProcessKiller_KillProcess = 强制关闭进程
+Menu_Main_MoveProfiles = 简介
+Menu_Main_MoveProfiles_ForceClose = 强制关闭
+Menu_Main_HideApp = Hide app.
+Menu_Main_ShowApp = Show app.
+Menu_Main_Exit = 退出
+
+#Window other
+Core_MSG_BeginVerification = 开始验证核心
+
+#Tab About
+About_ButtonName_Application = 反馈问题
+About_ButtonInfo_Application = 反馈本软件问题
+About_ButtonName_Localization = 反馈汉化问题
+About_ButtonInfo_Localization = 反馈汉化问题
+About_ButtonName_Core = 反馈汉化核心问题
+About_ButtonInfo_Core = 反馈未签名汉化核心问题
+
+#Tab Log
+Log_Button_ClearLog = 清除日志
+
+#Tab Profiles
+Profiles_ButtonsInfo_RenameGameFolder = 将文件夹重命名为 LIVE, PTU, EPTU
+Profiles_CheckName_FinishInAdvance = 强制关闭
+Profiles_CheckInfo_FinishInAdvance = 在重命名文件夹前强制关闭星际公民进程和启动器进程
+Profiles_Bottom_Info = 允许你在LIVE, PTU, EPTU之间快速切换.\n
+
+#Tab SystemSettings
+CheckBox_UpdateAlert = 当有汉化更新时提醒
+CheckBox_StartUp = 随系统启动
+CheckBox_HideWhenClose = 关闭窗口后不退出
+
+#Tab repository
+Repository_ButtonName_ButtonSetRep = 设置仓库
+Repository_ButtonInfo_ButtonSetRep = 分配选定的仓库以供后续使用
+Repository_Label_SelectedRep = 使用中仓库: {0}
+Repository_MSG_SelectCorrectRepository = 在变更仓库前请选择仓库
+Repository_ButtonInfo_AddGroup = 添加新的语言组
+Repository_ButtonInfo_RemoveGroup = 移除选择的语言组
+Repository_ButtonInfo_EditGroup = 编辑选择的语言组
+Repository_Label_LanguageGroupName = 语言组名
+Repository_MSG_RemoveGroup = 你想要移除选定的语言组吗？
+Repository_Label_LanguageGroup = 添加删除语言组
+Repository_Label_Repository = 添加删除更改仓库
+Repository_ButtonInfo_AddRepository = 添加新的仓库
+Repository_ButtonInfo_RemoveRepository = 移除选定的仓库
+Repository_ButtonInfo_EditRepository = 编辑选定的仓库
+Repository_MSG_RemoveRepository = 你想要删除选定的仓库吗
+Repository_Label_RepositoryLangGroup =语言组
+Repository_Label_RepositoryName = 仓库名
+Repository_Label_RepositoryURL = GIT仓库链接
+Repository_Label_RepositoryDescription = 仓库简介
+Repository_MSG_RepositoryLinkAlreadyExist = 此链接指向的仓库已存在:\n{0}\n\n链接为:\n{1}
+Repository_MSG_YouCanNotRemoveActiveRepository = 你无法删除使用中的仓库\n设置新的仓库后删除当前仓库
+Repository_MSG_YouCanNotRemoveActiveRepositoryGroup = 删除的语言组中包含使用中仓库\n设置新的仓库后删除当前仓库
+
+#Module PATCH
+Patch_MSG_Blocks = HEX_BLOCK1: [{0}]\nHEX_BLOCK2: [{1}]
+
+#Module INET
+INet_MSG_IncorrectURLString = 错误的 URL 字符串
+
+#Module HELPER
+Helper_MSG_UpdateOK = 成功更新到最新版本
+Helper_MSG_ConfigFileNotFoundCreateNew = 未找到配置文件，已创建新配置\n\t{0}
+Helper_MSG_ConfigFileLoadFrom = 正在从文件中读取配置:\n\t{0}
+Helper_MSG_UpdateErrorTitle = 更新错误
+Helper_MSG_UpdateErrorBody = 更新后自动重启失败{0}
+Helper_MSG_AfterUpdateErrorTitle = 更新后的版本与下载的版本不一致
+Helper_MSG_AfterUpdateErrorBody = 如果程序已经是最新版本 ([{0}]标签 - 对比当前与最新版本), 请忽略此消息. 如果程序未更新成功，请手动下载最新版本。
+Helper_MSG_RenameGameFolderError = 文件夹无法被重命名
+Helper_MSG_RenameGameFolder = 成功重命名文件夹
+Helper_MSG_CoreVerificationOK = 核心校验成功
+Helper_MSG_CoreVerificationError = 核心校验失败
+Helper_MSG_CoreNotEnabled = 核心未启用\n
+Helper_MSG_CoreErrorRecomendation = 此问题与软件电子签名相关，可能在新版本的Windows中出现。请在更新软件后重试.\n\n监测到本地化核心被修改! 可能包含恶意内容。 确认要使用此汉化包吗?\n\n强烈推荐仅从可信来源下载汉化包！\n\n请点击[{0}]标签，输入你在何处下载汉化包（网址）然后点击[{1}]按钮来发送反馈.\n\n
+
+Module GIT
+GIT_MSG_AccessDeniedLimit = 访问失败，达到最大重试次数\n{0}
+GIT_MSG_CannotLoadBuildList = 无法从Gitee加载内容\n{0}
+GIT_MSG_CannotSendStatRequest = 无法发送stat请求\n{0}
+GIT_MSG_SendStatRequest = stat请求:
+
+#Watcher
+Watcher_MSG_FileChangedDisable = 追踪中文件已删除，禁用跟踪
+Watcher_MSG_FileChanged = 追踪中文件被修改
+Watcher_MSG_AddErrorFileNotExist = 无法启用文件追踪, 缺少权限或文件不存在
+Watcher_MSG_AddErrorAlreadyInList = 无法启用文件追踪; 已在追踪列表中\n\t{0}
+Watcher_MSG_AddOK = 文件追踪已启用\n\t{0}
+Watcher_MSG_ErrorRequest = 无法完成请求, 文件已在追踪列表中\n\t{0}
+Watcher_MSG_ErrorAccess = 无法归档数据, 缺少权限或文件不存在
+
+#SystemUpdate
+SysUpdateCheck_Group_Installed = 已安装
+SysUpdateCheck_Group_Actual = 当前
+SysUpdateCheck_Name_CurentVersion = 版本:
+SysUpdateCheck_Name_OnlineDate = 发布日期:
+SysUpdateCheck_Name_OnlineInformation = 附加信息:
+SysUpdateCheck_Name_OnlineVersion = 版本:
+SysUpdate_Bottom_Info = 警告!\n下载成功后软件会自动更新\n可能需要权限来[{0}]\n\n文件路径: {1}
+SysUpdate_MSG_SysUpdateTitle = 名称：更新
+SysUpdate_MSG_ChangesInfo = 更新日志可以在[{0}]标签或Gitee页面中查看
+SysUpdate_MSG_Downloadmanual = 你可以在下面的链接中手动下载更新: {0}
+
+#ProcessKiller
+ProcessKiller_CheckName_Enable = 启用强制关闭进程
+ProcessKiller_CheckInfo_Enable = 启用
+ProcessKiller_ButtonName_SetHotKey = 选择热键
+ProcessKiller_ButtonInfo_SetHotKey = 无启用热键
+ProcessKiller_ListInfo_KeyModifier = 未选择热键修饰器
+ProcessKiller_ButtonName_AddProcess = 加入强制关闭列表
+ProcessKiller_ButtonName_RemoveProcess = 从强制关闭列表中移除
+ProcessKiller_Bottom_Info = 强制关闭功能允许你使用热键强制关闭进程\n当游戏进程卡死时格外有用\n\n需要使用管理员权限启动App！\n你可以同时关闭一个或多个进程.
+ProcessKiller_MSG_KillIgnore = 强制关闭进程 - 已忽略
+ProcessKiller_MSG_Kill = 强制关闭进程
+ProcessKiller_MSG_CallError = 调用失败: {0}({1})
+ProcessKiller_MSG_KeyInfo = 按键: "{0}"\n按键ID: {1}
+ProcessKiller_MSG_ProcessRequiredName = 请指定进程名称
+ProcessKiller_MSG_ProcessAlreadyInList = 进程已在列表中
+ProcessKiller_MSG_ProcessSelectFromList = 请从列表中选择进程
+
+#Localization
+Pack_CheckName_ShowAllBuild = 列出所有本地化包
+Pack_ButtonName_DownloadPack = 下载本地化包
+Pack_ButtonInfo_DownloadPack = 下载选中的本地化包 (包含核心)
+Pack_ButtonName_PackInstallAll = 完整安装
+Pack_ButtonInfo_PackInstallAll = 本地化和字体
+Pack_Label_RepositoryName = 仓库: {0}
+Pack_Bottom_Info = 在下拉菜单中选择一个{1}后点击[{2}]来下载{0}. 下载后点击[{3}]来加载汉化.\n你需要启用{4}来启动汉化, 导航到[{5}]标签然后点击[{6}]。
+Pack_MSG_ChangesInfo = 更新日志可以在: {0}查看
+Pack_MSG_CreateTempFolder = 已为本地化包创建文件夹:\n\t{0}
+Pack_MSG_AssignTempFolder = 已为本地化包指定文件夹:\n\t{0}
+Pack_MSG_DownloadedVersion = 已下载版本: {0}
+Pack_MSG_InstalledVersion = 已安装版本: {0}
+Pack_MSG_VersionUnspecified = 未知版本
+Pack_MSG_ErrorAccessTempFolder = 缺少访问文件夹的权限
+Pack_MSG_ErrorClearTempFolder = 无法删除已安装汉化包
+Pack_MSG_ErrorNotSelectPack = 需要选择汉化包
+Pack_MSG_ErrorAccessPackFile = 缺少访问本地化包文件夹的权限e:\n\t{0}
+Pack_MSG_ErrorUnpackPackToGame = 将汉化包安装到游戏文件夹失败\n\t源文件夹: {0}\n\t目标文件夹: {1}
+
+#Modification!
+Modification_ButtonName_Path = 选择{0}
+Modification_ButtonName_Enable = 启用{0}
+Modification_ButtonInfo_Enable = 启用{0}
+Modification_ButtonName_Disable = 禁用{0}
+Modification_ButtonInfo_Disable = 禁用{0}
+Modification_Bottom_Info = 点击[{4}]标签然后按照提示操作.\n\n注意: 当你重新下载后{3}需要重新启用{5}. 这会为{2}启用合适的本地化包。\n\n本软件作者强烈反对包括但不限于游戏作弊，RMT等违反CIG用户协议的行为，本软件永远不会提供此种功能。\n\n
+Modification_OpenFileDialog_GameFile = 游戏启动文件
+Modification_MSG_CoreNotFound = {0}核心未发现, 请检查窗口下方使用提示
+Modification_MSG_VersionUnspecified = 未知版本
+Modification_ListName_LocalizationType = 本地化变更
+
+#Launcher
+Launcher_ButtonName_LaunchGame = 启动游戏
+Launcher_MSG_LaunchGameProcessOK = 启动进程:\n\t成功\n\t路径: {0}
+Launcher_MSG_LaunchGameProcessERR = 启动进程错误:\n\t编号: {0}\n\t描述: {1}\n\tPath: {2}
+Launcher_MSG_LaunchGameEnableCore = 启用{0}
+
+Launcher_Info_NoExeFile = 点击[{0}]来选择游戏文件
+Launcher_Info_NeedDisableCore = 点击[{1}]来关闭{0} 
+Launcher_Info_NoSourceToken = 使用游戏启动器来启动游戏, 进入游戏启动界面, 然后关闭游戏.\n提示: 当以标准方式启动游戏时会生成校验码, 这将会被用来进行汉化启动.
+Launcher_Info_NeedEnableCore = 要以汉化启动游戏 - 请点击[{1}]来打开{0} 
+Launcher_Info_Ready = 当{0}运行时，如果游戏停止运行，别忘了定期使用启动器打开游戏\n来生成校验码
+
+Launcher_MSG_KillProcessQuestion = 游戏{0}已启动.\n\n你想要强制关闭游戏并重启吗?
+
+#SysLanguage
+Pack_MSG_CreateLangFolder = 已为软件本地化包创建文件夹:\n\t{0}
+Pack_MSG_AssignLangFolder = 已为软件本地化包指定文件夹:\n\t{0}
+SysLanguage_ButtonName_SetLanguage = 设置
+SysLanguage_ButtonInfo_SetLanguage = 界面语言
+SysLanguage_Group_Language = 界面语言
+
+#END

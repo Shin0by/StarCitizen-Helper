@@ -156,6 +156,9 @@ Public Class WL_Language
         If _FSO._FileExits(_FSO._CombinePath(Property_Path_Folder_Language, "default_korean.txt")) = False Or ForceUpdateFiles = True Then
             _FSO._WriteTextFile(My.Resources.default_korean, _FSO._CombinePath(Property_Path_Folder_Language, "default_korean.txt"), Encoding.Unicode, False)
         End If
+        If _FSO._FileExits(_FSO._CombinePath(Property_Path_Folder_Language, "default_chinese.txt")) = False Or ForceUpdateFiles = True Then
+            _FSO._WriteTextFile(My.Resources.default_chinese, _FSO._CombinePath(Property_Path_Folder_Language, "default_chinese.txt"), Encoding.Unicode, False)
+        End If
     End Sub
 
     Public Function _LoadLanguageList() As List(Of Class_LanguageList_Element)
