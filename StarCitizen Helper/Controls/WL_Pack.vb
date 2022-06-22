@@ -500,6 +500,41 @@ Finalize: If result.Err._Flag = True Then
         RaiseEvent _Event_Download_Click_After()
     End Sub
 
+    Private Sub Button_OpenFile_Click(sender As Object, e As EventArgs) Handles Button_OpenFile.Click
+        Me._Enabled(False)
+        RaiseEvent _Event_Download_Click_Before()
+        RaiseEvent _Event_Download_Before()
+
+        Dim result As New ResultClass(Me)
+
+
+        MAIN_THREAD.OpenFileDialog1.Filter = "Файл локализации (*.zip)|*.zip|" & _LANG._Get("FileAllFiles") & " (*.*)|*.*"
+        MAIN_THREAD.OpenFileDialog1.FilterIndex = 1
+        MAIN_THREAD.OpenFileDialog1.RestoreDirectory = True
+
+        Dim SrcFile As String = ""
+
+        If (MAIN_THREAD.OpenFileDialog1.ShowDialog() = DialogResult.OK) Then
+            SrcFile = MAIN_THREAD.OpenFileDialog1.FileName
+        Else
+            Me._Enabled(True)
+            GoTo Finalize
+        End If
+
+        If Me.Property_Path_Folder_Download Is Nothing Then result.Err._Flag = True : result.Err._Description_App = _LANG._Get("Pack_MSG_ErrorAccessTempFolder") : result.Err._Description_Sys = Me.Property_Path_Folder_Download : GoTo Finalize
+        If _FSO._DeleteFile(Path.Combine(Me.Property_Path_Folder_Download, "*.zip")).Err._Flag = True Then result.Err._Flag = True : result.Err._Description_App = _LANG._Get("Pack_MSG_ErrorClearTempFolder") : result.Err._Description_Sys = Me.Property_Path_Folder_Download : GoTo Finalize
+        Dim DestFile As String = _FSO._CombinePath(Me.Property_Path_Folder_Download, CType(_FSO._GetInfo(SrcFile).ValueObject, FileInfo).Name)
+        If _FSO._CopyFile(SrcFile, DestFile, True) = False Then result.Err._Flag = True : result.Err._Description_App = _LANG._Get("File_MSG_CannotCopyFile", SrcFile, DestFile) : GoTo Finalize
+
+        MAIN_THREAD.WL_Repo.Property_GitStatPage = SrcFile
+        Me.DownloadComplete(SrcFile, DestFile, Me.WL_Download.DownloadProgress)
+
+Finalize: If result.Err._Flag = True Then
+            result.Err._ToLOG(2)
+        End If
+        RaiseEvent _Event_Download_Click_After()
+    End Sub
+
     Public Sub Button_InstallFull_Click(sender As Object, e As EventArgs) Handles Button_InstallFull.Click
         On Error Resume Next
         RaiseEvent _Event_Download_Click_Before()

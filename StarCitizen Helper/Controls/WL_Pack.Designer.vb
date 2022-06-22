@@ -22,7 +22,9 @@ Partial Class WL_Pack
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(WL_Pack))
         Me.TableLayoutPanel = New System.Windows.Forms.TableLayoutPanel()
+        Me.Button_OpenFile = New System.Windows.Forms.Button()
         Me.Label_TextBottom = New System.Windows.Forms.Label()
         Me.List_Git = New System.Windows.Forms.ComboBox()
         Me.Button_InstallFull = New System.Windows.Forms.Button()
@@ -42,19 +44,21 @@ Partial Class WL_Pack
         '
         'TableLayoutPanel
         '
-        Me.TableLayoutPanel.ColumnCount = 3
+        Me.TableLayoutPanel.ColumnCount = 4
         Me.TableLayoutPanel.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33332!))
+        Me.TableLayoutPanel.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 36.0!))
         Me.TableLayoutPanel.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334!))
         Me.TableLayoutPanel.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334!))
+        Me.TableLayoutPanel.Controls.Add(Me.Button_OpenFile, 1, 2)
         Me.TableLayoutPanel.Controls.Add(Me.Label_TextBottom, 0, 8)
         Me.TableLayoutPanel.Controls.Add(Me.List_Git, 0, 1)
         Me.TableLayoutPanel.Controls.Add(Me.Button_InstallFull, 0, 3)
         Me.TableLayoutPanel.Controls.Add(Me.Button_Download, 0, 2)
-        Me.TableLayoutPanel.Controls.Add(Me.Label_Download, 1, 2)
-        Me.TableLayoutPanel.Controls.Add(Me.Label_InstallFull, 1, 3)
+        Me.TableLayoutPanel.Controls.Add(Me.Label_Download, 2, 2)
+        Me.TableLayoutPanel.Controls.Add(Me.Label_InstallFull, 2, 3)
         Me.TableLayoutPanel.Controls.Add(Me.WL_Download, 0, 4)
-        Me.TableLayoutPanel.Controls.Add(Me.CheckBox_ShowAllBuild, 1, 1)
-        Me.TableLayoutPanel.Controls.Add(Me.WL_PackUpdateCheck, 2, 1)
+        Me.TableLayoutPanel.Controls.Add(Me.CheckBox_ShowAllBuild, 2, 1)
+        Me.TableLayoutPanel.Controls.Add(Me.WL_PackUpdateCheck, 3, 1)
         Me.TableLayoutPanel.Controls.Add(Me.Panel1, 0, 0)
         Me.TableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TableLayoutPanel.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
@@ -73,10 +77,21 @@ Partial Class WL_Pack
         Me.TableLayoutPanel.Size = New System.Drawing.Size(662, 301)
         Me.TableLayoutPanel.TabIndex = 4
         '
+        'Button_OpenFile
+        '
+        Me.Button_OpenFile.BackgroundImage = CType(resources.GetObject("Button_OpenFile.BackgroundImage"), System.Drawing.Image)
+        Me.Button_OpenFile.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
+        Me.Button_OpenFile.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Button_OpenFile.Location = New System.Drawing.Point(211, 63)
+        Me.Button_OpenFile.Name = "Button_OpenFile"
+        Me.Button_OpenFile.Size = New System.Drawing.Size(30, 24)
+        Me.Button_OpenFile.TabIndex = 19
+        Me.Button_OpenFile.UseVisualStyleBackColor = True
+        '
         'Label_TextBottom
         '
         Me.Label_TextBottom.AutoSize = True
-        Me.TableLayoutPanel.SetColumnSpan(Me.Label_TextBottom, 3)
+        Me.TableLayoutPanel.SetColumnSpan(Me.Label_TextBottom, 4)
         Me.Label_TextBottom.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Label_TextBottom.Location = New System.Drawing.Point(3, 213)
         Me.Label_TextBottom.Margin = New System.Windows.Forms.Padding(3)
@@ -87,6 +102,7 @@ Partial Class WL_Pack
         '
         'List_Git
         '
+        Me.TableLayoutPanel.SetColumnSpan(Me.List_Git, 2)
         Me.List_Git.Dock = System.Windows.Forms.DockStyle.Fill
         Me.List_Git.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.List_Git.FormattingEnabled = True
@@ -94,15 +110,16 @@ Partial Class WL_Pack
         Me.List_Git.Location = New System.Drawing.Point(4, 33)
         Me.List_Git.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.List_Git.Name = "List_Git"
-        Me.List_Git.Size = New System.Drawing.Size(212, 21)
+        Me.List_Git.Size = New System.Drawing.Size(236, 21)
         Me.List_Git.TabIndex = 12
         '
         'Button_InstallFull
         '
+        Me.TableLayoutPanel.SetColumnSpan(Me.Button_InstallFull, 2)
         Me.Button_InstallFull.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button_InstallFull.Location = New System.Drawing.Point(3, 93)
         Me.Button_InstallFull.Name = "Button_InstallFull"
-        Me.Button_InstallFull.Size = New System.Drawing.Size(214, 24)
+        Me.Button_InstallFull.Size = New System.Drawing.Size(238, 24)
         Me.Button_InstallFull.TabIndex = 5
         Me.Button_InstallFull.Text = "Полная установка"
         Me.Button_InstallFull.UseVisualStyleBackColor = True
@@ -112,7 +129,7 @@ Partial Class WL_Pack
         Me.Button_Download.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button_Download.Location = New System.Drawing.Point(3, 63)
         Me.Button_Download.Name = "Button_Download"
-        Me.Button_Download.Size = New System.Drawing.Size(214, 24)
+        Me.Button_Download.Size = New System.Drawing.Size(202, 24)
         Me.Button_Download.TabIndex = 1
         Me.Button_Download.Text = "Загрузить пакет обновлений"
         Me.Button_Download.UseVisualStyleBackColor = True
@@ -122,10 +139,10 @@ Partial Class WL_Pack
         Me.Label_Download.AutoSize = True
         Me.TableLayoutPanel.SetColumnSpan(Me.Label_Download, 2)
         Me.Label_Download.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Label_Download.Location = New System.Drawing.Point(223, 63)
+        Me.Label_Download.Location = New System.Drawing.Point(247, 63)
         Me.Label_Download.Margin = New System.Windows.Forms.Padding(3)
         Me.Label_Download.Name = "Label_Download"
-        Me.Label_Download.Size = New System.Drawing.Size(436, 24)
+        Me.Label_Download.Size = New System.Drawing.Size(412, 24)
         Me.Label_Download.TabIndex = 2
         Me.Label_Download.Text = "Загрузка выбранного пакета обновлений (включая ядро)"
         Me.Label_Download.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -135,10 +152,10 @@ Partial Class WL_Pack
         Me.Label_InstallFull.AutoSize = True
         Me.TableLayoutPanel.SetColumnSpan(Me.Label_InstallFull, 2)
         Me.Label_InstallFull.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Label_InstallFull.Location = New System.Drawing.Point(223, 93)
+        Me.Label_InstallFull.Location = New System.Drawing.Point(247, 93)
         Me.Label_InstallFull.Margin = New System.Windows.Forms.Padding(3)
         Me.Label_InstallFull.Name = "Label_InstallFull"
-        Me.Label_InstallFull.Size = New System.Drawing.Size(436, 24)
+        Me.Label_InstallFull.Size = New System.Drawing.Size(412, 24)
         Me.Label_InstallFull.TabIndex = 8
         Me.Label_InstallFull.Text = "Локализация и шрифты"
         Me.Label_InstallFull.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -148,7 +165,7 @@ Partial Class WL_Pack
         Me.WL_Download.AutoEllipsis = False
         Me.WL_Download.BackColor = System.Drawing.SystemColors.ControlLightLight
         Me.WL_Download.Clickable = False
-        Me.TableLayoutPanel.SetColumnSpan(Me.WL_Download, 3)
+        Me.TableLayoutPanel.SetColumnSpan(Me.WL_Download, 4)
         Me.WL_Download.Dock = System.Windows.Forms.DockStyle.Fill
         Me.WL_Download.DownloadFrom = Nothing
         Me.WL_Download.DownloadTo = Nothing
@@ -163,9 +180,9 @@ Partial Class WL_Pack
         '
         Me.CheckBox_ShowAllBuild.AutoSize = True
         Me.CheckBox_ShowAllBuild.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.CheckBox_ShowAllBuild.Location = New System.Drawing.Point(223, 33)
+        Me.CheckBox_ShowAllBuild.Location = New System.Drawing.Point(247, 33)
         Me.CheckBox_ShowAllBuild.Name = "CheckBox_ShowAllBuild"
-        Me.CheckBox_ShowAllBuild.Size = New System.Drawing.Size(214, 24)
+        Me.CheckBox_ShowAllBuild.Size = New System.Drawing.Size(202, 24)
         Me.CheckBox_ShowAllBuild.TabIndex = 15
         Me.CheckBox_ShowAllBuild.Text = "Отображать тестовые сборки"
         Me.CheckBox_ShowAllBuild.UseVisualStyleBackColor = True
@@ -173,7 +190,7 @@ Partial Class WL_Pack
         'WL_PackUpdateCheck
         '
         Me.WL_PackUpdateCheck.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.WL_PackUpdateCheck.Location = New System.Drawing.Point(443, 33)
+        Me.WL_PackUpdateCheck.Location = New System.Drawing.Point(455, 33)
         Me.WL_PackUpdateCheck.Name = "WL_PackUpdateCheck"
         Me.WL_PackUpdateCheck.Property_AlertUpdate = True
         Me.WL_PackUpdateCheck.Property_ChangeRepository = False
@@ -198,14 +215,14 @@ Partial Class WL_Pack
         Me.WL_PackUpdateCheck.Property_URLDownload = Nothing
         Me.WL_PackUpdateCheck.Property_VersionLocal = Nothing
         Me.WL_PackUpdateCheck.Property_VersionOnline = Nothing
-        Me.WL_PackUpdateCheck.Size = New System.Drawing.Size(216, 24)
+        Me.WL_PackUpdateCheck.Size = New System.Drawing.Size(204, 24)
         Me.WL_PackUpdateCheck.TabIndex = 16
         Me.WL_PackUpdateCheck.Visible = False
         '
         'Panel1
         '
         Me.Panel1.BackColor = System.Drawing.Color.LightSteelBlue
-        Me.TableLayoutPanel.SetColumnSpan(Me.Panel1, 3)
+        Me.TableLayoutPanel.SetColumnSpan(Me.Panel1, 4)
         Me.Panel1.Controls.Add(Me.Label_RepositoryDate)
         Me.Panel1.Controls.Add(Me.Label_RepozitoryName)
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Fill
@@ -277,4 +294,5 @@ Partial Class WL_Pack
     Friend WithEvents Label_RepozitoryName As Label
     Friend WithEvents Panel1 As Panel
     Friend WithEvents Label_RepositoryDate As Label
+    Friend WithEvents Button_OpenFile As Button
 End Class

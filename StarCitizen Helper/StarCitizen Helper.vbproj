@@ -322,6 +322,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\default_korean.txt" />
+    <Content Include="Resources\icons\folder.png" />
     <None Include="Resources\default_russian.txt" />
     <None Include="Resources\default_english.txt" />
     <None Include="Resources\CertificateVerifier.dll" />
@@ -353,9 +354,7 @@
       <Name>CertificateVerifier</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Resources\icons\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>

@@ -244,11 +244,11 @@ ProcessKiller_MSG_ProcessSelectFromList = Choose one process
 #Localization
 Pack_CheckName_ShowAllBuild = Show all packages
 Pack_ButtonName_DownloadPack = Download package
-Pack_ButtonInfo_DownloadPack = Download chosen pack (includes core)
+Pack_ButtonInfo_DownloadPack = Load pack from internet or local file
 Pack_ButtonName_PackInstallAll = Full install
 Pack_ButtonInfo_PackInstallAll = Localization and Fonts
 Pack_Label_RepositoryName = Repository: {0}
-Pack_Bottom_Info = To download {0} choose one {1} in dropdown menu and click [{2}]. After download click [{3}] to push required files into game directory.\nTo enable localization you need to enable {4}, navigate to [{5}] tab and click [{6}].\n\nNote: {1} [Master] - is the last package which is not verified and may cause bugs (not recommended to download).
+Pack_Bottom_Info = To download {0} choose one {1} in dropdown menu and click [{2}]. After download click [{3}] to push required files into game directory.\nTo enable localization you need to enable {4}, navigate to [{5}] tab and click [{6}].\n\nNote: {1} [Master] - is the last package which is not verified and may cause bugs (not recommended to download).\n\nIf automatic downloading {0} is not possible, download file {0} manually, then press the folder button and specify the downloaded file.
 Pack_MSG_ChangesInfo = Changelog available on: {0}
 Pack_MSG_CreateTempFolder = Created folder for downloaded localization packs:\n\t{0}
 Pack_MSG_AssignTempFolder = Setted folder for downloaded localization packs:\n\t{0}

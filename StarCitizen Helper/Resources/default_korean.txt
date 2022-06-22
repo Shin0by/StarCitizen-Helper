@@ -244,11 +244,11 @@ ProcessKiller_MSG_ProcessSelectFromList = 프로세스 선택
 #Localization
 Pack_CheckName_ShowAllBuild = Show all packages
 Pack_ButtonName_DownloadPack = 팩 다운로드
-Pack_ButtonInfo_DownloadPack = 선택한 팩 다운로드 (코어 포함)
+Pack_ButtonInfo_DownloadPack = Load pack from internet or local file
 Pack_ButtonName_PackInstallAll = 전체 설치
 Pack_ButtonInfo_PackInstallAll = 현지화와 글꼴
 Pack_Label_RepositoryName = Repository: {0}
-Pack_Bottom_Info = {0}을 다운로드하려면 드롭다운 메뉴에서 {1}을 선택하고 [{2}]를 클릭합니다. 다운로드 후 [{3}]을 클릭하여 필요한 파일을 게임 폴더로 옮깁니다. \n언어팩을 적용하려면 {4}을 활성화해야합니다. [{5}]탭으로 이동하여 [{6}]을 클릭합니다.\n\n참고: [Master]버전 언어팩은 개발 중인 최신 버전이며 문제를 일으킬 수 있습니다. (사용을 추천하지 않습니다.)
+Pack_Bottom_Info = To download {0} choose one {1} in dropdown menu and click [{2}]. After download click [{3}] to push required files into game directory.\nTo enable localization you need to enable {4}, navigate to [{5}] tab and click [{6}].\n\nNote: {1} [Master] - is the last package which is not verified and may cause bugs (not recommended to download).\n\nIf automatic downloading {0} is not possible, download file {0} manually, then press the folder button and specify the downloaded file.
 Pack_MSG_ChangesInfo = 변경된 점: {0}
 Pack_MSG_CreateTempFolder = 다운로드된 언어팩을 위한 폴더 생성:\n\t{0}
 Pack_MSG_AssignTempFolder = 다운로드 한 언어팩을 위한 설정된 폴더:\n\t{0}
