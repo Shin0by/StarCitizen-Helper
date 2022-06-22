@@ -526,7 +526,7 @@ Finalize: If result.Err._Flag = True Then
         Dim DestFile As String = _FSO._CombinePath(Me.Property_Path_Folder_Download, CType(_FSO._GetInfo(SrcFile).ValueObject, FileInfo).Name)
         If _FSO._CopyFile(SrcFile, DestFile, True) = False Then result.Err._Flag = True : result.Err._Description_App = _LANG._Get("File_MSG_CannotCopyFile", SrcFile, DestFile) : GoTo Finalize
 
-        MAIN_THREAD.WL_Repo.Property_GitStatPage = SrcFile
+        'MAIN_THREAD.WL_Repo.Property_GitStatPage = SrcFile
         Me.DownloadComplete(SrcFile, DestFile, Me.WL_Download.DownloadProgress)
 
 Finalize: If result.Err._Flag = True Then
