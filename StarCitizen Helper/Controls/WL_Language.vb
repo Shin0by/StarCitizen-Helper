@@ -187,10 +187,11 @@ Public Class WL_Language
         Me.ComboBox_LanguageList.Items.Clear()
         For i = 0 To Me.aLanguageList.Count - 1
             Me.ComboBox_LanguageList.Items.Add(Me.aLanguageList(i).sName)
+            If LCase(Me.aLanguageList(i).sName) = LCase(_VARS.DefaultLanguage) Then
+                Property_LanguageList_SelString = Me.aLanguageList(i).sName
+            End If
         Next
-
-        Me.Property_LanguageList_SelString = _JSETTINGS._GetValue("configuration.main.language.language", "_current_.txt")
-        'Me.Property_GitList_SelString = Me.List_Git.Items(0)
+        Me.Property_LanguageList_SelString = _JSETTINGS._GetValue("configuration.main.language.language", _VARS.DefaultLanguage)
 
         Return result
     End Function

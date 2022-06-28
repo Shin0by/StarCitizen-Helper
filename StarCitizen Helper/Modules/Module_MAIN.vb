@@ -46,6 +46,7 @@ Module Module_MAIN
 
         _VARS.LangFolder_Name = "lang"
         _VARS.LangFile_Name = "_current_.txt"
+        _VARS.DefaultLanguage = "English"
         _LANG._LOAD(_FSO._CombinePath(_APP.exePath, _VARS.LangFolder_Name, _VARS.LangFile_Name))
 
         _VARS.ConfigFile_Name_System = "system.cfg"
@@ -112,7 +113,8 @@ Module Module_MAIN
         End If
 
         'Show additional language window
-        If _JSETTINGS._GetValue("configuration.main.language.language", _VARS.LangFile_Name) = _VARS.LangFile_Name Then
+        If _JSETTINGS._GetValue("configuration.main.language.language", "_current_.txt") = "_current_.txt" Then
+            _JSETTINGS._SetValue("configuration.main.language", "language", _VARS.DefaultLanguage)
             MAIN_THREAD.Hide()
             MAIN_THREAD.ShowWinToolStripMenuItem.Text = _LANG._Get("Menu_Main_ShowApp")
             SysLangForm.WL_SysLangModal.Property_File_Name_Current = _VARS.LangFile_Name
@@ -226,6 +228,7 @@ Module Module_MAIN
         Public StartUp As Boolean = False
         Public HideWhenClose As Boolean = False
         Public utf8NoBom As New System.Text.UTF8Encoding(False)
+        Public DefaultLanguage As String = Nothing
 
         'Config
         Public ConfigFileIsOK As Boolean = False

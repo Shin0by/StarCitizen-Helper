@@ -29,7 +29,7 @@ Module Module_HELPER
     End Function
 
     Private Sub InitConfigFile()
-        _LOG._sAdd("CONFIG_FILE", _LANG._Get("Helper_MSG_ConfigFileNotFoundCreateNew", _APP.configFullPath),, 0)
+        _LOG._sAdd("CONFIG_FILE", "Configuration file not found, creating new one:" & vbNewLine & _APP.configFullPath,, 0)
         _VARS.ConfigFileIsOK = True
 
         'Configuration

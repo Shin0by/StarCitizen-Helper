@@ -70,6 +70,24 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Language = Chinese
+        '''
+        '''########################### Info ###########################
+        '''#                                                          #
+        '''# LANGUAGE - USED IN APPLICATION LANGUAGE LIST             #
+        '''# Name = Value - Basic                                     #
+        '''# NameT - declension of a word, not used in many languages #
+        '''# {0},{1}...{10} - Variable replaced programmatically      #
+        '''# \n - New line                                            #
+        '''# \t - Tab character                                     [rest of string was truncated]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property default_chinese() As String
+            Get
+                Return ResourceManager.GetString("default_chinese", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Language = English
         '''
         '''########################### Info ###########################
