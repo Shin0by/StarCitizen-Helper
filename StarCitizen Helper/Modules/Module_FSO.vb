@@ -185,7 +185,7 @@ Module Module_FSO
         Public Function _CopyFile(Source As String, Destination As String, Optional Overwrite As Boolean = False) As Boolean
             Try
                 If Overwrite = False Then
-                    If Me._FileExits(Destination) = True And Me._FileExits(Destination) = True Then Return True
+                    If Me._FileExits(Destination) = True Then Return True
                 End If
                 My.Computer.FileSystem.CopyFile(Source, Destination, Overwrite)
                 Return True
