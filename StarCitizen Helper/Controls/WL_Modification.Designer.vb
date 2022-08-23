@@ -23,6 +23,7 @@ Partial Class WL_Modification
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.TableLayoutPanel = New System.Windows.Forms.TableLayoutPanel()
+        Me.List_AltSubLocal = New System.Windows.Forms.ComboBox()
         Me.Label_SubLocal = New System.Windows.Forms.Label()
         Me.Label_TextBottom = New System.Windows.Forms.Label()
         Me.Button_Enable = New System.Windows.Forms.Button()
@@ -31,9 +32,8 @@ Partial Class WL_Modification
         Me.Button_Disable = New System.Windows.Forms.Button()
         Me.Label_ModOn = New System.Windows.Forms.Label()
         Me.Label_ModOff = New System.Windows.Forms.Label()
-        Me.WL_Launcher1 = New SC.WL_Launcher()
         Me.List_SubLocal = New System.Windows.Forms.ComboBox()
-        Me.List_AltSubLocal = New System.Windows.Forms.ComboBox()
+        Me.WL_Launcher1 = New SC.WL_Launcher()
         Me.TableLayoutPanel.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -66,6 +66,18 @@ Partial Class WL_Modification
         Me.TableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
         Me.TableLayoutPanel.Size = New System.Drawing.Size(566, 279)
         Me.TableLayoutPanel.TabIndex = 3
+        '
+        'List_AltSubLocal
+        '
+        Me.List_AltSubLocal.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.List_AltSubLocal.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.List_AltSubLocal.FormattingEnabled = True
+        Me.List_AltSubLocal.IntegralHeight = False
+        Me.List_AltSubLocal.Location = New System.Drawing.Point(4, 144)
+        Me.List_AltSubLocal.Margin = New System.Windows.Forms.Padding(4, 4, 4, 2)
+        Me.List_AltSubLocal.Name = "List_AltSubLocal"
+        Me.List_AltSubLocal.Size = New System.Drawing.Size(180, 21)
+        Me.List_AltSubLocal.TabIndex = 16
         '
         'Label_SubLocal
         '
@@ -161,6 +173,18 @@ Partial Class WL_Modification
         Me.Label_ModOff.Text = "Выключить модификацию"
         Me.Label_ModOff.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
+        'List_SubLocal
+        '
+        Me.List_SubLocal.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.List_SubLocal.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.List_SubLocal.FormattingEnabled = True
+        Me.List_SubLocal.IntegralHeight = False
+        Me.List_SubLocal.Location = New System.Drawing.Point(0, 0)
+        Me.List_SubLocal.Margin = New System.Windows.Forms.Padding(4, 4, 4, 2)
+        Me.List_SubLocal.Name = "List_SubLocal"
+        Me.List_SubLocal.Size = New System.Drawing.Size(566, 21)
+        Me.List_SubLocal.TabIndex = 14
+        '
         'WL_Launcher1
         '
         Me.TableLayoutPanel.SetColumnSpan(Me.WL_Launcher1, 3)
@@ -175,30 +199,6 @@ Partial Class WL_Modification
         Me.WL_Launcher1.TabIndex = 15
         Me.WL_Launcher1.Text_Button_LaunchGame = "Запустить игру"
         Me.WL_Launcher1.Text_Label_LaunchGame = ""
-        '
-        'List_SubLocal
-        '
-        Me.List_SubLocal.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.List_SubLocal.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.List_SubLocal.FormattingEnabled = True
-        Me.List_SubLocal.IntegralHeight = False
-        Me.List_SubLocal.Location = New System.Drawing.Point(0, 0)
-        Me.List_SubLocal.Margin = New System.Windows.Forms.Padding(4, 4, 4, 2)
-        Me.List_SubLocal.Name = "List_SubLocal"
-        Me.List_SubLocal.Size = New System.Drawing.Size(566, 21)
-        Me.List_SubLocal.TabIndex = 14
-        '
-        'List_AltSubLocal
-        '
-        Me.List_AltSubLocal.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.List_AltSubLocal.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.List_AltSubLocal.FormattingEnabled = True
-        Me.List_AltSubLocal.IntegralHeight = False
-        Me.List_AltSubLocal.Location = New System.Drawing.Point(4, 144)
-        Me.List_AltSubLocal.Margin = New System.Windows.Forms.Padding(4, 4, 4, 2)
-        Me.List_AltSubLocal.Name = "List_AltSubLocal"
-        Me.List_AltSubLocal.Size = New System.Drawing.Size(180, 21)
-        Me.List_AltSubLocal.TabIndex = 16
         '
         'WL_Modification
         '
