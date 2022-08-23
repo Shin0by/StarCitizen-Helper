@@ -710,10 +710,10 @@ Fin:    RaiseEvent _Event_ListGit_List_Change_After()
             For Each elem As String In Split(_SYSTEM._GET_VALUE(Nothing, "sys_languages", Me.Property_LocalizationDefault, _VARS.utf8NoBom).Value, ",")
                 Dim temp As String = Trim(elem)
                 LocalList.Add(temp)
-                AltLocalList.Add(_SYSTEM._GET_VALUE(Nothing, temp, Me.Property_LocalizationDefault, _VARS.utf8NoBom).Value)
+                AltLocalList.Add(_SYSTEM._GET_VALUE(Nothing, temp, temp, _VARS.utf8NoBom).Value)
             Next
-            Me.Property_LocalizationList = LocalList
             Me.Property_AltLocalizationList = AltLocalList
+            Me.Property_LocalizationList = LocalList
         End If
 
         RaiseEvent _Event_GetLocalsUpdate_After()

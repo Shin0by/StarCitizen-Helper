@@ -156,12 +156,11 @@ Public Class WL_Modification
         Set(ByVal Value As List(Of String))
             Me.List_SubLocal.Items.Clear()
             Me.List_AltSubLocal.Items.Clear()
-            For Each elem As String In Value
-                Me.List_SubLocal.Items.Add(elem)
-            Next
-
             For Each elem As String In Me.lAltLocalList
                 Me.List_AltSubLocal.Items.Add(elem)
+            Next
+            For Each elem As String In Value
+                Me.List_SubLocal.Items.Add(elem)
             Next
         End Set
     End Property
@@ -183,8 +182,6 @@ Public Class WL_Modification
         Set(ByVal Value As String)
             If LCase(Value) <> LCase(Me.List_SubLocal.Text) Then
                 Me.List_SubLocal.Text = Value
-
-
                 Me.List_AltSubLocal.SelectedIndex = Me.List_SubLocal.SelectedIndex
             End If
         End Set
@@ -400,7 +397,7 @@ Finalize:   If Me.sGameExeFileName IsNot Nothing Then
     End Sub
 
     Private Sub List_AltSubLocal_SelectedIndexChanged(sender As Object, e As EventArgs) Handles List_AltSubLocal.SelectedIndexChanged
-        List_SubLocal.SelectedIndex = List_AltSubLocal.SelectedIndex
+        Me.List_SubLocal.SelectedIndex = Me.List_AltSubLocal.SelectedIndex
         Me.List_SubLocal_SelectedIndexChanged(sender, e)
     End Sub
     '-----------------------------------> Controls
