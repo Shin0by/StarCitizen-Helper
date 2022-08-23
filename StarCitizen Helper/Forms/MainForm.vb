@@ -36,6 +36,7 @@ Public Class MainForm
 
     '<----------------------------------- Localization in pack
     Sub UpdateLocalizationList() Handles WL_Pack._Event_GetLocalsUpdate_After
+        Me.WL_Mod.List_AltLocalization = Me.WL_Pack.Property_AltLocalizationList
         Me.WL_Mod.List_Localization = Me.WL_Pack.Property_LocalizationList
         LoadUserCfgFile()
     End Sub

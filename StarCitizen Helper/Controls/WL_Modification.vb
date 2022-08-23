@@ -34,6 +34,8 @@ Public Class WL_Modification
 
     Private bLoadComplete As Boolean = False
 
+    Private lAltLocalList As New List(Of String)
+
     '<----------------------------------- Basic control
     Public Sub New()
         InitializeComponent()
@@ -153,9 +155,24 @@ Public Class WL_Modification
         End Get
         Set(ByVal Value As List(Of String))
             Me.List_SubLocal.Items.Clear()
+            Me.List_AltSubLocal.Items.Clear()
             For Each elem As String In Value
                 Me.List_SubLocal.Items.Add(elem)
             Next
+
+            For Each elem As String In Me.lAltLocalList
+                Me.List_AltSubLocal.Items.Add(elem)
+            Next
+        End Set
+    End Property
+
+    Public Property List_AltLocalization() As List(Of String)
+        Get
+            Return Me.lAltLocalList
+        End Get
+        Set(ByVal Value As List(Of String))
+            Me.lAltLocalList.Clear()
+            Me.lAltLocalList = Value
         End Set
     End Property
 
@@ -164,7 +181,12 @@ Public Class WL_Modification
             Return Me.List_SubLocal.Text
         End Get
         Set(ByVal Value As String)
-            If LCase(Value) <> LCase(Me.List_SubLocal.Text) Then Me.List_SubLocal.Text = Value
+            If LCase(Value) <> LCase(Me.List_SubLocal.Text) Then
+                Me.List_SubLocal.Text = Value
+
+
+                Me.List_AltSubLocal.SelectedIndex = Me.List_SubLocal.SelectedIndex
+            End If
         End Set
     End Property
 
@@ -361,7 +383,7 @@ Finalize:   If Me.sGameExeFileName IsNot Nothing Then
         RaiseEvent _Event_PatchDisable_Click_After()
     End Sub
 
-    Private Sub List_SubLocal_SelectedIndexChanged(sender As Object, e As EventArgs) Handles List_SubLocal.SelectedIndexChanged
+    Private Sub List_SubLocal_SelectedIndexChanged(sender As Object, e As EventArgs)
         If Initialization = True Then Exit Sub
 
         Me.Localization = List_SubLocal.Text
@@ -375,6 +397,11 @@ Finalize:   If Me.sGameExeFileName IsNot Nothing Then
         _USER._FSO = MAIN_THREAD.WL_Pack.Property_FilePath_User
         _USER._Write(Nothing, "g_language", Me.Localization, _VARS.utf8NoBom)
         RaiseEvent _Event_Localization_Changed_After(Me.Localization)
+    End Sub
+
+    Private Sub List_AltSubLocal_SelectedIndexChanged(sender As Object, e As EventArgs) Handles List_AltSubLocal.SelectedIndexChanged
+        List_SubLocal.SelectedIndex = List_AltSubLocal.SelectedIndex
+        Me.List_SubLocal_SelectedIndexChanged(sender, e)
     End Sub
     '-----------------------------------> Controls
 
@@ -487,5 +514,7 @@ Finalize:   If Me.sGameExeFileName IsNot Nothing Then
             RaiseEvent _Event_Controls_Enabled_After(Enabled)
         End If
     End Sub
+
+
     '-----------------------------------> Logic
 End Class

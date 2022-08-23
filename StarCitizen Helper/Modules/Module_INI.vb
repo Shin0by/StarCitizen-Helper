@@ -58,7 +58,7 @@ Module Module_INI
             End Try
         End Function
 
-        Public Function _GET_VALUE(Section As String, Key As String, DefaultValue As String, Optional Variants As String() = Nothing) As INI_VALUE
+        Public Function _GET_VALUE(Section As String, Key As String, DefaultValue As String, Encoding As System.Text.Encoding, Optional Variants As String() = Nothing) As INI_VALUE
             Dim result As New INI_VALUE
             result.Section = Section
             result.Key = Key
@@ -68,7 +68,7 @@ Module Module_INI
 
             Me.Config.parser.configuration.skipinvalidlines = Me.SkipInvalidLines
             Dim Data As IniParser.Model.IniData = Me.Config.ReadFile(Me.FilePath)
-            Data = Me.Config.ReadFile(Me.FilePath)
+            Data = Me.Config.ReadFile(Me.FilePath, Encoding)
             Data.Configuration.SkipInvalidLines = Me.SkipInvalidLines
 
             Try

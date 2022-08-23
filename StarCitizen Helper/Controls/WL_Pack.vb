@@ -59,6 +59,8 @@ Public Class WL_Pack
     Private FirstUpdate As Boolean = True
 
     Private lLocal_LangList As New List(Of String)
+    Private lAltLocal_LangList As New List(Of String)
+
     Private lLocal_LangDefault As String = Nothing
     Private sFilePath_Config_System As String = Nothing
     Private sFilePath_Config_User As String = Nothing
@@ -135,6 +137,16 @@ Public Class WL_Pack
             Me.lLocal_LangList = Value
         End Set
     End Property
+
+    Public Property Property_AltLocalizationList() As List(Of String)
+        Get
+            Return Me.lAltLocal_LangList
+        End Get
+        Set(ByVal Value As List(Of String))
+            Me.lAltLocal_LangList = Value
+        End Set
+    End Property
+
 
     Public Property Property_LocalizationDefault() As String
         Get
@@ -676,7 +688,7 @@ Finalize: sender.Enabled = True
             Me.Invoke(Sub() Me.List_Git.Items.Add(List(i)._name))
         Next
 
-        'Me.Property_GitList_SelString = _INI._GET_VALUE("EXTERNAL", "PACK_GIT_SELECTED", "").Value
+        'Me.Property_GitList_SelString = _INI._GET_VALUE("EXTERNAL", "PACK_GIT_SELECTED", "", _VARS.utf8NoBom).Value
         Me.Property_GitList_SelString = Me.List_Git.Items(0)
 Fin:    RaiseEvent _Event_ListGit_List_Change_After()
     End Sub
@@ -691,13 +703,17 @@ Fin:    RaiseEvent _Event_ListGit_List_Change_After()
         _SYSTEM.SkipInvalidLines = True
         _SYSTEM._FSO = Me.Property_FilePath_Config
 
-        Me.Property_LocalizationDefault = _SYSTEM._GET_VALUE(Nothing, "g_language", Nothing).Value.Trim
+        Me.Property_LocalizationDefault = _SYSTEM._GET_VALUE(Nothing, "g_language", Nothing, _VARS.utf8NoBom).Value.Trim
         If Len(Me.Property_LocalizationDefault) > 0 Then
             Dim LocalList As New List(Of String)
-            For Each elem As String In Split(_SYSTEM._GET_VALUE(Nothing, "sys_languages", Me.Property_LocalizationDefault).Value, ",")
-                LocalList.Add(Trim(elem))
+            Dim AltLocalList As New List(Of String)
+            For Each elem As String In Split(_SYSTEM._GET_VALUE(Nothing, "sys_languages", Me.Property_LocalizationDefault, _VARS.utf8NoBom).Value, ",")
+                Dim temp As String = Trim(elem)
+                LocalList.Add(temp)
+                AltLocalList.Add(_SYSTEM._GET_VALUE(Nothing, temp, Me.Property_LocalizationDefault, _VARS.utf8NoBom).Value)
             Next
             Me.Property_LocalizationList = LocalList
+            Me.Property_AltLocalizationList = AltLocalList
         End If
 
         RaiseEvent _Event_GetLocalsUpdate_After()

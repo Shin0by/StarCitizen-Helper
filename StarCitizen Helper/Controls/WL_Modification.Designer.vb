@@ -24,7 +24,6 @@ Partial Class WL_Modification
     Private Sub InitializeComponent()
         Me.TableLayoutPanel = New System.Windows.Forms.TableLayoutPanel()
         Me.Label_SubLocal = New System.Windows.Forms.Label()
-        Me.List_SubLocal = New System.Windows.Forms.ComboBox()
         Me.Label_TextBottom = New System.Windows.Forms.Label()
         Me.Button_Enable = New System.Windows.Forms.Button()
         Me.Button_Path = New System.Windows.Forms.Button()
@@ -33,6 +32,8 @@ Partial Class WL_Modification
         Me.Label_ModOn = New System.Windows.Forms.Label()
         Me.Label_ModOff = New System.Windows.Forms.Label()
         Me.WL_Launcher1 = New SC.WL_Launcher()
+        Me.List_SubLocal = New System.Windows.Forms.ComboBox()
+        Me.List_AltSubLocal = New System.Windows.Forms.ComboBox()
         Me.TableLayoutPanel.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -42,8 +43,8 @@ Partial Class WL_Modification
         Me.TableLayoutPanel.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
         Me.TableLayoutPanel.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
         Me.TableLayoutPanel.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
+        Me.TableLayoutPanel.Controls.Add(Me.List_AltSubLocal, 0, 4)
         Me.TableLayoutPanel.Controls.Add(Me.Label_SubLocal, 1, 4)
-        Me.TableLayoutPanel.Controls.Add(Me.List_SubLocal, 0, 4)
         Me.TableLayoutPanel.Controls.Add(Me.Label_TextBottom, 0, 5)
         Me.TableLayoutPanel.Controls.Add(Me.Button_Enable, 0, 2)
         Me.TableLayoutPanel.Controls.Add(Me.Button_Path, 0, 1)
@@ -62,6 +63,7 @@ Partial Class WL_Modification
         Me.TableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
         Me.TableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
         Me.TableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
         Me.TableLayoutPanel.Size = New System.Drawing.Size(566, 279)
         Me.TableLayoutPanel.TabIndex = 3
         '
@@ -77,18 +79,6 @@ Partial Class WL_Modification
         Me.Label_SubLocal.TabIndex = 14
         Me.Label_SubLocal.Text = "Варианты локализации"
         Me.Label_SubLocal.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'List_SubLocal
-        '
-        Me.List_SubLocal.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.List_SubLocal.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.List_SubLocal.FormattingEnabled = True
-        Me.List_SubLocal.IntegralHeight = False
-        Me.List_SubLocal.Location = New System.Drawing.Point(4, 144)
-        Me.List_SubLocal.Margin = New System.Windows.Forms.Padding(4, 4, 4, 2)
-        Me.List_SubLocal.Name = "List_SubLocal"
-        Me.List_SubLocal.Size = New System.Drawing.Size(180, 21)
-        Me.List_SubLocal.TabIndex = 13
         '
         'Label_TextBottom
         '
@@ -186,11 +176,36 @@ Partial Class WL_Modification
         Me.WL_Launcher1.Text_Button_LaunchGame = "Запустить игру"
         Me.WL_Launcher1.Text_Label_LaunchGame = ""
         '
+        'List_SubLocal
+        '
+        Me.List_SubLocal.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.List_SubLocal.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.List_SubLocal.FormattingEnabled = True
+        Me.List_SubLocal.IntegralHeight = False
+        Me.List_SubLocal.Location = New System.Drawing.Point(0, 0)
+        Me.List_SubLocal.Margin = New System.Windows.Forms.Padding(4, 4, 4, 2)
+        Me.List_SubLocal.Name = "List_SubLocal"
+        Me.List_SubLocal.Size = New System.Drawing.Size(566, 21)
+        Me.List_SubLocal.TabIndex = 14
+        '
+        'List_AltSubLocal
+        '
+        Me.List_AltSubLocal.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.List_AltSubLocal.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.List_AltSubLocal.FormattingEnabled = True
+        Me.List_AltSubLocal.IntegralHeight = False
+        Me.List_AltSubLocal.Location = New System.Drawing.Point(4, 144)
+        Me.List_AltSubLocal.Margin = New System.Windows.Forms.Padding(4, 4, 4, 2)
+        Me.List_AltSubLocal.Name = "List_AltSubLocal"
+        Me.List_AltSubLocal.Size = New System.Drawing.Size(180, 21)
+        Me.List_AltSubLocal.TabIndex = 16
+        '
         'WL_Modification
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.Controls.Add(Me.TableLayoutPanel)
+        Me.Controls.Add(Me.List_SubLocal)
         Me.Name = "WL_Modification"
         Me.Size = New System.Drawing.Size(566, 279)
         Me.TableLayoutPanel.ResumeLayout(False)
@@ -207,7 +222,8 @@ Partial Class WL_Modification
     Friend WithEvents Button_Disable As Button
     Friend WithEvents Label_ModOn As Label
     Friend WithEvents Label_ModOff As Label
-    Friend WithEvents List_SubLocal As ComboBox
     Friend WithEvents Label_SubLocal As Label
     Friend WithEvents WL_Launcher1 As WL_Launcher
+    Friend WithEvents List_AltSubLocal As ComboBox
+    Friend WithEvents List_SubLocal As ComboBox
 End Class
