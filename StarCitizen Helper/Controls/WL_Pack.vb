@@ -49,6 +49,7 @@ Public Class WL_Pack
     Private sPath_Folder_Meta As String = Nothing
     Private sName_File_Meta As String = Nothing
     Private sPath_File_Meta As String = Nothing
+    Private sPath_File_AltLocal As String = Nothing
 
     Private hashGitList As String = Nothing
     Private hashCurrentList As String = Nothing
@@ -128,6 +129,17 @@ Public Class WL_Pack
             Me.sFilePath_Config_User = Value
         End Set
     End Property
+
+    Public Property Property_FilePath_AltLocal() As String
+        Get
+            Return Me.sPath_File_AltLocal
+        End Get
+        Set(ByVal Value As String)
+            Me.sPath_File_AltLocal = Value
+        End Set
+    End Property
+
+
 
     Public Property Property_LocalizationList() As List(Of String)
         Get
@@ -700,8 +712,12 @@ Fin:    RaiseEvent _Event_ListGit_List_Change_After()
         If Me.Property_FilePath_Config Is Nothing Then Exit Sub
 
         Dim _SYSTEM As New Class_INI
+        Dim _ALTLANG As New Class_INI
         _SYSTEM.SkipInvalidLines = True
+        _ALTLANG.SkipInvalidLines = True
+
         _SYSTEM._FSO = Me.Property_FilePath_Config
+        _ALTLANG._FSO = Me.Property_FilePath_AltLocal
 
         Me.Property_LocalizationDefault = _SYSTEM._GET_VALUE(Nothing, "g_language", Nothing, _VARS.utf8NoBom).Value.Trim
         If Len(Me.Property_LocalizationDefault) > 0 Then
@@ -710,7 +726,7 @@ Fin:    RaiseEvent _Event_ListGit_List_Change_After()
             For Each elem As String In Split(_SYSTEM._GET_VALUE(Nothing, "sys_languages", Me.Property_LocalizationDefault, _VARS.utf8NoBom).Value, ",")
                 Dim temp As String = Trim(elem)
                 LocalList.Add(temp)
-                AltLocalList.Add(_SYSTEM._GET_VALUE(Nothing, temp, temp, _VARS.utf8NoBom).Value)
+                AltLocalList.Add(_ALTLANG._GET_VALUE(Nothing, temp, temp, _VARS.utf8NoBom).Value)
             Next
             Me.Property_AltLocalizationList = AltLocalList
             Me.Property_LocalizationList = LocalList

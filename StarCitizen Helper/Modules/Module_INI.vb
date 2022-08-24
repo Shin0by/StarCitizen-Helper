@@ -1,5 +1,7 @@
 ﻿Imports IniParser
 Imports IniParser.Parser
+Imports SC.Class_FSO
+
 
 
 Module Module_INI
@@ -12,11 +14,15 @@ Module Module_INI
         Public Key As String
         Public Value As String
         Public SkipInvalidLines As Boolean
+        Public NewLineStr As String = Nothing
+
     End Class
     Class Class_INI
-        Private Config = New FileIniDataParser()
+        Private Config As FileIniDataParser = New FileIniDataParser()
         Private FilePath As String = Nothing
         Public SkipInvalidLines As Boolean = False
+        Public NewLineStr = vbCrLf
+        Public FSO As New Class_FSO
 
         Public WriteOnly Property _FSO() As String
             Set(ByVal Value As String)
@@ -64,14 +70,25 @@ Module Module_INI
             result.Key = Key
             result.Value = DefaultValue
             result.SkipInvalidLines = Me.SkipInvalidLines
+            result.NewLineStr = Me.NewLineStr
             result.ErrDescription = _LANG._Get("File_MSG_SectionNotFound", Section, _APP.configFullPath)
 
-            Me.Config.parser.configuration.skipinvalidlines = Me.SkipInvalidLines
-            Dim Data As IniParser.Model.IniData = Me.Config.ReadFile(Me.FilePath)
-            Data = Me.Config.ReadFile(Me.FilePath, Encoding)
-            Data.Configuration.SkipInvalidLines = Me.SkipInvalidLines
-
             Try
+                Me.Config.Parser.Configuration.SkipInvalidLines = Me.SkipInvalidLines
+                Me.Config.Parser.Configuration.NewLineStr = Me.NewLineStr
+
+
+                Dim fileData As String = FSO._ReadTextFile(Me.FilePath, Encoding)
+                fileData = Replace(fileData, vbCrLf, vbLf)
+                fileData = Replace(fileData, vbCr, vbLf)
+                fileData = Replace(fileData, vbLf, vbCrLf)
+                Dim Data As IniParser.Model.IniData = Me.Config.Parser.Parse(fileData)
+
+                'Dim Data As IniParser.Model.IniData = Me.Config.ReadFile(Me.FilePath, Encoding)
+                Data.Configuration.NewLineStr = Me.NewLineStr
+                Data.Configuration.SkipInvalidLines = Me.SkipInvalidLines
+
+
                 If Section IsNot Nothing Then
                     If Data.Sections.Count > 0 Then
                         Dim DataSection As IniParser.Model.SectionDataCollection = Data.Sections
