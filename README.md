@@ -28,5 +28,5 @@
   * Большинство функций продублированы в меню, доступном в SystemTray
 
 ### Инструкция:
-[![IMAGE ALT TEXT](https://github.com/Shin0by/StarCitizen-Helper/blob/master/install/cache/instruction.jpg)](https://www.youtube.com/watch?v=gvFzKGFU2gQ"Инструкций")
+[![IMAGE ALT TEXT](https://github.com/Shin0by/StarCitizen-Helper/blob/master/install/cache/instruction_prev.jpg)](https://www.youtube.com/watch?v=gvFzKGFU2gQ"Инструкций")
 
