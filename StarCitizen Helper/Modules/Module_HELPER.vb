@@ -39,6 +39,7 @@ Module Module_HELPER
         _JSETTINGS._SetValue("configuration.main", "alert_update", 1)
         _JSETTINGS._SetValue("configuration.main", "startup", 0)
         _JSETTINGS._SetValue("configuration.main", "hide_when_close", 0)
+        _JSETTINGS._SetValue("configuration.main", "ignore_ssl_tls_error", 0)
 
         'SystemLanguage
         _JSETTINGS._SetValue("configuration.main.language", "language", _VARS.LangFile_Name)
@@ -100,6 +101,7 @@ Module Module_HELPER
         MAIN_THREAD.CheckBox_UpdateAlert.Checked = StringToBool(_JSETTINGS._GetValue("configuration.main.alert_update", True, {0, 1}))
         MAIN_THREAD.CheckBox_StartUp.Checked = StringToBool(_JSETTINGS._GetValue("configuration.main.startup", False, {0, 1}))
         MAIN_THREAD.CheckBox_HideWhenClose.Checked = StringToBool(_JSETTINGS._GetValue("configuration.main.hide_when_close", False, {0, 1}))
+        MAIN_THREAD.CheckBox_IgnoreSSL_TLS.Checked = StringToBool(_JSETTINGS._GetValue("configuration.main.ignore_ssl_tls_error", False, {0, 1}))
         _VARS.AlertWindows = MAIN_THREAD.CheckBox_UpdateAlert.Checked
         _VARS.StartUp = MAIN_THREAD.CheckBox_StartUp.Checked
         _VARS.HideWhenClose = MAIN_THREAD.CheckBox_HideWhenClose.Checked

@@ -713,6 +713,8 @@ Fin:    RaiseEvent _Event_ListGit_List_Change_After()
 
         Dim _SYSTEM As New Class_INI
         Dim _ALTLANG As New Class_INI
+        If MAIN_THREAD.WL_Mod.Property_GameRootFolderPath IsNot Nothing Then MAIN_THREAD.WL_Pack.Property_FilePath_AltLocal = _FSO._CombinePath(MAIN_THREAD.WL_Mod.Property_GameRootFolderPath, MAIN_THREAD.WL_Mod.Property_GameModFolderName, "languages.ini")
+        MAIN_THREAD.UpdateLocalization()
         _SYSTEM.SkipInvalidLines = True
         _ALTLANG.SkipInvalidLines = True
 

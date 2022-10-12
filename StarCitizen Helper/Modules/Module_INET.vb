@@ -5,6 +5,8 @@ Imports Newtonsoft.Json.Linq
 
 Module Module_INET
     Class Class_INET
+        Public Ignore_SSL_TLS_Error As Boolean = False
+
         Public Function OpenURL(sURL) As Byte
             Dim temp As String = LCase(sURL)
             Dim Type As Byte = 0
@@ -30,8 +32,8 @@ Module Module_INET
 
             Try
                 Dim content = New MemoryStream()
-
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12
+                If Ignore_SSL_TLS_Error Then ServicePointManager.ServerCertificateValidationCallback = (Function(sender, certificate, chain, sslPolicyErrors) True)
                 Dim request As Net.HttpWebRequest = DirectCast(Net.HttpWebRequest.Create(Url), Net.HttpWebRequest)
                 Using response = request.GetResponse()
                     Using Stream = response.GetResponseStream
@@ -64,6 +66,7 @@ Module Module_INET
             Dim result As New ResultClass(Me)
             Dim uUrl As New Uri(Url)
             ServicePointManager.SecurityProtocol = SecurityProtocol
+            If Ignore_SSL_TLS_Error Then ServicePointManager.ServerCertificateValidationCallback = (Function(sender, certificate, chain, sslPolicyErrors) True)
             Dim request As HttpWebRequest = HttpWebRequest.Create(uUrl)
             request.Credentials = CredentialCache.DefaultCredentials
             If Header Is Nothing Then Header = New WebHeaderCollection

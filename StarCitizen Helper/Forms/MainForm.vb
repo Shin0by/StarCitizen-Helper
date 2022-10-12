@@ -478,6 +478,11 @@ Public Class MainForm
         _JSETTINGS._SetValue("configuration.main", "hide_when_close", BoolToString(_VARS.HideWhenClose))
     End Sub
 
+    Private Sub CheckBox_IgnoreSSL_TLS_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox_IgnoreSSL_TLS.CheckedChanged
+        _INET.Ignore_SSL_TLS_Error = CheckBox_IgnoreSSL_TLS.Checked
+        _JSETTINGS._SetValue("configuration.main", "ignore_ssl_tls_error", BoolToString(_INET.Ignore_SSL_TLS_Error))
+    End Sub
+
     Private Sub MainForm_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
         If _VARS.HideWhenClose = True Then
             ShowWinToolStripMenuItem_Click(sender, e)
@@ -485,5 +490,7 @@ Public Class MainForm
         End If
 
     End Sub
+
+
     '-----------------------------------> 'Callback
 End Class
