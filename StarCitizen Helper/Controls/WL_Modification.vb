@@ -1,5 +1,37 @@
 ﻿Imports System.IO
+Imports System.Net
+
 Public Class WL_Modification
+    Class UnpackLine
+        Private bIsFile As Boolean = True
+        Private sFromPath As String = Nothing
+        Private sToPath As String = Nothing
+
+        Sub New(IsFile As Boolean, FromPath As String, ToPath As String)
+            Me.sFromPath = FromPath
+            Me.sToPath = ToPath
+            Me.bIsFile = IsFile
+        End Sub
+
+        Public ReadOnly Property FromPath As String
+            Get
+                Return Me.sFromPath
+            End Get
+        End Property
+
+        Public ReadOnly Property ToPath As String
+            Get
+                Return Me.sToPath
+            End Get
+        End Property
+
+        Public ReadOnly Property IsFile As Boolean
+            Get
+                Return Me.bIsFile
+            End Get
+        End Property
+    End Class
+
     Public Event _Event_GameExeFile_Update_Before(Path As String)
     Public Event _Event_GameExeFile_Update_After(Path As String)
     Public Event _Event_PatchEnable_Click_Before()
@@ -17,6 +49,8 @@ Public Class WL_Modification
     Private sGameExeFileName As String = Nothing
     Private sGameExeFolderPath As String = Nothing
     Private sGameRootFolderPath As String = Nothing
+    Private sGameUserCfgFileName As String = Nothing
+    Private sGameUserCfgFilePath As String = Nothing
 
     Private sPatchSrcFileName As String = Nothing
     Private sPatchSrcFilePath As String = Nothing
@@ -29,6 +63,7 @@ Public Class WL_Modification
 
     Private sGameModFolderName As String = Nothing
     Private sGameModFolderPath As String = Nothing
+    Private sGameModUnpackList As New List(Of UnpackLine)
 
     Private iGameType As GameType = 0  'LIVE, PTU, EPTU
 
@@ -47,12 +82,6 @@ Public Class WL_Modification
     '-----------------------------------> Basic control
 
     '<----------------------------------- Properties
-    Public ReadOnly Property Property_Launcher() As WL_Launcher
-        Get
-            Return Me.WL_Launcher1
-        End Get
-    End Property
-
     Public Enum GameType As Byte
         UNKNOWN = 0
         LIVE = 1
@@ -162,6 +191,9 @@ Public Class WL_Modification
             For Each elem As String In Value
                 Me.List_SubLocal.Items.Add(elem)
             Next
+            If Value.Count > 0 Then
+                _Update(2)
+            End If
         End Set
     End Property
 
@@ -237,6 +269,15 @@ Finalize:   If Me.sGameExeFileName IsNot Nothing Then
         End Get
     End Property
 
+    Public Property Property_GameModUnpackList() As List(Of UnpackLine)
+        Get
+            Return Me.sGameModUnpackList
+        End Get
+        Set(Value As List(Of UnpackLine))
+            Me.sGameModUnpackList = Value
+        End Set
+    End Property
+
     Public Property Property_GameExeFileName() As String
         Get
             Return Me.sGameExeFileName
@@ -245,6 +286,24 @@ Finalize:   If Me.sGameExeFileName IsNot Nothing Then
             Me.sGameExeFileName = Value
         End Set
     End Property
+
+    Public Property Property_GameUserCfgFileName() As String
+        Get
+            Return Me.sGameUserCfgFileName
+        End Get
+        Set(Value As String)
+            Me.sGameUserCfgFileName = Value
+        End Set
+    End Property
+
+    Public ReadOnly Property Property_GameUserCfgFilePath() As String
+        Get
+            If Me.sGameRootFolderPath Is Nothing Then Return Nothing
+            If Me.sGameUserCfgFileName Is Nothing Then Return Nothing
+            Return _FSO._CombinePath(Me.sGameRootFolderPath, Me.sGameUserCfgFileName)
+        End Get
+    End Property
+
     Public ReadOnly Property Property_GameExeFolderPath() As String
         Get
             Return Me.sGameExeFolderPath
@@ -274,6 +333,8 @@ Finalize:   If Me.sGameExeFileName IsNot Nothing Then
             Me.sPatchDstFileName = Value
         End Set
     End Property
+
+
 
     Public Property Property_PatchSrcFilePath() As String
         Get
@@ -351,13 +412,22 @@ Finalize:   If Me.sGameExeFileName IsNot Nothing Then
         On Error Resume Next
         RaiseEvent _Event_PatchEnable_Click_Before()
         Me._Enabled(False)
-        _LOG._sAdd("MODIFICATION", _LANG._Get("Core_MSG_BeginVerification"), _LANG._Get("l_File", Me.Property_PatchSrcFilePath), 2, 0)
-        If VerifyFile(Me.Property_PatchSrcFilePath, True) = False Then
-            Me._Enabled(True)
-            _Update(2)
-            RaiseEvent _Event_PatchEnable_Click_After()
-            Exit Sub
-        End If
+        '_LOG._sAdd("MODIFICATION", _LANG._Get("Core_MSG_BeginVerification"), _LANG._Get("l_File", Me.Property_PatchSrcFilePath), 2, 0)
+        'If _FSO._FileExits(Me.Property_GameUserCfgFilePath) = False Then
+        '    _FSO._WriteTextFile("g_language = ", Me.Property_GameUserCfgFilePath, System.Text.Encoding.UTF8)
+        'End If
+        'If VerifyFile(Me.Property_PatchSrcFilePath, True) = False Then
+        '    Me._Enabled(True)
+        '    _Update(2)
+        '    RaiseEvent _Event_PatchEnable_Click_After()
+        '    Exit Sub
+        'End If
+
+        Dim _USER As New Class_INI
+        _USER.SkipInvalidLines = True
+        _USER._FSO = MAIN_THREAD.WL_Pack.Property_FilePath_User
+        _USER._Write(Nothing, _VARS.g_langueage, Me.Localization, _VARS.utf8NoBom)
+
         _Update()
         _FSO._CopyFile(Me.Property_PatchSrcFilePath, Me.Property_PatchDstFilePath)
         _FSO._DeleteFile(_FSO._CombinePath(MAIN_THREAD.WL_Mod.Property_GameExeFolderPath, _VARS.OldPatcher_File_Name)) 'Remove in next releases (fix old file name)
@@ -373,8 +443,15 @@ Finalize:   If Me.sGameExeFileName IsNot Nothing Then
         RaiseEvent _Event_PatchDisable_Click_Before()
         Me._Enabled(False)
         _Update()
-        _FSO._DeleteFile(Me.Property_PatchDstFilePath)
-        _FSO._DeleteFile(_FSO._CombinePath(MAIN_THREAD.WL_Mod.Property_GameExeFolderPath, _VARS.OldPatcher_File_Name)) 'Remove in next releases (fix old file name)
+
+        Dim _USER As New Class_INI
+        _USER.SkipInvalidLines = True
+        _USER._FSO = MAIN_THREAD.WL_Pack.Property_FilePath_User
+        _USER._Write(Nothing, _VARS.g_langueage, "", _VARS.utf8NoBom)
+
+
+        '_FSO._DeleteFile(Me.Property_PatchDstFilePath)
+        '_FSO._DeleteFile(_FSO._CombinePath(MAIN_THREAD.WL_Mod.Property_GameExeFolderPath, _VARS.OldPatcher_File_Name)) 'Remove in next releases (fix old file name)
         Me._Enabled(True)
         _Update(2)
         RaiseEvent _Event_PatchDisable_Click_After()
@@ -384,21 +461,22 @@ Finalize:   If Me.sGameExeFileName IsNot Nothing Then
         If Initialization = True Then Exit Sub
 
         Me.Localization = List_SubLocal.Text
-        Dim _USER As New Class_INI
+        'Dim _USER As New Class_INI
 
-        If _FSO._FileExits(MAIN_THREAD.WL_Pack.Property_FilePath_User) = False Then
-            _FSO._WriteTextFile(Nothing, MAIN_THREAD.WL_Pack.Property_FilePath_User, _VARS.utf8NoBom)
-        End If
+        'If _FSO._FileExits(MAIN_THREAD.WL_Pack.Property_FilePath_User) = False Then
+        '    _FSO._WriteTextFile(Nothing, MAIN_THREAD.WL_Pack.Property_FilePath_User, _VARS.utf8NoBom)
+        'End If
 
-        _USER.SkipInvalidLines = True
-        _USER._FSO = MAIN_THREAD.WL_Pack.Property_FilePath_User
-        _USER._Write(Nothing, "g_language", Me.Localization, _VARS.utf8NoBom)
+        '_USER.SkipInvalidLines = True
+        '_USER._FSO = MAIN_THREAD.WL_Pack.Property_FilePath_User
+        '_USER._Write(Nothing, "g_language", Me.Localization, _VARS.utf8NoBom)
         RaiseEvent _Event_Localization_Changed_After(Me.Localization)
     End Sub
 
     Private Sub List_AltSubLocal_SelectedIndexChanged(sender As Object, e As EventArgs) Handles List_AltSubLocal.SelectedIndexChanged
         Me.List_SubLocal.SelectedIndex = Me.List_AltSubLocal.SelectedIndex
         Me.List_SubLocal_SelectedIndexChanged(sender, e)
+        '_Update(3)
     End Sub
     '-----------------------------------> Controls
 
@@ -425,17 +503,28 @@ Finalize:   If Me.sGameExeFileName IsNot Nothing Then
 
     Private Function CheckSourceModСonditions() As Byte
         If MAIN_THREAD.WL_Pack.Property_Path_Folder_Download Is Nothing Then Return 3
-        If Me.Property_PatchSrcFileName Is Nothing Then Return 2
-        If _FSO._FileExits(Me.Property_PatchSrcFilePath) = False Then Return 1
+        'If Me.Property_PatchSrcFileName Is Nothing Then Return 2
+        'If _FSO._FileExits(Me.Property_PatchSrcFilePath) = False Then Return 1
         Return 0
     End Function
 
     Private Function CheckDestinationModСonditions() As Byte
         If Property_GameExeFilePath Is Nothing Then Return 3
-        If Me.Property_PatchDstFilePath Is Nothing Then Return 2
-        If _FSO._FileExits(Me.Property_PatchDstFilePath) = False Then
-            Return 1
+        'If Me.Property_PatchDstFilePath Is Nothing Then Return 2
+        If _FSO._FileExits(Me.Property_GameUserCfgFilePath) = False Then Return 1
+
+        Dim _USER As New Class_INI
+        _USER.SkipInvalidLines = True
+        _USER._FSO = MAIN_THREAD.WL_Pack.Property_FilePath_User
+        Dim Variants As String() = Nothing
+        Dim ValidList(MAIN_THREAD.WL_Pack.Property_LocalizationList.Count - 1) As String
+        For i = 0 To Me.List_Localization.Count - 1
+            ValidList(i) = Me.List_Localization(i)
+        Next i
+        If _USER._GET_VALUE(Nothing, _VARS.g_langueage, Nothing, _VARS.utf8NoBom, ValidList).Value IsNot Nothing Then
+            Return 2
         End If
+
         Return 0
     End Function
 
@@ -447,18 +536,12 @@ Finalize:   If Me.sGameExeFileName IsNot Nothing Then
         Dim srcCondition As Byte = CheckSourceModСonditions()
         Dim dstCondition As Byte = CheckDestinationModСonditions()
 
-        If dstCondition = 0 Then
+        If dstCondition = 2 Then
             Me.Button_Disable.Enabled = True : Me.Button_Disable.Focus()
         Else
-            If dstCondition <= 1 And srcCondition = 0 Then
+            If dstCondition = 0 And srcCondition = 0 Then
                 Me.Button_Enable.Enabled = True : Me.Button_Enable.Focus()
             End If
-        End If
-
-        If dstCondition <= 1 Then
-            Me.WL_Launcher1.Property_SourceTokenFilePatch = _FSO._CombinePath(Property_GameRootFolderPath, _VARS.LoginDataToken_SoureFileName)
-            Me.WL_Launcher1.Property_DestTokenFilePatch = _FSO._CombinePath(MAIN_THREAD.WL_Pack.Property_Path_Folder_Download, _VARS.LoginDataToken_DestFileName)
-            Me.WL_Launcher1.Property_GameExeFilePath = Property_GameExeFilePath
         End If
 
         If Me.Button_Enable.Enabled = True Then
@@ -487,8 +570,6 @@ Finalize:   If Me.sGameExeFileName IsNot Nothing Then
                 Me.Label_ModOff.Text = _LANG._Get("l_Disable", _LANG._Get("ModificationModule")) & " v." & Me.sModInGameFileVersion
             End If
         End If
-
-        Me.WL_Launcher1._Update()
     End Sub
 
     Private Sub _Enabled(Enabled As Boolean, Optional FirstRecurseControl As Object = Nothing)
@@ -500,12 +581,9 @@ Finalize:   If Me.sGameExeFileName IsNot Nothing Then
         End If
 
         For Each elem In FirstRecurseControl.Controls
-            If TypeOf elem IsNot WL_Launcher Then
-                Me._Enabled(Enabled, elem)
-
-                If TypeOf elem Is Button Then elem.Enabled = Enabled
-                If TypeOf elem Is ComboBox Then elem.Enabled = Enabled
-            End If
+            Me._Enabled(Enabled, elem)
+            If TypeOf elem Is Button Then elem.Enabled = Enabled
+            If TypeOf elem Is ComboBox Then elem.Enabled = Enabled
         Next
         If FirstIteration = True Then
             RaiseEvent _Event_Controls_Enabled_After(Enabled)

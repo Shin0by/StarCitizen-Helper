@@ -27,9 +27,9 @@ SourceURL = 源URL
 Destination = 目标点
 FunctionEnabled = 启用操作
 FunctionDisabled = 禁用操作
-Modification = 修改
-ModificationModule = 修改模块
-ModificationModuleT = 修改模块
+Modification = Localization
+ModificationModule = localization
+ModificationModuleT = localization
 Enable = 启用
 Disable = 禁用
 EnabledT = 已启用
@@ -126,9 +126,6 @@ Menu_Main_MoveProfiles_ForceClose = 强制关闭
 Menu_Main_HideApp = Hide app.
 Menu_Main_ShowApp = Show app.
 Menu_Main_Exit = 退出
-
-#Window other
-Core_MSG_BeginVerification = 开始验证核心
 
 #Tab About
 About_ButtonName_Application = 反馈问题
@@ -245,7 +242,7 @@ ProcessKiller_MSG_ProcessSelectFromList = 请从列表中选择进程
 Pack_CheckName_ShowAllBuild = 列出所有本地化包
 Pack_ButtonName_DownloadPack = 下载本地化包
 Pack_ButtonInfo_DownloadPack = 下载选中的本地化包 (包含核心)
-Pack_ButtonName_PackInstallAll = 完整安装
+Pack_ButtonName_PackInstallAll = Install
 Pack_ButtonInfo_PackInstallAll = 本地化和字体
 Pack_Label_RepositoryName = 仓库: {0}
 Pack_Bottom_Info = 在下拉菜单中选择一个{1}后点击[{2}]来下载{0}. 下载后点击[{3}]来加载汉化.\n你需要启用{4}来启动汉化, 导航到[{5}]标签然后点击[{6}]。
@@ -267,25 +264,11 @@ Modification_ButtonName_Enable = 启用{0}
 Modification_ButtonInfo_Enable = 启用{0}
 Modification_ButtonName_Disable = 禁用{0}
 Modification_ButtonInfo_Disable = 禁用{0}
-Modification_Bottom_Info = 点击[{4}]标签然后按照提示操作.\n\n注意: 当你重新下载后{3}需要重新启用{5}. 这会为{2}启用合适的本地化包。\n\n本软件作者强烈反对包括但不限于游戏作弊，RMT等违反CIG用户协议的行为，本软件永远不会提供此种功能。\n\n
+Modification_Bottom_Info = When running the program for the first time, you must:\n - Specify the path to {4} by clicking [{0}];\n - Select the required [{6}] by clicking the appropriate tab [{6}];\n - Load {5} by clicking the tab [{1}] and following the instructions;\n - Click [{2}], then start the game. \n\nThe author of the program {3} against cheats and dishonest play, this program does not carry such functionality.\nThe program and localizations are distributed completely free of charge.
 Modification_OpenFileDialog_GameFile = 游戏启动文件
 Modification_MSG_CoreNotFound = {0}核心未发现, 请检查窗口下方使用提示
 Modification_MSG_VersionUnspecified = 未知版本
 Modification_ListName_LocalizationType = 本地化变更
-
-#Launcher
-Launcher_ButtonName_LaunchGame = 启动游戏
-Launcher_MSG_LaunchGameProcessOK = 启动进程:\n\t成功\n\t路径: {0}
-Launcher_MSG_LaunchGameProcessERR = 启动进程错误:\n\t编号: {0}\n\t描述: {1}\n\tPath: {2}
-Launcher_MSG_LaunchGameEnableCore = 启用{0}
-
-Launcher_Info_NoExeFile = 点击[{0}]来选择游戏文件
-Launcher_Info_NeedDisableCore = 点击[{1}]来关闭{0} 
-Launcher_Info_NoSourceToken = 使用游戏启动器来启动游戏, 进入游戏启动界面, 然后关闭游戏.\n提示: 当以标准方式启动游戏时会生成校验码, 这将会被用来进行汉化启动.
-Launcher_Info_NeedEnableCore = 要以汉化启动游戏 - 请点击[{1}]来打开{0} 
-Launcher_Info_Ready = 当{0}运行时，如果游戏停止运行，别忘了定期使用启动器打开游戏\n来生成校验码
-
-Launcher_MSG_KillProcessQuestion = 游戏{0}已启动.\n\n你想要强制关闭游戏并重启吗?
 
 #SysLanguage
 Pack_MSG_CreateLangFolder = 已为软件本地化包创建文件夹:\n\t{0}

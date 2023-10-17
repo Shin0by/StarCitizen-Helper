@@ -154,12 +154,6 @@
     <Compile Include="Controls\WL_Language.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\WL_Launcher.Designer.vb">
-      <DependentUpon>WL_Launcher.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\WL_Launcher.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Include="Controls\WL_Modification.Designer.vb">
       <DependentUpon>WL_Modification.vb</DependentUpon>
     </Compile>
@@ -264,9 +258,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\WL_Language.resx">
       <DependentUpon>WL_Language.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\WL_Launcher.resx">
-      <DependentUpon>WL_Launcher.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\WL_Modification.resx">
       <DependentUpon>WL_Modification.vb</DependentUpon>

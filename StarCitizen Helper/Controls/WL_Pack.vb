@@ -566,8 +566,24 @@ Finalize: If result.Err._Flag = True Then
 
         If MAIN_THREAD.WL_Mod.Property_GameExeFilePath Is Nothing Then _LOG._sAdd(Me.Name, _LANG._Get("File_MSG_PathNotAssign", _LANG._Get("FileGameExecT")), Nothing, 1) : GoTo Finalize
         If _FSO._FileExits(Property_Path_File_Download) = False Then _LOG._sAdd(Me.Name, _LANG._Get("Pack_MSG_ErrorAccessPackFile", Property_Path_File_Download), Nothing, 1) : GoTo Finalize
-        _FSO._DeleteFolder(MAIN_THREAD.WL_Mod.Property_GameModFolderPath)
-        If _FSO.ZIP.UnzipFolderToFolder(Property_Path_File_Download, ".data", MAIN_THREAD.WL_Mod.Property_GameModFolderPath) = False Then _LOG._sAdd(Me.Name, _LANG._Get("Pack_MSG_ErrorUnpackPackToGame", Property_Path_File_Download, MAIN_THREAD.WL_Mod.Property_GameModFolderPath), Nothing, 1) : GoTo Finalize
+
+        '_FSO._DeleteFolder(MAIN_THREAD.WL_Mod.Property_GameModFolderPath)
+        'If _FSO.ZIP.UnzipFolderToFolder(Property_Path_File_Download, ".data", MAIN_THREAD.WL_Mod.Property_GameModFolderPath) = False Then _LOG._sAdd(Me.Name, _LANG._Get("Pack_MSG_ErrorUnpackPackToGame", Property_Path_File_Download, MAIN_THREAD.WL_Mod.Property_GameModFolderPath), Nothing, 1) : GoTo Finalize
+
+        For Each elem In MAIN_THREAD.WL_Mod.Property_GameModUnpackList
+            If elem.IsFile Then
+                If _FSO.ZIP.UnzipFileToFolder(Property_Path_File_Download, elem.FromPath, Path.Combine(MAIN_THREAD.WL_Mod.Property_GameModFolderPath, elem.ToPath)) = False Then
+                    _LOG._sAdd(Me.Name, _LANG._Get("Pack_MSG_ErrorUnpackPackToGame", Property_Path_File_Download, Path.Combine(MAIN_THREAD.WL_Mod.Property_GameModFolderPath, elem.ToPath)), Nothing, 1)
+                    GoTo Finalize
+                End If
+            Else
+                If _FSO.ZIP.UnzipFolderToFolder(Property_Path_File_Download, elem.FromPath, Path.Combine(MAIN_THREAD.WL_Mod.Property_GameModFolderPath, elem.ToPath)) = False Then
+                    _LOG._sAdd(Me.Name, _LANG._Get("Pack_MSG_ErrorUnpackPackToGame", Property_Path_File_Download, Path.Combine(MAIN_THREAD.WL_Mod.Property_GameModFolderPath, elem.ToPath)), Nothing, 1)
+                    GoTo Finalize
+                End If
+            End If
+        Next
+
 
         _FSO._DeleteFile(Me.Property_Path_File_Meta).Err._Flag = False
         _FSO._WriteTextFile(Me.Property_PackInPackVersion, Me.Property_Path_File_Meta, System.Text.Encoding.UTF8)
@@ -697,7 +713,7 @@ Finalize: sender.Enabled = True
         If List.Count = 0 Then GoTo Fin
 
         For i = 0 To List.Count - 1
-            Me.Invoke(Sub() Me.List_Git.Items.Add(List(i)._name))
+            If InvokeRequired Then Me.Invoke(Sub() Me.List_Git.Items.Add(List(i)._name))
         Next
 
         'Me.Property_GitList_SelString = _INI._GET_VALUE("EXTERNAL", "PACK_GIT_SELECTED", "", _VARS.utf8NoBom).Value
@@ -708,7 +724,7 @@ Fin:    RaiseEvent _Event_ListGit_List_Change_After()
 
     Public Sub GetLocals()
         Me.Property_FilePath_Config = MAIN_THREAD.WL_Mod.Property_GameModFolderPath & "\" & _VARS.ConfigFile_Name_System
-        Me.Property_FilePath_User = MAIN_THREAD.WL_Mod.Property_GameRootFolderPath & "\" & _VARS.ConfigFile_Name_User
+        Me.Property_FilePath_User = MAIN_THREAD.WL_Mod.Property_GameUserCfgFilePath
         If Me.Property_FilePath_Config Is Nothing Then Exit Sub
 
         Dim _SYSTEM As New Class_INI
@@ -725,6 +741,7 @@ Fin:    RaiseEvent _Event_ListGit_List_Change_After()
         If Len(Me.Property_LocalizationDefault) > 0 Then
             Dim LocalList As New List(Of String)
             Dim AltLocalList As New List(Of String)
+            Dim aaaa = _SYSTEM._GET_VALUE(Nothing, "sys_languages", Me.Property_LocalizationDefault, _VARS.utf8NoBom).Value
             For Each elem As String In Split(_SYSTEM._GET_VALUE(Nothing, "sys_languages", Me.Property_LocalizationDefault, _VARS.utf8NoBom).Value, ",")
                 Dim temp As String = Trim(elem)
                 LocalList.Add(temp)

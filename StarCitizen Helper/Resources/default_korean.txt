@@ -27,9 +27,9 @@ SourceURL = 소스 URL
 Destination = 대상
 FunctionEnabled = 기능 활성화됨
 FunctionDisabled = 기능 비활성화됨
-Modification = 언어 변경
-ModificationModule = 언어 변경
-ModificationModuleT = 언어 변경
+Modification = Localization
+ModificationModule = localization
+ModificationModuleT = localization
 Enable = 활성화
 Disable = 비활성화
 EnabledT = 활성화
@@ -126,9 +126,6 @@ Menu_Main_MoveProfiles_ForceClose = Force close
 Menu_Main_HideApp = 프로그램 숨기기
 Menu_Main_ShowApp = 프로그램 나타내기
 Menu_Main_Exit = Exit
-
-#Window other
-Core_MSG_BeginVerification = 코어 검증 시작
 
 #Tab About
 About_ButtonName_Application = 프로그램에 대한 피드백
@@ -245,7 +242,7 @@ ProcessKiller_MSG_ProcessSelectFromList = 프로세스 선택
 Pack_CheckName_ShowAllBuild = Show all packages
 Pack_ButtonName_DownloadPack = 팩 다운로드
 Pack_ButtonInfo_DownloadPack = Load pack from internet or local file
-Pack_ButtonName_PackInstallAll = 전체 설치
+Pack_ButtonName_PackInstallAll = Install
 Pack_ButtonInfo_PackInstallAll = 현지화와 글꼴
 Pack_Label_RepositoryName = Repository: {0}
 Pack_Bottom_Info = To download {0} choose one {1} in dropdown menu and click [{2}]. After download click [{3}] to push required files into game directory.\nTo enable localization you need to enable {4}, navigate to [{5}] tab and click [{6}].\n\nNote: {1} [Master] - is the last package which is not verified and may cause bugs (not recommended to download).\n\nIf automatic downloading {0} is not possible, download file {0} manually, then press the folder button and specify the downloaded file.
@@ -267,37 +264,11 @@ Modification_ButtonName_Enable = {0} 활성화
 Modification_ButtonInfo_Enable = {0} 활성화
 Modification_ButtonName_Disable = {0} 비활성화
 Modification_ButtonInfo_Disable = {0} 비활성화
-Modification_Bottom_Info = 경고! [{0}] 탭에 나열된 모든 기능에 대한 사용으로 초래된 결과는 모두 사용자의 책임입니다. \n[{1}] - [{6}]를 누르면 CIG의 EULA를 위반하게 됩니다. \n\n{2}을 활성화 또는 비활성화 하려면 다운로드 해야합니다. [{4}] 탭으로 이동하여 표시된 지침을 따릅니다.\n\n참고: 새로운 {3}을 다운로드하고 설치할때 {5}을 활성화해야 합니다. 의도한 언어 패치를 위하여 적절한 {2}을 활성화합니다. 프로그램은 어떠한 게임파일을 변경하지 않으며 게임 실행시 메모리를 수정합니다.\n\n본 프로그램 제작자는 CIG에서 허용하지 않는 치트와 방법을 매우 반대합니다. 이 프로그램은 이러한 기능을 수행하지 않습니다.
+Modification_Bottom_Info = When running the program for the first time, you must:\n - Specify the path to {4} by clicking [{0}];\n - Select the required [{6}] by clicking the appropriate tab [{6}];\n - Load {5} by clicking the tab [{1}] and following the instructions;\n - Click [{2}], then start the game. \n\nThe author of the program {3} against cheats and dishonest play, this program does not carry such functionality.\nThe program and localizations are distributed completely free of charge.
 Modification_OpenFileDialog_GameFile = 게임 실행파일
 Modification_MSG_CoreNotFound = {0} 을/를 찾을 수 없습니다. 창 하단의 지침을 확인하십시오.
 Modification_MSG_VersionUnspecified = 알 수 없는 버전
 Modification_ListName_LocalizationType = Localization variations
-
-#Launcher
-Launcher_ButtonName_LaunchGame = Launch game
-Launcher_MSG_LaunchGameProcessOK = Starting process:\n\tSuccess\n\tPath: {0}
-Launcher_MSG_LaunchGameProcessERR = Error when starting process:\n\tNumber: {0}\n\tDescription: {1}\n\tPath: {2}
-Launcher_MSG_LaunchGameEnableCore = Enable {0}
-
-Launcher_Info_NoExeFile = Specify the location of the game file by pressing [{0}
-Launcher_Info_NeedDisableCore = Disable {0} by pressing [{1}]
-Launcher_Info_NoSourceToken = Launch the game using the game launcher, boot to the main menu, then close the game.\nNote: The standard launch of the game generates a token, it will be used to start the game with the localization.
-Launcher_Info_NeedEnableCore = To start the game with localization - turn on {0} by pressing [{1}]
-Launcher_Info_Ready = Don't forget to run the game occasionally with the Launcher in order to update it\nand to generate a new token when {0} is running, if the game stops running
-
-Launcher_MSG_KillProcessQuestion = Game {0} is already running.\n\nDo you want to forcibly end the game process and restart it?
-
-
-#Launcher
-
-
-Launcher_Info_NeedDisableCore = Выключите {0} нажав [{1}]
-Launcher_Info_NoSourceToken = Запустите игру с помощью лаунчера, загрузитесь в главное меню, после этого завершите игру.\nПрим.: Штатный запуск игры генерирует ключ, он будет использован для запуска игры с локализацией.
-Launcher_Info_NeedEnableCore = Включите {0} нажав [{1}]
-Launcher_Info_Ready = Не забывайте изредка запускать игру через лаунчер с целью её обновления, а так же для генерации нового ключа при запущенном {0}
-
-Launcher_MSG_KillProcessQuestion = Игра {0} уже запущена.\n\nЖелаете принудительно завершить процесс игры и запустить игру заново?
-
 
 #SysLanguage
 Pack_MSG_CreateLangFolder = 애플리케이션 언어팩을 위한 폴더 생성됨:\n\t{0}

@@ -42,12 +42,10 @@
         _LANG._Link(MAIN_THREAD.WL_Mod, "Text_Label_ModOn", "Modification_ButtonInfo_Enable", _LANG._Get("ModificationModule"))
         _LANG._Link(MAIN_THREAD.WL_Mod, "Text_Button_Disable", "Modification_ButtonName_Disable", _LANG._Get("ModificationModule"))
         _LANG._Link(MAIN_THREAD.WL_Mod, "Text_Label_ModOff", "Modification_ButtonInfo_Disable", _LANG._Get("ModificationModule"))
-        _LANG._Link(MAIN_THREAD.WL_Mod, "Text_Label_Bottom", "Modification_Bottom_Info", MAIN_THREAD.TabPage_Patch.Text, MAIN_THREAD.WL_Mod.Text_Button_Enable, _LANG._Get("ModificationModuleT"), _LANG._Get("PackUpdateName"), MAIN_THREAD.TabPage_Packages.Text, _LANG._Get("ModificationModule"), _LANG._Get("Launcher_ButtonName_LaunchGame"))
+        _LANG._Link(MAIN_THREAD.WL_Mod, "Text_Label_Bottom", "Modification_Bottom_Info", MAIN_THREAD.WL_Mod.Text_Button_Path, MAIN_THREAD.TabPage_Packages.Text, MAIN_THREAD.WL_Mod.Text_Button_Enable, _VARS.AuthorName, _LANG._Get("FileGameExecT"), _LANG._Get("PackUpdateName"), MAIN_THREAD.TabPage_Repository.Text)
+
+
         _LANG._Link(MAIN_THREAD.WL_Mod, "Text_Label_Localization", "Modification_ListName_LocalizationType")
-
-        _LANG._Link(MAIN_THREAD.WL_Mod.Property_Launcher, "Text_Button_LaunchGame", "Launcher_ButtonName_LaunchGame")
-        _LANG._Link(MAIN_THREAD.WL_Mod.Property_Launcher, "Text_Label_LaunchGame", "Launcher_Info_NoExeFile", _LANG._Get("Modification_ButtonName_Path", _LANG._Get("FileGameExec")))
-
 
         'TabPage_Packages
         _LANG._Link(MAIN_THREAD.WL_Pack, "Text_Check_ShowAllBuild", "Pack_CheckName_ShowAllBuild")

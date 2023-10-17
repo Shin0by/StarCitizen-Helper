@@ -24,6 +24,7 @@ Module Module_MAIN
     Public Sub InitializeStart()
         _KEYS = New Class_KEYS(MAIN_THREAD)
 
+        _VARS.AuthorName = "Shin0by"
         _VARS.FilePathMinLen = 2
         _VARS.FileNameMinLen = 5
         _VARS.SetupParameters = "/SILENT /COMPONENTS=""main"" /FORCECLOSEAPPLICATIONS /NOCANCEL /DIR=""{dir}"""
@@ -78,6 +79,13 @@ Module Module_MAIN
         MAIN_THREAD.WL_Mod.Property_PatchSrcFilePath = _FSO._CombinePath(MAIN_THREAD.WL_Pack.Property_Path_Folder_Download, MAIN_THREAD.WL_Mod.Property_PatchSrcFileName)
         MAIN_THREAD.WL_Mod.Property_PatchDstFileName = "dbghelp.dll"
         MAIN_THREAD.WL_Mod.Property_GameModFolderName = "data"
+        MAIN_THREAD.WL_Mod.Property_GameUserCfgFileName = _VARS.ConfigFile_Name_User
+
+        'Unpack from zip files and folders list
+        MAIN_THREAD.WL_Mod.Property_GameModUnpackList.Add(New WL_Modification.UnpackLine(False, "." & MAIN_THREAD.WL_Mod.Property_GameModFolderName & "/Localization", "Localization"))
+        MAIN_THREAD.WL_Mod.Property_GameModUnpackList.Add(New WL_Modification.UnpackLine(True, "." & MAIN_THREAD.WL_Mod.Property_GameModFolderName & "/languages.ini", "languages.ini"))
+        'Unpack from zip files and folders list
+
 
         MAIN_THREAD.WL_SysUpdateCheck.Property_Text_Label_Value_CurentVersion = _APP.Version
         MAIN_THREAD.WL_SysUpdateCheck.Property_SetupFileName = "Setup.exe"
@@ -101,7 +109,7 @@ Module Module_MAIN
         MAIN_THREAD.WL_Pack.Property_DateOnline = _VARS.PackageLatestDate
 
         MAIN_THREAD.UpdateInterface()
-        MAIN_THREAD.WL_Mod._Update(2)
+        MAIN_THREAD.WL_Mod._Update(3)
 
         'Build list and select localization in Mod Tab
         If MAIN_THREAD.WL_Mod.Property_GameRootFolderPath IsNot Nothing Then MAIN_THREAD.WL_Pack.Property_FilePath_AltLocal = _FSO._CombinePath(MAIN_THREAD.WL_Mod.Property_GameRootFolderPath, MAIN_THREAD.WL_Mod.Property_GameModFolderName, "languages.ini")
@@ -218,6 +226,7 @@ Module Module_MAIN
 
     Class Class_VarCol
         'Global
+        Public AuthorName As String = "Shin0by"
         Public FilePathMinLen As Long = 2
         Public FileNameMinLen As Long = 5
         Private sSetupParameters As String = Nothing
@@ -244,6 +253,7 @@ Module Module_MAIN
         Public OldPatcher_File_Name As String = Nothing
         Public LoginDataToken_SoureFileName As String = Nothing
         Public LoginDataToken_DestFileName As String = Nothing
+        Public g_langueage As String = "g_language"
 
         'Download
         Public PackageGitMaster_Name As String = Nothing

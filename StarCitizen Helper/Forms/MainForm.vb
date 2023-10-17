@@ -42,9 +42,9 @@ Public Class MainForm
     End Sub
 
     Sub UpdateLocalization() Handles WL_Pack._Event_ChangeRepository_Before
-        'If Initialization = True Then Exit Sub
-        'Me.WL_Mod.Localization = Nothing
-        'Me.WL_Mod.List_Localization = New List(Of String)
+        If Initialization = True Then Exit Sub
+        Me.WL_Mod.Localization = Nothing
+        Me.WL_Mod.List_Localization = New List(Of String)
     End Sub
     '-----------------------------------> Localization in pack
 
@@ -134,8 +134,10 @@ Public Class MainForm
 
     Private Sub ProccessList_ListBox_MouseClick(sender As Object, e As MouseEventArgs) Handles ListBox_ProccessList.MouseClick
         On Error Resume Next
-        If Len(ListBox_ProccessList.SelectedItem.ToString) > 0 Then
-            Me.TextBox_AddProccessKill.Text = ListBox_ProccessList.SelectedItem.ToString
+        If ListBox_ProccessList.Items.Count > 0 Then
+            If Len(ListBox_ProccessList.SelectedItem.ToString) > 0 Then
+                Me.TextBox_AddProccessKill.Text = ListBox_ProccessList.SelectedItem.ToString
+            End If
         End If
     End Sub
     '-----------------------------------> 'Process killer
@@ -491,6 +493,9 @@ Public Class MainForm
 
     End Sub
 
+    Private Sub WL_Mod_Load(sender As Object, e As EventArgs) Handles WL_Mod.Load
+
+    End Sub
 
     '-----------------------------------> 'Callback
 End Class

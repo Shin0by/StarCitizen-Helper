@@ -61,7 +61,6 @@ Partial Class WL_Pack
         Me.TableLayoutPanel.Controls.Add(Me.WL_PackUpdateCheck, 3, 1)
         Me.TableLayoutPanel.Controls.Add(Me.Panel1, 0, 0)
         Me.TableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TableLayoutPanel.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
         Me.TableLayoutPanel.Location = New System.Drawing.Point(0, 0)
         Me.TableLayoutPanel.Name = "TableLayoutPanel"
         Me.TableLayoutPanel.RowCount = 9
@@ -70,7 +69,7 @@ Partial Class WL_Pack
         Me.TableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
         Me.TableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
         Me.TableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
-        Me.TableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 10.0!))
         Me.TableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
         Me.TableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
@@ -93,10 +92,10 @@ Partial Class WL_Pack
         Me.Label_TextBottom.AutoSize = True
         Me.TableLayoutPanel.SetColumnSpan(Me.Label_TextBottom, 4)
         Me.Label_TextBottom.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Label_TextBottom.Location = New System.Drawing.Point(3, 213)
+        Me.Label_TextBottom.Location = New System.Drawing.Point(3, 193)
         Me.Label_TextBottom.Margin = New System.Windows.Forms.Padding(3)
         Me.Label_TextBottom.Name = "Label_TextBottom"
-        Me.Label_TextBottom.Size = New System.Drawing.Size(656, 85)
+        Me.Label_TextBottom.Size = New System.Drawing.Size(656, 105)
         Me.Label_TextBottom.TabIndex = 13
         Me.Label_TextBottom.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
@@ -173,7 +172,7 @@ Partial Class WL_Pack
         Me.WL_Download.Margin = New System.Windows.Forms.Padding(1)
         Me.WL_Download.Name = "WL_Download"
         Me.TableLayoutPanel.SetRowSpan(Me.WL_Download, 3)
-        Me.WL_Download.Size = New System.Drawing.Size(660, 88)
+        Me.WL_Download.Size = New System.Drawing.Size(660, 68)
         Me.WL_Download.TabIndex = 14
         '
         'CheckBox_ShowAllBuild
