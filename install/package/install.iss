@@ -1,11 +1,11 @@
 
 [Setup]
-AppVersion=1.8.21.125
+AppVersion=1.9.24.132
 AppName=StarCitizen Helper
 DefaultDirName={userappdata}\StarCitizen Helper
 DefaultGroupName=StarCitizen Helper
-SourceDir=C:\gdrive\programming\GitHub\StarCitizen-Helper\install\package\Input
-OutputDir=C:\gdrive\programming\GitHub\StarCitizen-Helper\install\package\Output
+SourceDir=C:\Programming\GitHub\StarCitizen-Helper\install\package\Input
+OutputDir=C:\Programming\GitHub\StarCitizen-Helper\install\package\Output
 UninstallDisplayIcon={app}\StarCitizen Helper.exe
 AlwaysShowDirOnReadyPage=yes
 DisableDirPage=no
