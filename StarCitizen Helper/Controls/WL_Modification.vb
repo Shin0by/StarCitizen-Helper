@@ -233,9 +233,9 @@ Public Class WL_Modification
             Me.sGameExeFilePath = Value
 
             If _FSO._FileExits(Me.sGameExeFilePath) = False Then GoTo Finalize
-            Me.sGameExeFileName = CType(_FSO._GetInfo(Me.sGameExeFilePath).ValueObject, FileInfo).Name
-            Me.sGameExeFolderPath = CType(_FSO._GetInfo(Me.sGameExeFilePath).ValueObject, FileInfo).Directory.FullName
-            Me.sGameRootFolderPath = CType(_FSO._GetInfo(Me.sGameExeFilePath).ValueObject, FileInfo).Directory.Parent.FullName
+            Me.sGameExeFileName = CType(_FSO._GetFileInfo(Me.sGameExeFilePath).ValueObject, FileInfo).Name
+            Me.sGameExeFolderPath = CType(_FSO._GetFileInfo(Me.sGameExeFilePath).ValueObject, FileInfo).Directory.FullName
+            Me.sGameRootFolderPath = CType(_FSO._GetFileInfo(Me.sGameExeFilePath).ValueObject, FileInfo).Directory.Parent.FullName
             If Me.Property_PatchDstFileName IsNot Nothing Then Me.Property_PatchDstFilePath = _FSO._CombinePath(Me.Property_GameExeFolderPath, Me.Property_PatchDstFileName)
 
 Finalize:   If Me.sGameExeFileName IsNot Nothing Then
@@ -423,6 +423,8 @@ Finalize:   If Me.sGameExeFileName IsNot Nothing Then
         '    Exit Sub
         'End If
 
+        Me.Localization = List_SubLocal.Items(0)
+
         Dim _USER As New Class_INI
         _USER.SkipInvalidLines = True
         _USER._FSO = MAIN_THREAD.WL_Pack.Property_FilePath_User
@@ -484,7 +486,7 @@ Finalize:   If Me.sGameExeFileName IsNot Nothing Then
     Private Sub Set_GameType(Path As String)
         If _FSO._FileExits(Path) = False Then Me.iGameType = GameType.UNKNOWN : Exit Sub
 
-        Dim result As ResultClass = _FSO._GetInfo(Path)
+        Dim result As ResultClass = _FSO._GetFileInfo(Path)
         Dim File As IO.FileInfo
         File = CType(result.ValueObject, IO.FileInfo)
 

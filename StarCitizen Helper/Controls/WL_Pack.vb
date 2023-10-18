@@ -1,6 +1,8 @@
 ﻿Imports System.IO
 Imports System.Net
 Imports System.Threading
+Imports System.Windows.Annotations
+Imports Microsoft.VisualBasic.ApplicationServices
 Imports SC.Class_GIT.Class_GitUpdateList
 
 Public Class WL_Pack
@@ -50,6 +52,7 @@ Public Class WL_Pack
     Private sName_File_Meta As String = Nothing
     Private sPath_File_Meta As String = Nothing
     Private sPath_File_AltLocal As String = Nothing
+    Private sPackLanguage As String = Nothing
 
     Private hashGitList As String = Nothing
     Private hashCurrentList As String = Nothing
@@ -83,6 +86,15 @@ Public Class WL_Pack
     '-----------------------------------> Basic control
 
     '<----------------------------------- Properties
+    Public Property Property_PackLanguage() As String
+        Set(Value As String)
+            Me.sPackLanguage = Value
+        End Set
+        Get
+            Return Me.sPackLanguage
+        End Get
+    End Property
+
     Public Property Game_Type() As GameType
         Set(Value As GameType)
             Me.iGameType = Value
@@ -406,11 +418,20 @@ Public Class WL_Pack
                 If InvokeRequired Then
                     Me.Invoke(Sub()
                                   Me.List_Git.Items.Clear()
-                                  Me.Enabled = False
+                                  'Me.Enabled = False
+                                  List_Git.Enabled = False
+                                  CheckBox_ShowAllBuild.Enabled = False
+                                  Button_Download.Enabled = False
+                                  WL_Download.Enabled = False
+
                               End Sub)
                 Else
                     Me.List_Git.Items.Clear()
-                    Me.Enabled = False
+                    'Me.Enabled = False
+                    List_Git.Enabled = False
+                    CheckBox_ShowAllBuild.Enabled = False
+                    Button_Download.Enabled = False
+                    WL_Download.Enabled = False
                 End If
                 Me.WL_PackUpdateCheck.Property_URLApi = Property_PackageGitURL_Api
                 Me.WL_PackUpdateCheck.Property_GitListAutoUpdate = False
@@ -488,7 +509,7 @@ Public Class WL_Pack
     Public ReadOnly Property Property_PackInPackVersion() As String
         Get
             If Me.Property_Path_File_Download Is Nothing Then Return Nothing
-            Dim File As FileInfo = CType(_FSO._GetInfo(Me.Property_Path_File_Download).ValueObject, FileInfo)
+            Dim File As FileInfo = CType(_FSO._GetFileInfo(Me.Property_Path_File_Download).ValueObject, FileInfo)
             If File Is Nothing Then
                 Me.Property_Name_File_Download = Nothing
                 _JSETTINGS._SetValue("configuration.external", "pack_pack_version", "", True)
@@ -547,7 +568,7 @@ Finalize: If result.Err._Flag = True Then
 
         If Me.Property_Path_Folder_Download Is Nothing Then result.Err._Flag = True : result.Err._Description_App = _LANG._Get("Pack_MSG_ErrorAccessTempFolder") : result.Err._Description_Sys = Me.Property_Path_Folder_Download : GoTo Finalize
         If _FSO._DeleteFile(Path.Combine(Me.Property_Path_Folder_Download, "*.zip")).Err._Flag = True Then result.Err._Flag = True : result.Err._Description_App = _LANG._Get("Pack_MSG_ErrorClearTempFolder") : result.Err._Description_Sys = Me.Property_Path_Folder_Download : GoTo Finalize
-        Dim DestFile As String = _FSO._CombinePath(Me.Property_Path_Folder_Download, CType(_FSO._GetInfo(SrcFile).ValueObject, FileInfo).Name)
+        Dim DestFile As String = _FSO._CombinePath(Me.Property_Path_Folder_Download, CType(_FSO._GetFileInfo(SrcFile).ValueObject, FileInfo).Name)
         If _FSO._CopyFile(SrcFile, DestFile, True) = False Then result.Err._Flag = True : result.Err._Description_App = _LANG._Get("File_MSG_CannotCopyFile", SrcFile, DestFile) : GoTo Finalize
 
         'MAIN_THREAD.WL_Repo.Property_GitStatPage = SrcFile
@@ -567,8 +588,24 @@ Finalize: If result.Err._Flag = True Then
         If MAIN_THREAD.WL_Mod.Property_GameExeFilePath Is Nothing Then _LOG._sAdd(Me.Name, _LANG._Get("File_MSG_PathNotAssign", _LANG._Get("FileGameExecT")), Nothing, 1) : GoTo Finalize
         If _FSO._FileExits(Property_Path_File_Download) = False Then _LOG._sAdd(Me.Name, _LANG._Get("Pack_MSG_ErrorAccessPackFile", Property_Path_File_Download), Nothing, 1) : GoTo Finalize
 
-        '_FSO._DeleteFolder(MAIN_THREAD.WL_Mod.Property_GameModFolderPath)
-        'If _FSO.ZIP.UnzipFolderToFolder(Property_Path_File_Download, ".data", MAIN_THREAD.WL_Mod.Property_GameModFolderPath) = False Then _LOG._sAdd(Me.Name, _LANG._Get("Pack_MSG_ErrorUnpackPackToGame", Property_Path_File_Download, MAIN_THREAD.WL_Mod.Property_GameModFolderPath), Nothing, 1) : GoTo Finalize
+        'Clear preview localization files and folders in Game\data folder
+        Dim ErrFlag As Boolean = False
+        For Each elem In MAIN_THREAD.WL_Mod.Property_GameModUnpackList
+            If elem.IsFile Then
+                If _FSO._FileExits(Path.Combine(MAIN_THREAD.WL_Mod.Property_GameModFolderPath, elem.ToPath)) Then
+                    Dim Result As ResultClass = _FSO._DeleteFile(Path.Combine(MAIN_THREAD.WL_Mod.Property_GameModFolderPath, elem.ToPath))
+                    If Result.Err._Flag = True Then _LOG._sAdd(Me.Name, _LANG._Get("File_MSG_CannotDelExsFile", Path.Combine(MAIN_THREAD.WL_Mod.Property_GameModFolderPath, elem.ToPath)), Nothing, 1) : ErrFlag = True
+                End If
+            Else
+                If _FSO._FolderExits(Path.Combine(MAIN_THREAD.WL_Mod.Property_GameModFolderPath, elem.ToPath)) Then
+                    Dim Result As ResultClass = _FSO._DeleteFolder(Path.Combine(MAIN_THREAD.WL_Mod.Property_GameModFolderPath, elem.ToPath))
+                    If Result.Err._Flag = True Then _LOG._sAdd(Me.Name, _LANG._Get("Folder_MSG_ErrorDeleteFolder", Path.Combine(MAIN_THREAD.WL_Mod.Property_GameModFolderPath, elem.ToPath)), Nothing, 1) : ErrFlag = True
+                End If
+            End If
+        Next
+
+        'Create new Localization folder in Game\data folder
+        If _FSO._CreateFolder(Path.Combine(MAIN_THREAD.WL_Mod.Property_GameModFolderPath, _VARS.LocalizationFolderName)) Is Nothing Then _LOG._sAdd(Me.Name, _LANG._Get("Folder_MSG_ErrorCreateFolder", Path.Combine(MAIN_THREAD.WL_Mod.Property_GameModFolderPath, _VARS.LocalizationFolderName)), Nothing, 1) : GoTo Finalize
 
         For Each elem In MAIN_THREAD.WL_Mod.Property_GameModUnpackList
             If elem.IsFile Then
@@ -584,12 +621,26 @@ Finalize: If result.Err._Flag = True Then
             End If
         Next
 
+        If MAIN_THREAD.WL_Mod.Property_GameUserCfgFilePath IsNot Nothing Then
+            If _FSO._FileExits(MAIN_THREAD.WL_Mod.Property_GameUserCfgFilePath) = False Then
+                _FSO._WriteTextFile(_VARS.g_langueage & " = ", MAIN_THREAD.WL_Mod.Property_GameUserCfgFilePath, System.Text.Encoding.UTF8)
+            Else
+                Dim _USER_CFG As New Class_INI()
+                _USER_CFG.SkipInvalidLines = True
+                _USER_CFG._FSO = MAIN_THREAD.WL_Mod.Property_GameUserCfgFilePath
+                _USER_CFG._Write(Nothing, _VARS.g_langueage, Nothing, _VARS.utf8NoBom)
+            End If
+        End If
+
 
         _FSO._DeleteFile(Me.Property_Path_File_Meta).Err._Flag = False
         _FSO._WriteTextFile(Me.Property_PackInPackVersion, Me.Property_Path_File_Meta, System.Text.Encoding.UTF8)
+
         Me.Property_PackInGameVersion = Me.Property_PackInPackVersion
 
         GetLocals()
+        MAIN_THREAD.WL_Mod._Update(3)
+
 
 Finalize: sender.Enabled = True
         RaiseEvent _Event_InstallFull_Button_Click_After()
@@ -656,8 +707,10 @@ Finalize: sender.Enabled = True
             _LOG._Add(Me.GetType().Name, _LANG._Get("ErrorDownload") & ": ", logLines, 1)
             _FSO._DeleteFile(DownloadTo)
         Else
-            logLine.Value = _LANG._Get("l_Name", GIT_PACK_DATA._GetByName(Me.Property_GitList_SelString, _VARS.PackageGitMaster_Name)._name)
-            logLines.Add(logLine)
+            If GIT_PACK_DATA._GetByName(Me.Property_GitList_SelString, _VARS.PackageGitMaster_Name) IsNot Nothing Then
+                logLine.Value = _LANG._Get("l_Name", GIT_PACK_DATA._GetByName(Me.Property_GitList_SelString, _VARS.PackageGitMaster_Name)._name)
+                logLines.Add(logLine)
+            End If
             _LOG._Add(Me.GetType().Name, _LANG._Get("l_UpdateComplete", _LANG._Get("PackUpdateNameT")), logLines, 2)
         End If
 
@@ -691,7 +744,7 @@ Finalize: sender.Enabled = True
         Dim Cntr As Integer = 0
         Dim result As String = Nothing
         If list.Count > 0 Then
-            File = CType(_FSO._GetInfo(list(0)).ValueObject, FileInfo)
+            File = CType(_FSO._GetFileInfo(list(0)).ValueObject, FileInfo)
             If LCase(File.Extension) = ".zip" Then
                 Cntr += 1
                 result = Trim(File.Name)
@@ -723,33 +776,54 @@ Fin:    RaiseEvent _Event_ListGit_List_Change_After()
 
 
     Public Sub GetLocals()
-        Me.Property_FilePath_Config = MAIN_THREAD.WL_Mod.Property_GameModFolderPath & "\" & _VARS.ConfigFile_Name_System
+        'Me.Property_FilePath_Config = MAIN_THREAD.WL_Mod.Property_GameModFolderPath & "\" & _VARS.ConfigFile_Name_System
         Me.Property_FilePath_User = MAIN_THREAD.WL_Mod.Property_GameUserCfgFilePath
-        If Me.Property_FilePath_Config Is Nothing Then Exit Sub
+        'If Me.Property_FilePath_Config Is Nothing Then Exit Sub
 
-        Dim _SYSTEM As New Class_INI
+        'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+
+        'Dim _SYSTEM As New Class_INI
         Dim _ALTLANG As New Class_INI
         If MAIN_THREAD.WL_Mod.Property_GameRootFolderPath IsNot Nothing Then MAIN_THREAD.WL_Pack.Property_FilePath_AltLocal = _FSO._CombinePath(MAIN_THREAD.WL_Mod.Property_GameRootFolderPath, MAIN_THREAD.WL_Mod.Property_GameModFolderName, "languages.ini")
         MAIN_THREAD.UpdateLocalization()
-        _SYSTEM.SkipInvalidLines = True
+        '_SYSTEM.SkipInvalidLines = True
         _ALTLANG.SkipInvalidLines = True
 
-        _SYSTEM._FSO = Me.Property_FilePath_Config
-        _ALTLANG._FSO = Me.Property_FilePath_AltLocal
+        Dim LocalList As New List(Of String)
+        Dim AltLocalList As New List(Of String)
 
-        Me.Property_LocalizationDefault = _SYSTEM._GET_VALUE(Nothing, "g_language", Nothing, _VARS.utf8NoBom).Value.Trim
-        If Len(Me.Property_LocalizationDefault) > 0 Then
-            Dim LocalList As New List(Of String)
-            Dim AltLocalList As New List(Of String)
-            Dim aaaa = _SYSTEM._GET_VALUE(Nothing, "sys_languages", Me.Property_LocalizationDefault, _VARS.utf8NoBom).Value
-            For Each elem As String In Split(_SYSTEM._GET_VALUE(Nothing, "sys_languages", Me.Property_LocalizationDefault, _VARS.utf8NoBom).Value, ",")
-                Dim temp As String = Trim(elem)
-                LocalList.Add(temp)
-                AltLocalList.Add(_ALTLANG._GET_VALUE(Nothing, temp, temp, _VARS.utf8NoBom).Value)
+        Dim ResultCls As ResultClass = _FSO._GetFolderList(Path.Combine(MAIN_THREAD.WL_Mod.Property_GameModFolderPath, _VARS.LocalizationFolderName))
+        Dim ResultCls2 As ResultClass
+        If ResultCls.Err._Flag = False Then
+            For Each elem In ResultCls.ValueObject
+                ResultCls2 = _FSO._GetFolderInfo(elem)
+                If ResultCls2.Err._Flag = False Then
+                    If ResultCls2.ValueBoolean = True Then
+                        LocalList.Add(ResultCls2.ValueObject.Name)
+                        AltLocalList.Add(ResultCls2.ValueObject.Name)
+                    End If
+                End If
             Next
-            Me.Property_AltLocalizationList = AltLocalList
             Me.Property_LocalizationList = LocalList
+            Me.Property_AltLocalizationList = AltLocalList
         End If
+        'Me.Property_PackLanguage = 
+
+
+        '_SYSTEM._FSO = Me.Property_FilePath_Config
+        '_ALTLANG._FSO = Me.Property_FilePath_AltLocal
+
+        'Me.Property_LocalizationDefault = _SYSTEM._GET_VALUE(Nothing, "g_language", Nothing, _VARS.utf8NoBom).Value.Trim
+        'If Len(Me.Property_LocalizationDefault) > 0 Then
+
+        'For Each elem As String In Split(_SYSTEM._GET_VALUE(Nothing, "sys_languages", Me.Property_LocalizationDefault, _VARS.utf8NoBom).Value, ",")
+        '    Dim temp As String = Trim(elem)
+        '    LocalList.Add(temp)
+        '    AltLocalList.Add(_ALTLANG._GET_VALUE(Nothing, temp, temp, _VARS.utf8NoBom).Value)
+        'Next
+        'Me.Property_AltLocalizationList = AltLocalList
+        'Me.Property_LocalizationList = LocalList
+        'End If
 
         RaiseEvent _Event_GetLocalsUpdate_After()
     End Sub
@@ -794,7 +868,12 @@ Fin:    RaiseEvent _Event_ListGit_List_Change_After()
         'Me.Invoke(Sub() Me.Property_RepositoryDate = GIT_PACK_LATEST._published.ToString)
 
 
-        Me.Invoke(Sub() Me.Enabled = True)
+        Me.Invoke(Sub() 'Me.Enabled = True
+                      List_Git.Enabled = True
+                      CheckBox_ShowAllBuild.Enabled = True
+                      Button_Download.Enabled = True
+                      WL_Download.Enabled = True
+                  End Sub)
         _UpdateListGit()
     End Sub
 

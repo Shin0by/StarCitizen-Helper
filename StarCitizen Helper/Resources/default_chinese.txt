@@ -99,6 +99,9 @@ File_MSG_CannotWriteCheckPermission = 无法写入文件 {0}, 请检查权限 \n
 File_MSG_IncorrectDownloadedSize = 文件下载大小错误\n\t{0}
 File_MSG_PathNotAssign = 将路径指定为 {0}
 File_MSG_CannotCopyFile =拷贝文件错误\n\t源: {0}\n\t目标: {1}
+Folder_MSG_ErrorCreateFolder = Failed to create folder:\n\t{0}
+Folder_MSG_ErrorDeleteFolder = Failed to delete folder:\n\t{0}
+Folder_MSG_ErrorRenameFolder = Failed to rename folder:\n\t{0}
 
 #Window Tabs
 Window_Tab_Modification = 修改

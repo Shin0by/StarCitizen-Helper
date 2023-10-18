@@ -99,6 +99,9 @@ File_MSG_CannotWriteCheckPermission = 파일 쓰기 오류, 파일 및 폴더에
 File_MSG_IncorrectDownloadedSize = 다운로드한 파일의 크기가 올바르지 않습니다.\n\t{0}
 File_MSG_PathNotAssign = {0}에 대한 경로 지정
 File_MSG_CannotCopyFile = 파일 복사 오류\n\t원본: {0}\n\t대상: {1}
+Folder_MSG_ErrorCreateFolder = Failed to create folder:\n\t{0}
+Folder_MSG_ErrorDeleteFolder = Failed to delete folder:\n\t{0}
+Folder_MSG_ErrorRenameFolder = Failed to rename folder:\n\t{0}
 
 #Window Tabs
 Window_Tab_Modification = 언어 변경

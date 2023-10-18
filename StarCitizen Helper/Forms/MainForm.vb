@@ -361,16 +361,16 @@ Public Class MainForm
         On Error Resume Next
         Dim result As New ResultClass(Me)
         result.ValueString = DownloadTo
-        _FSO._DeleteFile(_FSO._CombinePath(MAIN_THREAD.WL_Pack.Property_Path_Folder_Download, MAIN_THREAD.WL_Mod.Property_PatchSrcFileName))
-        If _FSO.ZIP.UnzipFileToFolder(MAIN_THREAD.WL_Pack.Property_Path_File_Download, "." & MAIN_THREAD.WL_Mod.Property_PatchSrcFileName, _FSO._CombinePath(MAIN_THREAD.WL_Pack.Property_Path_Folder_Download, MAIN_THREAD.WL_Mod.Property_PatchSrcFileName)) = False Then result.Err._Flag = True : result.Err._Description_App = "Не удалось извлечь ядро из загруженного пакета локадизации"
-        MAIN_THREAD.WL_Mod.Property_PatchSrcFilePath = _FSO._CombinePath(MAIN_THREAD.WL_Pack.Property_Path_Folder_Download, MAIN_THREAD.WL_Mod.Property_PatchSrcFileName)
+        '_FSO._DeleteFile(_FSO._CombinePath(MAIN_THREAD.WL_Pack.Property_Path_Folder_Download, MAIN_THREAD.WL_Mod.Property_PatchSrcFileName))
+        'If _FSO.ZIP.UnzipFileToFolder(MAIN_THREAD.WL_Pack.Property_Path_File_Download, "." & MAIN_THREAD.WL_Mod.Property_PatchSrcFileName, _FSO._CombinePath(MAIN_THREAD.WL_Pack.Property_Path_Folder_Download, MAIN_THREAD.WL_Mod.Property_PatchSrcFileName)) = False Then result.Err._Flag = True : result.Err._Description_App = "Не удалось извлечь ядро из загруженного пакета локадизации"
+        'MAIN_THREAD.WL_Mod.Property_PatchSrcFilePath = _FSO._CombinePath(MAIN_THREAD.WL_Pack.Property_Path_Folder_Download, MAIN_THREAD.WL_Mod.Property_PatchSrcFileName)
         MAIN_THREAD.WL_Mod.Property_ModInPackFileVersion = MAIN_THREAD.WL_Pack.Property_PackInPackVersion
         MAIN_THREAD.WL_Mod._Update()
         Me.UpdateInterface()
-        If result.Err._Flag = False Then
-            _LOG._sAdd("WINDOW_FORM", _LANG._Get("Core_MSG_BeginVerification"), _LANG._Get("l_File", MAIN_THREAD.WL_Mod.Property_PatchSrcFilePath), 2, 0)
-            VerifyFile(MAIN_THREAD.WL_Mod.Property_PatchSrcFilePath)
-        End If
+        'If result.Err._Flag = False Then
+        '_LOG._sAdd("WINDOW_FORM", _LANG._Get("Core_MSG_BeginVerification"), _LANG._Get("l_File", MAIN_THREAD.WL_Mod.Property_PatchSrcFilePath), 2, 0)
+        'VerifyFile(MAIN_THREAD.WL_Mod.Property_PatchSrcFilePath)
+        'End If
     End Sub
 
     Sub ModStatus_Click() Handles WL_Mod._Event_PatchDisable_Click_After, WL_Mod._Event_PatchEnable_Click_After

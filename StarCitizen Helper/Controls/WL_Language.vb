@@ -174,7 +174,7 @@ Public Class WL_Language
         Me.aLanguageList.Clear()
         If list.Count > 0 Then
             For Each elem In list
-                File = CType(_FSO._GetInfo(elem).ValueObject, FileInfo)
+                File = CType(_FSO._GetFileInfo(elem).ValueObject, FileInfo)
                 FileLanguageName = ParseFileLanguageName(ReadFile(_FSO._CombinePath(File.Directory.FullName, File.Name)))
                 If FileLanguageName IsNot Nothing Then
                     If (LCase(File.Name) <> LCase(Me.Property_File_Name_Current)) Then

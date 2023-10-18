@@ -55,6 +55,10 @@ Module Module_MAIN
 
         _VARS.OldPatcher_File_Name = "CIGDevelopmentTools.dll"
 
+        _VARS.LocalizationFolderName = "Localization"
+        _VARS.LanguageFolderDelimeter = "_"
+        _VARS.LanguageFolderDefault = "default"
+
         _VARS.LoginDataToken_SoureFileName = "loginData.json"
         _VARS.LoginDataToken_DestFileName = "loginData.json"
 
@@ -82,8 +86,9 @@ Module Module_MAIN
         MAIN_THREAD.WL_Mod.Property_GameUserCfgFileName = _VARS.ConfigFile_Name_User
 
         'Unpack from zip files and folders list
-        MAIN_THREAD.WL_Mod.Property_GameModUnpackList.Add(New WL_Modification.UnpackLine(False, "." & MAIN_THREAD.WL_Mod.Property_GameModFolderName & "/Localization", "Localization"))
+        MAIN_THREAD.WL_Mod.Property_GameModUnpackList.Add(New WL_Modification.UnpackLine(False, "." & MAIN_THREAD.WL_Mod.Property_GameModFolderName & "/" & _VARS.LocalizationFolderName, _VARS.LocalizationFolderName))
         MAIN_THREAD.WL_Mod.Property_GameModUnpackList.Add(New WL_Modification.UnpackLine(True, "." & MAIN_THREAD.WL_Mod.Property_GameModFolderName & "/languages.ini", "languages.ini"))
+        MAIN_THREAD.WL_Mod.Property_GameModUnpackList.Add(New WL_Modification.UnpackLine(True, "." & MAIN_THREAD.WL_Mod.Property_GameModFolderName & "/system.cfg", "system.cfg"))
         'Unpack from zip files and folders list
 
 
@@ -254,6 +259,10 @@ Module Module_MAIN
         Public LoginDataToken_SoureFileName As String = Nothing
         Public LoginDataToken_DestFileName As String = Nothing
         Public g_langueage As String = "g_language"
+        Public LocalizationFolderName As String = Nothing
+        Public LanguageFolderDelimeter = Nothing
+        Public LanguageFolderDefault = Nothing
+
 
         'Download
         Public PackageGitMaster_Name As String = Nothing

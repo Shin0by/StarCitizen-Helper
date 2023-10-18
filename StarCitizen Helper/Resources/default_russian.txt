@@ -99,6 +99,9 @@ File_MSG_CannotWriteCheckPermission = Запись файла невозможна, проверьте права н
 File_MSG_IncorrectDownloadedSize = Неверный размер загруженного файла\n\t{0}
 File_MSG_PathNotAssign = Не указан путь к {0}
 File_MSG_CannotCopyFile = Ошибка при копировании файла\n\tОткуда: {0}\n\tКуда: {1}
+Folder_MSG_ErrorCreateFolder = Не удалось создать папку:\n\t{0}
+Folder_MSG_ErrorDeleteFolder = Не удалось удалить папку:\n\t{0}
+Folder_MSG_ErrorRenameFolder = Не удалось переименовать папку:\n\t{0}
 
 #Window Tabs
 Window_Tab_Modification = Модификация

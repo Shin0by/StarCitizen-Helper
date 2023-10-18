@@ -40,7 +40,37 @@ Module Module_FSO
             Return result
         End Function
 
-        Public Function _GetInfo(Path As String) As ResultClass
+        Public Function _GetFileList(Path As String) As ResultClass
+            Dim result As New ResultClass(Me)
+            Dim fList() As String
+            Try
+                fList = IO.Directory.GetFiles(Path)
+                result.ValueBoolean = True
+                result.ValueObject = fList
+            Catch
+                result.Err._Description_Sys = Err.Description
+                result.Err._Number = Err.Number
+                result.Err._Flag = True
+            End Try
+            Return result
+        End Function
+
+        Public Function _GetFolderList(Path As String) As ResultClass
+            Dim result As New ResultClass(Me)
+            Dim dList() As String
+            Try
+                dList = IO.Directory.GetDirectories(Path)
+                result.ValueBoolean = True
+                result.ValueObject = dList
+            Catch
+                result.Err._Description_Sys = Err.Description
+                result.Err._Number = Err.Number
+                result.Err._Flag = True
+            End Try
+            Return result
+        End Function
+
+        Public Function _GetFileInfo(Path As String) As ResultClass
             Dim result As New ResultClass(Me)
 
             Try
@@ -59,6 +89,27 @@ Module Module_FSO
             End Try
             Return result
         End Function
+
+        Public Function _GetFolderInfo(Path As String) As ResultClass
+            Dim result As New ResultClass(Me)
+
+            Try
+                Dim File As New IO.DirectoryInfo(Path)
+                If Me._FolderExits(Path) = False Then
+                    result.ValueBoolean = False
+                    result.ValueObject = Nothing
+                    Return result
+                End If
+                result.ValueBoolean = True
+                result.ValueObject = My.Computer.FileSystem.GetDirectoryInfo(Path)
+            Catch
+                result.Err._Description_Sys = Err.Description
+                result.Err._Number = Err.Number
+                result.Err._Flag = True
+            End Try
+            Return result
+        End Function
+
         Public Function _ReadTextFile(Path As String, Encoding As Text.Encoding) As String
             Try
                 Return My.Computer.FileSystem.ReadAllText(Path, Encoding)
@@ -153,6 +204,15 @@ Module Module_FSO
             End Try
         End Function
 
+        Public Function _FolderExits(Path As String) As Boolean
+            Try
+                Dim Folder As New IO.DirectoryInfo(Path)
+                Return Folder.Exists
+            Catch
+                Return False
+            End Try
+        End Function
+
         Public Function _RenameFolder(Source As String, Destination As String) As ResultClass
             Dim result As New ResultClass(Me)
             Try
@@ -210,23 +270,26 @@ Module Module_FSO
                         Dim isFile As Boolean = True
                         Dim destPath As String = Nothing
                         Dim temp As String = Nothing
-                        Dim Cntr As Long = 0
+                        Dim tempFile As String = sFile
                         For Each elem In zipPack.Entries
                             temp = Nothing
                             destPath = Nothing
                             isFile = True
                             If elem.Name Is Nothing Or elem.Name = "" Then isFile = False
 
-                            If sFile.StartsWith(".", StringComparison.Ordinal) And Cntr = 0 Then
-                                sFile = elem.FullName & Right(sFile, Len(sFile) - 1)
+
+                            If sFile.StartsWith(".", StringComparison.Ordinal) Then
+                                Dim sRoot() = Split(elem.FullName, "/", 2, CompareMethod.Binary)
+                                If sRoot.Count > 0 Then
+                                    tempFile = sRoot(0) & "/" & Right(sFile, Len(sFile) - 1)
+                                End If
                             End If
 
-                            If elem.FullName.StartsWith(sFile, StringComparison.Ordinal) Then
+                            If elem.FullName.StartsWith(tempFile, StringComparison.Ordinal) Then
                                 If isFile = True Then
                                     elem.ExtractToFile(sPathTo, True)
                                 End If
                             End If
-                            Cntr += 1
                         Next
 
                     End Using
@@ -242,28 +305,32 @@ Module Module_FSO
                         Dim isFile As Boolean = True
                         Dim destPath As String = Nothing
                         Dim temp As String = Nothing
-                        Dim Cntr As Long = 0
+                        Dim tempPathFrom As String = sPathFrom
+
                         For Each elem In zipPack.Entries
                             temp = Nothing
                             destPath = Nothing
                             isFile = True
+                            tempPathFrom = sPathFrom
                             If elem.Name Is Nothing Or elem.Name = "" Then isFile = False
 
-                            temp = Replace(elem.FullName, sPathFrom & "/", "")
-                            destPath = Path.GetFullPath(Path.Combine(sPathTo, temp))
-
-                            If sPathFrom.StartsWith(".", StringComparison.Ordinal) And Cntr = 0 Then
-                                sPathFrom = elem.FullName & Right(sPathFrom, Len(sPathFrom) - 1)
+                            If sPathFrom.StartsWith(".", StringComparison.Ordinal) Then
+                                Dim sRoot() = Split(elem.FullName, "/", 2, CompareMethod.Binary)
+                                If sRoot.Count > 0 Then
+                                    tempPathFrom = sRoot(0) & "/" & Right(sPathFrom, Len(sPathFrom) - 1)
+                                End If
                             End If
 
-                            If elem.FullName.StartsWith(sPathFrom, StringComparison.Ordinal) Then
+                            temp = Replace(elem.FullName, tempPathFrom & "/", "")
+                            destPath = Path.GetFullPath(Path.Combine(sPathTo, temp))
+
+                            If elem.FullName.StartsWith(tempPathFrom, StringComparison.Ordinal) Then
                                 If isFile = True Then
                                     elem.ExtractToFile(destPath, True)
                                 Else
                                     _FSO._CreateFolder(destPath)
                                 End If
                             End If
-                            Cntr += 1
                         Next
 
                     End Using
@@ -279,7 +346,7 @@ Module Module_FSO
         Private data As New List(Of IO.FileInfo)
 
         Public Function _Add(sPath As String) As Boolean
-            Dim fo As ResultClass = _FSO._GetInfo(sPath)
+            Dim fo As ResultClass = _FSO._GetFileInfo(sPath)
             If fo.Err._Flag = True Or fo.ValueObject Is Nothing Then
                 _LOG._Add("FILE_SYSTEM", _LANG._Get("Watcher_MSG_AddErrorFileNotExist"), fo.LogList(sPath), 2)
                 Return False
@@ -326,7 +393,7 @@ Module Module_FSO
                 Return Nothing
             End If
 
-            Dim fo As ResultClass = _FSO._GetInfo(sPath)
+            Dim fo As ResultClass = _FSO._GetFileInfo(sPath)
             If fo.Err._Flag = True Or fo.ValueObject Is Nothing Then
                 _LOG._Add("FILE_SYSTEM", _LANG._Get("Watcher_MSG_ErrorAccess"), fo.LogList(sPath), 2)
                 Return Nothing

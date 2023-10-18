@@ -80,6 +80,8 @@ Module Module_HELPER
 
         _JSETTINGS._SetValue("configuration.external", "alert_date", "")
 
+        _JSETTINGS._SetValue("configuration.external", "pack_language", "")
+
         'Repository
         _RepositoryWriteHelper("Russian", "Полный", "https://github.com/n1ghter/SC_ru", "Полный перевод от инициаторов проекта локализации", True, True)
         _RepositoryWriteHelper("Russian", "Без названий", "https://github.com/budukratok/SC_not_so_ru", "Перевод с сохранением исходных имён и названий", True, True)
@@ -119,6 +121,7 @@ Module Module_HELPER
         MAIN_THREAD.WL_Mod.Property_ModInGameFileVersion = _JSETTINGS._GetValue("configuration.external.mod_game_version", Nothing)
         MAIN_THREAD.WL_Mod.Property_ModInPackFileVersion = _JSETTINGS._GetValue("configuration.external.mod_pack_version", Nothing)
         MAIN_THREAD.WL_Pack.Property_PackInGameVersion = _JSETTINGS._GetValue("configuration.external.pack_game_version", Nothing)
+        MAIN_THREAD.WL_Pack.Property_PackLanguage = _JSETTINGS._GetValue("configuration.external.pack_language", Nothing)
         MAIN_THREAD.WL_Pack.Property_ShowAllBuild = StringToBool(_JSETTINGS._GetValue("configuration.main.show_all_builds", False, {0, 1}))
 
         'GIT
@@ -223,7 +226,7 @@ Module Module_HELPER
     End Sub
 
     Public Function RenameLIVEFolder(ToProfile As String, Optional OnlyCheck As Boolean = True) As ResultClass
-        Dim result As ResultClass = _FSO._GetInfo(MAIN_THREAD.WL_Mod.Property_GameExeFilePath)
+        Dim result As ResultClass = _FSO._GetFileInfo(MAIN_THREAD.WL_Mod.Property_GameExeFilePath)
         MAIN_THREAD.Button_ToLIVE.Enabled = False
         MAIN_THREAD.Button_ToPTU.Enabled = False
         MAIN_THREAD.Button_ToEPTU.Enabled = False

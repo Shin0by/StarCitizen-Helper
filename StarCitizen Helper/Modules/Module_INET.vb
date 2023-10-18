@@ -48,7 +48,7 @@ Module Module_INET
                 End Using
 
                 If _FSO._FileExits(Path) = False Then result.Err._Description_App = _LANG._Get("File_MSG_CannotWriteCheckPermission", Path) : Return result
-                fo = _FSO._GetInfo(Path)
+                fo = _FSO._GetFileInfo(Path)
                 If CType(fo.ValueObject, IO.FileInfo).Length <> content.Length Then result.Err._Description_App = _LANG._Get("File_MSG_IncorrectDownloadedSize", Path) : Return result
                 result.Err._Flag = False
                 result.Err._Description_Sys = Nothing

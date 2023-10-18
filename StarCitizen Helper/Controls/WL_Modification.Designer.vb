@@ -75,6 +75,7 @@ Partial Class WL_Modification
         Me.List_AltSubLocal.Name = "List_AltSubLocal"
         Me.List_AltSubLocal.Size = New System.Drawing.Size(180, 21)
         Me.List_AltSubLocal.TabIndex = 16
+        Me.List_AltSubLocal.Visible = False
         '
         'Label_SubLocal
         '
@@ -88,6 +89,7 @@ Partial Class WL_Modification
         Me.Label_SubLocal.TabIndex = 14
         Me.Label_SubLocal.Text = "Варианты локализации"
         Me.Label_SubLocal.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.Label_SubLocal.Visible = False
         '
         'Label_TextBottom
         '
