@@ -770,7 +770,7 @@ Finalize: sender.Enabled = True
         Next
 
         'Me.Property_GitList_SelString = _INI._GET_VALUE("EXTERNAL", "PACK_GIT_SELECTED", "", _VARS.utf8NoBom).Value
-        Me.Property_GitList_SelString = Me.List_Git.Items(0)
+        If Me.List_Git.Items.Count > 0 Then Me.Property_GitList_SelString = Me.List_Git.Items(0)
 Fin:    RaiseEvent _Event_ListGit_List_Change_After()
     End Sub
 
