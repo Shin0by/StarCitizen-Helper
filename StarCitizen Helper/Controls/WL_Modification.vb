@@ -431,8 +431,8 @@ Finalize:   If Me.sGameExeFileName IsNot Nothing Then
         _USER._Write(Nothing, _VARS.g_langueage, Me.Localization, _VARS.utf8NoBom)
 
         _Update()
-        _FSO._CopyFile(Me.Property_PatchSrcFilePath, Me.Property_PatchDstFilePath)
-        _FSO._DeleteFile(_FSO._CombinePath(MAIN_THREAD.WL_Mod.Property_GameExeFolderPath, _VARS.OldPatcher_File_Name)) 'Remove in next releases (fix old file name)
+
+        If _FSO._FileExits(Me.Property_PatchDstFilePath) Then _FSO._DeleteFile(Me.Property_PatchDstFilePath) 'Remove old Core file (Old fix)
 
         Me.Property_ModInGameFileVersion = Me.Property_ModInPackFileVersion
         Me._Enabled(True)

@@ -778,7 +778,7 @@ Fin:    RaiseEvent _Event_ListGit_List_Change_After()
     Public Sub GetLocals()
         'Me.Property_FilePath_Config = MAIN_THREAD.WL_Mod.Property_GameModFolderPath & "\" & _VARS.ConfigFile_Name_System
         Me.Property_FilePath_User = MAIN_THREAD.WL_Mod.Property_GameUserCfgFilePath
-        'If Me.Property_FilePath_Config Is Nothing Then Exit Sub
+        If MAIN_THREAD.WL_Mod.Property_GameModFolderPath Is Nothing Then Exit Sub
 
         'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 
