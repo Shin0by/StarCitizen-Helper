@@ -164,15 +164,15 @@ Module Module_HELPER
             For i = 0 To MAIN_THREAD.WL_Pack.Property_LocalizationList.Count - 1
                 ValidList(i) = MAIN_THREAD.WL_Pack.Property_LocalizationList(i)
             Next i
-            temp = _USER._GET_VALUE(Nothing, "g_language", MAIN_THREAD.WL_Pack.Property_LocalizationDefault, _VARS.utf8NoBom, ValidList).Value
+            temp = _USER._GET_VALUE(Nothing, _VARS.g_language, MAIN_THREAD.WL_Pack.Property_LocalizationDefault, _VARS.utf8NoBom, ValidList).Value
 
             If MAIN_THREAD.WL_Mod.Localization <> temp Then
                 MAIN_THREAD.WL_Mod.Localization = temp
-                _USER._Write(Nothing, "g_language", MAIN_THREAD.WL_Mod.Localization, _VARS.utf8NoBom)
+                _USER._Write(Nothing, _VARS.g_language, MAIN_THREAD.WL_Mod.Localization, _VARS.utf8NoBom)
             End If
         Else
             MAIN_THREAD.WL_Mod.Localization = Nothing
-            _USER._Write(Nothing, "g_language", MAIN_THREAD.WL_Mod.Localization, _VARS.utf8NoBom)
+            _USER._Write(Nothing, _VARS.g_language, MAIN_THREAD.WL_Mod.Localization, _VARS.utf8NoBom)
         End If
     End Sub
 

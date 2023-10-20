@@ -7,9 +7,11 @@ Module Module_FSO
         Public WATCHER As New Class_WatcherList
         Public ZIP As New Class_ZIP
 
-        Public Function UsedByProcess(Path As String) As Boolean
+        Public Function _UsedByProcess(Path As String, Optional FileReadOnly As Boolean = False) As Boolean
             Try
-                Using temp As New IO.FileStream(Path, FileMode.Open, FileAccess.ReadWrite, FileShare.None)
+                Dim FileAccess As FileAccess = FileAccess.ReadWrite
+                If FileReadOnly Then FileAccess = FileAccess.Read
+                Using temp As New IO.FileStream(Path, FileMode.Open, FileAccess, FileShare.None)
                 End Using
             Catch Ex As Exception
                 Return True

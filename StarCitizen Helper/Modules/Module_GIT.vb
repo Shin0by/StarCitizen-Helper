@@ -95,7 +95,7 @@ Module Module_GIT
                 Me.data.Clear()
             End Sub
 
-            Public Sub _Add(Name As String, TagName As String, ZIPBallURL As String, Published As String, Body As String, Assets As Object, PreRelease As Boolean, Optional isMaster As Boolean = False)
+            Public Sub _Add(Name As String, TagName As String, ZIPBallURL As String, Published As String, Body As String, Assets As Object, PreRelease As Boolean, isMaster As Boolean)
                 data.Add(New Class_GitUpdateElement(Name, TagName, ZIPBallURL, Published, Body, Assets, PreRelease, Me.Get_Type(TagName), isMaster))
             End Sub
 

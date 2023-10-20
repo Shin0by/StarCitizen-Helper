@@ -258,7 +258,7 @@ Module Module_MAIN
         Public OldPatcher_File_Name As String = Nothing
         Public LoginDataToken_SoureFileName As String = Nothing
         Public LoginDataToken_DestFileName As String = Nothing
-        Public g_langueage As String = "g_language"
+        Public g_language As String = "g_language"
         Public LocalizationFolderName As String = Nothing
         Public LanguageFolderDelimeter = Nothing
         Public LanguageFolderDefault = Nothing

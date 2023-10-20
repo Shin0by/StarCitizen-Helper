@@ -109,6 +109,7 @@ Partial Class WL_About
         Me.Label_SendIssueCore.TabIndex = 3
         Me.Label_SendIssueCore.Text = "Отправить отзыв о проблеме с ядром"
         Me.Label_SendIssueCore.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.Label_SendIssueCore.Visible = False
         '
         'Button_SendIssueCore
         '
@@ -119,6 +120,7 @@ Partial Class WL_About
         Me.Button_SendIssueCore.TabIndex = 2
         Me.Button_SendIssueCore.Text = "Отзыв о ядре"
         Me.Button_SendIssueCore.UseVisualStyleBackColor = True
+        Me.Button_SendIssueCore.Visible = False
         '
         'WL_About
         '

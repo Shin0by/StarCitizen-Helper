@@ -122,6 +122,7 @@ Partial Class WL_Pack
         Me.Button_InstallFull.TabIndex = 5
         Me.Button_InstallFull.Text = "Полная установка"
         Me.Button_InstallFull.UseVisualStyleBackColor = True
+        Me.Button_InstallFull.Visible = False
         '
         'Button_Download
         '
@@ -158,6 +159,7 @@ Partial Class WL_Pack
         Me.Label_InstallFull.TabIndex = 8
         Me.Label_InstallFull.Text = "Локализация и шрифты"
         Me.Label_InstallFull.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.Label_InstallFull.Visible = False
         '
         'CheckBox_ShowAllBuild
         '
@@ -167,7 +169,7 @@ Partial Class WL_Pack
         Me.CheckBox_ShowAllBuild.Name = "CheckBox_ShowAllBuild"
         Me.CheckBox_ShowAllBuild.Size = New System.Drawing.Size(202, 24)
         Me.CheckBox_ShowAllBuild.TabIndex = 15
-        Me.CheckBox_ShowAllBuild.Text = "Отображать тестовые сборки"
+        Me.CheckBox_ShowAllBuild.Text = "Отображать все сборки"
         Me.CheckBox_ShowAllBuild.UseVisualStyleBackColor = True
         '
         'Panel1
@@ -201,7 +203,6 @@ Partial Class WL_Pack
         Me.Label_RepozitoryName.AutoSize = True
         Me.Label_RepozitoryName.BackColor = System.Drawing.Color.Transparent
         Me.Label_RepozitoryName.Dock = System.Windows.Forms.DockStyle.Left
-        Me.Label_RepozitoryName.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
         Me.Label_RepozitoryName.Location = New System.Drawing.Point(0, 0)
         Me.Label_RepozitoryName.Margin = New System.Windows.Forms.Padding(1, 5, 3, 5)
         Me.Label_RepozitoryName.Name = "Label_RepozitoryName"

@@ -345,6 +345,7 @@ Partial Class MainForm
         Me.WL_Pack.Property_PackageGitURL_Master = Nothing
         Me.WL_Pack.Property_PackageGitURL_Page = Nothing
         Me.WL_Pack.Property_PackInGameVersion = Nothing
+        Me.WL_Pack.Property_PackLanguage = Nothing
         Me.WL_Pack.Property_Path_File_Download = Nothing
         Me.WL_Pack.Property_Path_File_Meta = Nothing
         Me.WL_Pack.Property_Path_Folder_Download = Nothing
@@ -856,8 +857,8 @@ Partial Class MainForm
         'TableLayoutPanel3
         '
         Me.TableLayoutPanel3.ColumnCount = 2
-        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 93.4847!))
+        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 6.515301!))
         Me.TableLayoutPanel3.Controls.Add(Me.CheckBox_IgnoreSSL_TLS, 0, 3)
         Me.TableLayoutPanel3.Controls.Add(Me.CheckBox_HideWhenClose, 0, 2)
         Me.TableLayoutPanel3.Controls.Add(Me.CheckBox_UpdateAlert, 0, 0)
@@ -881,7 +882,7 @@ Partial Class MainForm
         Me.CheckBox_IgnoreSSL_TLS.Location = New System.Drawing.Point(4, 106)
         Me.CheckBox_IgnoreSSL_TLS.Margin = New System.Windows.Forms.Padding(4)
         Me.CheckBox_IgnoreSSL_TLS.Name = "CheckBox_IgnoreSSL_TLS"
-        Me.CheckBox_IgnoreSSL_TLS.Size = New System.Drawing.Size(498, 28)
+        Me.CheckBox_IgnoreSSL_TLS.Size = New System.Drawing.Size(939, 28)
         Me.CheckBox_IgnoreSSL_TLS.TabIndex = 3
         Me.CheckBox_IgnoreSSL_TLS.Text = "Игнорировать ошибки SSL\TLS сертификата GitHub (не рекомендуется)"
         Me.CheckBox_IgnoreSSL_TLS.UseVisualStyleBackColor = True
@@ -893,7 +894,7 @@ Partial Class MainForm
         Me.CheckBox_HideWhenClose.Location = New System.Drawing.Point(4, 72)
         Me.CheckBox_HideWhenClose.Margin = New System.Windows.Forms.Padding(4)
         Me.CheckBox_HideWhenClose.Name = "CheckBox_HideWhenClose"
-        Me.CheckBox_HideWhenClose.Size = New System.Drawing.Size(498, 26)
+        Me.CheckBox_HideWhenClose.Size = New System.Drawing.Size(939, 26)
         Me.CheckBox_HideWhenClose.TabIndex = 2
         Me.CheckBox_HideWhenClose.Text = "Скрывать при закрытии окна"
         Me.CheckBox_HideWhenClose.UseVisualStyleBackColor = True
@@ -905,7 +906,7 @@ Partial Class MainForm
         Me.CheckBox_UpdateAlert.Location = New System.Drawing.Point(4, 4)
         Me.CheckBox_UpdateAlert.Margin = New System.Windows.Forms.Padding(4)
         Me.CheckBox_UpdateAlert.Name = "CheckBox_UpdateAlert"
-        Me.CheckBox_UpdateAlert.Size = New System.Drawing.Size(498, 26)
+        Me.CheckBox_UpdateAlert.Size = New System.Drawing.Size(939, 26)
         Me.CheckBox_UpdateAlert.TabIndex = 0
         Me.CheckBox_UpdateAlert.Text = "Оповещать о наличии обновлений локализации"
         Me.CheckBox_UpdateAlert.UseVisualStyleBackColor = True
@@ -917,7 +918,7 @@ Partial Class MainForm
         Me.CheckBox_StartUp.Location = New System.Drawing.Point(4, 38)
         Me.CheckBox_StartUp.Margin = New System.Windows.Forms.Padding(4)
         Me.CheckBox_StartUp.Name = "CheckBox_StartUp"
-        Me.CheckBox_StartUp.Size = New System.Drawing.Size(498, 26)
+        Me.CheckBox_StartUp.Size = New System.Drawing.Size(939, 26)
         Me.CheckBox_StartUp.TabIndex = 1
         Me.CheckBox_StartUp.Text = "Автоматическая загрузка при старте системы"
         Me.CheckBox_StartUp.UseVisualStyleBackColor = True

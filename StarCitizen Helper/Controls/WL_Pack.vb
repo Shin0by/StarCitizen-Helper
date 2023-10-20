@@ -1,4 +1,5 @@
-﻿Imports System.IO
+﻿Imports System.Diagnostics.Eventing.Reader
+Imports System.IO
 Imports System.Net
 Imports System.Threading
 Imports System.Windows.Annotations
@@ -421,7 +422,7 @@ Public Class WL_Pack
                                   'Me.Enabled = False
                                   List_Git.Enabled = False
                                   CheckBox_ShowAllBuild.Enabled = False
-                                  Button_Download.Enabled = False
+                                  'Button_Download.Enabled = False
                                   WL_Download.Enabled = False
 
                               End Sub)
@@ -430,7 +431,7 @@ Public Class WL_Pack
                     'Me.Enabled = False
                     List_Git.Enabled = False
                     CheckBox_ShowAllBuild.Enabled = False
-                    Button_Download.Enabled = False
+                    'Button_Download.Enabled = False
                     WL_Download.Enabled = False
                 End If
                 Me.WL_PackUpdateCheck.Property_URLApi = Property_PackageGitURL_Api
@@ -525,7 +526,8 @@ Public Class WL_Pack
 
     '<----------------------------------- Controls
     Public Sub Button_Download_Click(sender As Object, e As EventArgs) Handles Button_Download.Click
-        Me._Enabled(False)
+        ControlsEnableDisable(False)
+        Me.Button_OpenFile.Enabled = False
         RaiseEvent _Event_Download_Click_Before()
         RaiseEvent _Event_Download_Before()
 
@@ -546,11 +548,13 @@ Finalize: If result.Err._Flag = True Then
     End Sub
 
     Private Sub Button_OpenFile_Click(sender As Object, e As EventArgs) Handles Button_OpenFile.Click
-        Me._Enabled(False)
         RaiseEvent _Event_Download_Click_Before()
         RaiseEvent _Event_Download_Before()
 
         Dim result As New ResultClass(Me)
+
+        ControlsEnableDisable(False)
+        Me.Button_OpenFile.Enabled = False
 
 
         MAIN_THREAD.OpenFileDialog1.Filter = "Файл локализации (*.zip)|*.zip|" & _LANG._Get("FileAllFiles") & " (*.*)|*.*"
@@ -562,7 +566,6 @@ Finalize: If result.Err._Flag = True Then
         If (MAIN_THREAD.OpenFileDialog1.ShowDialog() = DialogResult.OK) Then
             SrcFile = MAIN_THREAD.OpenFileDialog1.FileName
         Else
-            Me._Enabled(True)
             GoTo Finalize
         End If
 
@@ -623,12 +626,12 @@ Finalize: If result.Err._Flag = True Then
 
         If MAIN_THREAD.WL_Mod.Property_GameUserCfgFilePath IsNot Nothing Then
             If _FSO._FileExits(MAIN_THREAD.WL_Mod.Property_GameUserCfgFilePath) = False Then
-                _FSO._WriteTextFile(_VARS.g_langueage & " = ", MAIN_THREAD.WL_Mod.Property_GameUserCfgFilePath, System.Text.Encoding.UTF8)
+                _FSO._WriteTextFile(_VARS.g_language & " = ", MAIN_THREAD.WL_Mod.Property_GameUserCfgFilePath, System.Text.Encoding.UTF8)
             Else
                 Dim _USER_CFG As New Class_INI()
                 _USER_CFG.SkipInvalidLines = True
                 _USER_CFG._FSO = MAIN_THREAD.WL_Mod.Property_GameUserCfgFilePath
-                _USER_CFG._Write(Nothing, _VARS.g_langueage, Nothing, _VARS.utf8NoBom)
+                _USER_CFG._Write(Nothing, _VARS.g_language, Nothing, _VARS.utf8NoBom)
             End If
         End If
 
@@ -679,6 +682,9 @@ Finalize: sender.Enabled = True
             Me.WL_Download.Refresh()
             Me.Refresh()
 
+            'https://api.github.com/repos/n1ghter/StarCitizenRu/zipball/2.39
+            'https://codeload.github.com/n1ghter/SC_ru/zip/master
+
             Dim logLines As List(Of LOG_SubLine) = New List(Of LOG_SubLine)
             Dim logLine As LOG_SubLine = New LOG_SubLine
 
@@ -696,7 +702,6 @@ Finalize: sender.Enabled = True
     End Sub
 
     Private Sub DownloadComplete(DownloadFrom As String, DownloadTo As String, e As WL_Download.DownloadProgressElement) Handles WL_Download._Event_Complete_Event
-        Me._Enabled(True)
         Dim logLines As List(Of LOG_SubLine) = New List(Of LOG_SubLine)
         Dim logLine As LOG_SubLine = New LOG_SubLine
         logLine.List.Add(_LANG._Get("l_SourceURL", DownloadFrom))
@@ -715,6 +720,11 @@ Finalize: sender.Enabled = True
         End If
 
         Property_Path_File_Download = DownloadTo
+
+        If List_Git.Items.Count > 0 Then
+            ControlsEnableDisable(True)
+        End If
+        Me.Button_OpenFile.Enabled = True
 
         RaiseEvent _Event_Download_After(DownloadFrom, DownloadTo, e)
     End Sub
@@ -757,20 +767,39 @@ Finalize: sender.Enabled = True
 
     Public Sub _UpdateListGit()
         RaiseEvent _Event_ListGit_List_Change_Before()
-        Me.Invoke(Sub() Me.List_Git.Items.Clear())
+
+        If InvokeRequired Then
+            Me.Invoke(Sub() Me.List_Git.Items.Clear())
+        Else
+            Me.List_Git.Items.Clear()
+        End If
 
         Dim tagName As String = "UNKNOWN"
-        If Me.Property_ShowAllBuild = False Then tagName = Me.Game_Type.ToString()
+        If Me.Property_ShowAllBuild = False Then
+            tagName = Me.Game_Type.ToString()
+        End If
 
         Dim List As List(Of Class_GitUpdateElement) = Me.GIT_PACK_DATA._GetByTag(tagName)
-        If List.Count = 0 Then GoTo Fin
+        If List.Count = 0 Then
+            ControlsEnableDisable(False)
+            GoTo Fin
+        End If
 
         For i = 0 To List.Count - 1
-            If InvokeRequired Then Me.Invoke(Sub() Me.List_Git.Items.Add(List(i)._name))
+            If InvokeRequired Then
+                Me.Invoke(Sub() Me.List_Git.Items.Add(List(i)._name))
+            Else
+                Me.List_Git.Items.Add(List(i)._name)
+            End If
         Next
 
         'Me.Property_GitList_SelString = _INI._GET_VALUE("EXTERNAL", "PACK_GIT_SELECTED", "", _VARS.utf8NoBom).Value
-        If Me.List_Git.Items.Count > 0 Then Me.Property_GitList_SelString = Me.List_Git.Items(0)
+        If Me.List_Git.Items.Count > 0 Then
+            Me.Property_GitList_SelString = Me.List_Git.Items(0)
+            ControlsEnableDisable(True)
+        Else
+            ControlsEnableDisable(False)
+        End If
 Fin:    RaiseEvent _Event_ListGit_List_Change_After()
     End Sub
 
@@ -813,6 +842,7 @@ Fin:    RaiseEvent _Event_ListGit_List_Change_After()
         '_SYSTEM._FSO = Me.Property_FilePath_Config
         '_ALTLANG._FSO = Me.Property_FilePath_AltLocal
 
+        Me.Property_LocalizationDefault = "english"
         'Me.Property_LocalizationDefault = _SYSTEM._GET_VALUE(Nothing, "g_language", Nothing, _VARS.utf8NoBom).Value.Trim
         'If Len(Me.Property_LocalizationDefault) > 0 Then
 
@@ -853,10 +883,12 @@ Fin:    RaiseEvent _Event_ListGit_List_Change_After()
         For Each elem In JSON("data")
             Assets = Nothing
             Assets = elem("assets")
-            Me.GIT_PACK_DATA._Add(elem("name"), elem("tag_name"), elem("zipball_url"), elem("published_at"), elem("body"), Assets, False)
+            Me.GIT_PACK_DATA._Add(elem("name"), elem("tag_name"), elem("zipball_url"), elem("published_at"), elem("body"), Assets, False, False)
         Next
         Me.GIT_PACK_LATEST = _GIT._GetLatestElement(Me.GIT_PACK_DATA._GetAll)
-        If Me.Property_ShowAllBuild = True Then GIT_PACK_DATA._Add(("Master"), "Master", Me.Property_PackageGitURL_Master, DateTime.Now, Nothing, Nothing, True)
+        If Me.Property_ShowAllBuild = True Then
+            GIT_PACK_DATA._Add(("Master"), "Master", Me.Property_PackageGitURL_Master, DateTime.Now, Nothing, Nothing, True, True)
+        End If
 
         If _VARS.PackageLatestDate <> Me.GIT_PACK_LATEST._published And Convert.ToDateTime("01.01.2000 00:00:00") <> Me.GIT_PACK_LATEST._published Then
             _VARS.PackageLatestDate = Me.GIT_PACK_LATEST._published
@@ -869,14 +901,30 @@ Fin:    RaiseEvent _Event_ListGit_List_Change_After()
 
 
         Me.Invoke(Sub() 'Me.Enabled = True
-                      List_Git.Enabled = True
-                      CheckBox_ShowAllBuild.Enabled = True
-                      Button_Download.Enabled = True
-                      WL_Download.Enabled = True
+                      ControlsEnableDisable(True)
                   End Sub)
         _UpdateListGit()
+
     End Sub
 
-    '-----------------------------------> 'Callback
+    '-----------------------------------> 'Callbac
+
+
+    Private Sub ControlsEnableDisable(Enabled As Boolean)
+        If InvokeRequired Then
+            Me.Invoke(Sub()
+                          Me.Button_Download.Enabled = Enabled
+                          List_Git.Enabled = Enabled
+                          CheckBox_ShowAllBuild.Enabled = Enabled
+                          WL_Download.Enabled = Enabled
+                      End Sub)
+        Else
+            Me.Button_Download.Enabled = Enabled
+            List_Git.Enabled = Enabled
+            CheckBox_ShowAllBuild.Enabled = Enabled
+            WL_Download.Enabled = Enabled
+        End If
+
+    End Sub
 
 End Class

@@ -362,8 +362,8 @@ Finalize:   If Me.sGameExeFileName IsNot Nothing Then
         End Get
         Set(Value As String)
             If bLoadComplete = False And Value Is Nothing Then Exit Property
-            If Me.Property_PatchSrcFilePath Is Nothing Then Value = Nothing
-            If _FSO._FileExits(Me.Property_PatchSrcFilePath) = False Then Value = Nothing
+            'If Me.Property_PatchSrcFilePath Is Nothing Then Value = Nothing
+            'If _FSO._FileExits(Me.Property_PatchSrcFilePath) = False Then Value = Nothing
             Me.sModInPackFileVersion = Value
             If _VARS.ConfigFileIsOK = True Then
                 _JSETTINGS._SetValue("configuration.external", "mod_pack_version", Me.sModInPackFileVersion, True)
@@ -428,7 +428,7 @@ Finalize:   If Me.sGameExeFileName IsNot Nothing Then
         Dim _USER As New Class_INI
         _USER.SkipInvalidLines = True
         _USER._FSO = MAIN_THREAD.WL_Pack.Property_FilePath_User
-        _USER._Write(Nothing, _VARS.g_langueage, Me.Localization, _VARS.utf8NoBom)
+        _USER._Write(Nothing, _VARS.g_language, Me.Localization, _VARS.utf8NoBom)
 
         _Update()
 
@@ -449,7 +449,7 @@ Finalize:   If Me.sGameExeFileName IsNot Nothing Then
         Dim _USER As New Class_INI
         _USER.SkipInvalidLines = True
         _USER._FSO = MAIN_THREAD.WL_Pack.Property_FilePath_User
-        _USER._Write(Nothing, _VARS.g_langueage, "", _VARS.utf8NoBom)
+        _USER._Write(Nothing, _VARS.g_language, "", _VARS.utf8NoBom)
 
 
         '_FSO._DeleteFile(Me.Property_PatchDstFilePath)
@@ -484,7 +484,10 @@ Finalize:   If Me.sGameExeFileName IsNot Nothing Then
 
     '<----------------------------------- Logic
     Private Sub Set_GameType(Path As String)
-        If _FSO._FileExits(Path) = False Then Me.iGameType = GameType.UNKNOWN : Exit Sub
+        If _FSO._FileExits(Path) = False Then
+            Me.iGameType = GameType.UNKNOWN
+            Exit Sub
+        End If
 
         Dim result As ResultClass = _FSO._GetFileInfo(Path)
         Dim File As IO.FileInfo
@@ -523,7 +526,7 @@ Finalize:   If Me.sGameExeFileName IsNot Nothing Then
         For i = 0 To Me.List_Localization.Count - 1
             ValidList(i) = Me.List_Localization(i)
         Next i
-        If _USER._GET_VALUE(Nothing, _VARS.g_langueage, Nothing, _VARS.utf8NoBom, ValidList).Value IsNot Nothing Then
+        If _USER._GET_VALUE(Nothing, _VARS.g_language, Nothing, _VARS.utf8NoBom, ValidList).Value IsNot Nothing Then
             Return 2
         End If
 
@@ -533,6 +536,7 @@ Finalize:   If Me.sGameExeFileName IsNot Nothing Then
     Public Sub _Update(Optional LogType As Integer = 3)
         Me.Button_Disable.Enabled = False
         Me.Button_Enable.Enabled = False
+        Me.Button_Enable.BackColor = Me.BackColor
         Me.List_SubLocal.Enabled = True
 
         Dim srcCondition As Byte = CheckSourceModСonditions()
@@ -548,19 +552,17 @@ Finalize:   If Me.sGameExeFileName IsNot Nothing Then
 
         If Me.Button_Enable.Enabled = True Then
             Me.Property_ModStatus = False
-            _LOG._sAdd("MODIFICATION", _LANG._Get("l_Modification", _LANG._Get("DisabledT")), Me.Property_ModInGameFileVersion, LogType)
+            Me.Label_ModOn.Text = _LANG._Get("l_Enable", _LANG._Get("l_ModificationModule", Me.sModInPackFileVersion))
+            _LOG._sAdd("MODIFICATION", _LANG._Get("Modification") & " - " & _LANG._Get("DisabledT", "(" & Me.Property_ModInGameFileVersion & "):"), Me.Property_GameExeFilePath, LogType)
         End If
 
         If Me.Button_Disable.Enabled = True Then
             Me.Property_ModStatus = True
-            _LOG._sAdd("MODIFICATION", _LANG._Get("l_Modification", _LANG._Get("l_EnabledT", "(v." & Me.Property_ModInGameFileVersion & "):")), Me.Property_GameExeFilePath, LogType)
+            Me.Button_Enable.BackColor = Color.PaleGreen
+            Me.Label_ModOn.Text = _LANG._Get("l_EnabledT", _LANG._Get("l_Modification", Me.sModInPackFileVersion))
+            _LOG._sAdd("MODIFICATION", _LANG._Get("Modification") & " - " & _LANG._Get("l_EnabledT", "(" & Me.Property_ModInGameFileVersion & "):"), Me.Property_GameExeFilePath, LogType)
         End If
 
-        If Me.sModInPackFileVersion Is Nothing Then
-            Me.Label_ModOn.Text = _LANG._Get("Modification_MSG_CoreNotFound", _LANG._Get("ModificationModule"))
-        Else
-            Me.Label_ModOn.Text = _LANG._Get("l_Enable", _LANG._Get("ModificationModule")) & " v." & Me.sModInPackFileVersion
-        End If
 
         Me.Label_ModOff.Text = _LANG._Get("l_Disable", _LANG._Get("ModificationModule"))
         If Me.sModInGameFileVersion Is Nothing Then
@@ -569,7 +571,7 @@ Finalize:   If Me.sGameExeFileName IsNot Nothing Then
             End If
         Else
             If Me.Property_ModStatus = True Then
-                Me.Label_ModOff.Text = _LANG._Get("l_Disable", _LANG._Get("ModificationModule")) & " v." & Me.sModInGameFileVersion
+                Me.Label_ModOff.Text = _LANG._Get("l_Disable", _LANG._Get("ModificationModule")) & ": " & Me.sModInGameFileVersion
             End If
         End If
     End Sub
@@ -591,6 +593,7 @@ Finalize:   If Me.sGameExeFileName IsNot Nothing Then
             RaiseEvent _Event_Controls_Enabled_After(Enabled)
         End If
     End Sub
+
 
 
     '-----------------------------------> Logic

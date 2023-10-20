@@ -361,6 +361,13 @@ Public Class MainForm
         On Error Resume Next
         Dim result As New ResultClass(Me)
         result.ValueString = DownloadTo
+        If _FSO._FileExits(DownloadTo) Then
+            Threading.Thread.Sleep(300)
+            If _FSO._UsedByProcess(DownloadTo, True) = False Then
+                WL_Pack.Button_InstallFull_Click(MAIN_THREAD, EventArgs.Empty)
+            End If
+        End If
+
         '_FSO._DeleteFile(_FSO._CombinePath(MAIN_THREAD.WL_Pack.Property_Path_Folder_Download, MAIN_THREAD.WL_Mod.Property_PatchSrcFileName))
         'If _FSO.ZIP.UnzipFileToFolder(MAIN_THREAD.WL_Pack.Property_Path_File_Download, "." & MAIN_THREAD.WL_Mod.Property_PatchSrcFileName, _FSO._CombinePath(MAIN_THREAD.WL_Pack.Property_Path_Folder_Download, MAIN_THREAD.WL_Mod.Property_PatchSrcFileName)) = False Then result.Err._Flag = True : result.Err._Description_App = "Не удалось извлечь ядро из загруженного пакета локадизации"
         'MAIN_THREAD.WL_Mod.Property_PatchSrcFilePath = _FSO._CombinePath(MAIN_THREAD.WL_Pack.Property_Path_Folder_Download, MAIN_THREAD.WL_Mod.Property_PatchSrcFileName)
@@ -494,6 +501,10 @@ Public Class MainForm
     End Sub
 
     Private Sub WL_Mod_Load(sender As Object, e As EventArgs) Handles WL_Mod.Load
+
+    End Sub
+
+    Private Sub WL_Pack_Load(sender As Object, e As EventArgs) Handles WL_Pack.Load
 
     End Sub
 

@@ -158,7 +158,6 @@ Partial Class WL_Modification
         Me.Label_ModOn.TabIndex = 8
         Me.Label_ModOn.Text = "Включить модификацию"
         Me.Label_ModOn.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Label_ModOn.Visible = False
         '
         'Label_ModOff
         '
