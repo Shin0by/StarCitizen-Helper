@@ -104,15 +104,15 @@ Folder_MSG_ErrorDeleteFolder = Failed to delete folder:\n\t{0}
 Folder_MSG_ErrorRenameFolder = Failed to rename folder:\n\t{0}
 
 #Window Tabs
-Window_Tab_Modification = 修改
-Window_Tab_Localization = 本地化
-Window_Tab_ProcessKiller = 一键关闭
-Window_Tab_Profiles = 简介
-Window_Tab_Log = 日志
-Window_Tab_SysUpdate = 更新
-Window_Tab_SysSettings = 设置
-Window_Tab_About = 关于
-Window_Tab_Repository = 仓库
+Window_Tab_Modification = Home
+Window_Tab_Localization = Downloads and install
+Window_Tab_ProcessKiller = Process killer
+Window_Tab_Profiles = Profiles
+Window_Tab_Log = Log
+Window_Tab_SysUpdate = Program update
+Window_Tab_SysSettings = System
+Window_Tab_About = About
+Window_Tab_Repository = Repository
 
 #Window Menu
 Menu_Main_Modification = 修改

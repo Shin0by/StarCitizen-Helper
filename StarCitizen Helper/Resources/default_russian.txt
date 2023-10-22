@@ -104,12 +104,12 @@ Folder_MSG_ErrorDeleteFolder = Не удалось удалить папку:\n\t{0}
 Folder_MSG_ErrorRenameFolder = Не удалось переименовать папку:\n\t{0}
 
 #Window Tabs
-Window_Tab_Modification = Модификация
-Window_Tab_Localization = Локализация
+Window_Tab_Modification = Главная
+Window_Tab_Localization = Загрузка и установка
 Window_Tab_ProcessKiller = Завершение процессов
 Window_Tab_Profiles = Профили
 Window_Tab_Log = Лог
-Window_Tab_SysUpdate = Обновление
+Window_Tab_SysUpdate = Обновление программы
 Window_Tab_SysSettings = Система
 Window_Tab_About = О программе
 Window_Tab_Repository = Репозиторий

@@ -104,14 +104,14 @@ Folder_MSG_ErrorDeleteFolder = Failed to delete folder:\n\t{0}
 Folder_MSG_ErrorRenameFolder = Failed to rename folder:\n\t{0}
 
 #Window Tabs
-Window_Tab_Modification = 언어 변경
-Window_Tab_Localization = 현지화
-Window_Tab_ProcessKiller = 강제 종료
-Window_Tab_Profiles = 프로필
-Window_Tab_Log = 로그
-Window_Tab_SysUpdate = 업데이트
-Window_Tab_SysSettings = 시스템
-Window_Tab_About = 소개
+Window_Tab_Modification = Home
+Window_Tab_Localization = Downloads and install
+Window_Tab_ProcessKiller = Process killer
+Window_Tab_Profiles = Profiles
+Window_Tab_Log = Log
+Window_Tab_SysUpdate = Program update
+Window_Tab_SysSettings = System
+Window_Tab_About = About
 Window_Tab_Repository = Repository
 
 #Window Menu
