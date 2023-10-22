@@ -526,7 +526,7 @@ Public Class WL_Pack
 
     '<----------------------------------- Controls
     Public Sub Button_Download_Click(sender As Object, e As EventArgs) Handles Button_Download.Click
-        ControlsEnableDisable(False)
+        ControlsEnableDisable(False, True)
         Me.Button_OpenFile.Enabled = False
         RaiseEvent _Event_Download_Click_Before()
         RaiseEvent _Event_Download_Before()
@@ -553,7 +553,7 @@ Finalize: If result.Err._Flag = True Then
 
         Dim result As New ResultClass(Me)
 
-        ControlsEnableDisable(False)
+        ControlsEnableDisable(False, True)
         Me.Button_OpenFile.Enabled = False
 
 
@@ -722,7 +722,11 @@ Finalize: sender.Enabled = True
         Property_Path_File_Download = DownloadTo
 
         If List_Git.Items.Count > 0 Then
-            ControlsEnableDisable(True)
+            If MAIN_THREAD.WL_Mod.Property_GameExeFilePath IsNot Nothing Then
+                ControlsEnableDisable(True, True)
+            Else
+                ControlsEnableDisable(False, False)
+            End If
         End If
         Me.Button_OpenFile.Enabled = True
 
@@ -781,11 +785,15 @@ Finalize: sender.Enabled = True
 
         Dim List As List(Of Class_GitUpdateElement) = Me.GIT_PACK_DATA._GetByTag(tagName)
         If List.Count = 0 Then
-            ControlsEnableDisable(False)
+            If MAIN_THREAD.WL_Mod.Property_GameExeFilePath IsNot Nothing Then
+                ControlsEnableDisable(False, True)
+            Else
+                ControlsEnableDisable(False, False)
+            End If
             GoTo Fin
-        End If
+            End If
 
-        For i = 0 To List.Count - 1
+            For i = 0 To List.Count - 1
             If InvokeRequired Then
                 Me.Invoke(Sub() Me.List_Git.Items.Add(List(i)._name))
             Else
@@ -796,9 +804,17 @@ Finalize: sender.Enabled = True
         'Me.Property_GitList_SelString = _INI._GET_VALUE("EXTERNAL", "PACK_GIT_SELECTED", "", _VARS.utf8NoBom).Value
         If Me.List_Git.Items.Count > 0 Then
             Me.Property_GitList_SelString = Me.List_Git.Items(0)
-            ControlsEnableDisable(True)
+            If MAIN_THREAD.WL_Mod.Property_GameExeFilePath IsNot Nothing Then
+                ControlsEnableDisable(True, True)
+            Else
+                ControlsEnableDisable(False, False)
+            End If
         Else
-            ControlsEnableDisable(False)
+            If MAIN_THREAD.WL_Mod.Property_GameExeFilePath IsNot Nothing Then
+                ControlsEnableDisable(False, True)
+            Else
+                ControlsEnableDisable(False, False)
+            End If
         End If
 Fin:    RaiseEvent _Event_ListGit_List_Change_After()
     End Sub
@@ -899,10 +915,6 @@ Fin:    RaiseEvent _Event_ListGit_List_Change_After()
         'Me.GIT_PACK_DATA._GetByName()
         'Me.Invoke(Sub() Me.Property_RepositoryDate = GIT_PACK_LATEST._published.ToString)
 
-
-        Me.Invoke(Sub() 'Me.Enabled = True
-                      ControlsEnableDisable(True)
-                  End Sub)
         _UpdateListGit()
 
     End Sub
@@ -910,16 +922,18 @@ Fin:    RaiseEvent _Event_ListGit_List_Change_After()
     '-----------------------------------> 'Callbac
 
 
-    Private Sub ControlsEnableDisable(Enabled As Boolean)
+    Private Sub ControlsEnableDisable(Enabled As Boolean, Optional EnabledFileButton As Boolean = True)
         If InvokeRequired Then
             Me.Invoke(Sub()
                           Me.Button_Download.Enabled = Enabled
+                          Me.Button_OpenFile.Enabled = EnabledFileButton
                           List_Git.Enabled = Enabled
                           CheckBox_ShowAllBuild.Enabled = Enabled
                           WL_Download.Enabled = Enabled
                       End Sub)
         Else
             Me.Button_Download.Enabled = Enabled
+            Me.Button_OpenFile.Enabled = EnabledFileButton
             List_Git.Enabled = Enabled
             CheckBox_ShowAllBuild.Enabled = Enabled
             WL_Download.Enabled = Enabled

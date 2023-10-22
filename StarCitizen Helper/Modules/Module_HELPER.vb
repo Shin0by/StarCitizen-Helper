@@ -1,5 +1,6 @@
 ﻿Imports System.IO
 Imports System.Net
+Imports System.Text
 Imports Defter.CertificateVerifier.Security
 Imports Newtonsoft.Json.Linq
 
@@ -153,27 +154,15 @@ Module Module_HELPER
         _USER.SkipInvalidLines = True
         _USER._FSO = MAIN_THREAD.WL_Pack.Property_FilePath_User
 
-        If _FSO._FileExits(MAIN_THREAD.WL_Pack.Property_FilePath_User) = False Then
-            _FSO._WriteTextFile(Nothing, MAIN_THREAD.WL_Pack.Property_FilePath_User, _VARS.utf8NoBom)
+
+        If _FSO._FileExits(MAIN_THREAD.WL_Mod.Property_GameUserCfgFilePath) = False Then
+            If _FSO._WriteTextFile(_VARS.g_language & " = ", MAIN_THREAD.WL_Mod.Property_GameUserCfgFilePath, System.Text.Encoding.UTF8) = False Then _LOG._sAdd("LoadUserCfgFile", _LANG._Get("File_MSG_CannotWriteCheckPermission", MAIN_THREAD.WL_Mod.Property_GameUserCfgFilePath),, 1) : Exit Sub
         End If
 
-        Dim temp As String = Nothing
-
-        If MAIN_THREAD.WL_Pack.Property_LocalizationList.Count > 0 Then
-            Dim ValidList(MAIN_THREAD.WL_Pack.Property_LocalizationList.Count - 1) As String
-            For i = 0 To MAIN_THREAD.WL_Pack.Property_LocalizationList.Count - 1
-                ValidList(i) = MAIN_THREAD.WL_Pack.Property_LocalizationList(i)
-            Next i
-            temp = _USER._GET_VALUE(Nothing, _VARS.g_language, MAIN_THREAD.WL_Pack.Property_LocalizationDefault, _VARS.utf8NoBom, ValidList).Value
-
-            If MAIN_THREAD.WL_Mod.Localization <> temp Then
-                MAIN_THREAD.WL_Mod.Localization = temp
-                _USER._Write(Nothing, _VARS.g_language, MAIN_THREAD.WL_Mod.Localization, _VARS.utf8NoBom)
-            End If
-        Else
-            MAIN_THREAD.WL_Mod.Localization = Nothing
-            _USER._Write(Nothing, _VARS.g_language, MAIN_THREAD.WL_Mod.Localization, _VARS.utf8NoBom)
-        End If
+        Dim _USER_CFG As New Class_INI()
+        _USER_CFG.SkipInvalidLines = True
+        _USER_CFG._FSO = MAIN_THREAD.WL_Mod.Property_GameUserCfgFilePath
+        MAIN_THREAD.WL_Mod.Localization = _USER_CFG._GET_VALUE(Nothing, _VARS.g_language, Nothing, System.Text.Encoding.UTF8).Value
     End Sub
 
     Public Function StringToBool(Value As String) As Boolean

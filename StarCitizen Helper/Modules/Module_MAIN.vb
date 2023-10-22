@@ -79,9 +79,6 @@ Module Module_MAIN
         MAIN_THREAD.WL_Pack.Property_Path_Folder_Download = _FSO._CombinePath(_APP.exePath, "temp")
         MAIN_THREAD.WL_Pack.Property_Name_File_Meta = "meta.txt"
         MAIN_THREAD.WL_Mod.Property_GameExeFileName = "StarCitizen.exe"
-        MAIN_THREAD.WL_Mod.Property_PatchSrcFileName = "patcher.bin"
-        MAIN_THREAD.WL_Mod.Property_PatchSrcFilePath = _FSO._CombinePath(MAIN_THREAD.WL_Pack.Property_Path_Folder_Download, MAIN_THREAD.WL_Mod.Property_PatchSrcFileName)
-        MAIN_THREAD.WL_Mod.Property_PatchDstFileName = "dbghelp.dll"
         MAIN_THREAD.WL_Mod.Property_GameModFolderName = "data"
         MAIN_THREAD.WL_Mod.Property_GameUserCfgFileName = _VARS.ConfigFile_Name_User
 

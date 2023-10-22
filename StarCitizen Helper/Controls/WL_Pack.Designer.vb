@@ -31,13 +31,13 @@ Partial Class WL_Pack
         Me.Button_Download = New System.Windows.Forms.Button()
         Me.Label_Download = New System.Windows.Forms.Label()
         Me.Label_InstallFull = New System.Windows.Forms.Label()
+        Me.WL_Download = New SC.WL_Download()
         Me.CheckBox_ShowAllBuild = New System.Windows.Forms.CheckBox()
+        Me.WL_PackUpdateCheck = New SC.WL_Check()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.Label_RepositoryDate = New System.Windows.Forms.Label()
         Me.Label_RepozitoryName = New System.Windows.Forms.Label()
         Me.BackgroundWorker = New System.ComponentModel.BackgroundWorker()
-        Me.WL_Download = New SC.WL_Download()
-        Me.WL_PackUpdateCheck = New SC.WL_Check()
         Me.TableLayoutPanel.SuspendLayout()
         Me.Panel1.SuspendLayout()
         Me.SuspendLayout()
@@ -131,7 +131,7 @@ Partial Class WL_Pack
         Me.Button_Download.Name = "Button_Download"
         Me.Button_Download.Size = New System.Drawing.Size(202, 24)
         Me.Button_Download.TabIndex = 1
-        Me.Button_Download.Text = "Загрузить пакет обновлений"
+        Me.Button_Download.Text = "Загрузить и установить локализацию"
         Me.Button_Download.UseVisualStyleBackColor = True
         '
         'Label_Download
@@ -144,7 +144,7 @@ Partial Class WL_Pack
         Me.Label_Download.Name = "Label_Download"
         Me.Label_Download.Size = New System.Drawing.Size(412, 24)
         Me.Label_Download.TabIndex = 2
-        Me.Label_Download.Text = "Загрузка выбранного пакета обновлений (включая ядро)"
+        Me.Label_Download.Text = "Загрузка и установка выбранного пакета обновлений"
         Me.Label_Download.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'Label_InstallFull
@@ -161,6 +161,22 @@ Partial Class WL_Pack
         Me.Label_InstallFull.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.Label_InstallFull.Visible = False
         '
+        'WL_Download
+        '
+        Me.WL_Download.AutoEllipsis = False
+        Me.WL_Download.BackColor = System.Drawing.SystemColors.ControlLightLight
+        Me.WL_Download.Clickable = False
+        Me.TableLayoutPanel.SetColumnSpan(Me.WL_Download, 4)
+        Me.WL_Download.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.WL_Download.DownloadFrom = Nothing
+        Me.WL_Download.DownloadTo = Nothing
+        Me.WL_Download.Location = New System.Drawing.Point(1, 121)
+        Me.WL_Download.Margin = New System.Windows.Forms.Padding(1)
+        Me.WL_Download.Name = "WL_Download"
+        Me.TableLayoutPanel.SetRowSpan(Me.WL_Download, 3)
+        Me.WL_Download.Size = New System.Drawing.Size(660, 68)
+        Me.WL_Download.TabIndex = 14
+        '
         'CheckBox_ShowAllBuild
         '
         Me.CheckBox_ShowAllBuild.AutoSize = True
@@ -171,6 +187,38 @@ Partial Class WL_Pack
         Me.CheckBox_ShowAllBuild.TabIndex = 15
         Me.CheckBox_ShowAllBuild.Text = "Отображать все сборки"
         Me.CheckBox_ShowAllBuild.UseVisualStyleBackColor = True
+        '
+        'WL_PackUpdateCheck
+        '
+        Me.WL_PackUpdateCheck.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.WL_PackUpdateCheck.Location = New System.Drawing.Point(455, 33)
+        Me.WL_PackUpdateCheck.Name = "WL_PackUpdateCheck"
+        Me.WL_PackUpdateCheck.Property_AlertUpdate = True
+        Me.WL_PackUpdateCheck.Property_ChangeRepository = False
+        Me.WL_PackUpdateCheck.Property_DateOnline = New Date(CType(0, Long))
+        Me.WL_PackUpdateCheck.Property_GitListAutoUpdate = True
+        Me.WL_PackUpdateCheck.Property_GitListInterval = 90000
+        Me.WL_PackUpdateCheck.Property_Name = Nothing
+        Me.WL_PackUpdateCheck.Property_PreRelease = True
+        Me.WL_PackUpdateCheck.Property_SetupFileName = Nothing
+        Me.WL_PackUpdateCheck.Property_Text_Group_Actual = "Актуальная версия"
+        Me.WL_PackUpdateCheck.Property_Text_Group_Installed = "Установлена версия"
+        Me.WL_PackUpdateCheck.Property_Text_Label_Name_CurentVersion = ""
+        Me.WL_PackUpdateCheck.Property_Text_Label_Name_OnlineDate = ""
+        Me.WL_PackUpdateCheck.Property_Text_Label_Name_OnlineInformation = ""
+        Me.WL_PackUpdateCheck.Property_Text_Label_Name_OnlineVersion = ""
+        Me.WL_PackUpdateCheck.Property_Text_Label_Value_CurentVersion = ""
+        Me.WL_PackUpdateCheck.Property_Text_Label_Value_OnlineDate = ""
+        Me.WL_PackUpdateCheck.Property_Text_Label_Value_OnlineVersion = ""
+        Me.WL_PackUpdateCheck.Property_Text_TextBox_Value_OnlineInformation = ""
+        Me.WL_PackUpdateCheck.Property_URL = Nothing
+        Me.WL_PackUpdateCheck.Property_URLApi = Nothing
+        Me.WL_PackUpdateCheck.Property_URLDownload = Nothing
+        Me.WL_PackUpdateCheck.Property_VersionLocal = Nothing
+        Me.WL_PackUpdateCheck.Property_VersionOnline = Nothing
+        Me.WL_PackUpdateCheck.Size = New System.Drawing.Size(204, 24)
+        Me.WL_PackUpdateCheck.TabIndex = 16
+        Me.WL_PackUpdateCheck.Visible = False
         '
         'Panel1
         '
@@ -216,54 +264,6 @@ Partial Class WL_Pack
         '
         Me.BackgroundWorker.WorkerReportsProgress = True
         Me.BackgroundWorker.WorkerSupportsCancellation = True
-        '
-        'WL_Download
-        '
-        Me.WL_Download.AutoEllipsis = False
-        Me.WL_Download.BackColor = System.Drawing.SystemColors.ControlLightLight
-        Me.WL_Download.Clickable = False
-        Me.TableLayoutPanel.SetColumnSpan(Me.WL_Download, 4)
-        Me.WL_Download.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.WL_Download.DownloadFrom = Nothing
-        Me.WL_Download.DownloadTo = Nothing
-        Me.WL_Download.Location = New System.Drawing.Point(1, 121)
-        Me.WL_Download.Margin = New System.Windows.Forms.Padding(1)
-        Me.WL_Download.Name = "WL_Download"
-        Me.TableLayoutPanel.SetRowSpan(Me.WL_Download, 3)
-        Me.WL_Download.Size = New System.Drawing.Size(660, 68)
-        Me.WL_Download.TabIndex = 14
-        '
-        'WL_PackUpdateCheck
-        '
-        Me.WL_PackUpdateCheck.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.WL_PackUpdateCheck.Location = New System.Drawing.Point(455, 33)
-        Me.WL_PackUpdateCheck.Name = "WL_PackUpdateCheck"
-        Me.WL_PackUpdateCheck.Property_AlertUpdate = True
-        Me.WL_PackUpdateCheck.Property_ChangeRepository = False
-        Me.WL_PackUpdateCheck.Property_DateOnline = New Date(CType(0, Long))
-        Me.WL_PackUpdateCheck.Property_GitListAutoUpdate = True
-        Me.WL_PackUpdateCheck.Property_GitListInterval = 90000
-        Me.WL_PackUpdateCheck.Property_Name = Nothing
-        Me.WL_PackUpdateCheck.Property_PreRelease = True
-        Me.WL_PackUpdateCheck.Property_SetupFileName = Nothing
-        Me.WL_PackUpdateCheck.Property_Text_Group_Actual = "Актуальная версия"
-        Me.WL_PackUpdateCheck.Property_Text_Group_Installed = "Установлена версия"
-        Me.WL_PackUpdateCheck.Property_Text_Label_Name_CurentVersion = ""
-        Me.WL_PackUpdateCheck.Property_Text_Label_Name_OnlineDate = ""
-        Me.WL_PackUpdateCheck.Property_Text_Label_Name_OnlineInformation = ""
-        Me.WL_PackUpdateCheck.Property_Text_Label_Name_OnlineVersion = ""
-        Me.WL_PackUpdateCheck.Property_Text_Label_Value_CurentVersion = ""
-        Me.WL_PackUpdateCheck.Property_Text_Label_Value_OnlineDate = ""
-        Me.WL_PackUpdateCheck.Property_Text_Label_Value_OnlineVersion = ""
-        Me.WL_PackUpdateCheck.Property_Text_TextBox_Value_OnlineInformation = ""
-        Me.WL_PackUpdateCheck.Property_URL = Nothing
-        Me.WL_PackUpdateCheck.Property_URLApi = Nothing
-        Me.WL_PackUpdateCheck.Property_URLDownload = Nothing
-        Me.WL_PackUpdateCheck.Property_VersionLocal = Nothing
-        Me.WL_PackUpdateCheck.Property_VersionOnline = Nothing
-        Me.WL_PackUpdateCheck.Size = New System.Drawing.Size(204, 24)
-        Me.WL_PackUpdateCheck.TabIndex = 16
-        Me.WL_PackUpdateCheck.Visible = False
         '
         'WL_Pack
         '

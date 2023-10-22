@@ -294,10 +294,6 @@ Partial Class MainForm
         Me.WL_Mod.Property_ModInGameFileVersion = Nothing
         Me.WL_Mod.Property_ModInPackFileVersion = Nothing
         Me.WL_Mod.Property_ModStatus = False
-        Me.WL_Mod.Property_PatchDstFileName = Nothing
-        Me.WL_Mod.Property_PatchDstFilePath = Nothing
-        Me.WL_Mod.Property_PatchSrcFileName = Nothing
-        Me.WL_Mod.Property_PatchSrcFilePath = Nothing
         Me.WL_Mod.Size = New System.Drawing.Size(1029, 369)
         Me.WL_Mod.TabIndex = 0
         Me.WL_Mod.Text_Button_Disable = "Выкл. модификацию"
@@ -356,11 +352,11 @@ Partial Class MainForm
         Me.WL_Pack.Property_UpdateTargetName = Nothing
         Me.WL_Pack.Size = New System.Drawing.Size(1029, 369)
         Me.WL_Pack.TabIndex = 0
-        Me.WL_Pack.Text_Button_Download = "Загрузить пакет обновлений"
+        Me.WL_Pack.Text_Button_Download = "Загрузить и установить локализацию"
         Me.WL_Pack.Text_Button_InstallFull = "Полная установка"
         Me.WL_Pack.Text_Check_ShowAllBuild = "Отображать тестовые сборки"
         Me.WL_Pack.Text_Label_Bottom = ""
-        Me.WL_Pack.Text_Label_Download = "Загрузка выбранного пакета обновлений"
+        Me.WL_Pack.Text_Label_Download = "Загрузка и установка выбранного пакета обновлений"
         Me.WL_Pack.Text_Label_InstallFull = "Локализация и шрифты"
         '
         'TabPage_Repository

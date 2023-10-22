@@ -335,8 +335,6 @@ Public Class MainForm
         If Path Is Nothing Then Exit Sub
 
         MAIN_THREAD.WL_Mod._Update()
-        MAIN_THREAD.WL_Mod.Property_PatchDstFilePath = _FSO._CombinePath(MAIN_THREAD.WL_Mod.Property_GameExeFolderPath, MAIN_THREAD.WL_Mod.Property_PatchDstFileName)
-
         MAIN_THREAD.WL_Pack.Property_Path_Folder_Meta = MAIN_THREAD.WL_Mod.Property_GameRootFolderPath
         MAIN_THREAD.WL_Pack.Property_Path_File_Meta = _FSO._CombinePath(MAIN_THREAD.WL_Pack.Property_Path_Folder_Meta, MAIN_THREAD.WL_Pack.Property_Name_File_Meta)
 

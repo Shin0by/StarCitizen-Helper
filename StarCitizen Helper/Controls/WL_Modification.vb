@@ -1,5 +1,6 @@
 ﻿Imports System.IO
 Imports System.Net
+Imports Newtonsoft.Json.Linq
 
 Public Class WL_Modification
     Class UnpackLine
@@ -51,11 +52,6 @@ Public Class WL_Modification
     Private sGameRootFolderPath As String = Nothing
     Private sGameUserCfgFileName As String = Nothing
     Private sGameUserCfgFilePath As String = Nothing
-
-    Private sPatchSrcFileName As String = Nothing
-    Private sPatchSrcFilePath As String = Nothing
-    Private sPatchDstFileName As String = Nothing
-    Private sPatchDstFilePath As String = Nothing
 
     Private sModInGameFileVersion As String = Nothing
     Private sModInPackFileVersion As String = Nothing
@@ -230,13 +226,12 @@ Public Class WL_Modification
             If Len(Value) < _VARS.FileNameMinLen + _VARS.FilePathMinLen Then GoTo Finalize
             _JSETTINGS._SetValue("configuration.main", "exe_path", Value, True)
             If _JSETTINGS._GetValue("configuration.main.exe_path", Nothing) Is Nothing Then GoTo Finalize
-            Me.sGameExeFilePath = Value
 
-            If _FSO._FileExits(Me.sGameExeFilePath) = False Then GoTo Finalize
+            If _FSO._FileExits(Value) = False Then GoTo Finalize
+            Me.sGameExeFilePath = Value
             Me.sGameExeFileName = CType(_FSO._GetFileInfo(Me.sGameExeFilePath).ValueObject, FileInfo).Name
             Me.sGameExeFolderPath = CType(_FSO._GetFileInfo(Me.sGameExeFilePath).ValueObject, FileInfo).Directory.FullName
             Me.sGameRootFolderPath = CType(_FSO._GetFileInfo(Me.sGameExeFilePath).ValueObject, FileInfo).Directory.Parent.FullName
-            If Me.Property_PatchDstFileName IsNot Nothing Then Me.Property_PatchDstFilePath = _FSO._CombinePath(Me.Property_GameExeFolderPath, Me.Property_PatchDstFileName)
 
 Finalize:   If Me.sGameExeFileName IsNot Nothing Then
                 Me.Label_Path.Text = Me.sGameExeFilePath
@@ -316,46 +311,6 @@ Finalize:   If Me.sGameExeFileName IsNot Nothing Then
         End Get
     End Property
 
-    Public Property Property_PatchSrcFileName() As String
-        Get
-            Return Me.sPatchSrcFileName
-        End Get
-        Set(Value As String)
-            Me.sPatchSrcFileName = Value
-        End Set
-    End Property
-
-    Public Property Property_PatchDstFileName() As String
-        Get
-            Return Me.sPatchDstFileName
-        End Get
-        Set(Value As String)
-            Me.sPatchDstFileName = Value
-        End Set
-    End Property
-
-
-
-    Public Property Property_PatchSrcFilePath() As String
-        Get
-            Return Me.sPatchSrcFilePath
-        End Get
-        Set(Value As String)
-            If _FSO._FileExits(Value) = False Then
-                Exit Property
-            End If
-            Me.sPatchSrcFilePath = Value
-        End Set
-    End Property
-
-    Public Property Property_PatchDstFilePath() As String
-        Get
-            Return Me.sPatchDstFilePath
-        End Get
-        Set(Value As String)
-            Me.sPatchDstFilePath = Value
-        End Set
-    End Property
     Public Property Property_ModInPackFileVersion() As String
         Get
             Return Me.sModInPackFileVersion
@@ -427,12 +382,12 @@ Finalize:   If Me.sGameExeFileName IsNot Nothing Then
 
         Dim _USER As New Class_INI
         _USER.SkipInvalidLines = True
-        _USER._FSO = MAIN_THREAD.WL_Pack.Property_FilePath_User
+        _USER._FSO = MAIN_THREAD.WL_Mod.Property_GameUserCfgFilePath
         _USER._Write(Nothing, _VARS.g_language, Me.Localization, _VARS.utf8NoBom)
 
         _Update()
 
-        If _FSO._FileExits(Me.Property_PatchDstFilePath) Then _FSO._DeleteFile(Me.Property_PatchDstFilePath) 'Remove old Core file (Old fix)
+        If _FSO._FileExits(_FSO._CombinePath(Me.Property_GameExeFolderPath, "dbghelp.dll")) Then _FSO._DeleteFile(_FSO._CombinePath(Me.Property_GameExeFolderPath, "dbghelp.dll")) 'Remove old Core file (Old fix)
 
         Me.Property_ModInGameFileVersion = Me.Property_ModInPackFileVersion
         Me._Enabled(True)
@@ -515,20 +470,18 @@ Finalize:   If Me.sGameExeFileName IsNot Nothing Then
 
     Private Function CheckDestinationModСonditions() As Byte
         If Property_GameExeFilePath Is Nothing Then Return 3
-        'If Me.Property_PatchDstFilePath Is Nothing Then Return 2
-        If _FSO._FileExits(Me.Property_GameUserCfgFilePath) = False Then Return 1
+        If _FSO._FileExits(Me.Property_GameExeFilePath) = False Then Return 3
+        If _FSO._FileExits(Me.Property_GameUserCfgFilePath) = False Then Return 2
 
         Dim _USER As New Class_INI
         _USER.SkipInvalidLines = True
-        _USER._FSO = MAIN_THREAD.WL_Pack.Property_FilePath_User
+        _USER._FSO = Me.Property_GameUserCfgFilePath
         Dim Variants As String() = Nothing
         Dim ValidList(MAIN_THREAD.WL_Pack.Property_LocalizationList.Count - 1) As String
         For i = 0 To Me.List_Localization.Count - 1
             ValidList(i) = Me.List_Localization(i)
         Next i
-        If _USER._GET_VALUE(Nothing, _VARS.g_language, Nothing, _VARS.utf8NoBom, ValidList).Value IsNot Nothing Then
-            Return 2
-        End If
+        If _USER._GET_VALUE(Nothing, _VARS.g_language, Nothing, _VARS.utf8NoBom, ValidList).Value IsNot Nothing Then Return 1
 
         Return 0
     End Function
@@ -542,12 +495,18 @@ Finalize:   If Me.sGameExeFileName IsNot Nothing Then
         Dim srcCondition As Byte = CheckSourceModСonditions()
         Dim dstCondition As Byte = CheckDestinationModСonditions()
 
-        If dstCondition = 2 Then
+        If dstCondition = 1 Then
             Me.Button_Disable.Enabled = True : Me.Button_Disable.Focus()
         Else
             If dstCondition = 0 And srcCondition = 0 Then
                 Me.Button_Enable.Enabled = True : Me.Button_Enable.Focus()
             End If
+        End If
+
+        If Me.Property_GameExeFilePath Is Nothing Then
+            Me.Button_Path.BackColor = Color.PaleGreen
+        Else
+            Me.Button_Path.BackColor = Me.BackColor
         End If
 
         If Me.Button_Enable.Enabled = True Then
