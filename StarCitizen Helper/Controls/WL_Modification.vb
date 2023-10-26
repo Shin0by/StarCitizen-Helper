@@ -224,10 +224,12 @@ Public Class WL_Modification
             RaiseEvent _Event_GameExeFile_Update_Before(Value)
             If _VARS.ConfigFileIsOK = False Then Exit Property
             If Len(Value) < _VARS.FileNameMinLen + _VARS.FilePathMinLen Then GoTo Finalize
+            If LCase(Strings.Right(Value, Len(Property_GameExeFileName))) <> LCase(Property_GameExeFileName) Then _LOG._sAdd("MODIFICATION", _LANG._Get("Modification_MSG_IncorrectGameExePath", Property_GameExeFileName), Value, 1) : GoTo Finalize
+            If _FSO._FileExits(Value) = False Then GoTo Finalize
+
             _JSETTINGS._SetValue("configuration.main", "exe_path", Value, True)
             If _JSETTINGS._GetValue("configuration.main.exe_path", Nothing) Is Nothing Then GoTo Finalize
 
-            If _FSO._FileExits(Value) = False Then GoTo Finalize
             Me.sGameExeFilePath = Value
             Me.sGameExeFileName = CType(_FSO._GetFileInfo(Me.sGameExeFilePath).ValueObject, FileInfo).Name
             Me.sGameExeFolderPath = CType(_FSO._GetFileInfo(Me.sGameExeFilePath).ValueObject, FileInfo).Directory.FullName

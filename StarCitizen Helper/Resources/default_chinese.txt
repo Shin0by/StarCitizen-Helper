@@ -272,6 +272,7 @@ Modification_OpenFileDialog_GameFile = 游戏启动文件
 Modification_MSG_CoreNotFound = {0}核心未发现, 请检查窗口下方使用提示
 Modification_MSG_VersionUnspecified = 未知版本
 Modification_ListName_LocalizationType = 本地化变更
+Modification_MSG_IncorrectGameExePath = Wrong path to game file: {0}
 
 #SysLanguage
 Pack_MSG_CreateLangFolder = 已为软件本地化包创建文件夹:\n\t{0}

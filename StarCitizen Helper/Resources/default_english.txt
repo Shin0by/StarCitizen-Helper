@@ -272,6 +272,7 @@ Modification_OpenFileDialog_GameFile = Game exec file
 Modification_MSG_CoreNotFound = {0} not found, check instruction at the bottom of the window
 Modification_MSG_VersionUnspecified = unknown version
 Modification_ListName_LocalizationType = Localization variations
+Modification_MSG_IncorrectGameExePath = Wrong path to game file: {0}
 
 #SysLanguage
 Pack_MSG_CreateLangFolder = Created folder for application language packs:\n\t{0}
