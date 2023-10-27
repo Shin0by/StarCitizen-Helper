@@ -155,15 +155,15 @@ Module Module_HELPER
         _USER._FSO = MAIN_THREAD.WL_Pack.Property_FilePath_User
 
         If _FSO._FileExits(MAIN_THREAD.WL_Mod.Property_GameUserCfgFilePath) = False Then
-            If _FSO._WriteTextFile(Nothing, MAIN_THREAD.WL_Pack.Property_FilePath_User, System.Text.Encoding.UTF8) = False Then _LOG._sAdd("LoadUserCfgFile", _LANG._Get("File_MSG_CannotWriteCheckPermission", MAIN_THREAD.WL_Mod.Property_GameUserCfgFilePath),, 1) : Exit Sub
-            If _USER._Write(Nothing, _VARS.g_language, "", System.Text.Encoding.UTF8) = False Then _LOG._sAdd("LoadUserCfgFile", _LANG._Get("File_MSG_CannotWriteCheckPermission", MAIN_THREAD.WL_Mod.Property_GameUserCfgFilePath),, 1) : Exit Sub
-            If _USER._Write(Nothing, _VARS.g_languageAudio, "english", System.Text.Encoding.UTF8) = False Then _LOG._sAdd("LoadUserCfgFile", _LANG._Get("File_MSG_CannotWriteCheckPermission", MAIN_THREAD.WL_Mod.Property_GameUserCfgFilePath),, 1) : Exit Sub
+            If _FSO._WriteTextFile(Nothing, MAIN_THREAD.WL_Pack.Property_FilePath_User, _VARS.utf8NoBom) = False Then _LOG._sAdd("LoadUserCfgFile", _LANG._Get("File_MSG_CannotWriteCheckPermission", MAIN_THREAD.WL_Mod.Property_GameUserCfgFilePath),, 1) : Exit Sub
+            If _USER._Write(Nothing, _VARS.g_language, "", _VARS.utf8NoBom) = False Then _LOG._sAdd("LoadUserCfgFile", _LANG._Get("File_MSG_CannotWriteCheckPermission", MAIN_THREAD.WL_Mod.Property_GameUserCfgFilePath),, 1) : Exit Sub
+            If _USER._Write(Nothing, _VARS.g_languageAudio, "english", _VARS.utf8NoBom) = False Then _LOG._sAdd("LoadUserCfgFile", _LANG._Get("File_MSG_CannotWriteCheckPermission", MAIN_THREAD.WL_Mod.Property_GameUserCfgFilePath),, 1) : Exit Sub
         End If
 
         Dim _USER_CFG As New Class_INI()
         _USER_CFG.SkipInvalidLines = True
         _USER_CFG._FSO = MAIN_THREAD.WL_Mod.Property_GameUserCfgFilePath
-        MAIN_THREAD.WL_Mod.Localization = _USER_CFG._GET_VALUE(Nothing, _VARS.g_language, Nothing, System.Text.Encoding.UTF8).Value
+        MAIN_THREAD.WL_Mod.Localization = _USER_CFG._GET_VALUE(Nothing, _VARS.g_language, Nothing, _VARS.utf8NoBom).Value
     End Sub
 
     Public Function StringToBool(Value As String) As Boolean

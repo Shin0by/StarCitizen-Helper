@@ -1,6 +1,6 @@
 
 [Setup]
-AppVersion=1.9.26.137
+AppVersion=1.9.26.138
 AppName=StarCitizen Helper
 DefaultDirName={userappdata}\StarCitizen Helper
 DefaultGroupName=StarCitizen Helper

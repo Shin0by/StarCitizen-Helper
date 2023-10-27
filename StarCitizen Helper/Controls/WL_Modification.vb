@@ -389,7 +389,8 @@ Finalize:   If Me.sGameExeFileName IsNot Nothing Then
         Dim _USER As New Class_INI
         _USER.SkipInvalidLines = True
         _USER._FSO = MAIN_THREAD.WL_Pack.Property_FilePath_User
-        If _USER._Write(Nothing, _VARS.g_language, Me.Localization, System.Text.Encoding.UTF8) = False Then _LOG._sAdd("LoadUserCfgFile", _LANG._Get("File_MSG_CannotWriteCheckPermission", MAIN_THREAD.WL_Mod.Property_GameUserCfgFilePath),, 1) : Exit Sub
+        If _USER._Write(Nothing, _VARS.g_language, Me.Localization, _VARS.utf8NoBom) = False Then _LOG._sAdd("LoadUserCfgFile", _LANG._Get("File_MSG_CannotWriteCheckPermission", MAIN_THREAD.WL_Mod.Property_GameUserCfgFilePath),, 1) : Exit Sub
+        If _USER._GET_VALUE(Nothing, _VARS.g_languageAudio, Nothing, _VARS.utf8NoBom).Value Is Nothing Then If _USER._Write(Nothing, _VARS.g_languageAudio, "english", _VARS.utf8NoBom) = False Then _LOG._sAdd("LoadUserCfgFile", _LANG._Get("File_MSG_CannotWriteCheckPermission", MAIN_THREAD.WL_Mod.Property_GameUserCfgFilePath),, 1) : Exit Sub
 
         If _FSO._FileExits(_FSO._CombinePath(Me.Property_GameExeFolderPath, "dbghelp.dll")) Then _FSO._DeleteFile(_FSO._CombinePath(Me.Property_GameExeFolderPath, "dbghelp.dll")) 'Remove old Core file (Old fix)
 
@@ -501,9 +502,9 @@ Finalize:   If Me.sGameExeFileName IsNot Nothing Then
             _USER.SkipInvalidLines = True
             _USER._FSO = Me.Property_GameUserCfgFilePath
             If _FSO._FileExits(Property_GameUserCfgFilePath) = False Then
-                If _FSO._WriteTextFile(Nothing, Property_GameUserCfgFilePath, System.Text.Encoding.UTF8) = False Then _LOG._sAdd("LoadUserCfgFile", _LANG._Get("File_MSG_CannotWriteCheckPermission", MAIN_THREAD.WL_Mod.Property_GameUserCfgFilePath),, 1) : Exit Sub
-                If _USER._Write(Nothing, _VARS.g_language, Me.Localization, System.Text.Encoding.UTF8) = False Then _LOG._sAdd("LoadUserCfgFile", _LANG._Get("File_MSG_CannotWriteCheckPermission", MAIN_THREAD.WL_Mod.Property_GameUserCfgFilePath),, 1) : Exit Sub
-                If _USER._Write(Nothing, _VARS.g_languageAudio, "english", System.Text.Encoding.UTF8) = False Then _LOG._sAdd("LoadUserCfgFile", _LANG._Get("File_MSG_CannotWriteCheckPermission", MAIN_THREAD.WL_Mod.Property_GameUserCfgFilePath),, 1) : Exit Sub
+                If _FSO._WriteTextFile(Nothing, Property_GameUserCfgFilePath, _VARS.utf8NoBom) = False Then _LOG._sAdd("LoadUserCfgFile", _LANG._Get("File_MSG_CannotWriteCheckPermission", MAIN_THREAD.WL_Mod.Property_GameUserCfgFilePath),, 1) : Exit Sub
+                If _USER._Write(Nothing, _VARS.g_language, Me.Localization, _VARS.utf8NoBom) = False Then _LOG._sAdd("LoadUserCfgFile", _LANG._Get("File_MSG_CannotWriteCheckPermission", MAIN_THREAD.WL_Mod.Property_GameUserCfgFilePath),, 1) : Exit Sub
+                If _USER._Write(Nothing, _VARS.g_languageAudio, "english", _VARS.utf8NoBom) = False Then _LOG._sAdd("LoadUserCfgFile", _LANG._Get("File_MSG_CannotWriteCheckPermission", MAIN_THREAD.WL_Mod.Property_GameUserCfgFilePath),, 1) : Exit Sub
             End If
         End If
 
