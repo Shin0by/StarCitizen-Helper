@@ -624,20 +624,6 @@ Finalize: If result.Err._Flag = True Then
             End If
         Next
 
-        If MAIN_THREAD.WL_Mod.Property_GameUserCfgFilePath IsNot Nothing Then
-            Dim _USER As New Class_INI()
-            _USER.SkipInvalidLines = True
-            _USER._FSO = MAIN_THREAD.WL_Mod.Property_GameUserCfgFilePath
-
-            If _FSO._FileExits(MAIN_THREAD.WL_Mod.Property_GameUserCfgFilePath) = False Then
-                If _USER._Write(Nothing, _VARS.g_language, "", System.Text.Encoding.UTF8) = False Then _LOG._sAdd("LoadUserCfgFile", _LANG._Get("File_MSG_CannotWriteCheckPermission", MAIN_THREAD.WL_Mod.Property_GameUserCfgFilePath),, 1) : Exit Sub
-                If _USER._Write(Nothing, _VARS.g_languageAudio, "english", System.Text.Encoding.UTF8) = False Then _LOG._sAdd("LoadUserCfgFile", _LANG._Get("File_MSG_CannotWriteCheckPermission", MAIN_THREAD.WL_Mod.Property_GameUserCfgFilePath),, 1) : Exit Sub
-                Else
-                _USER._Write(Nothing, _VARS.g_language, Nothing, _VARS.utf8NoBom)
-            End If
-        End If
-
-
         _FSO._DeleteFile(Me.Property_Path_File_Meta).Err._Flag = False
         _FSO._WriteTextFile(Me.Property_PackInPackVersion, Me.Property_Path_File_Meta, System.Text.Encoding.UTF8)
 
@@ -646,6 +632,14 @@ Finalize: If result.Err._Flag = True Then
         GetLocals()
         MAIN_THREAD.WL_Mod._Update(3)
 
+        If MAIN_THREAD.WL_Mod.Property_GameUserCfgFilePath IsNot Nothing Then
+            Dim _USER As New Class_INI()
+            _USER.SkipInvalidLines = True
+            _USER._FSO = MAIN_THREAD.WL_Mod.Property_GameUserCfgFilePath
+            If _FSO._FileExits(MAIN_THREAD.WL_Mod.Property_GameUserCfgFilePath) Then
+                _USER._Write(Nothing, _VARS.g_language, Nothing, _VARS.utf8NoBom)
+            End If
+        End If
 
 Finalize: sender.Enabled = True
         RaiseEvent _Event_InstallFull_Button_Click_After()

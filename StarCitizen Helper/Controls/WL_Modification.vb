@@ -1,5 +1,6 @@
 ﻿Imports System.IO
 Imports System.Net
+Imports Microsoft.VisualBasic.ApplicationServices
 Imports Newtonsoft.Json.Linq
 
 Public Class WL_Modification
@@ -222,6 +223,7 @@ Public Class WL_Modification
         Set(Value As String)
             On Error Resume Next
             RaiseEvent _Event_GameExeFile_Update_Before(Value)
+            Dim result As Boolean = True
             If _VARS.ConfigFileIsOK = False Then Exit Property
             If Len(Value) < _VARS.FileNameMinLen + _VARS.FilePathMinLen Then GoTo Finalize
             If LCase(Strings.Right(Value, Len(Property_GameExeFileName))) <> LCase(Property_GameExeFileName) Then _LOG._sAdd("MODIFICATION", _LANG._Get("Modification_MSG_IncorrectGameExePath", Property_GameExeFileName), Value, 1) : GoTo Finalize
@@ -382,14 +384,12 @@ Finalize:   If Me.sGameExeFileName IsNot Nothing Then
 
         Me.Localization = List_SubLocal.Items(0)
 
+        _Update()
+
         Dim _USER As New Class_INI
         _USER.SkipInvalidLines = True
-        _USER._FSO = MAIN_THREAD.WL_Mod.Property_GameUserCfgFilePath
+        _USER._FSO = MAIN_THREAD.WL_Pack.Property_FilePath_User
         If _USER._Write(Nothing, _VARS.g_language, Me.Localization, System.Text.Encoding.UTF8) = False Then _LOG._sAdd("LoadUserCfgFile", _LANG._Get("File_MSG_CannotWriteCheckPermission", MAIN_THREAD.WL_Mod.Property_GameUserCfgFilePath),, 1) : Exit Sub
-        If _USER._Write(Nothing, _VARS.g_languageAudio, "english", System.Text.Encoding.UTF8) = False Then _LOG._sAdd("LoadUserCfgFile", _LANG._Get("File_MSG_CannotWriteCheckPermission", MAIN_THREAD.WL_Mod.Property_GameUserCfgFilePath),, 1) : Exit Sub
-
-
-        _Update()
 
         If _FSO._FileExits(_FSO._CombinePath(Me.Property_GameExeFolderPath, "dbghelp.dll")) Then _FSO._DeleteFile(_FSO._CombinePath(Me.Property_GameExeFolderPath, "dbghelp.dll")) 'Remove old Core file (Old fix)
 
@@ -495,6 +495,17 @@ Finalize:   If Me.sGameExeFileName IsNot Nothing Then
         Me.Button_Enable.Enabled = False
         Me.Button_Enable.BackColor = Me.BackColor
         Me.List_SubLocal.Enabled = True
+
+        If Property_GameUserCfgFilePath IsNot Nothing Then
+            Dim _USER As New Class_INI
+            _USER.SkipInvalidLines = True
+            _USER._FSO = Me.Property_GameUserCfgFilePath
+            If _FSO._FileExits(Property_GameUserCfgFilePath) = False Then
+                If _FSO._WriteTextFile(Nothing, Property_GameUserCfgFilePath, System.Text.Encoding.UTF8) = False Then _LOG._sAdd("LoadUserCfgFile", _LANG._Get("File_MSG_CannotWriteCheckPermission", MAIN_THREAD.WL_Mod.Property_GameUserCfgFilePath),, 1) : Exit Sub
+                If _USER._Write(Nothing, _VARS.g_language, Me.Localization, System.Text.Encoding.UTF8) = False Then _LOG._sAdd("LoadUserCfgFile", _LANG._Get("File_MSG_CannotWriteCheckPermission", MAIN_THREAD.WL_Mod.Property_GameUserCfgFilePath),, 1) : Exit Sub
+                If _USER._Write(Nothing, _VARS.g_languageAudio, "english", System.Text.Encoding.UTF8) = False Then _LOG._sAdd("LoadUserCfgFile", _LANG._Get("File_MSG_CannotWriteCheckPermission", MAIN_THREAD.WL_Mod.Property_GameUserCfgFilePath),, 1) : Exit Sub
+            End If
+        End If
 
         Dim srcCondition As Byte = CheckSourceModСonditions()
         Dim dstCondition As Byte = CheckDestinationModСonditions()
