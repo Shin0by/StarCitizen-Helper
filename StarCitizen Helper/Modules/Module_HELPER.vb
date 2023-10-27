@@ -156,7 +156,8 @@ Module Module_HELPER
 
 
         If _FSO._FileExits(MAIN_THREAD.WL_Mod.Property_GameUserCfgFilePath) = False Then
-            If _FSO._WriteTextFile(_VARS.g_language & " = ", MAIN_THREAD.WL_Mod.Property_GameUserCfgFilePath, System.Text.Encoding.UTF8) = False Then _LOG._sAdd("LoadUserCfgFile", _LANG._Get("File_MSG_CannotWriteCheckPermission", MAIN_THREAD.WL_Mod.Property_GameUserCfgFilePath),, 1) : Exit Sub
+            If _USER._Write(Nothing, _VARS.g_language, "", System.Text.Encoding.UTF8) = False Then _LOG._sAdd("LoadUserCfgFile", _LANG._Get("File_MSG_CannotWriteCheckPermission", MAIN_THREAD.WL_Mod.Property_GameUserCfgFilePath),, 1) : Exit Sub
+            If _USER._Write(Nothing, _VARS.g_languageAudio, "english", System.Text.Encoding.UTF8) = False Then _LOG._sAdd("LoadUserCfgFile", _LANG._Get("File_MSG_CannotWriteCheckPermission", MAIN_THREAD.WL_Mod.Property_GameUserCfgFilePath),, 1) : Exit Sub
         End If
 
         Dim _USER_CFG As New Class_INI()

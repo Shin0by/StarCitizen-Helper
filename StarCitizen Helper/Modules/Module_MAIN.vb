@@ -255,7 +255,6 @@ Module Module_MAIN
         Public OldPatcher_File_Name As String = Nothing
         Public LoginDataToken_SoureFileName As String = Nothing
         Public LoginDataToken_DestFileName As String = Nothing
-        Public g_language As String = "g_language"
         Public LocalizationFolderName As String = Nothing
         Public LanguageFolderDelimeter = Nothing
         Public LanguageFolderDefault = Nothing
@@ -286,6 +285,10 @@ Module Module_MAIN
         Public URL_App As String = Nothing
         Public URL_App_Api As String = Nothing
         Public URL_App_Release As String = Nothing
+
+        'User.cfg
+        Public g_language As String = "g_language"
+        Public g_languageAudio As String = "g_languageAudio"
 
         Public Property UpdateStatus() As String
             Get
