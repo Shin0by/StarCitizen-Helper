@@ -16,6 +16,7 @@ Module Module_APP
         Public configFullPath As String
         Public _ARGS As Class_Arguments
         Public debug As Boolean
+        Public SystemShutdown As Boolean = False
 
 
         Public Function _UPTIME() As TimeSpan

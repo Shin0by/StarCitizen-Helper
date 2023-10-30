@@ -56,6 +56,8 @@ Abort = Abort
 Save = Save
 Link = Link
 NotAssigned = Not set
+SystemLogOff = User is logging off
+SystemShutDown = System is shutting down
 
 #GLOBAL LONG
 l_Error = 오류: {0}
@@ -94,14 +96,14 @@ File_MSG_ChangeFile = [{0}] 파일 수정 중
 File_MSG_ErrorAccessConfigFile = 구성 파일 액세스 오류
 File_MSG_SectionNotFound = [{0}] 섹션이 파일에서 누락되었습니다. \n\t{1}
 File_MSG_ParameterNotFound = [{0}] 섹션에 대한 매개 변수 [{1}] 이/가 파일에서 누락되었습니다.\n\t{2}
-File_MSG_CannotDelExsFile = 파일 삭제 오류 \n\t{0}
-File_MSG_CannotWriteCheckPermission = 파일 쓰기 오류, 파일 및 폴더에 대한 쓰기 권한을 확인하십시오:\n\t{0}
+File_MSG_CannotDelExsFile = 파일 삭제 오류 \n\t{0}\nRecommended to reassign permissions to the target file or folder or run the program as an administrator.
+File_MSG_CannotWriteCheckPermission = 파일 쓰기 오류, 파일 및 폴더에 대한 쓰기 권한을 확인하십시오:\n\t{0}\nRecommended to reassign permissions to the target file or folder or run the program as an administrator.
 File_MSG_IncorrectDownloadedSize = 다운로드한 파일의 크기가 올바르지 않습니다.\n\t{0}
 File_MSG_PathNotAssign = {0}에 대한 경로 지정
-File_MSG_CannotCopyFile = 파일 복사 오류\n\t원본: {0}\n\t대상: {1}
-Folder_MSG_ErrorCreateFolder = Failed to create folder:\n\t{0}
-Folder_MSG_ErrorDeleteFolder = Failed to delete folder:\n\t{0}
-Folder_MSG_ErrorRenameFolder = Failed to rename folder:\n\t{0}
+File_MSG_CannotCopyFile = 파일 복사 오류\n\t원본: {0}\n\t대상: {1}\nRecommended to reassign permissions to the target file or folder or run the program as an administrator.
+Folder_MSG_ErrorCreateFolder = Failed to create folder:\n\t{0}\nRecommended to reassign permissions to the target file or folder or run the program as an administrator.
+Folder_MSG_ErrorDeleteFolder = Failed to delete folder:\n\t{0}\nRecommended to reassign permissions to the target file or folder or run the program as an administrator.
+Folder_MSG_ErrorRenameFolder = Failed to rename folder:\n\t{0}\nRecommended to reassign permissions to the target file or folder or run the program as an administrator.
 
 #Window Tabs
 Window_Tab_Modification = Home

@@ -56,6 +56,8 @@ Abort = Прервать
 Save = Сохранить
 Link = Ссылка
 NotAssigned = Не задан
+SystemLogOff = Сеанс пользователя завершается
+SystemShutDown = Windows завершает работу
 
 #GLOBAL LONG
 l_Error = Ошибка: {0}
@@ -94,14 +96,14 @@ File_MSG_ChangeFile = Модифицирование файла [{0}]
 File_MSG_ErrorAccessConfigFile = Ошибка доступа к файлу конфигурации
 File_MSG_SectionNotFound = Секция [{0}] не найдена в файле\n\t{1}
 File_MSG_ParameterNotFound = Не найден параметр [{0}] для секции [{1}] в файле\n\t{2}
-File_MSG_CannotDelExsFile = Ошибка при удалении файла\n\t{0}
-File_MSG_CannotWriteCheckPermission = Запись файла невозможна, проверьте права на запись для файла и папки:\n\t{0}
+File_MSG_CannotDelExsFile = Ошибка при удалении файла\n\t{0}\nРекомендуется переназначить права на целевой файл или папку или запустить программу от администратора.
+File_MSG_CannotWriteCheckPermission = Запись файла невозможна:\n\t{0}\nРекомендуется переназначить права на целевой файл или папку или запустить программу от администратора.
 File_MSG_IncorrectDownloadedSize = Неверный размер загруженного файла\n\t{0}
 File_MSG_PathNotAssign = Не указан путь к {0}
-File_MSG_CannotCopyFile = Ошибка при копировании файла\n\tОткуда: {0}\n\tКуда: {1}
-Folder_MSG_ErrorCreateFolder = Не удалось создать папку:\n\t{0}
-Folder_MSG_ErrorDeleteFolder = Не удалось удалить папку:\n\t{0}
-Folder_MSG_ErrorRenameFolder = Не удалось переименовать папку:\n\t{0}
+File_MSG_CannotCopyFile = Ошибка при копировании файла\n\tОткуда: {0}\n\tКуда: {1}\nРекомендуется переназначить права на целевой файл или папку или запустить программу от администратора.
+Folder_MSG_ErrorCreateFolder = Не удалось создать папку:\n\t{0}\nРекомендуется переназначить права на целевой файл или папку или запустить программу от администратора.
+Folder_MSG_ErrorDeleteFolder = Не удалось удалить папку:\n\t{0}\nРекомендуется переназначить права на целевой файл или папку или запустить программу от администратора.
+Folder_MSG_ErrorRenameFolder = Не удалось переименовать папку:\n\t{0}\nРекомендуется переназначить права на целевой файл или папку или запустить программу от администратора.
 
 #Window Tabs
 Window_Tab_Modification = Главная

@@ -56,6 +56,8 @@ Abort = Abort
 Save = Save
 Link = Link
 NotAssigned = Not set
+SystemLogOff = User is logging off
+SystemShutDown = System is shutting down
 
 #GLOBAL LONG
 l_Error = Error: {0}
@@ -94,14 +96,14 @@ File_MSG_ChangeFile = Modifying file [{0}]
 File_MSG_ErrorAccessConfigFile = Error accessing the configuration file
 File_MSG_SectionNotFound = Section [{0}] is missing from file\n\t{1}
 File_MSG_ParameterNotFound = Parameter [{0}] for section [{1}] is missing from file\n\t{2}
-File_MSG_CannotDelExsFile = Error deleting file \n\t{0}
-File_MSG_CannotWriteCheckPermission = Error writing to file, check write right for file and folder:\n\t{0}
+File_MSG_CannotDelExsFile = Error deleting file \n\t{0}\nRecommended to reassign permissions to the target file or folder or run the program as an administrator.
+File_MSG_CannotWriteCheckPermission = Error writing to file, check write right for file and folder:\n\t{0}\nRecommended to reassign permissions to the target file or folder or run the program as an administrator.
 File_MSG_IncorrectDownloadedSize = Incorrect size of downloaded file\n\t{0}
 File_MSG_PathNotAssign = Specify path to {0}
-File_MSG_CannotCopyFile = Error copying file\n\tSource: {0}\n\tDestination: {1}
-Folder_MSG_ErrorCreateFolder = Failed to create folder:\n\t{0}
-Folder_MSG_ErrorDeleteFolder = Failed to delete folder:\n\t{0}
-Folder_MSG_ErrorRenameFolder = Failed to rename folder:\n\t{0}
+File_MSG_CannotCopyFile = Error copying file\n\tSource: {0}\n\tDestination: {1}\nRecommended to reassign permissions to the target file or folder or run the program as an administrator.
+Folder_MSG_ErrorCreateFolder = Failed to create folder:\n\t{0}\nRecommended to reassign permissions to the target file or folder or run the program as an administrator.
+Folder_MSG_ErrorDeleteFolder = Failed to delete folder:\n\t{0}\nRecommended to reassign permissions to the target file or folder or run the program as an administrator.
+Folder_MSG_ErrorRenameFolder = Failed to rename folder:\n\t{0}\nRecommended to reassign permissions to the target file or folder or run the program as an administrator.
 
 #Window Tabs
 Window_Tab_Modification = Home

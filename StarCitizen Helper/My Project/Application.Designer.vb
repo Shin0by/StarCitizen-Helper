@@ -46,7 +46,7 @@ Finalize:   Exit Sub
         Private Sub MyApplication_Shutdown(sender As Object, e As System.EventArgs) Handles Me.Shutdown
             On Error GoTo Finalize
             Unload()
-Finalize:   Exit Sub
+Finalize:   End
         End Sub
 
         Private Sub MyApplication_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup

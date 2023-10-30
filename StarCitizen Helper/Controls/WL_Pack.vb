@@ -605,6 +605,7 @@ Finalize: If result.Err._Flag = True Then
                     If Result.Err._Flag = True Then _LOG._sAdd(Me.Name, _LANG._Get("Folder_MSG_ErrorDeleteFolder", Path.Combine(MAIN_THREAD.WL_Mod.Property_GameModFolderPath, elem.ToPath)), Nothing, 1) : ErrFlag = True
                 End If
             End If
+            If ErrFlag Then GoTo Finalize
         Next
 
         'Create new Localization folder in Game\data folder
@@ -613,15 +614,16 @@ Finalize: If result.Err._Flag = True Then
         For Each elem In MAIN_THREAD.WL_Mod.Property_GameModUnpackList
             If elem.IsFile Then
                 If _FSO.ZIP.UnzipFileToFolder(Property_Path_File_Download, elem.FromPath, Path.Combine(MAIN_THREAD.WL_Mod.Property_GameModFolderPath, elem.ToPath)) = False Then
-                    _LOG._sAdd(Me.Name, _LANG._Get("Pack_MSG_ErrorUnpackPackToGame", Property_Path_File_Download, Path.Combine(MAIN_THREAD.WL_Mod.Property_GameModFolderPath, elem.ToPath)), Nothing, 1)
+                    _LOG._sAdd(Me.Name, _LANG._Get("Pack_MSG_ErrorUnpackPackToGame", Property_Path_File_Download, Path.Combine(MAIN_THREAD.WL_Mod.Property_GameModFolderPath, elem.ToPath)), Nothing, 1) : ErrFlag = True
                     GoTo Finalize
                 End If
             Else
                 If _FSO.ZIP.UnzipFolderToFolder(Property_Path_File_Download, elem.FromPath, Path.Combine(MAIN_THREAD.WL_Mod.Property_GameModFolderPath, elem.ToPath)) = False Then
-                    _LOG._sAdd(Me.Name, _LANG._Get("Pack_MSG_ErrorUnpackPackToGame", Property_Path_File_Download, Path.Combine(MAIN_THREAD.WL_Mod.Property_GameModFolderPath, elem.ToPath)), Nothing, 1)
+                    _LOG._sAdd(Me.Name, _LANG._Get("Pack_MSG_ErrorUnpackPackToGame", Property_Path_File_Download, Path.Combine(MAIN_THREAD.WL_Mod.Property_GameModFolderPath, elem.ToPath)), Nothing, 1) : ErrFlag = True
                     GoTo Finalize
                 End If
             End If
+            If ErrFlag Then GoTo Finalize
         Next
 
         _FSO._DeleteFile(Me.Property_Path_File_Meta).Err._Flag = False

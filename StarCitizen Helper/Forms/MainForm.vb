@@ -1,14 +1,19 @@
 ﻿Imports System.ComponentModel
+Imports System.Diagnostics.Eventing.Reader
 
 Public Class MainForm
     Dim FirstRun As Boolean = True
     Dim LatestSysUpdateVersion As String = Nothing
+
     '<----------------------------------- Form
+    Protected Overrides Sub WndProc(ByRef m As Message)
+        If m.Msg = &H11 Then _APP.SystemShutdown = True
+        MyBase.WndProc(m)
+    End Sub
+
     Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.CheckBox_StartUp_CheckedChanged(Me, e)
     End Sub
-
-
 
     'Private Sub CheckBox_FSOWatcher_CheckedChanged(sender As Object, e As EventArgs)
     'On Error Resume Next
@@ -23,15 +28,14 @@ Public Class MainForm
     End Sub
 
     Private Sub MainForm_VisibleChanged(sender As Object, e As EventArgs) Handles Me.VisibleChanged
-
-
         If Me.Visible = True Then
             Me.Timer_LOG.Enabled = True
         Else
             Me.Timer_LOG.Enabled = False
         End If
-
     End Sub
+
+
     '-----------------------------------> 'Form
 
     '<----------------------------------- Localization in pack
@@ -491,11 +495,12 @@ Public Class MainForm
     End Sub
 
     Private Sub MainForm_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
-        If _VARS.HideWhenClose = True Then
-            ShowWinToolStripMenuItem_Click(sender, e)
-            e.Cancel = True
+        If _APP.SystemShutdown = False Then
+            If _VARS.HideWhenClose = True Then
+                ShowWinToolStripMenuItem_Click(sender, e)
+                e.Cancel = True
+            End If
         End If
-
     End Sub
 
     Private Sub WL_Mod_Load(sender As Object, e As EventArgs) Handles WL_Mod.Load

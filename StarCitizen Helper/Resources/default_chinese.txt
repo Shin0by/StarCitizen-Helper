@@ -56,6 +56,8 @@ Abort = 停止
 Save = 保存
 Link = 链接
 NotAssigned = 未分配
+SystemLogOff = User is logging off
+SystemShutDown = System is shutting down
 
 #GLOBAL LONG
 l_Error = 错误: {0}
@@ -94,14 +96,14 @@ File_MSG_ChangeFile = 正在修改文件[{0}]
 File_MSG_ErrorAccessConfigFile = 无法访问配置文件
 File_MSG_SectionNotFound = 文件中缺失节 [{0}]\n\t{1}
 File_MSG_ParameterNotFound = 节 [{1}] 中缺少参数 [{0}]\n\t{2}
-File_MSG_CannotDelExsFile = 无法删除文件 \n\t{0}
-File_MSG_CannotWriteCheckPermission = 无法写入文件 {0}, 请检查权限
+File_MSG_CannotDelExsFile = 无法删除文件 \n\t{0}\nRecommended to reassign permissions to the target file or folder or run the program as an administrator.
+File_MSG_CannotWriteCheckPermission = 无法写入文件 {0}, 请检查权限\nRecommended to reassign permissions to the target file or folder or run the program as an administrator.
 File_MSG_IncorrectDownloadedSize = 文件下载大小错误\n\t{0}
 File_MSG_PathNotAssign = 将路径指定为 {0}
-File_MSG_CannotCopyFile =拷贝文件错误\n\t源: {0}\n\t目标: {1}
-Folder_MSG_ErrorCreateFolder = Failed to create folder:\n\t{0}
-Folder_MSG_ErrorDeleteFolder = Failed to delete folder:\n\t{0}
-Folder_MSG_ErrorRenameFolder = Failed to rename folder:\n\t{0}
+File_MSG_CannotCopyFile =拷贝文件错误\n\t源: {0}\n\t目标: {1}\nRecommended to reassign permissions to the target file or folder or run the program as an administrator.
+Folder_MSG_ErrorCreateFolder = Failed to create folder:\n\t{0}\nRecommended to reassign permissions to the target file or folder or run the program as an administrator.
+Folder_MSG_ErrorDeleteFolder = Failed to delete folder:\n\t{0}\nRecommended to reassign permissions to the target file or folder or run the program as an administrator.
+Folder_MSG_ErrorRenameFolder = Failed to rename folder:\n\t{0}\nRecommended to reassign permissions to the target file or folder or run the program as an administrator.
 
 #Window Tabs
 Window_Tab_Modification = Home
