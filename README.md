@@ -1,7 +1,7 @@
 [![Latest Release Version](https://img.shields.io/github/release/Shin0by/StarCitizen-Helper?sort=date)](https://github.com/Shin0by/StarCitizen-Helper/releases/latest)
 [![Latest Release Downloads](https://img.shields.io/github/downloads/Shin0by/StarCitizen-Helper/latest/total)](https://github.com/Shin0by/StarCitizen-Helper/releases/latest)
 [![Total Downloads](https://img.shields.io/github/downloads/Shin0by/StarCitizen-Helper/total.svg)](https://github.com/Shin0by/StarCitizen-Helper/releases)
-[![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg)](http://creativecommons.org/licenses/by-nc-sa/4.0/)
+[![License: PolyForm Noncommercial License 1.0.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg)](https://polyformproject.org/licenses/noncommercial/1.0.0/)
 
 # StarCitizen-Helper
 
