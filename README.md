@@ -1,7 +1,12 @@
 [![Latest Release Version](https://img.shields.io/github/release/Shin0by/StarCitizen-Helper?sort=date)](https://github.com/Shin0by/StarCitizen-Helper/releases/latest)
 [![Latest Release Downloads](https://img.shields.io/github/downloads/Shin0by/StarCitizen-Helper/latest/total)](https://github.com/Shin0by/StarCitizen-Helper/releases/latest)
 [![Total Downloads](https://img.shields.io/github/downloads/Shin0by/StarCitizen-Helper/total.svg)](https://github.com/Shin0by/StarCitizen-Helper/releases)
-[![License: Polyform NC](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg)](https://polyformproject.org/licenses/noncommercial/1.0.0/)
+
+## Лицензия / License
+
+Этот проект лицензирован под Polyform Noncommercial License 1.0.0. Полный текст лицензии можно найти в файле [LICENSE](./LICENSE).
+
+This project is licensed under Polyform Noncommercial License 1.0.0. The full licence can be found in the [LICENSE](./LICENSE).
 
 # StarCitizen-Helper
 
