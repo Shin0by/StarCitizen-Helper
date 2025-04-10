@@ -262,6 +262,7 @@ Pack_MSG_ErrorClearTempFolder = Не удалось удалить существующий файл пакета лока
 Pack_MSG_ErrorNotSelectPack = Не выбрана версия загружаемого пакета локализации
 Pack_MSG_ErrorAccessPackFile = Не удалось получить доступ к файлу обновлений:\n\t{0}
 Pack_MSG_ErrorUnpackPackToGame = Не удалось распаковать пакет обновлений в папку игры\n\tИсходный архив: {0}\n\tПуть установки: {1}
+Pack_MSG_ErrorRenameFileLocalization = Не удалось переименовать файл локализации:\n\tИз: {0}\n\tВ: {1}
 
 #Modification
 Modification_ButtonName_Path = Задать {0}

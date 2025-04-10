@@ -39,15 +39,21 @@ Public Class MainForm
     '-----------------------------------> 'Form
 
     '<----------------------------------- Localization in pack
-    Sub UpdateLocalizationList() Handles WL_Pack._Event_GetLocalsUpdate_After
+    Sub UpdateSubLocalizationList() Handles WL_Pack._Event_GetLocalsUpdate_After
         Me.WL_Mod.List_AltLocalization = Me.WL_Pack.Property_AltLocalizationList
         Me.WL_Mod.List_Localization = Me.WL_Pack.Property_LocalizationList
-        LoadUserCfgFile()
+        If Me.WL_Pack.Property_DefaultSubLocalization IsNot Nothing Then
+            Me.WL_Mod.SubLocalization = Me.WL_Pack.Property_DefaultSubLocalization
+        Else
+            If Me.WL_Mod.List_AltSubLocal.Items.Count > 0 Then
+                Me.WL_Mod.List_AltSubLocal.SelectedIndex = 0
+            End If
+        End If
     End Sub
 
-    Sub UpdateLocalization() Handles WL_Pack._Event_ChangeRepository_Before
+    Sub UpdateSubLocalization() Handles WL_Pack._Event_ChangeRepository_Before
         If Initialization = True Then Exit Sub
-        Me.WL_Mod.Localization = Nothing
+        Me.WL_Mod.SubLocalization = Nothing
         Me.WL_Mod.List_Localization = New List(Of String)
     End Sub
     '-----------------------------------> Localization in pack

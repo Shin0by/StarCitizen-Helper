@@ -163,7 +163,7 @@ Module Module_HELPER
         Dim _USER_CFG As New Class_INI()
         _USER_CFG.SkipInvalidLines = True
         _USER_CFG._FSO = MAIN_THREAD.WL_Mod.Property_GameUserCfgFilePath
-        MAIN_THREAD.WL_Mod.Localization = _USER_CFG._GET_VALUE(Nothing, _VARS.g_language, Nothing, _VARS.utf8NoBom).Value
+        MAIN_THREAD.WL_Pack.Property_PackLanguage = _USER_CFG._GET_VALUE(Nothing, _VARS.g_language, Nothing, _VARS.utf8NoBom).Value
     End Sub
 
     Public Function StringToBool(Value As String) As Boolean

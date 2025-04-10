@@ -262,6 +262,7 @@ Pack_MSG_ErrorClearTempFolder = 기존 언어 팩을 삭제할 수 없습니다.
 Pack_MSG_ErrorNotSelectPack = 언어팩 선택이 필요합니다.
 Pack_MSG_ErrorAccessPackFile = 언어팩에 대한 액세스 권한이 없음:\n\t{0}
 Pack_MSG_ErrorUnpackPackToGame = 언어팩은 게임 폴더에 설치할 수 없습니다.\n\t원본 위치: {0}\n\t대상 경로: {1}
+Pack_MSG_ErrorRenameFileLocalization = Failed to rename the localization file:\n\tFrom: {0}\n\tTo: {1}
 
 #Modification!
 Modification_ButtonName_Path = {0} 선택

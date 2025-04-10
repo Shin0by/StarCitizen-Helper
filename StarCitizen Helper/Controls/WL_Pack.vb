@@ -48,12 +48,15 @@ Public Class WL_Pack
     Private sPath_Folder_Download As String = Nothing
     Private sName_File_Download As String = Nothing
     Private sPath_File_Download As String = Nothing
+    Private sName_Folder_g_language As String = Nothing
+    Private sPath_Folder_g_language As String = Nothing
 
     Private sPath_Folder_Meta As String = Nothing
     Private sName_File_Meta As String = Nothing
     Private sPath_File_Meta As String = Nothing
     Private sPath_File_AltLocal As String = Nothing
     Private sPackLanguage As String = Nothing
+    Private sPackDefaultSubLocalization As String = Nothing
 
     Private hashGitList As String = Nothing
     Private hashCurrentList As String = Nothing
@@ -79,6 +82,21 @@ Public Class WL_Pack
         EPTU = 3
     End Enum
 
+    ''' <summary>
+    ''' Class to store the sub-localization data
+    ''' </summary>
+    Public Class SubLocalizationData
+        ''' <summary>
+        ''' The name of the sub-localization
+        ''' </summary>
+        Public Property SubLocalName As String
+
+        ''' <summary>
+        ''' The file name of the localization
+        ''' </summary>
+        Public Property FileName As String
+    End Class
+
     '<----------------------------------- Basic control
     Public Sub New()
         InitializeComponent()
@@ -87,6 +105,25 @@ Public Class WL_Pack
     '-----------------------------------> Basic control
 
     '<----------------------------------- Properties
+
+    Public Property Property_Name_g_language() As String
+        Set(Value As String)
+            Me.sName_Folder_g_language = Value
+        End Set
+        Get
+            Return Me.sName_Folder_g_language
+        End Get
+    End Property
+
+    Public Property Property_Path_g_language() As String
+        Set(Value As String)
+            Me.sPath_Folder_g_language = Value
+        End Set
+        Get
+            Return Me.sPath_Folder_g_language
+        End Get
+    End Property
+
     Public Property Property_PackLanguage() As String
         Set(Value As String)
             Me.sPackLanguage = Value
@@ -104,6 +141,17 @@ Public Class WL_Pack
             Return Me.iGameType
         End Get
     End Property
+
+    Public Property Property_DefaultSubLocalization() As String
+        Set(Value As String)
+            Me.sPackDefaultSubLocalization = Value
+        End Set
+        Get
+            Return Me.sPackDefaultSubLocalization
+        End Get
+    End Property
+
+
 
     Private Sub WL_Update_BackColorChanged(sender As Object, e As EventArgs) Handles Me.BackColorChanged
         On Error Resume Next
@@ -634,15 +682,6 @@ Finalize: If result.Err._Flag = True Then
         GetLocals()
         MAIN_THREAD.WL_Mod._Update(3)
 
-        If MAIN_THREAD.WL_Mod.Property_GameUserCfgFilePath IsNot Nothing Then
-            Dim _USER As New Class_INI()
-            _USER.SkipInvalidLines = True
-            _USER._FSO = MAIN_THREAD.WL_Mod.Property_GameUserCfgFilePath
-            If _FSO._FileExits(MAIN_THREAD.WL_Mod.Property_GameUserCfgFilePath) Then
-                _USER._Write(Nothing, _VARS.g_language, Nothing, _VARS.utf8NoBom)
-            End If
-        End If
-
 Finalize: sender.Enabled = True
         RaiseEvent _Event_InstallFull_Button_Click_After()
     End Sub
@@ -789,9 +828,9 @@ Finalize: sender.Enabled = True
                 ControlsEnableDisable(False, False)
             End If
             GoTo Fin
-            End If
+        End If
 
-            For i = 0 To List.Count - 1
+        For i = 0 To List.Count - 1
             If InvokeRequired Then
                 Me.Invoke(Sub() Me.List_Git.Items.Add(List(i)._name))
             Else
@@ -819,58 +858,188 @@ Fin:    RaiseEvent _Event_ListGit_List_Change_After()
 
 
     Public Sub GetLocals()
-        'Me.Property_FilePath_Config = MAIN_THREAD.WL_Mod.Property_GameModFolderPath & "\" & _VARS.ConfigFile_Name_System
         Me.Property_FilePath_User = MAIN_THREAD.WL_Mod.Property_GameUserCfgFilePath
         If MAIN_THREAD.WL_Mod.Property_GameModFolderPath Is Nothing Then Exit Sub
 
-        'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-
-        'Dim _SYSTEM As New Class_INI
-        Dim _ALTLANG As New Class_INI
         If MAIN_THREAD.WL_Mod.Property_GameRootFolderPath IsNot Nothing Then MAIN_THREAD.WL_Pack.Property_FilePath_AltLocal = _FSO._CombinePath(MAIN_THREAD.WL_Mod.Property_GameRootFolderPath, MAIN_THREAD.WL_Mod.Property_GameModFolderName, "languages.ini")
-        MAIN_THREAD.UpdateLocalization()
-        '_SYSTEM.SkipInvalidLines = True
-        _ALTLANG.SkipInvalidLines = True
+        MAIN_THREAD.UpdateSubLocalization()
 
         Dim LocalList As New List(Of String)
         Dim AltLocalList As New List(Of String)
 
         Dim ResultCls As ResultClass = _FSO._GetFolderList(Path.Combine(MAIN_THREAD.WL_Mod.Property_GameModFolderPath, _VARS.LocalizationFolderName))
         Dim ResultCls2 As ResultClass
+        Dim CopyGlobalINI As Boolean = True
+
+        Me.Property_DefaultSubLocalization = Nothing
+        Me.Property_Name_g_language = Nothing
+        Me.Property_Path_g_language = Nothing
+
         If ResultCls.Err._Flag = False Then
             For Each elem In ResultCls.ValueObject
-                ResultCls2 = _FSO._GetFolderInfo(elem)
-                If ResultCls2.Err._Flag = False Then
-                    If ResultCls2.ValueBoolean = True Then
-                        LocalList.Add(ResultCls2.ValueObject.Name)
-                        AltLocalList.Add(ResultCls2.ValueObject.Name)
+                Dim g_language_Info = _FSO._GetFolderInfo(elem.ToString).ValueObject
+                Me.Property_PackLanguage = g_language_Info.Name
+                Me.Property_Name_g_language = g_language_Info.Name
+                Me.Property_Path_g_language = g_language_Info.FullName
+                ResultCls2 = _FSO._GetFileList(elem)
+                For Each file_path In ResultCls2.ValueObject
+                    Dim sublocal As SubLocalizationData = Get_SubLocalization_Data(file_path, "@custom_localization_sub_version_name", 128, 128)
+
+                    Dim file = _FSO._GetFileInfo(file_path).ValueObject
+
+                    If LCase(file.Name) <> "global.ini" Then
+                        If file.Name <> sublocal.FileName Then
+                            If _FSO._RenameFile(file_path, sublocal.FileName) = False Then _LOG._sAdd(Me.Name, _LANG._Get("Pack_MSG_ErrorRenameFileLocalization", file_path, sublocal.FileName), Nothing, 2)
+                        End If
+                    Else
+                        If file.Name <> sublocal.FileName Then
+                            Dim TargetFilePath As String = _FSO._CombinePath(file.Directory.ToString, sublocal.FileName)
+                            If _FSO._FileExits(TargetFilePath) = False Then
+                                If _FSO._CopyFile(file_path, TargetFilePath) = False Then _LOG._sAdd(Me.Name, _LANG._Get("Pack_MSG_ErrorRenameFileLocalization", file_path, sublocal.FileName), Nothing, 2)
+                            Else
+                                Dim TargetFileInfo = _FSO._GetFileInfo(TargetFilePath).ValueObject
+                                If TargetFileInfo.CreationTime.ToString <> file.CreationTime.ToString Or TargetFileInfo.Length <> file.Length Then
+                                    If _FSO._CopyFile(file_path, TargetFilePath, True) = False Then _LOG._sAdd(Me.Name, _LANG._Get("Pack_MSG_ErrorRenameFileLocalization", file_path, sublocal.FileName), Nothing, 2)
+                                End If
+                            End If
+                        End If
+                        _FSO._DeleteFile(file.Name)
+                        Property_DefaultSubLocalization = sublocal.FileName
                     End If
+                Next
+            Next
+        End If
+
+        Dim list As ResultClass = _FSO._GetFileList(Me.Property_Path_g_language)
+        If list.ValueObject IsNot Nothing Then
+            For Each file_path In list.ValueObject
+                Dim file = _FSO._GetFileInfo(file_path).ValueObject
+                If LCase(file.Name) <> "global.ini" Then
+                    Dim sublocal As SubLocalizationData = Get_SubLocalization_Data(file_path, "@custom_localization_sub_version_name", 128, 128)
+
+                    AltLocalList.Add(sublocal.SubLocalName)
+                    LocalList.Add(sublocal.FileName)
+                ElseIf list.ValueObject.Length = 1 Then
+                    Dim sublocal As SubLocalizationData = Get_SubLocalization_Data(file_path, "@custom_localization_sub_version_name", 128, 128)
+
+                    AltLocalList.Add(sublocal.SubLocalName)
+                    LocalList.Add(sublocal.FileName)
                 End If
             Next
-            Me.Property_LocalizationList = LocalList
-            Me.Property_AltLocalizationList = AltLocalList
         End If
-        'Me.Property_PackLanguage = 
 
-
-        '_SYSTEM._FSO = Me.Property_FilePath_Config
-        '_ALTLANG._FSO = Me.Property_FilePath_AltLocal
 
         Me.Property_LocalizationDefault = "english"
-        'Me.Property_LocalizationDefault = _SYSTEM._GET_VALUE(Nothing, "g_language", Nothing, _VARS.utf8NoBom).Value.Trim
-        'If Len(Me.Property_LocalizationDefault) > 0 Then
-
-        'For Each elem As String In Split(_SYSTEM._GET_VALUE(Nothing, "sys_languages", Me.Property_LocalizationDefault, _VARS.utf8NoBom).Value, ",")
-        '    Dim temp As String = Trim(elem)
-        '    LocalList.Add(temp)
-        '    AltLocalList.Add(_ALTLANG._GET_VALUE(Nothing, temp, temp, _VARS.utf8NoBom).Value)
-        'Next
-        'Me.Property_AltLocalizationList = AltLocalList
-        'Me.Property_LocalizationList = LocalList
-        'End If
+        Me.Property_AltLocalizationList = AltLocalList
+        Me.Property_LocalizationList = LocalList
 
         RaiseEvent _Event_GetLocalsUpdate_After()
     End Sub
+
+    ''' <summary>
+    ''' Gets the default sub-localization data for a file
+    ''' </summary>
+    ''' <param name="filePath">The full path to the file</param>
+    ''' <returns>A SubLocalizationData object with default values</returns>
+    Public Function Get_SubLocalization_DefaultData(filePath As String) As SubLocalizationData
+        Try
+            ' Get the file name without path
+            Dim fileName As String = Path.GetFileName(filePath)
+
+            ' Get the file name without extension
+            Dim fileNameWithoutExtension As String = Path.GetFileNameWithoutExtension(filePath)
+
+            'If LCase(fileNameWithoutExtension) = "global" Then
+            '    fileNameWithoutExtension = "default"
+            'End If
+
+            ' Return the default values
+            Return New SubLocalizationData With {
+            .SubLocalName = fileNameWithoutExtension,
+            .FileName = fileName
+        }
+        Catch ex As Exception
+            ' In case of any exception, return empty values
+            Return New SubLocalizationData With {
+            .SubLocalName = String.Empty,
+            .FileName = String.Empty
+        }
+        End Try
+    End Function
+
+    ''' <summary>
+    ''' Gets the sub-localization data from a file
+    ''' </summary>
+    ''' <param name="filePath">The full path to the file</param>
+    ''' <param name="key">The key to search for in the first line</param>
+    ''' <param name="maxValueLength">Maximum length allowed for values</param>
+    ''' <param name="maxContentLength">Maximum additional content length (used to calculate max first line length)</param>
+    ''' <returns>A SubLocalizationData object</returns>
+    Public Function Get_SubLocalization_Data(filePath As String, Optional key As String = "@custom_localization_sub_version_name", Optional maxValueLength As Integer = 128, Optional maxContentLength As Integer = 128) As SubLocalizationData
+
+        ' Calculate max first line length based on parameters
+        Dim maxFirstLineLength As Integer = maxContentLength + key.Length
+
+        Try
+            ' Check if file exists
+            If Not File.Exists(filePath) Then
+                Return Get_SubLocalization_DefaultData(filePath)
+            End If
+
+            ' Check if file name is too long
+            If Path.GetFileName(filePath).Length > maxValueLength Then
+                Return Get_SubLocalization_DefaultData(filePath)
+            End If
+
+            ' Open file and read first line without loading entire file
+            Using reader As New StreamReader(filePath)
+                ' Read the first line
+                Dim firstLine As String = reader.ReadLine()
+
+                ' Check if the first line is null or too long
+                If String.IsNullOrEmpty(firstLine) OrElse firstLine.Length > maxFirstLineLength Then
+                    Return Get_SubLocalization_DefaultData(filePath)
+                End If
+
+                ' Check if the first line starts with the key
+                If Not firstLine.StartsWith(key & "=") Then
+                    Return Get_SubLocalization_DefaultData(filePath)
+                End If
+
+                ' Extract the value part (everything after the key=)
+                Dim valuePart As String = firstLine.Substring(key.Length + 1)
+
+                ' Split the value by pipe character
+                Dim parts As String() = valuePart.Split("|"c)
+
+                ' Check if we have exactly two parts
+                If parts.Length <> 2 Then
+                    Return Get_SubLocalization_DefaultData(filePath)
+                End If
+
+                ' Extract the display name and file name
+                Dim subLocalName As String = parts(0).Trim()
+                Dim fileName As String = parts(1).Trim()
+
+                ' Validate lengths
+                If subLocalName.Length > maxValueLength OrElse fileName.Length > maxValueLength Then
+                    Return Get_SubLocalization_DefaultData(filePath)
+                End If
+
+                ' Return the parsed values
+                Return New SubLocalizationData With {
+                .SubLocalName = subLocalName,
+                .FileName = fileName
+            }
+            End Using
+        Catch ex As IOException
+            ' File not accessible for reading
+            Return Get_SubLocalization_DefaultData(filePath)
+        Catch ex As Exception
+            ' Any other exception (could be a binary file or other issues)
+            Return Get_SubLocalization_DefaultData(filePath)
+        End Try
+    End Function
     '-----------------------------------> Logic
 
     '<----------------------------------- 'Callback

@@ -262,6 +262,7 @@ Pack_MSG_ErrorClearTempFolder = 无法删除已安装汉化包
 Pack_MSG_ErrorNotSelectPack = 需要选择汉化包
 Pack_MSG_ErrorAccessPackFile = 缺少访问本地化包文件夹的权限e:\n\t{0}
 Pack_MSG_ErrorUnpackPackToGame = 将汉化包安装到游戏文件夹失败\n\t源文件夹: {0}\n\t目标文件夹: {1}
+Pack_MSG_ErrorRenameFileLocalization = Failed to rename the localization file:\n\tFrom: {0}\n\tTo: {1}
 
 #Modification!
 Modification_ButtonName_Path = 选择{0}

@@ -116,7 +116,7 @@ Module Module_MAIN
         'Build list and select localization in Mod Tab
         If MAIN_THREAD.WL_Mod.Property_GameRootFolderPath IsNot Nothing Then MAIN_THREAD.WL_Pack.Property_FilePath_AltLocal = _FSO._CombinePath(MAIN_THREAD.WL_Mod.Property_GameRootFolderPath, MAIN_THREAD.WL_Mod.Property_GameModFolderName, "languages.ini")
         MAIN_THREAD.WL_Pack.GetLocals()
-        LoadUserCfgFile()
+        'LoadUserCfgFile()
 
         If _VARS.StartUp = True Then
             MAIN_THREAD.Hide()

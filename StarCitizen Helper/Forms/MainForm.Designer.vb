@@ -283,7 +283,7 @@ Partial Class MainForm
         Me.WL_Mod.Dock = System.Windows.Forms.DockStyle.Fill
         Me.WL_Mod.List_AltLocalization = CType(resources.GetObject("WL_Mod.List_AltLocalization"), System.Collections.Generic.List(Of String))
         Me.WL_Mod.List_Localization = CType(resources.GetObject("WL_Mod.List_Localization"), System.Collections.Generic.List(Of String))
-        Me.WL_Mod.Localization = ""
+        Me.WL_Mod.SubLocalization = ""
         Me.WL_Mod.Location = New System.Drawing.Point(4, 4)
         Me.WL_Mod.Margin = New System.Windows.Forms.Padding(4)
         Me.WL_Mod.Name = "WL_Mod"
